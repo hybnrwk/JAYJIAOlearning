@@ -29,6 +29,20 @@ CNAME
 *.cbp
 *.depend
 *.layout
+
+# 仅保留 md 和 pdf：数据挖掘
+/cs_ds/数据挖掘/**
+!/cs_ds/数据挖掘/
+!/cs_ds/数据挖掘/**/
+!/cs_ds/数据挖掘/**/*.md
+!/cs_ds/数据挖掘/**/*.pdf
+
+# 仅保留 md 和 pdf：金科_ba
+/金科_ba/**
+!/金科_ba/
+!/金科_ba/**/
+!/金科_ba/**/*.md
+!/金科_ba/**/*.pdf
 *.o
 *.h
 *.data
@@ -37,4 +51,3 @@ CNAME
 *.base
 *.pl
 *.pickle
-

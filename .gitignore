@@ -9,9 +9,7 @@ __MACOSX/
 *.tmp
 *.temp
 *.zip
-*.pptx
 *.html
-*.ipynb
 *.rar
 *.exe
 *.csv

@@ -1,0 +1,12 @@
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+__MACOSX/
+.ipynb_checkpoints/
+~$*
+
+*.tmp
+*.temp
+*.zip
+*.pptx

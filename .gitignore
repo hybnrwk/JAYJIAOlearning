@@ -12,14 +12,12 @@ __MACOSX/
 *.html
 *.rar
 *.exe
-*.csv
 *.cpp
 *.py
 *.ico
 CNAME
 *.doc
 *.xls
-*.xlsx
 *.jpeg
 *.txt
 *.json

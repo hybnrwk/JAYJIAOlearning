@@ -24,6 +24,7 @@ CNAME
 *.txt
 *.json
 *.ttc
+*.mp4
 *.cbp
 *.depend
 *.layout

@@ -4,6 +4,9 @@ param(
     [string]$Remote = "origin",
     [string]$Branch = "main",
     [string]$CommitPrefix = "weekly sync",
+    [switch]$LogonFallback,
+    [string]$ScheduledDay = "Sunday",
+    [int]$ScheduledHour = 18,
     [switch]$DryRun
 )
 
@@ -19,6 +22,7 @@ try {
     New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
 }
 $script:LogPath = Join-Path $LogDir "weekly-sync.log"
+$StatePath = Join-Path $LogDir "weekly-sync-state.json"
 
 function Write-Log {
     param([string]$Message)
@@ -30,7 +34,7 @@ function Write-Log {
             $script:LogPath = $null
         }
     }
-    Write-Output $line
+    Write-Host $line
 }
 
 function Invoke-Git {
@@ -42,28 +46,111 @@ function Invoke-Git {
         return @()
     }
 
-    $output = & git @GitArgs 2>&1
-    $code = $LASTEXITCODE
+    $result = Invoke-GitRaw @GitArgs
+    foreach ($line in $result.Output) {
+        Write-Log ("git: {0}" -f $line)
+    }
+    if ($result.ExitCode -ne 0) {
+        throw ("git {0} failed with exit code {1}" -f ($GitArgs -join " "), $result.ExitCode)
+    }
+    return $result.Output
+}
+
+function Invoke-GitRaw {
+    param([Parameter(ValueFromRemainingArguments = $true)][string[]]$GitArgs)
+
+    $oldPreference = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    try {
+        $output = & git @GitArgs 2>&1
+        $code = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $oldPreference
+    }
+
+    $clean = New-Object System.Collections.Generic.List[string]
     foreach ($line in $output) {
-        if ($null -ne $line -and $line.ToString().Length -gt 0) {
-            Write-Log ("git: {0}" -f $line)
+        if ($null -eq $line) { continue }
+        $text = $line.ToString()
+        if ([string]::IsNullOrWhiteSpace($text)) { continue }
+        if ($text -like "warning:*") {
+            Write-Log ("git: {0}" -f $text)
+            continue
         }
+        $clean.Add($text)
     }
-    if ($code -ne 0) {
-        throw ("git {0} failed with exit code {1}" -f ($GitArgs -join " "), $code)
+
+    return [PSCustomObject]@{
+        ExitCode = $code
+        Output = @($clean)
     }
-    return $output
+}
+
+function Get-GitOutput {
+    param([string[]]$GitArgs)
+
+    $result = Invoke-GitRaw @GitArgs
+    if ($result.ExitCode -ne 0) {
+        throw ("git {0} failed with exit code {1}" -f ($GitArgs -join " "), $result.ExitCode)
+    }
+    return @($result.Output)
 }
 
 function Test-GitQuiet {
     param([string[]]$GitArgs)
-    & git @GitArgs *> $null
-    return $LASTEXITCODE
+    $result = Invoke-GitRaw @GitArgs
+    return $result.ExitCode
 }
 
 function Get-RepoPath {
     param([string]$Path)
     return (Join-Path $RepoRoot ($Path -replace "/", [System.IO.Path]::DirectorySeparatorChar))
+}
+
+function Get-LatestScheduledTime {
+    $day = [System.Enum]::Parse([System.DayOfWeek], $ScheduledDay, $true)
+    $now = Get-Date
+    $daysBack = ([int]$now.DayOfWeek - [int]$day + 7) % 7
+    $scheduled = $now.Date.AddDays(-$daysBack).AddHours($ScheduledHour)
+    if ($scheduled -gt $now) {
+        $scheduled = $scheduled.AddDays(-7)
+    }
+    return $scheduled
+}
+
+function Get-LastSuccessTime {
+    if (-not (Test-Path -LiteralPath $StatePath -PathType Leaf)) {
+        return $null
+    }
+
+    try {
+        $state = Get-Content -LiteralPath $StatePath -Raw -Encoding UTF8 | ConvertFrom-Json
+        if ($state.LastSuccessTime) {
+            return [datetime]::Parse($state.LastSuccessTime)
+        }
+    } catch {
+        Write-Log ("Ignoring unreadable state file: {0}" -f $_.Exception.Message)
+    }
+    return $null
+}
+
+function Save-SuccessState {
+    if ($DryRun) {
+        Write-Log "[dry-run] success state not updated."
+        return
+    }
+
+    $state = [PSCustomObject]@{
+        LastSuccessTime = (Get-Date).ToString("o")
+        RepoRoot = $RepoRoot
+        Remote = $Remote
+        Branch = $Branch
+    }
+    try {
+        $state | ConvertTo-Json | Set-Content -LiteralPath $StatePath -Encoding UTF8
+    } catch {
+        Write-Log ("Unable to write state file: {0}" -f $_.Exception.Message)
+    }
 }
 
 try {
@@ -75,20 +162,28 @@ try {
         throw "RepoRoot is not a Git working tree: $RepoRoot"
     }
 
-    $cachedStatus = Test-GitQuiet @("diff", "--cached", "--quiet")
-    if ($cachedStatus -eq 1) {
-        throw "Index already has staged changes. Aborting to avoid committing unrelated manual staging."
+    if ($LogonFallback) {
+        $latestScheduled = Get-LatestScheduledTime
+        $lastSuccess = Get-LastSuccessTime
+        if ($lastSuccess -and $lastSuccess -ge $latestScheduled) {
+            Write-Log ("Logon fallback skipped. Last success {0}; latest scheduled run {1}." -f $lastSuccess, $latestScheduled)
+            exit 0
+        }
+        Write-Log ("Logon fallback active. Latest scheduled run needing coverage: {0}." -f $latestScheduled)
     }
-    if ($cachedStatus -ne 0) {
+
+    $cachedStatus = Test-GitQuiet @("diff", "--cached", "--quiet")
+    if ($cachedStatus -ne 0 -and $cachedStatus -ne 1) {
         throw "Unable to inspect staged changes."
     }
 
     Invoke-Git fetch $Remote | Out-Null
 
-    $upstream = (& git rev-parse --abbrev-ref --symbolic-full-name "@{u}" 2>$null)
-    if ($LASTEXITCODE -eq 0 -and $upstream) {
-        $counts = (& git rev-list --left-right --count "HEAD...@{u}")
-        if ($LASTEXITCODE -eq 0 -and $counts) {
+    $upstreamResult = Invoke-GitRaw rev-parse --abbrev-ref --symbolic-full-name "@{u}"
+    if ($upstreamResult.ExitCode -eq 0 -and $upstreamResult.Output.Count -gt 0) {
+        $countsResult = Invoke-GitRaw rev-list --left-right --count "HEAD...@{u}"
+        if ($countsResult.ExitCode -eq 0 -and $countsResult.Output.Count -gt 0) {
+            $counts = $countsResult.Output[0]
             $parts = $counts.Trim() -split "\s+"
             $ahead = [int]$parts[0]
             $behind = [int]$parts[1]
@@ -97,16 +192,21 @@ try {
                 Invoke-Git pull --ff-only | Out-Null
             } elseif ($behind -gt 0 -and $ahead -gt 0) {
                 throw "Local and upstream branches have diverged. Aborting automatic sync."
+            } elseif ($ahead -gt 0) {
+                Write-Log ("Local branch is ahead by {0} commit(s); pushing pending commits." -f $ahead)
+                Invoke-Git push $Remote $Branch | Out-Null
             }
         }
     }
 
-    $tracked = @(& git -c core.quotePath=false diff --name-only)
-    $untracked = @(& git -c core.quotePath=false ls-files --others --exclude-standard)
-    $candidates = @($tracked + $untracked | Where-Object { $_ } | Sort-Object -Unique)
+    $stagedInitial = @(Get-GitOutput @("-c", "core.quotePath=false", "diff", "--cached", "--name-only"))
+    $tracked = @(Get-GitOutput @("-c", "core.quotePath=false", "diff", "--name-only"))
+    $untracked = @(Get-GitOutput @("-c", "core.quotePath=false", "ls-files", "--others", "--exclude-standard"))
+    $candidates = @($stagedInitial + $tracked + $untracked | Where-Object { $_ } | Sort-Object -Unique)
 
     if ($candidates.Count -eq 0) {
         Write-Log "No working tree changes to sync."
+        Save-SuccessState
         exit 0
     }
 
@@ -134,6 +234,7 @@ try {
 
     if ($selected.Count -eq 0) {
         Write-Log "No small files selected for sync."
+        Save-SuccessState
         exit 0
     }
 
@@ -141,13 +242,13 @@ try {
         Invoke-Git add -- $path | Out-Null
     }
 
-    $staged = @(& git -c core.quotePath=false diff --cached --name-only)
+    $staged = @(Get-GitOutput @("-c", "core.quotePath=false", "diff", "--cached", "--name-only"))
     foreach ($path in $staged) {
-        $sizeText = (& git cat-file -s ":$path" 2>$null)
-        if ($LASTEXITCODE -ne 0 -or -not $sizeText) {
+        $blobResult = Invoke-GitRaw cat-file -s ":$path"
+        if ($blobResult.ExitCode -ne 0 -or $blobResult.Output.Count -eq 0) {
             continue
         }
-        $stagedSize = [int64]$sizeText.Trim()
+        $stagedSize = [int64]$blobResult.Output[0].Trim()
         if ($stagedSize -ge $MaxBytes) {
             Write-Log ("Unstaging oversized Git blob: {0} ({1:N2} MB)" -f $path, ($stagedSize / 1MB))
             Invoke-Git reset -- $path | Out-Null
@@ -157,6 +258,7 @@ try {
     $hasStagedChanges = Test-GitQuiet @("diff", "--cached", "--quiet")
     if ($hasStagedChanges -eq 0) {
         Write-Log "Nothing staged after filtering."
+        Save-SuccessState
         exit 0
     }
     if ($hasStagedChanges -ne 1) {
@@ -167,6 +269,7 @@ try {
     Invoke-Git commit -m $message | Out-Null
     Invoke-Git push $Remote $Branch | Out-Null
 
+    Save-SuccessState
     Write-Log "Weekly sync completed."
 } catch {
     Write-Log ("ERROR: {0}" -f $_.Exception.Message)

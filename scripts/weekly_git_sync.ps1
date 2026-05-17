@@ -7,6 +7,8 @@ param(
     [switch]$LogonFallback,
     [string]$ScheduledDay = "Sunday",
     [int]$ScheduledHour = 18,
+    [int]$NetworkRetries = 5,
+    [int]$NetworkRetryDelaySeconds = 30,
     [switch]$DryRun
 )
 
@@ -54,6 +56,50 @@ function Invoke-Git {
         throw ("git {0} failed with exit code {1}" -f ($GitArgs -join " "), $result.ExitCode)
     }
     return $result.Output
+}
+
+function Invoke-GitWithRetry {
+    param(
+        [Parameter(Mandatory = $true)][string[]]$GitArgs,
+        [int]$Attempts = $NetworkRetries,
+        [int]$DelaySeconds = $NetworkRetryDelaySeconds
+    )
+
+    if ($DryRun) {
+        return Invoke-Git @GitArgs
+    }
+
+    if ($Attempts -lt 1) {
+        $Attempts = 1
+    }
+    if ($DelaySeconds -lt 0) {
+        $DelaySeconds = 0
+    }
+
+    for ($attempt = 1; $attempt -le $Attempts; $attempt++) {
+        if ($Attempts -gt 1) {
+            Write-Log ("git {0} attempt {1}/{2}" -f ($GitArgs -join " "), $attempt, $Attempts)
+        }
+
+        $result = Invoke-GitRaw @GitArgs
+        foreach ($line in $result.Output) {
+            Write-Log ("git: {0}" -f $line)
+        }
+
+        if ($result.ExitCode -eq 0) {
+            return $result.Output
+        }
+
+        if ($attempt -lt $Attempts) {
+            Write-Log ("git {0} failed with exit code {1}; retrying in {2}s." -f ($GitArgs -join " "), $result.ExitCode, $DelaySeconds)
+            if ($DelaySeconds -gt 0) {
+                Start-Sleep -Seconds $DelaySeconds
+            }
+            continue
+        }
+
+        throw ("git {0} failed with exit code {1} after {2} attempt(s)" -f ($GitArgs -join " "), $result.ExitCode, $Attempts)
+    }
 }
 
 function Invoke-GitRaw {
@@ -177,7 +223,7 @@ try {
         throw "Unable to inspect staged changes."
     }
 
-    Invoke-Git fetch $Remote | Out-Null
+    Invoke-GitWithRetry -GitArgs @("fetch", $Remote) | Out-Null
 
     $upstreamResult = Invoke-GitRaw rev-parse --abbrev-ref --symbolic-full-name "@{u}"
     if ($upstreamResult.ExitCode -eq 0 -and $upstreamResult.Output.Count -gt 0) {
@@ -189,12 +235,12 @@ try {
             $behind = [int]$parts[1]
             if ($behind -gt 0 -and $ahead -eq 0) {
                 Write-Log "Local branch is behind upstream; attempting fast-forward pull."
-                Invoke-Git pull --ff-only | Out-Null
+                Invoke-GitWithRetry -GitArgs @("pull", "--ff-only") | Out-Null
             } elseif ($behind -gt 0 -and $ahead -gt 0) {
                 throw "Local and upstream branches have diverged. Aborting automatic sync."
             } elseif ($ahead -gt 0) {
                 Write-Log ("Local branch is ahead by {0} commit(s); pushing pending commits." -f $ahead)
-                Invoke-Git push $Remote $Branch | Out-Null
+                Invoke-GitWithRetry -GitArgs @("push", $Remote, $Branch) | Out-Null
             }
         }
     }
@@ -267,7 +313,7 @@ try {
 
     $message = "{0} {1}" -f $CommitPrefix, (Get-Date -Format "yyyy-MM-dd")
     Invoke-Git commit -m $message | Out-Null
-    Invoke-Git push $Remote $Branch | Out-Null
+    Invoke-GitWithRetry -GitArgs @("push", $Remote, $Branch) | Out-Null
 
     Save-SuccessState
     Write-Log "Weekly sync completed."

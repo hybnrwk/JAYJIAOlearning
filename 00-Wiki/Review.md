@@ -20,8 +20,8 @@
 - 算法路线：[[00-Wiki/Concepts/复杂度分析|复杂度分析]] -> [[00-Wiki/Concepts/数据结构|数据结构]] -> [[00-Wiki/Concepts/图算法|图算法]] -> [[00-Wiki/Concepts/贪心算法|贪心算法]] / [[00-Wiki/Concepts/分治算法|分治算法]]。
 - 数据库路线：[[00-Wiki/Concepts/E-R模型|E-R 模型]] -> [[00-Wiki/Concepts/关系模型|关系模型]] -> [[00-Wiki/Concepts/关系代数|关系代数]] -> [[00-Wiki/Concepts/数据完整性|数据完整性]]。
 - AI 路线：[[00-Wiki/Concepts/知识表示|知识表示]] -> [[00-Wiki/Concepts/状态空间搜索|状态空间搜索]] -> [[00-Wiki/Concepts/确定性推理|确定性推理]] -> [[00-Wiki/Concepts/不确定性推理|不确定性推理]]。
-- 概率统计路线：[[00-Wiki/Concepts/概率分布|概率分布]] -> [[00-Wiki/Concepts/三大抽样分布|三大抽样分布]] -> [[00-Wiki/Concepts/参数估计|参数估计]] -> [[00-Wiki/Concepts/假设检验|假设检验]]。
-- 优化路线：[[00-Wiki/Concepts/线性规划几何|线性规划几何]] -> [[00-Wiki/Concepts/单纯形法|单纯形法]] -> [[00-Wiki/Concepts/对偶理论|对偶理论]] -> [[00-Wiki/Concepts/梯度下降|梯度下降]]。
+- 概率统计路线：[[00-Wiki/Concepts/概率分布|概率分布]] -> [[00-Wiki/Concepts/三大抽样分布|三大抽样分布]] -> [[00-Wiki/Concepts/充分统计量|充分统计量]] -> [[00-Wiki/Concepts/参数估计|参数估计]] -> [[00-Wiki/Concepts/假设检验|假设检验]]。
+- 优化路线：[[00-Wiki/Concepts/线性规划几何|线性规划几何]] -> [[00-Wiki/Concepts/单纯形法|单纯形法]] -> [[00-Wiki/Concepts/对偶理论|对偶理论]] -> [[00-Wiki/Concepts/梯度下降|梯度下降]] -> [[00-Wiki/Concepts/二阶优化|二阶优化]]。
 
 ## 高频易忘概念
 
@@ -32,10 +32,12 @@
 - [[00-Wiki/Concepts/条件分布|条件分布]]
 - [[00-Wiki/Concepts/卷积公式|卷积公式]]
 - [[00-Wiki/Concepts/三大抽样分布|三大抽样分布]]
+- [[00-Wiki/Concepts/充分统计量|充分统计量]]
 - [[00-Wiki/Concepts/最大似然估计|最大似然估计]]
 - [[00-Wiki/Concepts/置信区间|置信区间]]
 - [[00-Wiki/Concepts/KKT条件|KKT 条件]]
 - [[00-Wiki/Concepts/灵敏度分析|灵敏度分析]]
+- [[00-Wiki/Concepts/二阶优化|二阶优化]]
 - [[00-Wiki/Concepts/拓扑排序|拓扑排序]]
 - [[00-Wiki/Concepts/支持向量机|支持向量机]]
 - [[00-Wiki/Concepts/关联规则|关联规则]]

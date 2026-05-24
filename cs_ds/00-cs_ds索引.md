@@ -18,6 +18,7 @@
 - [[cs_ds/数据库/00-数据库索引|数据库]]
 - [[cs_ds/人工智能导论/2knowledge and search|Knowledge and Search]]
 - [[cs_ds/数科导/2.数据获取与爬虫|数据获取与爬虫]]
+- [[cs_ds/数科导/4.数据可视化|数据可视化]]
 
 ## 资料清单
 
@@ -37,6 +38,7 @@
 - [[00-Wiki/Concepts/数据库系统架构|数据库系统架构]]
 - [[00-Wiki/Concepts/知识表示|知识表示]]
 - [[00-Wiki/Concepts/探索性数据分析|探索性数据分析]]
+- [[00-Wiki/Concepts/数据可视化|数据可视化]]
 - [[00-Wiki/Concepts/分类模型|分类模型]]
 
 ## 复习抓手

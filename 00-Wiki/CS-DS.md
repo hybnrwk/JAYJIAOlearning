@@ -30,7 +30,7 @@
 - 算法图谱：[[00-Wiki/Concepts/BFS与DFS|BFS 与 DFS]]、[[00-Wiki/Concepts/最短路|最短路]]、[[00-Wiki/Concepts/最小生成树|最小生成树]]、[[00-Wiki/Concepts/拓扑排序|拓扑排序]]。
 - 数据库：[[00-Wiki/Concepts/数据库系统架构|数据库系统架构]]、[[00-Wiki/Concepts/E-R模型|E-R 模型]]、[[00-Wiki/Concepts/关系模型|关系模型]]、[[00-Wiki/Concepts/数据完整性|数据完整性]]。
 - AI 知识表示：[[00-Wiki/Concepts/知识表示|知识表示]]、[[00-Wiki/Concepts/谓词逻辑|谓词逻辑]]、[[00-Wiki/Concepts/产生式系统|产生式系统]]、[[00-Wiki/Concepts/语义网络|语义网络]]、[[00-Wiki/Concepts/状态空间搜索|状态空间搜索]]。
-- 数据挖掘：[[00-Wiki/Concepts/探索性数据分析|探索性数据分析]]、[[00-Wiki/Concepts/回归模型|回归模型]]、[[00-Wiki/Concepts/分类模型|分类模型]]、[[00-Wiki/Concepts/聚类分析|聚类分析]]、[[00-Wiki/Concepts/文本挖掘|文本挖掘]]、[[00-Wiki/Concepts/推荐系统|推荐系统]]。
+- 数据挖掘：[[00-Wiki/Concepts/探索性数据分析|探索性数据分析]]、[[00-Wiki/Concepts/数据可视化|数据可视化]]、[[00-Wiki/Concepts/回归模型|回归模型]]、[[00-Wiki/Concepts/分类模型|分类模型]]、[[00-Wiki/Concepts/聚类分析|聚类分析]]、[[00-Wiki/Concepts/文本挖掘|文本挖掘]]、[[00-Wiki/Concepts/推荐系统|推荐系统]]。
 
 ## 维护提示
 

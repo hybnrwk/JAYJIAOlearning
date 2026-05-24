@@ -64,6 +64,7 @@
 - [[00-Wiki/Concepts/语义网络|语义网络]]
 - [[00-Wiki/Concepts/状态空间搜索|状态空间搜索]]
 - [[00-Wiki/Concepts/探索性数据分析|探索性数据分析]]
+- [[00-Wiki/Concepts/数据可视化|数据可视化]]
 - [[00-Wiki/Concepts/回归模型|回归模型]]
 - [[00-Wiki/Concepts/分类模型|分类模型]]
 - [[00-Wiki/Concepts/决策树|决策树]]
@@ -90,12 +91,14 @@
 - [[00-Wiki/Concepts/卷积公式|卷积公式]]
 - [[00-Wiki/Concepts/分布特征数|分布特征数]]
 - [[00-Wiki/Concepts/三大抽样分布|三大抽样分布]]
+- [[00-Wiki/Concepts/充分统计量|充分统计量]]
 - [[00-Wiki/Concepts/最大似然估计|最大似然估计]]
 - [[00-Wiki/Concepts/置信区间|置信区间]]
 - [[00-Wiki/Concepts/方差检验|方差检验]]
 - [[00-Wiki/Concepts/线性规划几何|线性规划几何]]
 - [[00-Wiki/Concepts/灵敏度分析|灵敏度分析]]
 - [[00-Wiki/Concepts/一阶优化|一阶优化]]
+- [[00-Wiki/Concepts/二阶优化|二阶优化]]
 
 ## 使用原则
 

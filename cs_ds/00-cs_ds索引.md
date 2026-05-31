@@ -7,7 +7,7 @@
 - 入门与工具：[[cs_ds/cs_introduction/00-cs_introduction索引|CS 入门与衔接]] -> [[cs_ds/cs_self_learning/00-cs_self_learning索引|CS 自学资料库]] -> [[cs_ds/python/00-python索引|Python]]。
 - 编程与实现：[[cs_ds/程序设计C++/00-程序设计C++索引|C++ 程序设计]] -> [[cs_ds/数据结构与算法/00-数据结构与算法索引|数据结构与算法]]。
 - 理论与系统：[[cs_ds/Discrete-Mathematics/00-Discrete-Mathematics索引|离散数学]] -> [[cs_ds/数据库/00-数据库索引|数据库]]。
-- 智能与数据：[[cs_ds/人工智能导论/00-人工智能导论索引|人工智能导论]] -> [[cs_ds/数科导/00-数科导索引|数科导]] -> [[cs_ds/数据挖掘/00-数据挖掘索引|数据挖掘]]。
+- 智能与数据：[[00-人工智能导论索引|人工智能导论]] -> [[cs_ds/数科导/00-数科导索引|数科导]] -> [[cs_ds/数据挖掘/00-数据挖掘索引|数据挖掘]]。
 
 ## 核心笔记
 
@@ -16,7 +16,7 @@
 - [[cs_ds/Discrete-Mathematics/离散数学复习重点|离散数学复习重点]]
 - [[cs_ds/数据结构与算法/00-数据结构与算法索引|数据结构与算法]]
 - [[cs_ds/数据库/00-数据库索引|数据库]]
-- [[cs_ds/人工智能导论/2knowledge and search|Knowledge and Search]]
+- [[2knowledge and search|Knowledge and Search]]
 - [[cs_ds/数科导/2.数据获取与爬虫|数据获取与爬虫]]
 - [[cs_ds/数科导/4.数据可视化|数据可视化]]
 

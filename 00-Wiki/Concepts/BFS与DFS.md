@@ -13,7 +13,7 @@ BFS 按层扩展，DFS 沿路径深入，它们是图、树、状态空间搜索
 ## 关联课程
 
 - [[cs_ds/数据结构与算法/00-数据结构与算法索引|数据结构与算法]]
-- [[cs_ds/人工智能导论/00-人工智能导论索引|人工智能导论]]
+- [[00-人工智能导论索引|人工智能导论]]
 
 ## 常见题型
 
@@ -25,4 +25,4 @@ BFS 按层扩展，DFS 沿路径深入，它们是图、树、状态空间搜索
 
 - [[cs_ds/数据结构与算法/数据结构与算法笔记/9.图结构与算法|图结构与算法]]
 - [[cs_ds/数据结构与算法/算法设计课程书籍笔记/Chapter 3 Graphs|算法设计：Graphs]]
-- [[cs_ds/人工智能导论/2knowledge and search|AI：Knowledge and Search]]
+- [[2knowledge and search|AI：Knowledge and Search]]

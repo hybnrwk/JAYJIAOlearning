@@ -8194,7 +8194,7 @@ K-c(S,T)
 = \sum_{i\in A}a_i  
 +  
 \sum_{i\in B}b_i
-
+-
 \sum_{(i,j)\text{ 被分开}}p_{ij}  
 $$
 
@@ -8924,7 +8924,7 @@ $$
 \sum_{i\in R}w_i  
 +  
 \sum_{i<j,\ i,j\in R}g_{ij}
-
+>
 |R|M  
 $$
 
@@ -9190,7 +9190,7 @@ $$
 \sum_{(x,y)\in M}c_p(x,y)
 
 = \sum_{(x,y)\in M}c(x,y)
-
+-
 \sum_{x\in X}p(x)  
 +  
 \sum_{y\in Y}p(y)  
@@ -9318,12 +9318,12 @@ $$
 
 目标：
 
-## $$  
+ $$  
 \max  
 \sum_{i\in A}a_i  
 +  
 \sum_{j\in B}b_j
-
+-
 \sum_{(i,j)\text{ 被分开}}p_{ij}  
 $$
 

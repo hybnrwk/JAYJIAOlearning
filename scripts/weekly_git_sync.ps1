@@ -7,6 +7,7 @@ param(
     [switch]$LogonFallback,
     [string]$ScheduledDay = "Sunday",
     [int]$ScheduledHour = 18,
+    [int]$MaxPathChars = 260,
     [int]$NetworkRetries = 5,
     [int]$NetworkRetryDelaySeconds = 30,
     [switch]$DryRun
@@ -148,6 +149,42 @@ function Test-GitQuiet {
     return $result.ExitCode
 }
 
+function Test-LongPath {
+    param([string]$FullPath)
+    return ($MaxPathChars -gt 0 -and $FullPath.Length -ge $MaxPathChars)
+}
+
+function Test-SkippableGitPathError {
+    param([string]$Message)
+    return ($Message -like "*Filename too long*" -or $Message -like "*unable to index file*")
+}
+
+function Add-GitPath {
+    param([string]$Path)
+
+    if ($DryRun) {
+        Write-Log ("[dry-run] git add -- {0}" -f $Path)
+        return $true
+    }
+
+    $result = Invoke-GitRaw add -- $Path
+    foreach ($line in $result.Output) {
+        Write-Log ("git: {0}" -f $line)
+    }
+
+    if ($result.ExitCode -eq 0) {
+        return $true
+    }
+
+    $failureText = ($result.Output -join " ")
+    if (Test-SkippableGitPathError $failureText) {
+        Write-Log ("Skipped path after git add failure: {0}; {1}" -f $Path, $failureText)
+        return $false
+    }
+
+    throw ("git add -- {0} failed with exit code {1}" -f $Path, $result.ExitCode)
+}
+
 function Get-RepoPath {
     param([string]$Path)
     return (Join-Path $RepoRoot ($Path -replace "/", [System.IO.Path]::DirectorySeparatorChar))
@@ -261,6 +298,10 @@ try {
 
     foreach ($path in $candidates) {
         $fullPath = Get-RepoPath $path
+        if (Test-LongPath $fullPath) {
+            $skipped.Add(("{0} ({1} chars path)" -f $path, $fullPath.Length))
+            continue
+        }
         if (Test-Path -LiteralPath $fullPath -PathType Leaf) {
             $file = Get-Item -LiteralPath $fullPath
             if ($file.Length -ge $MaxBytes) {
@@ -285,11 +326,17 @@ try {
     }
 
     foreach ($path in $selected) {
-        Invoke-Git add -- $path | Out-Null
+        Add-GitPath $path | Out-Null
     }
 
     $staged = @(Get-GitOutput @("-c", "core.quotePath=false", "diff", "--cached", "--name-only"))
     foreach ($path in $staged) {
+        $fullPath = Get-RepoPath $path
+        if (Test-LongPath $fullPath) {
+            Write-Log ("Unstaging long path: {0} ({1} chars path)" -f $path, $fullPath.Length)
+            Invoke-Git reset -- $path | Out-Null
+            continue
+        }
         $blobResult = Invoke-GitRaw cat-file -s ":$path"
         if ($blobResult.ExitCode -ne 0 -or $blobResult.Output.Count -eq 0) {
             continue

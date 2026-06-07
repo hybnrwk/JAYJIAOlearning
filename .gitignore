@@ -13,7 +13,6 @@ __MACOSX/
 *.rar
 *.exe
 *.cpp
-*.py
 *.ico
 CNAME
 *.doc

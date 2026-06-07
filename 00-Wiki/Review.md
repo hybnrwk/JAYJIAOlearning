@@ -7,7 +7,8 @@
 - [[cs_ds/00-cs_ds索引|CS/DS 总索引]]
 - [[cs_ds/数据结构与算法/00-数据结构与算法索引|数据结构与算法]]
 - [[cs_ds/数据库/00-数据库索引|数据库]]
-- [[00-人工智能导论索引|人工智能导论]]
+- [[cs_ds/机器学习/00-机器学习索引|机器学习]]
+- [[cs_ds/人工智能/00-人工智能导论索引|人工智能导论]]
 - [[cs_ds/数据挖掘/00-数据挖掘索引|数据挖掘]]
 - [[数统/00-数统索引|数学统计总索引]]
 - [[数统/线性代数/00-线性代数索引|线性代数]]
@@ -20,8 +21,9 @@
 - 算法路线：[[00-Wiki/Concepts/复杂度分析|复杂度分析]] -> [[00-Wiki/Concepts/数据结构|数据结构]] -> [[00-Wiki/Concepts/图算法|图算法]] -> [[00-Wiki/Concepts/贪心算法|贪心算法]] / [[00-Wiki/Concepts/分治算法|分治算法]]。
 - 数据库路线：[[00-Wiki/Concepts/E-R模型|E-R 模型]] -> [[00-Wiki/Concepts/关系模型|关系模型]] -> [[00-Wiki/Concepts/关系代数|关系代数]] -> [[00-Wiki/Concepts/数据完整性|数据完整性]]。
 - AI 路线：[[00-Wiki/Concepts/知识表示|知识表示]] -> [[00-Wiki/Concepts/状态空间搜索|状态空间搜索]] -> [[00-Wiki/Concepts/确定性推理|确定性推理]] -> [[00-Wiki/Concepts/不确定性推理|不确定性推理]]。
+- 机器学习路线：[[00-Wiki/Concepts/机器学习基础|机器学习基础]] -> [[00-Wiki/Concepts/回归模型|回归模型]] -> [[00-Wiki/Concepts/逻辑回归|逻辑回归]] -> [[00-Wiki/Concepts/神经网络|神经网络]] -> [[00-Wiki/Concepts/偏差方差|偏差方差]] -> [[00-Wiki/Concepts/决策树|决策树]]。
 - 概率统计路线：[[00-Wiki/Concepts/概率分布|概率分布]] -> [[00-Wiki/Concepts/三大抽样分布|三大抽样分布]] -> [[00-Wiki/Concepts/充分统计量|充分统计量]] -> [[00-Wiki/Concepts/参数估计|参数估计]] -> [[00-Wiki/Concepts/假设检验|假设检验]]。
-- 优化路线：[[00-Wiki/Concepts/线性规划几何|线性规划几何]] -> [[00-Wiki/Concepts/单纯形法|单纯形法]] -> [[00-Wiki/Concepts/对偶理论|对偶理论]] -> [[00-Wiki/Concepts/梯度下降|梯度下降]] -> [[00-Wiki/Concepts/二阶优化|二阶优化]]。
+- 优化路线：[[00-Wiki/Concepts/线性规划几何|线性规划几何]] -> [[00-Wiki/Concepts/单纯形法|单纯形法]] -> [[00-Wiki/Concepts/对偶理论|对偶理论]] -> [[00-Wiki/Concepts/梯度下降|梯度下降]] -> [[00-Wiki/Concepts/二阶优化|二阶优化]] -> [[00-Wiki/Concepts/内点法|内点法]]。
 
 ## 高频易忘概念
 
@@ -35,9 +37,15 @@
 - [[00-Wiki/Concepts/充分统计量|充分统计量]]
 - [[00-Wiki/Concepts/最大似然估计|最大似然估计]]
 - [[00-Wiki/Concepts/置信区间|置信区间]]
+- [[00-Wiki/Concepts/SQL查询分析|SQL 查询分析]]
+- [[00-Wiki/Concepts/机器学习基础|机器学习基础]]
+- [[00-Wiki/Concepts/逻辑回归|逻辑回归]]
+- [[00-Wiki/Concepts/神经网络|神经网络]]
+- [[00-Wiki/Concepts/偏差方差|偏差方差]]
 - [[00-Wiki/Concepts/KKT条件|KKT 条件]]
 - [[00-Wiki/Concepts/灵敏度分析|灵敏度分析]]
 - [[00-Wiki/Concepts/二阶优化|二阶优化]]
+- [[00-Wiki/Concepts/内点法|内点法]]
 - [[00-Wiki/Concepts/拓扑排序|拓扑排序]]
 - [[00-Wiki/Concepts/支持向量机|支持向量机]]
 - [[00-Wiki/Concepts/关联规则|关联规则]]

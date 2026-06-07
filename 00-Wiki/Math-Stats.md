@@ -18,14 +18,14 @@
 - 线性代数：[[00-Wiki/Concepts/线性方程组|线性方程组]] -> [[00-Wiki/Concepts/向量空间|向量空间]] -> [[00-Wiki/Concepts/正交投影|正交投影]] -> [[00-Wiki/Concepts/奇异值分解|奇异值分解]]。
 - 概率论：[[00-Wiki/Concepts/概率分布|概率分布]] -> [[00-Wiki/Concepts/联合分布与边际分布|联合分布与边际分布]] -> [[00-Wiki/Concepts/条件分布|条件分布]] -> [[00-Wiki/Concepts/大数定律与中心极限定理|大数定律与中心极限定理]]。
 - 数理统计：[[00-Wiki/Concepts/三大抽样分布|三大抽样分布]] -> [[00-Wiki/Concepts/充分统计量|充分统计量]] -> [[00-Wiki/Concepts/最大似然估计|最大似然估计]] -> [[00-Wiki/Concepts/置信区间|置信区间]] -> [[00-Wiki/Concepts/假设检验|假设检验]]。
-- 优化：[[00-Wiki/Concepts/线性规划几何|线性规划几何]] -> [[00-Wiki/Concepts/单纯形法|单纯形法]] -> [[00-Wiki/Concepts/对偶理论|对偶理论]] -> [[00-Wiki/Concepts/KKT条件|KKT 条件]] -> [[00-Wiki/Concepts/一阶优化|一阶优化]] -> [[00-Wiki/Concepts/二阶优化|二阶优化]]。
+- 优化：[[00-Wiki/Concepts/线性规划几何|线性规划几何]] -> [[00-Wiki/Concepts/单纯形法|单纯形法]] -> [[00-Wiki/Concepts/对偶理论|对偶理论]] -> [[00-Wiki/Concepts/KKT条件|KKT 条件]] -> [[00-Wiki/Concepts/一阶优化|一阶优化]] -> [[00-Wiki/Concepts/二阶优化|二阶优化]] -> [[00-Wiki/Concepts/内点法|内点法]]。
 
 ## 概念簇
 
 - 离散结构：[[00-Wiki/Concepts/集合|集合]]、[[00-Wiki/Concepts/关系|关系]]、[[00-Wiki/Concepts/函数|函数]]、[[00-Wiki/Concepts/命题逻辑|命题逻辑]]。
 - 线性代数：[[00-Wiki/Concepts/行列式|行列式]]、[[00-Wiki/Concepts/四个基本子空间|四个基本子空间]]、[[00-Wiki/Concepts/特征值与特征向量|特征值与特征向量]]、[[00-Wiki/Concepts/线性变换|线性变换]]。
 - 概率统计：[[00-Wiki/Concepts/卷积公式|卷积公式]]、[[00-Wiki/Concepts/分布特征数|分布特征数]]、[[00-Wiki/Concepts/充分统计量|充分统计量]]、[[00-Wiki/Concepts/参数估计|参数估计]]、[[00-Wiki/Concepts/方差检验|方差检验]]、[[00-Wiki/Concepts/方差分析与回归|方差分析与回归]]。
-- 优化算法：[[00-Wiki/Concepts/凸集合与凸函数|凸集合与凸函数]]、[[00-Wiki/Concepts/梯度下降|梯度下降]]、[[00-Wiki/Concepts/一阶优化|一阶优化]]、[[00-Wiki/Concepts/二阶优化|二阶优化]]、[[00-Wiki/Concepts/灵敏度分析|灵敏度分析]]、[[00-Wiki/Concepts/网络流|网络流]]。
+- 优化算法：[[00-Wiki/Concepts/凸集合与凸函数|凸集合与凸函数]]、[[00-Wiki/Concepts/梯度下降|梯度下降]]、[[00-Wiki/Concepts/一阶优化|一阶优化]]、[[00-Wiki/Concepts/二阶优化|二阶优化]]、[[00-Wiki/Concepts/内点法|内点法]]、[[00-Wiki/Concepts/灵敏度分析|灵敏度分析]]、[[00-Wiki/Concepts/网络流|网络流]]。
 
 ## 维护提示
 

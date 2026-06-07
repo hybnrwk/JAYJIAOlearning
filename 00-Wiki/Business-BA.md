@@ -17,6 +17,10 @@
 
 ## 相关概念
 
+- [[00-Wiki/Concepts/SQL查询分析|SQL 查询分析]]
+- [[00-Wiki/Concepts/机器学习基础|机器学习基础]]
+- [[00-Wiki/Concepts/回归模型|回归模型]]
+- [[00-Wiki/Concepts/分类模型|分类模型]]
 - [[00-Wiki/Concepts/梯度下降|梯度下降]]
 - [[00-Wiki/Concepts/假设检验|假设检验]]
 

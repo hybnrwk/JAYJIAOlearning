@@ -19,7 +19,8 @@
 - [[cs_ds/数据结构与算法/00-数据结构与算法索引|数据结构与算法]]
 - [[cs_ds/Discrete-Mathematics/00-Discrete-Mathematics索引|离散数学]]
 - [[cs_ds/数据库/00-数据库索引|数据库]]
-- [[00-人工智能导论索引|人工智能导论]]
+- [[cs_ds/机器学习/00-机器学习索引|机器学习]]
+- [[cs_ds/人工智能/00-人工智能导论索引|人工智能导论]]
 - [[cs_ds/数科导/00-数科导索引|数科导]]
 - [[cs_ds/数据挖掘/00-数据挖掘索引|数据挖掘]]
 
@@ -58,6 +59,7 @@
 - [[00-Wiki/Concepts/关系模型|关系模型]]
 - [[00-Wiki/Concepts/关系代数|关系代数]]
 - [[00-Wiki/Concepts/数据完整性|数据完整性]]
+- [[00-Wiki/Concepts/SQL查询分析|SQL 查询分析]]
 - [[00-Wiki/Concepts/知识表示|知识表示]]
 - [[00-Wiki/Concepts/谓词逻辑|谓词逻辑]]
 - [[00-Wiki/Concepts/产生式系统|产生式系统]]
@@ -65,8 +67,12 @@
 - [[00-Wiki/Concepts/状态空间搜索|状态空间搜索]]
 - [[00-Wiki/Concepts/探索性数据分析|探索性数据分析]]
 - [[00-Wiki/Concepts/数据可视化|数据可视化]]
+- [[00-Wiki/Concepts/机器学习基础|机器学习基础]]
 - [[00-Wiki/Concepts/回归模型|回归模型]]
 - [[00-Wiki/Concepts/分类模型|分类模型]]
+- [[00-Wiki/Concepts/逻辑回归|逻辑回归]]
+- [[00-Wiki/Concepts/神经网络|神经网络]]
+- [[00-Wiki/Concepts/偏差方差|偏差方差]]
 - [[00-Wiki/Concepts/决策树|决策树]]
 - [[00-Wiki/Concepts/集成学习|集成学习]]
 - [[00-Wiki/Concepts/支持向量机|支持向量机]]
@@ -99,6 +105,7 @@
 - [[00-Wiki/Concepts/灵敏度分析|灵敏度分析]]
 - [[00-Wiki/Concepts/一阶优化|一阶优化]]
 - [[00-Wiki/Concepts/二阶优化|二阶优化]]
+- [[00-Wiki/Concepts/内点法|内点法]]
 
 ## 使用原则
 

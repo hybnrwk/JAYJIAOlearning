@@ -1,0 +1,936 @@
+1
+00:00:00,980 --> 00:00:03,315
+In the last video, you saw
+
+2
+00:00:03,315 --> 00:00:06,855
+an illustration of the
+k-means algorithm running.
+
+3
+00:00:06,855 --> 00:00:09,420
+Now let's write out the
+K-means algorithm in
+
+4
+00:00:09,420 --> 00:00:10,770
+detail so that you'd
+
+5
+00:00:10,770 --> 00:00:12,480
+be able to implement
+it for yourself.
+
+6
+00:00:12,480 --> 00:00:14,700
+Here's the K-means algorithm.
+
+7
+00:00:14,700 --> 00:00:17,010
+The first step is to
+
+8
+00:00:17,010 --> 00:00:20,190
+randomly initialize
+K cluster centroids,
+
+9
+00:00:20,190 --> 00:00:21,480
+Mu 1 Mu 2,
+
+10
+00:00:21,480 --> 00:00:25,890
+through Mu k. In the
+example that we had,
+
+11
+00:00:25,890 --> 00:00:28,080
+this corresponded
+to when we randomly
+
+12
+00:00:28,080 --> 00:00:30,270
+chose a location for
+
+13
+00:00:30,270 --> 00:00:33,645
+the red cross and for
+
+14
+00:00:33,645 --> 00:00:35,780
+the blue cross corresponding
+
+15
+00:00:35,780 --> 00:00:38,660
+to the two cluster centroids.
+
+16
+00:00:38,660 --> 00:00:41,630
+In our example, K
+was equal to two.
+
+17
+00:00:41,630 --> 00:00:45,005
+If the red cross was cluster
+
+18
+00:00:45,005 --> 00:00:48,785
+centroid one and the blue cross
+was cluster centroid two.
+
+19
+00:00:48,785 --> 00:00:51,125
+These are just two indices
+
+20
+00:00:51,125 --> 00:00:53,980
+to denote the first and
+the second cluster.
+
+21
+00:00:53,980 --> 00:00:58,795
+Then the red cross would
+be the location of Mu 1
+
+22
+00:00:58,795 --> 00:01:04,520
+and the blue cross would
+be the location of Mu 2.
+
+23
+00:01:04,520 --> 00:01:08,860
+Just to be clear, Mu 1 and Mu 2
+
+24
+00:01:08,860 --> 00:01:10,580
+are vectors which have
+
+25
+00:01:10,580 --> 00:01:13,325
+the same dimension as
+your training examples,
+
+26
+00:01:13,325 --> 00:01:17,270
+X1 through say X30,
+in our example.
+
+27
+00:01:17,270 --> 00:01:20,510
+All of these are lists of
+two numbers or they're
+
+28
+00:01:20,510 --> 00:01:23,555
+two-dimensional
+vectors or whatever
+
+29
+00:01:23,555 --> 00:01:26,345
+dimension the training data had.
+
+30
+00:01:26,345 --> 00:01:30,260
+We had n equals two
+features for each of
+
+31
+00:01:30,260 --> 00:01:32,960
+the training examples
+then Mu 1 and Mu
+
+32
+00:01:32,960 --> 00:01:36,350
+2 will also be
+two-dimensional vectors,
+
+33
+00:01:36,350 --> 00:01:38,560
+meaning vectors with
+two numbers in them.
+
+34
+00:01:38,560 --> 00:01:43,215
+Having randomly initialized
+the K cluster centroids,
+
+35
+00:01:43,215 --> 00:01:45,830
+K-means will then
+repeatedly carry
+
+36
+00:01:45,830 --> 00:01:48,815
+out the two steps that you
+saw in the last video.
+
+37
+00:01:48,815 --> 00:01:51,710
+The first step is to
+assign points to clusters,
+
+38
+00:01:51,710 --> 00:01:54,635
+centroids, meaning color,
+each of the points,
+
+39
+00:01:54,635 --> 00:01:57,050
+either red or blue,
+
+40
+00:01:57,050 --> 00:02:00,935
+corresponding to assigning
+them to cluster centroids one
+
+41
+00:02:00,935 --> 00:02:05,385
+or two when K is equal to two.
+
+42
+00:02:05,385 --> 00:02:08,085
+Rinse it out enough.
+
+43
+00:02:08,085 --> 00:02:10,220
+That means that we're going to,
+
+44
+00:02:10,220 --> 00:02:14,419
+for I equals one through m
+for all m training examples,
+
+45
+00:02:14,419 --> 00:02:17,930
+we're going to set c^i to
+be equal to the index,
+
+46
+00:02:17,930 --> 00:02:21,020
+which can be anything
+from one to K of
+
+47
+00:02:21,020 --> 00:02:25,760
+the cluster centroid closest
+to the training example x^i.
+
+48
+00:02:25,760 --> 00:02:27,830
+Mathematically you
+can write this out
+
+49
+00:02:27,830 --> 00:02:29,840
+as computing the distance
+
+50
+00:02:29,840 --> 00:02:33,920
+between x^i and Mu k. In math,
+
+51
+00:02:33,920 --> 00:02:35,570
+the distance between two points
+
+52
+00:02:35,570 --> 00:02:38,210
+is often written like this.
+
+53
+00:02:38,210 --> 00:02:41,845
+It is also called the L2 norm.
+
+54
+00:02:41,845 --> 00:02:44,270
+What you want to
+find is the value of
+
+55
+00:02:44,270 --> 00:02:48,245
+k that minimizes this,
+
+56
+00:02:48,245 --> 00:02:52,895
+because that corresponds to
+the cluster centroid Mu k
+
+57
+00:02:52,895 --> 00:02:58,375
+that is closest to the
+training example x^i.
+
+58
+00:02:58,375 --> 00:03:01,910
+Then the value of k
+that minimizes this
+
+59
+00:03:01,910 --> 00:03:06,120
+is what gets set to c^i.
+
+60
+00:03:06,400 --> 00:03:09,305
+When you implement
+this algorithm,
+
+61
+00:03:09,305 --> 00:03:11,060
+you find that it's
+actually a little
+
+62
+00:03:11,060 --> 00:03:13,234
+bit more convenient to minimize
+
+63
+00:03:13,234 --> 00:03:17,720
+the squared distance because
+the cluster centroid with
+
+64
+00:03:17,720 --> 00:03:20,840
+the smallest square
+distance should be the
+
+65
+00:03:20,840 --> 00:03:25,165
+same as the cluster centroid
+with the smallest distance.
+
+66
+00:03:25,165 --> 00:03:26,915
+When you look at
+
+67
+00:03:26,915 --> 00:03:30,020
+this week's optional
+labs and practice labs,
+
+68
+00:03:30,020 --> 00:03:33,380
+you see how to implement
+this in code for yourself.
+
+69
+00:03:33,380 --> 00:03:36,020
+As a concrete example,
+
+70
+00:03:36,020 --> 00:03:38,780
+this point up here is closer to
+
+71
+00:03:38,780 --> 00:03:41,645
+the red or two
+cluster centroids 1.
+
+72
+00:03:41,645 --> 00:03:44,420
+If this was training
+example x^1,
+
+73
+00:03:44,420 --> 00:03:49,155
+we will set c^1
+to be equal to 1.
+
+74
+00:03:49,155 --> 00:03:50,945
+Whereas this point over here,
+
+75
+00:03:50,945 --> 00:03:53,195
+if this was the 12th
+training example,
+
+76
+00:03:53,195 --> 00:03:54,320
+this is closer to
+
+77
+00:03:54,320 --> 00:03:57,005
+the second cluster
+centroids the blue one.
+
+78
+00:03:57,005 --> 00:03:59,720
+We will set this,
+
+79
+00:03:59,720 --> 00:04:01,910
+the corresponding
+cluster assignment
+
+80
+00:04:01,910 --> 00:04:03,830
+variable to two because it's
+
+81
+00:04:03,830 --> 00:04:06,290
+closer to cluster centroid 2.
+
+82
+00:04:06,290 --> 00:04:10,325
+That's the first step of
+the K-means algorithm,
+
+83
+00:04:10,325 --> 00:04:12,515
+assign points to
+cluster centroids.
+
+84
+00:04:12,515 --> 00:04:17,155
+The second step is to move
+the cluster centroids.
+
+85
+00:04:17,155 --> 00:04:22,880
+What that means is for lowercase
+k equals 1 to capital K,
+
+86
+00:04:22,880 --> 00:04:24,230
+the number of clusters.
+
+87
+00:04:24,230 --> 00:04:26,030
+We're going to set
+
+88
+00:04:26,030 --> 00:04:30,230
+the cluster centroid
+location to be updated to
+
+89
+00:04:30,230 --> 00:04:33,275
+be the average or the
+mean of the points
+
+90
+00:04:33,275 --> 00:04:36,500
+assigned to that
+cluster k. Concretely,
+
+91
+00:04:36,500 --> 00:04:38,090
+what that means is,
+we'll look at all
+
+92
+00:04:38,090 --> 00:04:39,995
+of these red points, say,
+
+93
+00:04:39,995 --> 00:04:41,840
+and look at their position on
+
+94
+00:04:41,840 --> 00:04:43,550
+the horizontal axis and look at
+
+95
+00:04:43,550 --> 00:04:45,935
+the value of the
+first feature x^1,
+
+96
+00:04:45,935 --> 00:04:47,950
+and average that out.
+
+97
+00:04:47,950 --> 00:04:52,125
+Compute the average value on
+the vertical axis as well.
+
+98
+00:04:52,125 --> 00:04:54,470
+After computing
+those two averages,
+
+99
+00:04:54,470 --> 00:04:56,570
+you find that the mean is here,
+
+100
+00:04:56,570 --> 00:04:59,785
+which is why Mu 1,
+
+101
+00:04:59,785 --> 00:05:02,345
+that is the location that
+the red cluster centroid
+
+102
+00:05:02,345 --> 00:05:05,765
+gets updated as follows.
+
+103
+00:05:05,765 --> 00:05:08,240
+Similarly, we will
+look at all of
+
+104
+00:05:08,240 --> 00:05:10,715
+the points that were
+colored blue, that is,
+
+105
+00:05:10,715 --> 00:05:15,080
+with c^i equals 2 and
+
+106
+00:05:15,080 --> 00:05:19,460
+computes the average of the
+value on the horizontal axis,
+
+107
+00:05:19,460 --> 00:05:21,830
+the average of their feature x1.
+
+108
+00:05:21,830 --> 00:05:24,215
+Compute the average
+of the feature x2.
+
+109
+00:05:24,215 --> 00:05:26,975
+Those two averages give you
+
+110
+00:05:26,975 --> 00:05:29,375
+the new location of the
+blue cluster centroid,
+
+111
+00:05:29,375 --> 00:05:32,260
+which therefore moves over here.
+
+112
+00:05:32,260 --> 00:05:35,460
+Just to write those out in math.
+
+113
+00:05:35,460 --> 00:05:39,020
+If the first cluster
+has assigned to
+
+114
+00:05:39,020 --> 00:05:46,430
+it training examples 1,5,6,10.
+
+115
+00:05:46,430 --> 00:05:48,310
+Just as an example.
+
+116
+00:05:48,310 --> 00:05:50,630
+Then what that means is you will
+
+117
+00:05:50,630 --> 00:05:54,305
+compute the average this way.
+
+118
+00:05:54,305 --> 00:05:56,780
+Notice that x^1, x^5, x^6,
+
+119
+00:05:56,780 --> 00:06:00,550
+and x^10 are training examples.
+
+120
+00:06:00,550 --> 00:06:02,370
+Four training examples,
+
+121
+00:06:02,370 --> 00:06:04,820
+so we divide by 4 and this gives
+
+122
+00:06:04,820 --> 00:06:07,880
+you the new location of Mu1,
+
+123
+00:06:07,880 --> 00:06:11,705
+the new cluster
+centroid for cluster 1.
+
+124
+00:06:11,705 --> 00:06:14,420
+To be clear, each
+of these x values
+
+125
+00:06:14,420 --> 00:06:17,575
+are vectors with two
+numbers in them,
+
+126
+00:06:17,575 --> 00:06:21,330
+or n numbers in them if
+you have n features,
+
+127
+00:06:21,330 --> 00:06:24,830
+and so Mu will also have
+two numbers in it or
+
+128
+00:06:24,830 --> 00:06:29,155
+n numbers in it if you have
+n features instead of two.
+
+129
+00:06:29,155 --> 00:06:32,260
+Now, there is one corner
+case of this algorithm,
+
+130
+00:06:32,260 --> 00:06:34,870
+which is what happens if
+
+131
+00:06:34,870 --> 00:06:38,680
+a cluster has zero training
+examples assigned to it.
+
+132
+00:06:38,680 --> 00:06:41,740
+In that case, the
+second step, Mu k,
+
+133
+00:06:41,740 --> 00:06:45,115
+would be trying to compute
+the average of zero points.
+
+134
+00:06:45,115 --> 00:06:46,854
+That's not well-defined.
+
+135
+00:06:46,854 --> 00:06:48,430
+If that ever happens,
+
+136
+00:06:48,430 --> 00:06:50,140
+the most common
+thing to do is to
+
+137
+00:06:50,140 --> 00:06:52,135
+just eliminate that cluster.
+
+138
+00:06:52,135 --> 00:06:55,540
+You end up with K
+minus 1 clusters.
+
+139
+00:06:55,540 --> 00:06:57,040
+Or if you really, really need
+
+140
+00:06:57,040 --> 00:06:59,995
+K clusters an alternative
+would be to just
+
+141
+00:06:59,995 --> 00:07:03,490
+randomly reinitialize
+that cluster centroid
+
+142
+00:07:03,490 --> 00:07:04,930
+and hope that it
+gets assigned at
+
+143
+00:07:04,930 --> 00:07:06,820
+least some points
+next time round.
+
+144
+00:07:06,820 --> 00:07:08,260
+But it's actually more
+
+145
+00:07:08,260 --> 00:07:10,090
+common when running
+K-means to just
+
+146
+00:07:10,090 --> 00:07:14,005
+eliminate a cluster if no
+points are assigned to it.
+
+147
+00:07:14,005 --> 00:07:16,670
+Even though I've
+mainly been describing
+
+148
+00:07:16,670 --> 00:07:19,490
+K-means for clusters
+that are well separated.
+
+149
+00:07:19,490 --> 00:07:21,575
+Clusters that may
+look like this.
+
+150
+00:07:21,575 --> 00:07:25,310
+Where if you asked her
+to find three clusters,
+
+151
+00:07:25,310 --> 00:07:29,035
+hopefully they will find these
+three distinct clusters.
+
+152
+00:07:29,035 --> 00:07:32,690
+It turns out that K-means is
+also frequently applied to
+
+153
+00:07:32,690 --> 00:07:36,575
+data sets where the clusters
+are not that well separated.
+
+154
+00:07:36,575 --> 00:07:38,870
+For example, if you are
+
+155
+00:07:38,870 --> 00:07:42,830
+a designer and manufacturer
+of cool t-shirts,
+
+156
+00:07:42,830 --> 00:07:44,540
+and you want to decide,
+
+157
+00:07:44,540 --> 00:07:47,675
+how do I size my small,
+
+158
+00:07:47,675 --> 00:07:49,935
+medium, and large t-shirts.
+
+159
+00:07:49,935 --> 00:07:51,330
+How small should a small be,
+
+160
+00:07:51,330 --> 00:07:52,550
+how large should a large be,
+
+161
+00:07:52,550 --> 00:07:55,915
+and what should a medium-size
+t-shirt really be?
+
+162
+00:07:55,915 --> 00:07:57,650
+One thing you might
+do is collect
+
+163
+00:07:57,650 --> 00:07:59,780
+data of people likely to
+
+164
+00:07:59,780 --> 00:08:03,760
+buy your t-shirts based on
+their heights and weights.
+
+165
+00:08:03,760 --> 00:08:07,670
+You find that the height and
+weight of people tend to
+
+166
+00:08:07,670 --> 00:08:09,980
+vary continuously
+on the spectrum
+
+167
+00:08:09,980 --> 00:08:12,535
+without some very
+clear clusters.
+
+168
+00:08:12,535 --> 00:08:15,500
+Nonetheless, if you
+were to run K-means
+
+169
+00:08:15,500 --> 00:08:19,070
+with say, three
+clusters centroids,
+
+170
+00:08:19,070 --> 00:08:21,260
+you might find
+that K-means would
+
+171
+00:08:21,260 --> 00:08:23,555
+group these points
+into one cluster,
+
+172
+00:08:23,555 --> 00:08:25,895
+these points into
+a second cluster,
+
+173
+00:08:25,895 --> 00:08:29,540
+and these points into
+a third cluster.
+
+174
+00:08:29,540 --> 00:08:32,115
+If you're trying to decide
+
+175
+00:08:32,115 --> 00:08:34,870
+exactly how to size your small,
+
+176
+00:08:34,870 --> 00:08:36,655
+medium, and large t-shirts,
+
+177
+00:08:36,655 --> 00:08:40,330
+you might then choose
+the dimensions of
+
+178
+00:08:40,330 --> 00:08:42,100
+your small t-shirt
+to try to make it
+
+179
+00:08:42,100 --> 00:08:44,350
+fit these individuals well.
+
+180
+00:08:44,350 --> 00:08:46,090
+The medium-size t-shirt to
+
+181
+00:08:46,090 --> 00:08:47,965
+try to fit these
+individuals well,
+
+182
+00:08:47,965 --> 00:08:49,780
+and the large t-shirt to try to
+
+183
+00:08:49,780 --> 00:08:52,560
+fit these individuals well with
+
+184
+00:08:52,560 --> 00:08:55,080
+potentially the
+cluster centroids
+
+185
+00:08:55,080 --> 00:08:56,890
+giving you a sense of what is
+
+186
+00:08:56,890 --> 00:08:59,440
+the most representative
+height and weight that
+
+187
+00:08:59,440 --> 00:09:02,945
+you will want your three
+t-shirt sizes to fit.
+
+188
+00:09:02,945 --> 00:09:05,830
+This is an example of K-means
+
+189
+00:09:05,830 --> 00:09:07,960
+working just fine and giving
+
+190
+00:09:07,960 --> 00:09:10,990
+a useful results even
+if the data does
+
+191
+00:09:10,990 --> 00:09:14,895
+not lie in well-separated
+groups or clusters.
+
+192
+00:09:14,895 --> 00:09:18,095
+That was the K-means
+clustering algorithm.
+
+193
+00:09:18,095 --> 00:09:21,335
+Assign cluster centroids
+randomly and then repeatedly
+
+194
+00:09:21,335 --> 00:09:23,195
+assign points to
+cluster centroids
+
+195
+00:09:23,195 --> 00:09:25,435
+and move the cluster centroids.
+
+196
+00:09:25,435 --> 00:09:28,980
+But what this algorithm
+really doing and do we think
+
+197
+00:09:28,980 --> 00:09:30,830
+this algorithm will
+converge or they just
+
+198
+00:09:30,830 --> 00:09:33,065
+keep on running forever
+and never converge.
+
+199
+00:09:33,065 --> 00:09:36,410
+To gain deeper intuition about
+the K-means algorithm and
+
+200
+00:09:36,410 --> 00:09:40,345
+also see why we might hope
+this algorithm does converge,
+
+201
+00:09:40,345 --> 00:09:43,220
+let's go on to the next
+video where you see that
+
+202
+00:09:43,220 --> 00:09:44,795
+K-means is actually trying to
+
+203
+00:09:44,795 --> 00:09:47,360
+optimize a specific
+cost function.
+
+204
+00:09:47,360 --> 00:09:50,550
+Let's take a look at

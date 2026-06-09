@@ -1,0 +1,634 @@
+1
+00:00:01,160 --> 00:00:04,440
+Many robotic control
+applications,
+
+2
+00:00:04,440 --> 00:00:06,975
+including the lunar
+lander application
+
+3
+00:00:06,975 --> 00:00:09,060
+that you work on in
+the practice lab,
+
+4
+00:00:09,060 --> 00:00:11,430
+have continuous state spaces.
+
+5
+00:00:11,430 --> 00:00:12,690
+Let's take a look at what that
+
+6
+00:00:12,690 --> 00:00:14,399
+means and how to generalize
+
+7
+00:00:14,399 --> 00:00:16,170
+the concept we've
+talked about to
+
+8
+00:00:16,170 --> 00:00:18,120
+these continuous state spaces.
+
+9
+00:00:18,120 --> 00:00:21,825
+A simplify Mars rover
+example we use,
+
+10
+00:00:21,825 --> 00:00:24,675
+I use a discrete set of states,
+
+11
+00:00:24,675 --> 00:00:28,290
+and what that means is that
+simplify Mars rover could
+
+12
+00:00:28,290 --> 00:00:32,280
+only be in one of six
+possible positions.
+
+13
+00:00:32,280 --> 00:00:35,580
+But most robots can be
+in more than one of
+
+14
+00:00:35,580 --> 00:00:39,405
+six or any discrete
+number of positions,
+
+15
+00:00:39,405 --> 00:00:41,600
+instead, they can be in any of
+
+16
+00:00:41,600 --> 00:00:46,195
+a very large number of
+continuous value positions.
+
+17
+00:00:46,195 --> 00:00:49,025
+For example, if the Mars rover
+
+18
+00:00:49,025 --> 00:00:52,135
+could be anywhere on a line,
+
+19
+00:00:52,135 --> 00:00:56,405
+so its position was indicated
+by a number ranging from
+
+20
+00:00:56,405 --> 00:01:01,640
+0-6 kilometers where any
+number in between is valid.
+
+21
+00:01:01,640 --> 00:01:06,145
+That would be an example of
+a continuous state space,
+
+22
+00:01:06,145 --> 00:01:08,270
+because the position would be
+
+23
+00:01:08,270 --> 00:01:11,360
+represented by a
+number such as that is
+
+24
+00:01:11,360 --> 00:01:13,835
+2.7 kilometers along or
+
+25
+00:01:13,835 --> 00:01:17,980
+4.8 kilometers or any other
+number between zero and six.
+
+26
+00:01:17,980 --> 00:01:19,810
+Let's look at another example.
+
+27
+00:01:19,810 --> 00:01:22,175
+I'm going to use
+for this example,
+
+28
+00:01:22,175 --> 00:01:25,415
+the application of
+controlling a car or a truck.
+
+29
+00:01:25,415 --> 00:01:27,590
+Here's a toy car,
+Russia toy truck.
+
+30
+00:01:27,590 --> 00:01:29,645
+This one belongs to my daughter.
+
+31
+00:01:29,645 --> 00:01:31,880
+If you're building a
+self-driving car or
+
+32
+00:01:31,880 --> 00:01:33,650
+self-driving truck and you want
+
+33
+00:01:33,650 --> 00:01:35,675
+to control this to
+drive smoothly,
+
+34
+00:01:35,675 --> 00:01:37,865
+then the state of this truck
+
+35
+00:01:37,865 --> 00:01:40,490
+might include a few
+numbers such as this,
+
+36
+00:01:40,490 --> 00:01:45,485
+x position, its y position,
+maybe it's orientation.
+
+37
+00:01:45,485 --> 00:01:47,065
+What way is it facing?
+
+38
+00:01:47,065 --> 00:01:49,040
+Assuming the truck
+stays on the ground,
+
+39
+00:01:49,040 --> 00:01:50,870
+you probably don't need to worry
+
+40
+00:01:50,870 --> 00:01:53,225
+about how tall is,
+how high up it is.
+
+41
+00:01:53,225 --> 00:01:56,375
+This is state will include x,
+
+42
+00:01:56,375 --> 00:01:59,440
+y, and is angle Theta,
+
+43
+00:01:59,440 --> 00:02:02,790
+as well as maybe its
+speeds in x-direction,
+
+44
+00:02:02,790 --> 00:02:04,590
+the speed in the y-direction,
+
+45
+00:02:04,590 --> 00:02:06,110
+and how quickly it's turning.
+
+46
+00:02:06,110 --> 00:02:07,580
+Is it turning at one degree
+
+47
+00:02:07,580 --> 00:02:08,945
+per second or is it turning at
+
+48
+00:02:08,945 --> 00:02:10,940
+30 degrees per second
+or is it turning
+
+49
+00:02:10,940 --> 00:02:13,615
+really quickly at 90
+degrees per second?
+
+50
+00:02:13,615 --> 00:02:16,740
+For a truck or a car,
+
+51
+00:02:16,740 --> 00:02:20,885
+the state might include
+not just one number,
+
+52
+00:02:20,885 --> 00:02:23,915
+like how many kilometers of
+this along on this line,
+
+53
+00:02:23,915 --> 00:02:26,180
+but they might
+includes six numbers,
+
+54
+00:02:26,180 --> 00:02:27,700
+is x position,
+
+55
+00:02:27,700 --> 00:02:30,800
+is y position, is orientation,
+
+56
+00:02:30,800 --> 00:02:34,505
+which I'm going to denote
+using Greek alphabet Theta,
+
+57
+00:02:34,505 --> 00:02:37,595
+as well its velocity
+in the x-direction,
+
+58
+00:02:37,595 --> 00:02:39,770
+which I will denote using x dot,
+
+59
+00:02:39,770 --> 00:02:43,765
+so that means how quickly is
+this x-coordinate changing,
+
+60
+00:02:43,765 --> 00:02:46,230
+y dot how quickly is the y
+
+61
+00:02:46,230 --> 00:02:48,570
+coordinate changing,
+and then finally,
+
+62
+00:02:48,570 --> 00:02:51,050
+Theta dot, which
+is how quickly is
+
+63
+00:02:51,050 --> 00:02:54,745
+the angle of the car changing.
+
+64
+00:02:54,745 --> 00:02:58,025
+Whereas for the 60
+Mars rover example,
+
+65
+00:02:58,025 --> 00:03:01,620
+the state was just one
+of six possible numbers.
+
+66
+00:03:01,620 --> 00:03:03,005
+It could be one, two,
+
+67
+00:03:03,005 --> 00:03:05,455
+three, four, five or six.
+
+68
+00:03:05,455 --> 00:03:07,850
+For the car, the state would
+
+69
+00:03:07,850 --> 00:03:11,530
+comprise this vector
+of six numbers,
+
+70
+00:03:11,530 --> 00:03:13,940
+and any of these
+numbers can take on
+
+71
+00:03:13,940 --> 00:03:17,740
+any value within is valid range.
+
+72
+00:03:17,740 --> 00:03:20,330
+For example, Theta should range
+
+73
+00:03:20,330 --> 00:03:23,305
+between zero and 360 degrees.
+
+74
+00:03:23,305 --> 00:03:25,455
+Let's look at another example.
+
+75
+00:03:25,455 --> 00:03:26,945
+What if you're building
+
+76
+00:03:26,945 --> 00:03:28,670
+a reinforcement
+learning algorithm to
+
+77
+00:03:28,670 --> 00:03:31,100
+control an autonomous
+helicopter,
+
+78
+00:03:31,100 --> 00:03:34,280
+how would you characterize
+the position of a helicopter?
+
+79
+00:03:34,280 --> 00:03:35,840
+To illustrate, I
+have with me here
+
+80
+00:03:35,840 --> 00:03:37,735
+a small toy helicopter.
+
+81
+00:03:37,735 --> 00:03:39,830
+The positioning of
+the helicopter would
+
+82
+00:03:39,830 --> 00:03:41,960
+include is x position,
+
+83
+00:03:41,960 --> 00:03:44,360
+such as how far north or south
+
+84
+00:03:44,360 --> 00:03:46,985
+is a helicopter, is y position.
+
+85
+00:03:46,985 --> 00:03:51,050
+Maybe how far on the east-west
+axis is the helicopter,
+
+86
+00:03:51,050 --> 00:03:52,880
+and then also z, the height of
+
+87
+00:03:52,880 --> 00:03:55,095
+the helicopter above ground.
+
+88
+00:03:55,095 --> 00:03:57,635
+But other than the position,
+
+89
+00:03:57,635 --> 00:03:59,030
+the helicopter also has
+
+90
+00:03:59,030 --> 00:04:01,745
+an orientation, and
+conventionally,
+
+91
+00:04:01,745 --> 00:04:03,530
+one way to capture
+its orientation
+
+92
+00:04:03,530 --> 00:04:05,510
+is with three
+additional numbers,
+
+93
+00:04:05,510 --> 00:04:09,170
+one of which captures of
+the row of the helicopter.
+
+94
+00:04:09,170 --> 00:04:11,185
+Is it rolling to the
+left or the right?
+
+95
+00:04:11,185 --> 00:04:12,570
+The pitch, is it pitching
+
+96
+00:04:12,570 --> 00:04:14,835
+forward or pitching
+up, pitching back,
+
+97
+00:04:14,835 --> 00:04:17,130
+and then finally the yaw which
+
+98
+00:04:17,130 --> 00:04:19,980
+is west the compass
+orientation is it facing.
+
+99
+00:04:19,980 --> 00:04:22,605
+If facing north or
+east or south or west?
+
+100
+00:04:22,605 --> 00:04:25,610
+To summarize, the state
+of the helicopter
+
+101
+00:04:25,610 --> 00:04:30,050
+includes is position in the
+say, north-south direction,
+
+102
+00:04:30,050 --> 00:04:32,545
+is positioned in the
+east-west direction,
+
+103
+00:04:32,545 --> 00:04:34,805
+y is height above ground,
+
+104
+00:04:34,805 --> 00:04:36,785
+and also the row,
+
+105
+00:04:36,785 --> 00:04:42,055
+the pitch, and also
+that yaw of helicopter.
+
+106
+00:04:42,055 --> 00:04:43,760
+To write this down,
+
+107
+00:04:43,760 --> 00:04:48,455
+the state therefore includes
+the position x, y, z,
+
+108
+00:04:48,455 --> 00:04:51,845
+and then the row pitch,
+
+109
+00:04:51,845 --> 00:04:54,500
+and yaw denoted with
+
+110
+00:04:54,500 --> 00:04:59,415
+the Greek alphabets
+Phi, Theta and Omega.
+
+111
+00:04:59,415 --> 00:05:00,860
+But to control the helicopter,
+
+112
+00:05:00,860 --> 00:05:05,600
+we also need to know its
+speed in the x-direction,
+
+113
+00:05:05,600 --> 00:05:08,809
+in the y-direction, and
+in the z direction,
+
+114
+00:05:08,809 --> 00:05:11,239
+as well as its rate of turning,
+
+115
+00:05:11,239 --> 00:05:13,450
+also called the
+angular velocity.
+
+116
+00:05:13,450 --> 00:05:16,970
+How fast is this row
+changing and how fast is
+
+117
+00:05:16,970 --> 00:05:21,485
+this pitch changing and how
+fast is its yaw changing?
+
+118
+00:05:21,485 --> 00:05:23,435
+This is actually the state
+
+119
+00:05:23,435 --> 00:05:26,030
+used to control
+autonomous helicopters.
+
+120
+00:05:26,030 --> 00:05:31,570
+Is this list of 12 numbers
+that is input to a policy,
+
+121
+00:05:31,570 --> 00:05:33,470
+and the job of a
+policy is look at
+
+122
+00:05:33,470 --> 00:05:35,765
+these 12 numbers and decide
+
+123
+00:05:35,765 --> 00:05:38,530
+what's an appropriate action
+to take in the helicopter.
+
+124
+00:05:38,530 --> 00:05:42,330
+So any continuous state
+reinforcement learning problem or
+
+125
+00:05:42,330 --> 00:05:43,485
+a continuous state
+
+126
+00:05:43,485 --> 00:05:46,880
+Markov decision process,
+continuously MTP.
+
+127
+00:05:46,880 --> 00:05:50,015
+The state of the
+problem isn't just one
+
+128
+00:05:50,015 --> 00:05:52,895
+of a small number of
+possible discrete values,
+
+129
+00:05:52,895 --> 00:05:54,530
+like a number from 1-6.
+
+130
+00:05:54,530 --> 00:05:58,520
+Instead, it's a
+vector of numbers,
+
+131
+00:05:58,520 --> 00:06:03,005
+any of which could take any
+of a large number of values.
+
+132
+00:06:03,005 --> 00:06:05,630
+In the practice
+lab for this week,
+
+133
+00:06:05,630 --> 00:06:06,830
+you get to implement for
+
+134
+00:06:06,830 --> 00:06:09,125
+yourself a reinforcement
+learning algorithm
+
+135
+00:06:09,125 --> 00:06:13,370
+applied to a simulated
+lunar lander application.
+
+136
+00:06:13,370 --> 00:06:16,685
+Landing something on
+the moon is simulation.
+
+137
+00:06:16,685 --> 00:06:18,815
+Let's take a look in
+the next video at
+
+138
+00:06:18,815 --> 00:06:20,960
+what that application entails,
+
+139
+00:06:20,960 --> 00:06:25,110
+since there will be another

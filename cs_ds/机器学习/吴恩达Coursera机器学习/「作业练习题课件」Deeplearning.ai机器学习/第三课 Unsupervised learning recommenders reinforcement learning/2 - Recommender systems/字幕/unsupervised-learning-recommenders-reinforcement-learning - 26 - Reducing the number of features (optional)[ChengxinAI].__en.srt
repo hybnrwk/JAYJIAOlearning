@@ -1,0 +1,1186 @@
+1
+00:00:00,260 --> 00:00:03,570
+I hope you enjoyed
+the videos on how you
+
+2
+00:00:03,570 --> 00:00:06,270
+can build your own
+recommender system.
+
+3
+00:00:06,270 --> 00:00:08,610
+Before we wrap up
+this week in this and
+
+4
+00:00:08,610 --> 00:00:11,280
+a few other optional videos
+I'd like to share with
+
+5
+00:00:11,280 --> 00:00:14,220
+you an unsupervised
+learning algorithm
+
+6
+00:00:14,220 --> 00:00:17,055
+called principal
+components analysis.
+
+7
+00:00:17,055 --> 00:00:18,660
+This is an algorithm that is
+
+8
+00:00:18,660 --> 00:00:21,210
+commonly used for visualization.
+
+9
+00:00:21,210 --> 00:00:22,710
+Specifically, if you
+
+10
+00:00:22,710 --> 00:00:24,720
+have a dataset with
+a lot of features,
+
+11
+00:00:24,720 --> 00:00:26,400
+say 10 features or
+
+12
+00:00:26,400 --> 00:00:28,815
+50 features or even
+thousands of features,
+
+13
+00:00:28,815 --> 00:00:32,790
+you can't plot 1,000
+dimensional data.
+
+14
+00:00:32,790 --> 00:00:35,770
+PCA, or principal
+components analysis
+
+15
+00:00:35,770 --> 00:00:36,920
+is an algorithm that lets
+
+16
+00:00:36,920 --> 00:00:40,575
+you take data with a lot
+of features, 50, 1,000,
+
+17
+00:00:40,575 --> 00:00:42,349
+even more, and reduce
+
+18
+00:00:42,349 --> 00:00:44,570
+the number of features
+to two features,
+
+19
+00:00:44,570 --> 00:00:46,580
+maybe three features,
+so that you
+
+20
+00:00:46,580 --> 00:00:48,740
+can plot it and visualize it.
+
+21
+00:00:48,740 --> 00:00:50,420
+Is commonly used by
+
+22
+00:00:50,420 --> 00:00:52,850
+data scientists to
+visualize the data,
+
+23
+00:00:52,850 --> 00:00:54,485
+to figure out what
+might be going on.
+
+24
+00:00:54,485 --> 00:00:56,585
+Let's take a look at how PCA,
+
+25
+00:00:56,585 --> 00:00:59,455
+principal components
+analysis works.
+
+26
+00:00:59,455 --> 00:01:03,770
+To describe PCA, I'm going
+to use as a running example,
+
+27
+00:01:03,770 --> 00:01:08,660
+if you have data from a
+collection of passenger cars,
+
+28
+00:01:08,660 --> 00:01:11,795
+and passenger cars can
+have a lot of features.
+
+29
+00:01:11,795 --> 00:01:14,480
+You may know the length of
+
+30
+00:01:14,480 --> 00:01:17,630
+the car or the width of the car,
+
+31
+00:01:17,630 --> 00:01:20,840
+maybe the diameter of the wheel,
+
+32
+00:01:20,840 --> 00:01:23,885
+or maybe the height of the car,
+
+33
+00:01:23,885 --> 00:01:27,395
+and many other features of cars.
+
+34
+00:01:27,395 --> 00:01:29,540
+If you want to reduce
+
+35
+00:01:29,540 --> 00:01:32,435
+the number of features
+so you can visualize it,
+
+36
+00:01:32,435 --> 00:01:35,725
+how can you use PCA to do so?
+
+37
+00:01:35,725 --> 00:01:38,195
+For the first example,
+
+38
+00:01:38,195 --> 00:01:41,690
+let's say you're given a
+dataset with two features.
+
+39
+00:01:41,690 --> 00:01:45,260
+The feature x_1 is the
+length of the car,
+
+40
+00:01:45,260 --> 00:01:50,300
+like so, and the
+second feature x_2,
+
+41
+00:01:50,300 --> 00:01:52,055
+is the width of the car,
+
+42
+00:01:52,055 --> 00:01:55,150
+which is measured like so.
+
+43
+00:01:55,150 --> 00:01:58,610
+It turns out that
+in most countries,
+
+44
+00:01:58,610 --> 00:02:00,830
+because of constraints
+about the width
+
+45
+00:02:00,830 --> 00:02:03,230
+of the road the cars drive on,
+
+46
+00:02:03,230 --> 00:02:05,375
+width of the car
+which has got to fit
+
+47
+00:02:05,375 --> 00:02:08,195
+within the width of the
+road of a single lane,
+
+48
+00:02:08,195 --> 00:02:10,320
+tends not to vary that much.
+
+49
+00:02:10,320 --> 00:02:13,085
+For example, in
+the United States,
+
+50
+00:02:13,085 --> 00:02:14,745
+most cars are,
+
+51
+00:02:14,745 --> 00:02:18,470
+let's call it about
+1.8 meters wide,
+
+52
+00:02:18,470 --> 00:02:20,930
+that's just under six feet.
+
+53
+00:02:20,930 --> 00:02:23,780
+If you were to have
+a collection of
+
+54
+00:02:23,780 --> 00:02:25,670
+cars and the dataset of
+
+55
+00:02:25,670 --> 00:02:28,065
+the length and
+width of the cars,
+
+56
+00:02:28,065 --> 00:02:32,405
+you will find that the
+dataset might look like this,
+
+57
+00:02:32,405 --> 00:02:36,140
+where x_1 varies quite a bit
+because some cars are really
+
+58
+00:02:36,140 --> 00:02:41,260
+long and x_2 varies
+relatively little.
+
+59
+00:02:41,260 --> 00:02:45,150
+If you want to reduce the
+number of features, well,
+
+60
+00:02:45,150 --> 00:02:48,245
+one thing you could do is
+let us take x_1 because
+
+61
+00:02:48,245 --> 00:02:51,985
+x_2 varies relatively
+little from car to car.
+
+62
+00:02:51,985 --> 00:02:54,470
+It turns out that
+PCA is an algorithm
+
+63
+00:02:54,470 --> 00:02:57,285
+that when applied to
+this data set will
+
+64
+00:02:57,285 --> 00:03:02,615
+more or less automatically
+decide to just take x_1,
+
+65
+00:03:02,615 --> 00:03:04,685
+but it can do much
+more than that.
+
+66
+00:03:04,685 --> 00:03:07,640
+Let's look at a second example
+
+67
+00:03:07,640 --> 00:03:11,875
+where here x_1 is again
+the length of the car,
+
+68
+00:03:11,875 --> 00:03:14,835
+and let's say that
+in this dataset,
+
+69
+00:03:14,835 --> 00:03:18,465
+x_2 is the diameter
+of the wheel.
+
+70
+00:03:18,465 --> 00:03:22,185
+The diameter of the wheel
+does vary a little bit.
+
+71
+00:03:22,185 --> 00:03:24,230
+If you were to plot the data,
+
+72
+00:03:24,230 --> 00:03:25,850
+it might look like this.
+
+73
+00:03:25,850 --> 00:03:29,060
+But again, if you want to
+
+74
+00:03:29,060 --> 00:03:32,645
+simplify this dataset
+to just one feature,
+
+75
+00:03:32,645 --> 00:03:35,570
+you might decide, let's
+just take x_1 and
+
+76
+00:03:35,570 --> 00:03:38,865
+forget x_2 and PCA when
+applied to this dataset.
+
+77
+00:03:38,865 --> 00:03:40,955
+Well, again, more or less,
+
+78
+00:03:40,955 --> 00:03:44,275
+cause you to just
+check the feature x_1.
+
+79
+00:03:44,275 --> 00:03:46,400
+In both the examples we saw,
+
+80
+00:03:46,400 --> 00:03:49,055
+only one of the two
+features seemed
+
+81
+00:03:49,055 --> 00:03:52,840
+to have a meaningful
+degree of variation.
+
+82
+00:03:52,840 --> 00:03:55,515
+Here's a more complex example.
+
+83
+00:03:55,515 --> 00:03:58,760
+Say the feature x_1 is
+the length of the car,
+
+84
+00:03:58,760 --> 00:04:00,460
+so that varies quite a bit,
+
+85
+00:04:00,460 --> 00:04:04,265
+and the feature x_2 here
+is the height of the car,
+
+86
+00:04:04,265 --> 00:04:06,200
+which also varies quite a bit.
+
+87
+00:04:06,200 --> 00:04:08,750
+Some cars are much
+taller than other cars.
+
+88
+00:04:08,750 --> 00:04:10,775
+If you were to plot the data,
+
+89
+00:04:10,775 --> 00:04:13,520
+you might get a dataset
+that looks like this,
+
+90
+00:04:13,520 --> 00:04:15,680
+where some cars are bigger and
+
+91
+00:04:15,680 --> 00:04:17,990
+they tend to be
+longer and taller,
+
+92
+00:04:17,990 --> 00:04:20,000
+and some cars are a
+little bit smaller.
+
+93
+00:04:20,000 --> 00:04:23,735
+They tend to be not as
+long and not as tall.
+
+94
+00:04:23,735 --> 00:04:26,600
+If you wanted to
+reduce the number of
+
+95
+00:04:26,600 --> 00:04:29,285
+features, what should you pick?
+
+96
+00:04:29,285 --> 00:04:31,500
+You don't want to pick
+just x_1, the length,
+
+97
+00:04:31,500 --> 00:04:33,105
+and ignore x_2 the height
+
+98
+00:04:33,105 --> 00:04:35,385
+and you also don't
+want to pick just x_2,
+
+99
+00:04:35,385 --> 00:04:38,145
+the height, and ignore
+x_1, the length.
+
+100
+00:04:38,145 --> 00:04:42,660
+It seems as if both x_1 and
+x_2 have useful information.
+
+101
+00:04:42,660 --> 00:04:44,340
+In this graph,
+
+102
+00:04:44,340 --> 00:04:49,485
+x_1 and x_2 are the
+two axes of this plot.
+
+103
+00:04:49,485 --> 00:04:52,310
+Instead of being
+limited to taking
+
+104
+00:04:52,310 --> 00:04:55,505
+either the x_1 axis
+or the x_2 axis,
+
+105
+00:04:55,505 --> 00:04:58,145
+what if we had a third axis.
+
+106
+00:04:58,145 --> 00:05:02,250
+I'm going to call this
+new axis the z-axis.
+
+107
+00:05:02,250 --> 00:05:05,435
+To be clear, this is not
+sticking out of this diagram.
+
+108
+00:05:05,435 --> 00:05:08,510
+This is a combination
+of x_1 and x_2.
+
+109
+00:05:08,510 --> 00:05:10,760
+This is not a z-axis
+
+110
+00:05:10,760 --> 00:05:13,370
+that's sticking out in
+the third dimension.
+
+111
+00:05:13,370 --> 00:05:17,790
+This z-axis lies flat
+within this plot.
+
+112
+00:05:17,790 --> 00:05:20,360
+But why do we have
+the z-axis which
+
+113
+00:05:20,360 --> 00:05:25,035
+corresponds to something
+about the size of the car?
+
+114
+00:05:25,035 --> 00:05:29,015
+Given a car like this one
+over here, its coordinate,
+
+115
+00:05:29,015 --> 00:05:31,550
+meaning the value
+on the x-axis tells
+
+116
+00:05:31,550 --> 00:05:34,775
+us the length of the car
+and the coordinate is just,
+
+117
+00:05:34,775 --> 00:05:36,500
+what is this distance?
+
+118
+00:05:36,500 --> 00:05:39,650
+Similarly its
+coordinate, meaning,
+
+119
+00:05:39,650 --> 00:05:41,990
+what is this distance on
+
+120
+00:05:41,990 --> 00:05:46,030
+the x_2 axis tells us what
+is the height of the car.
+
+121
+00:05:46,030 --> 00:05:48,995
+If we're now going to
+use the z-axis instead
+
+122
+00:05:48,995 --> 00:05:52,130
+as one feature to capture what
+
+123
+00:05:52,130 --> 00:05:55,100
+we know about this car
+then is coordinate on
+
+124
+00:05:55,100 --> 00:05:58,460
+the z-axis, meaning
+this distance.
+
+125
+00:05:58,460 --> 00:06:03,025
+That tells us roughly what
+is the size of the car.
+
+126
+00:06:03,025 --> 00:06:07,100
+We'll formalize this in
+the next few videos.
+
+127
+00:06:07,100 --> 00:06:13,775
+But the idea of PCA is to
+find one or more new axes,
+
+128
+00:06:13,775 --> 00:06:16,370
+such as z so that when you
+
+129
+00:06:16,370 --> 00:06:20,165
+measure your datas
+coordinates on the new axis,
+
+130
+00:06:20,165 --> 00:06:21,980
+you end up still with
+
+131
+00:06:21,980 --> 00:06:25,145
+very useful information
+about the car.
+
+132
+00:06:25,145 --> 00:06:28,175
+But maybe now,
+instead of needing
+
+133
+00:06:28,175 --> 00:06:30,140
+two numbers corresponding to
+
+134
+00:06:30,140 --> 00:06:33,215
+the coordinates on
+X_1 and X_2 axes,
+
+135
+00:06:33,215 --> 00:06:34,910
+the length and height.
+
+136
+00:06:34,910 --> 00:06:37,505
+You now need a few
+numbers, in this case,
+
+137
+00:06:37,505 --> 00:06:39,785
+only one number instead of two,
+
+138
+00:06:39,785 --> 00:06:42,860
+to capture roughly
+the size of the car.
+
+139
+00:06:42,860 --> 00:06:45,965
+In the example,
+we've used so far,
+
+140
+00:06:45,965 --> 00:06:49,745
+we were trying to reduce
+the data from two numbers,
+
+141
+00:06:49,745 --> 00:06:52,925
+X_1 and X_2 down to one number,
+
+142
+00:06:52,925 --> 00:06:55,415
+the coordinate on the z-axis.
+
+143
+00:06:55,415 --> 00:06:58,280
+In practice, PCA
+is usually used to
+
+144
+00:06:58,280 --> 00:07:01,355
+reduce a very large
+number of features,
+
+145
+00:07:01,355 --> 00:07:02,600
+say 10, 20,
+
+146
+00:07:02,600 --> 00:07:05,585
+50, even thousands of features,
+
+147
+00:07:05,585 --> 00:07:10,970
+down to maybe two or three
+features so that you can
+
+148
+00:07:10,970 --> 00:07:12,890
+visualize the data in a
+
+149
+00:07:12,890 --> 00:07:16,520
+two-dimensional or in a
+three-dimensional plot.
+
+150
+00:07:16,520 --> 00:07:18,380
+But for this video,
+
+151
+00:07:18,380 --> 00:07:22,520
+because I could only draw on
+a two-dimensional screen.
+
+152
+00:07:22,520 --> 00:07:24,529
+I'm going to use mainly
+
+153
+00:07:24,529 --> 00:07:27,050
+two or three-dimensional
+data sets
+
+154
+00:07:27,050 --> 00:07:28,850
+as my examples.
+
+155
+00:07:28,850 --> 00:07:31,415
+Let's look at one more example.
+
+156
+00:07:31,415 --> 00:07:35,120
+In this visualization, we
+have a three-dimensional data
+
+157
+00:07:35,120 --> 00:07:39,095
+set and notice that I can
+rotate the data set here,
+
+158
+00:07:39,095 --> 00:07:40,955
+so you can see it in 3D.
+
+159
+00:07:40,955 --> 00:07:45,170
+But notice if I rotate
+the data set like this,
+
+160
+00:07:45,170 --> 00:07:47,135
+well, most of this data,
+
+161
+00:07:47,135 --> 00:07:48,710
+even though it is in 3D,
+
+162
+00:07:48,710 --> 00:07:53,225
+it actually lives on
+a very thin surface.
+
+163
+00:07:53,225 --> 00:07:55,400
+It's almost as if
+all the data lies
+
+164
+00:07:55,400 --> 00:07:57,755
+on a two-dimensional pancake,
+
+165
+00:07:57,755 --> 00:07:59,165
+even though the pancake
+
+166
+00:07:59,165 --> 00:08:01,880
+lives in this
+three-dimensional space.
+
+167
+00:08:01,880 --> 00:08:04,625
+A PCA, what you can do is,
+
+168
+00:08:04,625 --> 00:08:08,210
+instead of having
+three features, x_1,
+
+169
+00:08:08,210 --> 00:08:10,415
+x_2, x_3,
+
+170
+00:08:10,415 --> 00:08:12,800
+reduce it to two numbers,
+
+171
+00:08:12,800 --> 00:08:16,610
+which we're going to
+call Z_1 and Z_2.
+
+172
+00:08:16,610 --> 00:08:18,200
+When you do that,
+
+173
+00:08:18,200 --> 00:08:22,100
+you can then visualize
+the data on this Z_1,
+
+174
+00:08:22,100 --> 00:08:25,010
+Z_2 axis and this becomes
+
+175
+00:08:25,010 --> 00:08:29,675
+a convenient way to visualize
+this data if you had to,
+
+176
+00:08:29,675 --> 00:08:31,580
+say print on a piece of paper.
+
+177
+00:08:31,580 --> 00:08:33,230
+I couldn't dynamically rotate
+
+178
+00:08:33,230 --> 00:08:35,630
+it like you'll seeing
+me do on the screen.
+
+179
+00:08:35,630 --> 00:08:37,355
+Here's one more example.
+
+180
+00:08:37,355 --> 00:08:39,440
+If you have data about
+
+181
+00:08:39,440 --> 00:08:42,980
+the development status of
+many different countries,
+
+182
+00:08:42,980 --> 00:08:44,675
+you might have for example
+
+183
+00:08:44,675 --> 00:08:47,030
+data about different countries,
+
+184
+00:08:47,030 --> 00:08:50,135
+GDP, and that's feature x_1.
+
+185
+00:08:50,135 --> 00:08:52,985
+In addition, Let's
+say we also have
+
+186
+00:08:52,985 --> 00:08:56,195
+the per capita GDP and also
+
+187
+00:08:56,195 --> 00:08:59,750
+a measure of their Human
+Development Index.
+
+188
+00:08:59,750 --> 00:09:03,335
+The Human Development
+Index was developed
+
+189
+00:09:03,335 --> 00:09:07,250
+to measure the overall
+progress of how well
+
+190
+00:09:07,250 --> 00:09:09,290
+people in a country might be
+
+191
+00:09:09,290 --> 00:09:12,050
+doing based on things
+like the lifespan and
+
+192
+00:09:12,050 --> 00:09:13,760
+education and so on
+
+193
+00:09:13,760 --> 00:09:16,940
+or you might separately
+have a feature
+
+194
+00:09:16,940 --> 00:09:20,600
+corresponding to
+the life expectancy
+
+195
+00:09:20,600 --> 00:09:23,945
+in different countries
+and so on and so forth.
+
+196
+00:09:23,945 --> 00:09:28,025
+If for each country
+you have 50 features,
+
+197
+00:09:28,025 --> 00:09:31,310
+how can you visualize this
+data because you can't plot
+
+198
+00:09:31,310 --> 00:09:33,215
+50 dimensional data on
+
+199
+00:09:33,215 --> 00:09:35,840
+a two-dimensional
+computer monitor.
+
+200
+00:09:35,840 --> 00:09:38,180
+What PCLS will do is take
+
+201
+00:09:38,180 --> 00:09:42,470
+these 50 features,
+X_1,X_2,X_3,X_4,
+
+202
+00:09:42,470 --> 00:09:45,155
+and so on and compress it
+
+203
+00:09:45,155 --> 00:09:48,155
+down to two features
+which I'm going to call
+
+204
+00:09:48,155 --> 00:09:51,515
+Z_1 and Z_2 and you can then
+
+205
+00:09:51,515 --> 00:09:56,270
+plot these different countries
+values of z_1 and z_2.
+
+206
+00:09:56,270 --> 00:10:01,070
+You might find for example
+that Z_1 loosely corresponds
+
+207
+00:10:01,070 --> 00:10:05,600
+to how big is the country
+and what is this total GDP?
+
+208
+00:10:05,600 --> 00:10:09,035
+Because larger countries
+tend to have a higher GDP,
+
+209
+00:10:09,035 --> 00:10:11,420
+because large countries
+have many people,
+
+210
+00:10:11,420 --> 00:10:14,105
+tend to have a larger economy
+
+211
+00:10:14,105 --> 00:10:18,140
+and perhaps you find that Z_2
+
+212
+00:10:18,140 --> 00:10:22,970
+corresponds roughly
+to the per person GDP
+
+213
+00:10:22,970 --> 00:10:26,420
+or the amount of economic
+activity per person.
+
+214
+00:10:26,420 --> 00:10:29,595
+For example, the United States,
+
+215
+00:10:29,595 --> 00:10:32,860
+which is a relatively
+large country and has
+
+216
+00:10:32,860 --> 00:10:36,205
+relatively high per
+person economic activity
+
+217
+00:10:36,205 --> 00:10:39,370
+may be somewhere up here
+to the up and right of
+
+218
+00:10:39,370 --> 00:10:43,010
+this plot and a country
+like Singapore,
+
+219
+00:10:43,010 --> 00:10:44,825
+where I live many years as well,
+
+220
+00:10:44,825 --> 00:10:47,210
+is a smaller country but it has
+
+221
+00:10:47,210 --> 00:10:50,630
+relatively high per
+person economic activity.
+
+222
+00:10:50,630 --> 00:10:54,620
+Take on a lower value
+on the z_1 axis,
+
+223
+00:10:54,620 --> 00:10:58,130
+but still a relatively high
+value on the z_2 axis.
+
+224
+00:10:58,130 --> 00:11:01,160
+Whereas a country like
+this would be maybe
+
+225
+00:11:01,160 --> 00:11:02,540
+a smaller country with
+
+226
+00:11:02,540 --> 00:11:04,910
+lower per person
+economic activity.
+
+227
+00:11:04,910 --> 00:11:08,510
+Whereas the country like this
+may be a large country with
+
+228
+00:11:08,510 --> 00:11:11,870
+lower per person economic
+activity and a figure like
+
+229
+00:11:11,870 --> 00:11:13,115
+this lets you take
+
+230
+00:11:13,115 --> 00:11:15,815
+a large number of
+features, 50 features.
+
+231
+00:11:15,815 --> 00:11:18,875
+Sometimes we also say
+that's 50 dimensional data.
+
+232
+00:11:18,875 --> 00:11:21,290
+It just means we
+have 50 features and
+
+233
+00:11:21,290 --> 00:11:24,530
+reduce that to two features
+or sometimes we say
+
+234
+00:11:24,530 --> 00:11:27,380
+is two-dimensional data because
+you can then plot it on
+
+235
+00:11:27,380 --> 00:11:30,705
+this two-dimensional plot
+like you're seeing here.
+
+236
+00:11:30,705 --> 00:11:32,635
+Whenever I get a new data set,
+
+237
+00:11:32,635 --> 00:11:35,769
+one of the things I'll often
+want to do is to visualize
+
+238
+00:11:35,769 --> 00:11:37,270
+the data since that helps me
+
+239
+00:11:37,270 --> 00:11:39,280
+understand what the
+data looks like,
+
+240
+00:11:39,280 --> 00:11:40,900
+what do the countries look like,
+
+241
+00:11:40,900 --> 00:11:43,720
+or what do the cars seem
+like in this data set
+
+242
+00:11:43,720 --> 00:11:47,025
+or whatever data you
+may be examining.
+
+243
+00:11:47,025 --> 00:11:50,210
+You find also that
+visualizing the data set will
+
+244
+00:11:50,210 --> 00:11:51,845
+sometimes help you figure out
+
+245
+00:11:51,845 --> 00:11:54,035
+something funny's going
+on in this datas.
+
+246
+00:11:54,035 --> 00:11:56,210
+Something unexpected
+is happening.
+
+247
+00:11:56,210 --> 00:11:58,700
+PCA is a powerful algorithm
+
+248
+00:11:58,700 --> 00:12:01,115
+for taking data with
+a lot of features,
+
+249
+00:12:01,115 --> 00:12:03,935
+with a lot of dimensions
+or high-dimensional data,
+
+250
+00:12:03,935 --> 00:12:07,460
+and reducing it to two
+or three features to
+
+251
+00:12:07,460 --> 00:12:10,490
+two or three dimensional
+data so you can plot
+
+252
+00:12:10,490 --> 00:12:12,020
+it and visualize it and better
+
+253
+00:12:12,020 --> 00:12:14,630
+understand what's in your data.
+
+254
+00:12:14,630 --> 00:12:17,620
+That's what the PCA
+algorithm can do for you.
+
+255
+00:12:17,620 --> 00:12:18,830
+In the next video,
+
+256
+00:12:18,830 --> 00:12:20,645
+let's start to
+take a look at how
+
+257
+00:12:20,645 --> 00:12:24,330

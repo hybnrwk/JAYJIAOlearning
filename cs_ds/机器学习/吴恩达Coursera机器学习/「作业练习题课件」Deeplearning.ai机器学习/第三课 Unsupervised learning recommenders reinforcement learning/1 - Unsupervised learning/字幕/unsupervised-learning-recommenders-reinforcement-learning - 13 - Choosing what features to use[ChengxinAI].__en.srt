@@ -1,0 +1,965 @@
+1
+00:00:02,550 --> 00:00:05,670
+When building an anomaly
+detection algorithm,
+
+2
+00:00:05,670 --> 00:00:10,857
+I found that choosing a good choice of
+features turns out to be really important.
+
+3
+00:00:10,857 --> 00:00:15,297
+In supervised learning, if you don't
+have the features quite right, or
+
+4
+00:00:15,297 --> 00:00:19,450
+if you have a few extra features that
+are not relevant to the problem,
+
+5
+00:00:19,450 --> 00:00:21,401
+that often turns out to be okay.
+
+6
+00:00:21,401 --> 00:00:26,075
+Because the algorithm has to supervised
+signal that is enough labels why for
+
+7
+00:00:26,075 --> 00:00:30,968
+the algorithm to figure out what features
+ignore, or how to re scale feature and
+
+8
+00:00:30,968 --> 00:00:34,970
+to take the best advantage of
+the features you do give it.
+
+9
+00:00:34,970 --> 00:00:39,845
+But for anomaly detection which runs,
+or learns just from unlabeled data,
+
+10
+00:00:39,845 --> 00:00:43,980
+is harder for the anomaly to figure
+out what features to ignore.
+
+11
+00:00:43,980 --> 00:00:48,600
+So I found that carefully choosing
+the features, is even more important for
+
+12
+00:00:48,600 --> 00:00:52,940
+anomaly detection, than for
+supervised learning approaches.
+
+13
+00:00:52,940 --> 00:00:56,658
+Let's take a look at this video as
+some practical tips, for how to tune
+
+14
+00:00:56,658 --> 00:01:01,280
+the features for anomaly detection, to try
+to get you the best possible performance.
+
+15
+00:01:01,280 --> 00:01:05,533
+One step that can help your
+anomaly detection algorithm,
+
+16
+00:01:05,533 --> 00:01:11,460
+is to try to make sure the features
+you give it are more or less Gaussian.
+
+17
+00:01:11,460 --> 00:01:14,364
+And if your features are not Gaussian,
+
+18
+00:01:14,364 --> 00:01:19,207
+sometimes you can change it to make
+it a little bit more Gaussian.
+
+19
+00:01:19,207 --> 00:01:20,919
+Let me show you what I mean.
+
+20
+00:01:20,919 --> 00:01:26,147
+If you have a feature X,
+I will often plot to hissed
+
+21
+00:01:26,147 --> 00:01:33,131
+a gram of the feature which you can
+do using the python command PLT.
+
+22
+00:01:33,131 --> 00:01:36,581
+Though you see this in
+the practice lab as well,
+
+23
+00:01:36,581 --> 00:01:41,010
+in order to look at
+the history graham of the data.
+
+24
+00:01:41,010 --> 00:01:43,851
+This distribution here
+looks pretty Gaussian.
+
+25
+00:01:43,851 --> 00:01:46,731
+So this would be a good candidate feature.
+
+26
+00:01:46,731 --> 00:01:51,756
+If you think this is a feature that
+hopes distinguish between anomalies and
+
+27
+00:01:51,756 --> 00:01:53,790
+normal examples.
+
+28
+00:01:53,790 --> 00:01:57,484
+But quite often when you plot
+a hissed a gram of your features,
+
+29
+00:01:57,484 --> 00:02:01,060
+you may find that the feature
+has a distribution like this.
+
+30
+00:02:01,060 --> 00:02:06,770
+This does not at all look like
+that symmetric bell shaped curve.
+
+31
+00:02:06,770 --> 00:02:14,099
+When that is the case, I would consider
+if you can take this feature X,
+
+32
+00:02:14,099 --> 00:02:19,340
+and transform it in order
+to make a more Gaussian.
+
+33
+00:02:19,340 --> 00:02:24,466
+For example, maybe if you were
+to compute the log of X and
+
+34
+00:02:24,466 --> 00:02:29,154
+plot a hissed a gram of log of X,
+look like this, and
+
+35
+00:02:29,154 --> 00:02:32,130
+this looks much more Gaussian.
+
+36
+00:02:32,130 --> 00:02:37,811
+And so if this feature was feature X one,
+then instead of using the original
+
+37
+00:02:37,811 --> 00:02:43,403
+feature X one which looks like this on
+the left, you might instead replace
+
+38
+00:02:43,403 --> 00:02:48,564
+that feature with log of X one,
+to get this distribution over here.
+
+39
+00:02:48,564 --> 00:02:51,650
+Because when X one is made more Gaussian.
+
+40
+00:02:51,650 --> 00:02:56,308
+When anomaly detection models
+P of X one using a Gaussian
+
+41
+00:02:56,308 --> 00:03:01,968
+distribution like that, is more
+likely to be a good fit to the data.
+
+42
+00:03:01,968 --> 00:03:07,008
+Other than the log function,
+other things you might do is, given
+
+43
+00:03:07,008 --> 00:03:13,071
+a different feature X two, you may replace
+it with X two, log of X two plus one.
+
+44
+00:03:13,071 --> 00:03:16,858
+This would be a different
+way of transforming X two.
+
+45
+00:03:16,858 --> 00:03:21,610
+And more generally, log of X two plus C,
+would be one example of
+
+46
+00:03:21,610 --> 00:03:26,560
+a formula you can use, to change X
+to try to make it more Gaussian.
+
+47
+00:03:26,560 --> 00:03:31,618
+Or for a different feature,
+you might try taking the square root or
+
+48
+00:03:31,618 --> 00:03:36,404
+really the square would have
+executed this X lead to the power of
+
+49
+00:03:36,404 --> 00:03:40,680
+one half,and you may change
+that exponentially term.
+
+50
+00:03:40,680 --> 00:03:42,893
+So for a different feature X four,
+
+51
+00:03:42,893 --> 00:03:47,280
+you might use X four to the power
+of one third, for example.
+
+52
+00:03:47,280 --> 00:03:50,892
+So when I'm building
+an anomaly detection system,
+
+53
+00:03:50,892 --> 00:03:56,309
+I'll sometimes take a look at my features,
+and if I see any highly non Gaussian
+
+54
+00:03:56,309 --> 00:04:01,319
+by plotting hissed a gram, I might
+choose transformations like these or
+
+55
+00:04:01,319 --> 00:04:04,790
+others, In order to try
+to make it more Gaussian.
+
+56
+00:04:04,790 --> 00:04:10,822
+It turns out a larger value of C, will end
+up transforming this distribution less.
+
+57
+00:04:10,822 --> 00:04:14,894
+But in practice I just try
+a bunch of different values of C,
+
+58
+00:04:14,894 --> 00:04:19,878
+and then try to take a look to pick one
+that looks better in terms of making
+
+59
+00:04:19,878 --> 00:04:22,309
+the distribution more Gaussian.
+
+60
+00:04:22,309 --> 00:04:27,036
+Now, let me illustrate how I actually
+do this and that you put a notebook.
+
+61
+00:04:27,036 --> 00:04:30,774
+So this is what the process of
+exploring different transformations in
+
+62
+00:04:30,774 --> 00:04:32,431
+the features might look like.
+
+63
+00:04:33,460 --> 00:04:39,060
+When you have a feature X, you can
+plot a hissed a gram of it as follows.
+
+64
+00:04:39,060 --> 00:04:43,770
+It actually looks like there's
+a pretty cause hissed a gram.
+
+65
+00:04:43,770 --> 00:04:47,590
+Let me increase the number of
+bins in my history gram to 50.
+
+66
+00:04:47,590 --> 00:04:51,300
+So bins equals 50 there.
+
+67
+00:04:51,300 --> 00:04:53,369
+That's what hissed a gram bins.
+
+68
+00:04:53,369 --> 00:05:00,194
+And by the way, if you want to change
+the color, you can also do so as follows.
+
+69
+00:05:00,194 --> 00:05:04,465
+And if you want to try
+a different transformation,
+
+70
+00:05:04,465 --> 00:05:08,550
+you can try for
+example to plot X square root of X.
+
+71
+00:05:08,550 --> 00:05:13,828
+So X to the power of 0.5 with
+again 50 hissed a gram bins,
+
+72
+00:05:13,828 --> 00:05:17,154
+in which case it might look like this.
+
+73
+00:05:17,154 --> 00:05:21,216
+And this actually looks
+somewhat more Gaussian.
+
+74
+00:05:21,216 --> 00:05:25,343
+But not perfectly, and
+let's try a different parameter.
+
+75
+00:05:25,343 --> 00:05:30,927
+So let me try to the power of 4.25.
+
+76
+00:05:30,927 --> 00:05:33,440
+Maybe I just a little bit too far.
+
+77
+00:05:33,440 --> 00:05:35,760
+It's the old 0.4 that
+looks pretty Gaussian.
+
+78
+00:05:35,760 --> 00:05:42,434
+So one thing you could do is replace
+X with excellent power of 0.4.
+
+79
+00:05:42,434 --> 00:05:48,420
+And so you would set X to be
+equal to X to the power of 0.4.
+
+80
+00:05:48,420 --> 00:05:53,670
+And just use the value of X in
+your training process instead.
+
+81
+00:05:53,670 --> 00:05:56,080
+Or let me show you another transformation.
+
+82
+00:05:56,080 --> 00:05:59,359
+Here, I'm going to try
+taking the log of X.
+
+83
+00:05:59,359 --> 00:06:03,641
+So log of X spotted with 50 bins,
+
+84
+00:06:03,641 --> 00:06:09,851
+I'm going to use the numpy
+log function as follows.
+
+85
+00:06:09,851 --> 00:06:14,981
+And it turns out you get an error,
+because it turns out that excellent.
+
+86
+00:06:14,981 --> 00:06:18,885
+This example has some values
+that are equal to zero, and
+
+87
+00:06:18,885 --> 00:06:22,805
+we'll log of zero is negative
+infinity is not defined.
+
+88
+00:06:22,805 --> 00:06:27,251
+So common trick is to add just
+a very tiny number there.
+
+89
+00:06:28,810 --> 00:06:33,250
+So exports 0.001, becomes non negative.
+
+90
+00:06:33,250 --> 00:06:36,327
+And so you get the hissed
+gram that looks like this.
+
+91
+00:06:36,327 --> 00:06:40,317
+But if you want the distribution to
+look more Gaussian, you can also
+
+92
+00:06:40,317 --> 00:06:44,740
+play around with this parameter,
+to try to see if there's a value of that.
+
+93
+00:06:44,740 --> 00:06:51,990
+Cause user data to look more symmetric and
+maybe look more Gaussian as follows.
+
+94
+00:06:51,990 --> 00:06:57,037
+And just as I'm doing right now
+in real time, you can see that,
+
+95
+00:06:57,037 --> 00:07:02,763
+you can very quickly change these
+parameters and plot the hissed gram.
+
+96
+00:07:02,763 --> 00:07:08,706
+In order to try to take a look and
+try to get something a bit more Gaussian,
+
+97
+00:07:08,706 --> 00:07:15,310
+than was the original data next that
+you saw in this hissed gram up above.
+
+98
+00:07:15,310 --> 00:07:18,733
+If you read the machine learning
+literature, there are some ways to
+
+99
+00:07:18,733 --> 00:07:22,408
+automatically measure how close
+these distributions are to Gaussian.
+
+100
+00:07:22,408 --> 00:07:25,641
+But I found it in practice,
+it doesn't make a big difference,
+
+101
+00:07:25,641 --> 00:07:29,240
+if you just try a few values and
+pick something that looks right to you,
+
+102
+00:07:29,240 --> 00:07:32,440
+that will work well for
+all practical purposes.
+
+103
+00:07:32,440 --> 00:07:35,939
+So, by trying things out
+in Jupiter notebook,
+
+104
+00:07:35,939 --> 00:07:41,290
+you can try to pick a transformation
+that makes your data more Gaussian.
+
+105
+00:07:41,290 --> 00:07:42,879
+And just as a reminder,
+
+106
+00:07:42,879 --> 00:07:48,365
+whatever transformation you apply to
+the training set, please remember to apply
+
+107
+00:07:48,365 --> 00:07:53,471
+the same transformation to your cross
+validation and test set data as well.
+
+108
+00:07:53,471 --> 00:07:58,500
+Other than making sure that your
+data is approximately Gaussian,
+
+109
+00:07:58,500 --> 00:08:02,992
+after you've trained your
+anomaly detection algorithm,
+
+110
+00:08:02,992 --> 00:08:07,480
+if it doesn't work that well
+on your trust validation set,
+
+111
+00:08:07,480 --> 00:08:12,999
+you can also carry out an error
+analysis process for anomaly detection.
+
+112
+00:08:12,999 --> 00:08:18,199
+In other words, you can try to look at
+where the algorithm is not yet doing well
+
+113
+00:08:18,199 --> 00:08:23,484
+whereas making errors, and then use that
+to try to come up with improvements.
+
+114
+00:08:23,484 --> 00:08:29,940
+So as a reminder, what we want is for
+P of X to be large.
+
+115
+00:08:29,940 --> 00:08:34,971
+For normal examples X, so
+greater than equal to epsilon, and
+
+116
+00:08:34,971 --> 00:08:40,510
+p f X to be small or less than epsilon,
+for the anomalous examples X.
+
+117
+00:08:40,510 --> 00:08:45,236
+When you've learned the model P
+of X from your unlabeled data,
+
+118
+00:08:45,236 --> 00:08:50,673
+the most common problem that you may
+run into is that, P of X is comparable
+
+119
+00:08:50,673 --> 00:08:55,772
+in value say is, large for
+both normal and for anomalous examples.
+
+120
+00:08:55,772 --> 00:08:59,386
+As a concrete example,
+if this is your data set,
+
+121
+00:08:59,386 --> 00:09:02,500
+you might fit that galaxy into it.
+
+122
+00:09:02,500 --> 00:09:06,660
+And if you have an example in your
+cross validation set or test set,
+
+123
+00:09:06,660 --> 00:09:11,732
+that is over here, that is anomalous,
+then this has a pretty high probability.
+
+124
+00:09:11,732 --> 00:09:17,170
+And in fact, it looks quite similar to
+the other examples in your training set.
+
+125
+00:09:17,170 --> 00:09:23,370
+And so, even though this is an anomaly,
+P of X is actually pretty large.
+
+126
+00:09:23,370 --> 00:09:28,230
+And so the algorithm will fail to flag
+this particular example as an anomaly.
+
+127
+00:09:28,230 --> 00:09:35,193
+In that case, what I would normally do is,
+try to look at that example and
+
+128
+00:09:35,193 --> 00:09:40,899
+try to figure out what is it that
+made me think is an anomaly,
+
+129
+00:09:40,899 --> 00:09:48,339
+even if this feature X one took on values
+similar to other training examples.
+
+130
+00:09:48,339 --> 00:09:52,751
+And if I can identify some
+new feature say X two,
+
+131
+00:09:52,751 --> 00:09:58,730
+that helps distinguish this
+example from the normal examples.
+
+132
+00:09:58,730 --> 00:10:03,110
+Then adding that feature, can help
+improve the performance of the algorithm.
+
+133
+00:10:03,110 --> 00:10:05,370
+Here's a picture showing what I mean.
+
+134
+00:10:05,370 --> 00:10:10,322
+If I can come up with a new feature X two,
+say, I'm trying to detect
+
+135
+00:10:10,322 --> 00:10:15,984
+fraudulent behavior, and if X one is
+the number of transactions they make,
+
+136
+00:10:15,984 --> 00:10:22,830
+maybe this user looks like they're making
+some of the transactions as everyone else.
+
+137
+00:10:22,830 --> 00:10:28,309
+But if I discover that this user has
+some insanely fast typing speed,
+
+138
+00:10:28,309 --> 00:10:35,060
+and if I were to add a new feature X two,
+that is the typing speed of this user.
+
+139
+00:10:35,060 --> 00:10:40,795
+And if it turns out that when I plot this
+data using the old feature X one and
+
+140
+00:10:40,795 --> 00:10:45,520
+this new feature X two,
+causes X two to stand out over here.
+
+141
+00:10:45,520 --> 00:10:47,496
+Then it becomes much easier for
+
+142
+00:10:47,496 --> 00:10:52,368
+the anomaly detection algorithm to
+recognize an X two is an anomalous user.
+
+143
+00:10:52,368 --> 00:10:57,057
+Because when you have this new feature
+X two, the learning anomaly may fit
+
+144
+00:10:57,057 --> 00:11:02,275
+a Gaussian distribution that assigns high
+probability to points in this region,
+
+145
+00:11:02,275 --> 00:11:06,680
+a bit lower in this region, and
+a bit lower in this region.
+
+146
+00:11:06,680 --> 00:11:12,032
+And so this example, because of
+the very anomalous value of X two,
+
+147
+00:11:12,032 --> 00:11:15,980
+becomes easier to detect as an anomaly.
+
+148
+00:11:15,980 --> 00:11:21,380
+So just to summarize the development
+process will often go through is,
+
+149
+00:11:21,380 --> 00:11:25,880
+to train the model and
+then to see what anomalies in the cross
+
+150
+00:11:25,880 --> 00:11:29,490
+validation set the algorithm
+is failing to detect.
+
+151
+00:11:29,490 --> 00:11:33,642
+And then to look at those examples
+to see if that can inspire
+
+152
+00:11:33,642 --> 00:11:38,577
+the creation of new features that
+would allow the algorithm to spot.
+
+153
+00:11:38,577 --> 00:11:43,609
+That example takes on unusually large or
+unusually small values on the new
+
+154
+00:11:43,609 --> 00:11:49,070
+features, so that you can now successfully
+flag those examples as anomalies.
+
+155
+00:11:49,070 --> 00:11:54,003
+Just as one more example, let's say you're
+building an anomaly detection system to
+
+156
+00:11:54,003 --> 00:11:56,275
+monitor computers in the data center.
+
+157
+00:11:56,275 --> 00:11:59,902
+To try to figure out if a computer
+may be behaving strangely and
+
+158
+00:11:59,902 --> 00:12:03,739
+deserves a closer look,
+maybe because of a hardware failure, or
+
+159
+00:12:03,739 --> 00:12:06,930
+because it's been hacked into or
+something.
+
+160
+00:12:06,930 --> 00:12:11,763
+So what you'd like to do is, to choose
+features that might take on unusually
+
+161
+00:12:11,763 --> 00:12:14,869
+large or
+small values in the event of an anomaly.
+
+162
+00:12:14,869 --> 00:12:19,666
+You might start off with features like X
+one is the memory use, X two is the number
+
+163
+00:12:19,666 --> 00:12:25,370
+of disk accesses per second, then the CPU
+load, and the volume of network traffic.
+
+164
+00:12:25,370 --> 00:12:30,293
+And if you train the algorithm,
+you may find that it detects
+
+165
+00:12:30,293 --> 00:12:35,650
+some anomalies but
+fails to detect some other anomalies.
+
+166
+00:12:35,650 --> 00:12:41,760
+In that case, it's not unusual to create
+new features by combining old features.
+
+167
+00:12:41,760 --> 00:12:47,460
+So, for example, if you find that
+there's a computer that is behaving
+
+168
+00:12:47,460 --> 00:12:53,750
+very strangely, but neither is CPU load
+nor network traffic is that unusual.
+
+169
+00:12:53,750 --> 00:12:57,831
+But what is unusual is,
+it has a really high CPU load,
+
+170
+00:12:57,831 --> 00:13:02,280
+while having a very low
+network traffic volume.
+
+171
+00:13:02,280 --> 00:13:07,284
+If you're running the data center that
+streams videos, then computers may have
+
+172
+00:13:07,284 --> 00:13:12,240
+high CPU load and high network traffic,
+or low CPU load and no network traffic.
+
+173
+00:13:12,240 --> 00:13:16,276
+But what's unusual about this one
+machine is a very high CPU load,
+
+174
+00:13:16,276 --> 00:13:18,460
+despite a very low traffic volume.
+
+175
+00:13:18,460 --> 00:13:21,295
+In that case,
+you might create a new feature X five,
+
+176
+00:13:21,295 --> 00:13:23,890
+which is a ratio of CPU
+load to network traffic.
+
+177
+00:13:23,890 --> 00:13:28,959
+And this new feature with hope,
+the anomaly detection algorithm
+
+178
+00:13:28,959 --> 00:13:35,422
+flagged future examples like the specific
+machine you may be seeing as anomalous.
+
+179
+00:13:35,422 --> 00:13:41,002
+Or you can also consider other features
+like the square of the CPU load,
+
+180
+00:13:41,002 --> 00:13:44,180
+divided by the network traffic volume.
+
+181
+00:13:44,180 --> 00:13:49,226
+And you can play around with
+different choices of these features.
+
+182
+00:13:49,226 --> 00:13:55,370
+In order to try to get it so that P of X
+is still large for the normal examples but
+
+183
+00:13:55,370 --> 00:14:00,570
+it becomes small in the anomalies
+in your cross validation set.
+
+184
+00:14:00,570 --> 00:14:01,790
+So that's it.
+
+185
+00:14:01,790 --> 00:14:04,540
+Thanks for
+sticking with me to the end of this week.
+
+186
+00:14:04,540 --> 00:14:08,527
+I hope you enjoy hearing about
+both clustering algorithms and
+
+187
+00:14:08,527 --> 00:14:10,682
+anomaly detection algorithms.
+
+188
+00:14:10,682 --> 00:14:13,013
+And that you also enjoy playing
+with these ideas
+
+189
+00:14:13,013 --> 00:14:14,391
+in the practice labs.
+
+190
+00:14:15,420 --> 00:14:19,238
+Next week, we'll go on to talk
+about recommender systems.
+
+191
+00:14:19,238 --> 00:14:23,350
+When you go to a website and
+recommends products, or movies, or
+
+192
+00:14:23,350 --> 00:14:24,740
+other things to you.
+
+193
+00:14:24,740 --> 00:14:28,030
+How does that algorithm actually work?
+
+194
+00:14:28,030 --> 00:14:32,560
+This is one of the most commercially
+important algorithms in machine learning
+
+195
+00:14:32,560 --> 00:14:37,224
+that gets talked about surprisingly little
+but next week we'll take a look at how
+
+196
+00:14:37,224 --> 00:14:41,684
+these algorithms work so that you understand
+the next time you go to the website and
+
+197
+00:14:41,684 --> 00:14:43,710
+then recommend something to you.
+
+198
+00:14:43,710 --> 00:14:45,610
+Maybe how that came about.
+
+199
+00:14:45,610 --> 00:14:50,120
+As was you'll be able to build other
+algorithms like that for yourself as well.
+
+200
+00:14:50,120 --> 00:14:54,161
+So have fun with the labs and

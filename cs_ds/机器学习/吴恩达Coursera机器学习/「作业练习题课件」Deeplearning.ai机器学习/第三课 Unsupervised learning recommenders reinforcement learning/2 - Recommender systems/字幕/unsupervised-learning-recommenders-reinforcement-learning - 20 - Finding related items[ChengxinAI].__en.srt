@@ -1,0 +1,671 @@
+1
+00:00:01,790 --> 00:00:05,010
+If you come to an
+online shopping website
+
+2
+00:00:05,010 --> 00:00:07,335
+and you're looking
+at a specific item,
+
+3
+00:00:07,335 --> 00:00:09,405
+say maybe a specific book,
+
+4
+00:00:09,405 --> 00:00:11,865
+the website may show
+you things like,
+
+5
+00:00:11,865 --> 00:00:13,620
+"Here are some other
+books similar to this
+
+6
+00:00:13,620 --> 00:00:16,605
+one" or if you're browsing
+a specific movie,
+
+7
+00:00:16,605 --> 00:00:17,940
+it may say, "Here are
+
+8
+00:00:17,940 --> 00:00:19,890
+some other movies
+similar to this one."
+
+9
+00:00:19,890 --> 00:00:21,795
+How do the websites do that?,
+
+10
+00:00:21,795 --> 00:00:23,550
+so that when you're
+looking at one item,
+
+11
+00:00:23,550 --> 00:00:26,790
+it gives you other similar or
+related items to consider.
+
+12
+00:00:26,790 --> 00:00:28,650
+It turns out the collaborative
+
+13
+00:00:28,650 --> 00:00:30,240
+filtering algorithm
+that we've been talking
+
+14
+00:00:30,240 --> 00:00:32,550
+about gives you a nice way to
+
+15
+00:00:32,550 --> 00:00:35,140
+find related items.
+Let's take a look.
+
+16
+00:00:35,140 --> 00:00:39,010
+As part of the collaborative
+filtering we've discussed,
+
+17
+00:00:39,010 --> 00:00:42,890
+you learned features
+x^(i) for every item i,
+
+18
+00:00:42,890 --> 00:00:44,750
+for every movie i
+or other type of
+
+19
+00:00:44,750 --> 00:00:47,125
+item they're
+recommending to users.
+
+20
+00:00:47,125 --> 00:00:48,665
+Whereas early this week,
+
+21
+00:00:48,665 --> 00:00:52,550
+I had used a hypothetical
+example of the features
+
+22
+00:00:52,550 --> 00:00:54,740
+representing how much a movie
+
+23
+00:00:54,740 --> 00:00:57,545
+is a romance movie
+versus an action movie.
+
+24
+00:00:57,545 --> 00:00:59,780
+In practice, when you
+use this algorithm to
+
+25
+00:00:59,780 --> 00:01:02,465
+learn the features
+x^(i) automatically,
+
+26
+00:01:02,465 --> 00:01:05,780
+looking at the
+individual features x_1,
+
+27
+00:01:05,780 --> 00:01:07,760
+x_2, x_3,
+
+28
+00:01:07,760 --> 00:01:10,330
+you find them to be
+quite hard to interpret.
+
+29
+00:01:10,330 --> 00:01:13,205
+Is quite hard to learn
+features and say,
+
+30
+00:01:13,205 --> 00:01:15,800
+x_1 is an action movie
+
+31
+00:01:15,800 --> 00:01:19,610
+and x_2 is as a foreign
+film and so on.
+
+32
+00:01:19,610 --> 00:01:22,925
+But nonetheless, these
+learned features,
+
+33
+00:01:22,925 --> 00:01:26,570
+collectively x_1, x_2, x_3,
+
+34
+00:01:26,570 --> 00:01:28,265
+other many features,
+
+35
+00:01:28,265 --> 00:01:31,940
+and you have collectively
+these features
+
+36
+00:01:31,940 --> 00:01:36,755
+do convey something about
+what that movie is like.
+
+37
+00:01:36,755 --> 00:01:41,570
+It turns out that given
+features x^(i) of item i,
+
+38
+00:01:41,570 --> 00:01:43,925
+if you want to find other items,
+
+39
+00:01:43,925 --> 00:01:47,435
+say other movies
+related to movie i,
+
+40
+00:01:47,435 --> 00:01:51,755
+then what you can do is try
+to find the item k with
+
+41
+00:01:51,755 --> 00:01:58,110
+features x^(k) that
+is similar to x^(i).
+
+42
+00:01:58,110 --> 00:02:03,110
+In particular, given a
+feature vector x^(k),
+
+43
+00:02:03,110 --> 00:02:05,270
+the way we determine
+what are known as
+
+44
+00:02:05,270 --> 00:02:07,550
+similar to the feature x^(i) is
+
+45
+00:02:07,550 --> 00:02:11,315
+as follows: is the sum from
+l equals 1 through n with
+
+46
+00:02:11,315 --> 00:02:16,370
+n features of x^(k)_l
+minus x^(i)_l square.
+
+47
+00:02:16,370 --> 00:02:19,715
+This turns out to be the
+squared distance between
+
+48
+00:02:19,715 --> 00:02:23,915
+x^(k) and x^(i) and in math,
+
+49
+00:02:23,915 --> 00:02:28,220
+this squared distance
+between these two vectors,
+
+50
+00:02:28,220 --> 00:02:29,840
+x^(k) and x^(i),
+
+51
+00:02:29,840 --> 00:02:32,570
+is sometimes written
+as follows as well.
+
+52
+00:02:32,570 --> 00:02:36,230
+If you find not just
+the one movie with
+
+53
+00:02:36,230 --> 00:02:38,465
+the smallest distance between
+
+54
+00:02:38,465 --> 00:02:40,935
+x^(k) and x^(i) but find say,
+
+55
+00:02:40,935 --> 00:02:43,430
+the five or 10 items with
+
+56
+00:02:43,430 --> 00:02:45,845
+the most similar
+feature vectors,
+
+57
+00:02:45,845 --> 00:02:47,135
+then you end up finding
+
+58
+00:02:47,135 --> 00:02:51,610
+five or 10 related items
+to the item x^(i).
+
+59
+00:02:51,610 --> 00:02:54,710
+If you're building a website
+and want to help users find
+
+60
+00:02:54,710 --> 00:02:56,180
+related products to
+
+61
+00:02:56,180 --> 00:02:57,920
+a specific product
+they are looking at,
+
+62
+00:02:57,920 --> 00:03:01,430
+this would be a nice
+way to do so because
+
+63
+00:03:01,430 --> 00:03:07,125
+the features x^(i) give a
+sense of what item i is about,
+
+64
+00:03:07,125 --> 00:03:08,950
+other items x^(k) with
+
+65
+00:03:08,950 --> 00:03:12,950
+similar features will turn
+out to be similar to item i.
+
+66
+00:03:12,950 --> 00:03:15,005
+It turns out later this week,
+
+67
+00:03:15,005 --> 00:03:16,430
+this idea of finding
+
+68
+00:03:16,430 --> 00:03:19,580
+related items will be a small
+building blocks that we'll
+
+69
+00:03:19,580 --> 00:03:20,855
+use to get to
+
+70
+00:03:20,855 --> 00:03:24,470
+an even more powerful
+recommended system as well.
+
+71
+00:03:24,470 --> 00:03:26,780
+Before wrapping up this section,
+
+72
+00:03:26,780 --> 00:03:28,280
+I want to mention
+
+73
+00:03:28,280 --> 00:03:31,840
+a few limitations of
+collaborative filtering.
+
+74
+00:03:31,840 --> 00:03:33,590
+In collaborative filtering, you
+
+75
+00:03:33,590 --> 00:03:35,270
+have a set of items and so
+
+76
+00:03:35,270 --> 00:03:39,095
+the users and the users have
+rated some subset of items.
+
+77
+00:03:39,095 --> 00:03:41,810
+One of this
+weaknesses is that is
+
+78
+00:03:41,810 --> 00:03:44,690
+not very good at the
+cold start problem.
+
+79
+00:03:44,690 --> 00:03:48,050
+For example, if there's a
+new item in your catalog,
+
+80
+00:03:48,050 --> 00:03:50,360
+say someone's just
+published a new movie
+
+81
+00:03:50,360 --> 00:03:53,195
+and hardly anyone has
+rated that movie yet,
+
+82
+00:03:53,195 --> 00:03:55,610
+how do you rank the new item
+
+83
+00:03:55,610 --> 00:03:58,780
+if very few users
+have rated it before?
+
+84
+00:03:58,780 --> 00:04:01,640
+Similarly, for new users
+
+85
+00:04:01,640 --> 00:04:04,145
+that have rated
+only a few items,
+
+86
+00:04:04,145 --> 00:04:07,795
+how can we make sure we show
+them something reasonable?
+
+87
+00:04:07,795 --> 00:04:10,155
+We could see in
+an earlier video,
+
+88
+00:04:10,155 --> 00:04:12,500
+how mean normalization can help
+
+89
+00:04:12,500 --> 00:04:15,110
+with this and it
+does help a lot.
+
+90
+00:04:15,110 --> 00:04:17,480
+But perhaps even better ways to
+
+91
+00:04:17,480 --> 00:04:20,465
+show users that rated
+very few items,
+
+92
+00:04:20,465 --> 00:04:22,970
+things that are likely
+to interest them.
+
+93
+00:04:22,970 --> 00:04:26,089
+This is called the
+cold start problem,
+
+94
+00:04:26,089 --> 00:04:28,835
+because when you
+have a new item,
+
+95
+00:04:28,835 --> 00:04:30,515
+there are few users have rated,
+
+96
+00:04:30,515 --> 00:04:35,105
+or we have a new user that's
+rated very few items,
+
+97
+00:04:35,105 --> 00:04:38,000
+the results of collaborative
+filtering for that item
+
+98
+00:04:38,000 --> 00:04:40,895
+or for that user may
+not be very accurate.
+
+99
+00:04:40,895 --> 00:04:42,230
+The second limitation of
+
+100
+00:04:42,230 --> 00:04:44,660
+collaborative filtering
+is it doesn't give you
+
+101
+00:04:44,660 --> 00:04:47,185
+a natural way to use
+side information
+
+102
+00:04:47,185 --> 00:04:50,190
+or additional information
+about items or users.
+
+103
+00:04:50,190 --> 00:04:53,989
+For example, for a given
+movie in your catalog,
+
+104
+00:04:53,989 --> 00:04:56,510
+you might know what is
+the genre of the movie,
+
+105
+00:04:56,510 --> 00:04:57,980
+who had a movie stars,
+
+106
+00:04:57,980 --> 00:04:59,150
+whether it is a studio,
+
+107
+00:04:59,150 --> 00:05:01,310
+what is the budget, and so on.
+
+108
+00:05:01,310 --> 00:05:04,780
+You may have a lot of
+features about a given movie.
+
+109
+00:05:04,780 --> 00:05:06,515
+For a single user,
+
+110
+00:05:06,515 --> 00:05:09,185
+you may know something
+about their demographics,
+
+111
+00:05:09,185 --> 00:05:12,110
+such as their age,
+gender, location.
+
+112
+00:05:12,110 --> 00:05:15,200
+They express preferences,
+such as if they tell
+
+113
+00:05:15,200 --> 00:05:17,330
+you they like certain
+movies genres
+
+114
+00:05:17,330 --> 00:05:19,330
+but not other movies genres,
+
+115
+00:05:19,330 --> 00:05:22,970
+or it turns out if you know
+the user's IP address,
+
+116
+00:05:22,970 --> 00:05:26,050
+that can tell you a lot
+about a user's location,
+
+117
+00:05:26,050 --> 00:05:29,060
+and knowing the user's
+location might also help
+
+118
+00:05:29,060 --> 00:05:32,200
+you guess what might the
+user be interested in,
+
+119
+00:05:32,200 --> 00:05:35,180
+or if you know whether
+the user is accessing
+
+120
+00:05:35,180 --> 00:05:39,140
+your site on a mobile
+or on a desktop,
+
+121
+00:05:39,140 --> 00:05:41,510
+or if you know what web
+browser they're using.
+
+122
+00:05:41,510 --> 00:05:44,090
+It turns out all of these
+are little cues you can get.
+
+123
+00:05:44,090 --> 00:05:45,320
+They can be surprisingly
+
+124
+00:05:45,320 --> 00:05:48,305
+correlated with the
+preferences of a user.
+
+125
+00:05:48,305 --> 00:05:51,200
+It turns out by the way,
+that it is known that users,
+
+126
+00:05:51,200 --> 00:05:53,780
+that use the Chrome
+versus Firefox versus
+
+127
+00:05:53,780 --> 00:05:56,495
+Safari versus the
+Microsoft Edge browser,
+
+128
+00:05:56,495 --> 00:05:58,595
+they actually behave in
+very different ways.
+
+129
+00:05:58,595 --> 00:06:01,820
+Even knowing the user
+web browser can give you
+
+130
+00:06:01,820 --> 00:06:03,170
+a hint when you have collected
+
+131
+00:06:03,170 --> 00:06:06,235
+enough data of what this
+particular user may like.
+
+132
+00:06:06,235 --> 00:06:08,795
+Even though
+collaborative filtering,
+
+133
+00:06:08,795 --> 00:06:10,700
+we have multiple users give
+
+134
+00:06:10,700 --> 00:06:12,695
+you ratings of multiple items,
+
+135
+00:06:12,695 --> 00:06:14,740
+is a very powerful
+set of algorithms,
+
+136
+00:06:14,740 --> 00:06:16,900
+it also has some limitations.
+
+137
+00:06:16,900 --> 00:06:18,330
+In the next video,
+
+138
+00:06:18,330 --> 00:06:19,490
+let's go on to
+
+139
+00:06:19,490 --> 00:06:21,920
+develop content-based
+filtering algorithms,
+
+140
+00:06:21,920 --> 00:06:24,835
+which can address a lot
+of these limitations.
+
+141
+00:06:24,835 --> 00:06:26,900
+Content-based filtering
+algorithms are
+
+142
+00:06:26,900 --> 00:06:28,820
+a steady art technique used in
+
+143
+00:06:28,820 --> 00:06:30,950
+many commercial
+applications today.
+
+144
+00:06:30,950 --> 00:06:33,810
+Let's go take a look

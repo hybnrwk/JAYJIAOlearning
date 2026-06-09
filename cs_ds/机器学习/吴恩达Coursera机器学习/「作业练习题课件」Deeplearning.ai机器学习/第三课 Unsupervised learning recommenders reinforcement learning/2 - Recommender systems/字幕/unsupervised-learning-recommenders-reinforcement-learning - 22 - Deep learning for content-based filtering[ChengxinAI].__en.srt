@@ -1,0 +1,938 @@
+1
+00:00:00,410 --> 00:00:02,745
+A good way to develop
+
+2
+00:00:02,745 --> 00:00:04,620
+a content-based
+filtering algorithm
+
+3
+00:00:04,620 --> 00:00:06,450
+is to use deep learning.
+
+4
+00:00:06,450 --> 00:00:09,480
+The approach you see in
+this video is the way that
+
+5
+00:00:09,480 --> 00:00:12,060
+many important commercial
+
+6
+00:00:12,060 --> 00:00:14,595
+state-of-the-art content-based
+filtering algorithms
+
+7
+00:00:14,595 --> 00:00:16,650
+are built today.
+Let's take a look.
+
+8
+00:00:16,650 --> 00:00:20,505
+Recall that in our approach,
+
+9
+00:00:20,505 --> 00:00:24,000
+given a feature vector
+describing a user,
+
+10
+00:00:24,000 --> 00:00:26,520
+such as age and
+gender, and country,
+
+11
+00:00:26,520 --> 00:00:29,100
+and so on, we have to compute
+
+12
+00:00:29,100 --> 00:00:32,745
+the vector v_u, and similarly,
+
+13
+00:00:32,745 --> 00:00:34,934
+given a vector describing
+
+14
+00:00:34,934 --> 00:00:37,410
+a movie such as year of release,
+
+15
+00:00:37,410 --> 00:00:39,180
+the stars in the
+movie, and so on,
+
+16
+00:00:39,180 --> 00:00:42,300
+we have to compute a vector v_m.
+
+17
+00:00:42,300 --> 00:00:45,095
+In order to do the former,
+
+18
+00:00:45,095 --> 00:00:47,780
+we're going to use
+a neural network.
+
+19
+00:00:47,780 --> 00:00:50,060
+The first neural network will
+
+20
+00:00:50,060 --> 00:00:53,645
+be what we'll call
+the user network.
+
+21
+00:00:53,645 --> 00:00:56,680
+Here's an example
+of user network,
+
+22
+00:00:56,680 --> 00:00:58,490
+that takes as input the list
+
+23
+00:00:58,490 --> 00:01:01,010
+of features of the user, x_u,
+
+24
+00:01:01,010 --> 00:01:02,780
+so the age, the gender,
+
+25
+00:01:02,780 --> 00:01:05,725
+the country of the
+user, and so on.
+
+26
+00:01:05,725 --> 00:01:08,555
+Then using a few layers,
+
+27
+00:01:08,555 --> 00:01:10,760
+say dense neural network layers,
+
+28
+00:01:10,760 --> 00:01:17,360
+it will output this vector
+v_u that describes the user.
+
+29
+00:01:17,360 --> 00:01:20,465
+Notice that in this
+neural network,
+
+30
+00:01:20,465 --> 00:01:24,960
+the output layer has 32 units,
+
+31
+00:01:24,960 --> 00:01:28,995
+and so v_u is actually
+a list of 32 numbers.
+
+32
+00:01:28,995 --> 00:01:30,690
+Unlike most of the
+neural networks
+
+33
+00:01:30,690 --> 00:01:31,955
+that we were using earlier,
+
+34
+00:01:31,955 --> 00:01:36,110
+the final layer is not
+a layer with one unit,
+
+35
+00:01:36,110 --> 00:01:38,725
+it's a layer with 32 units.
+
+36
+00:01:38,725 --> 00:01:44,435
+Similarly, to compute
+v_m for a movie,
+
+37
+00:01:44,435 --> 00:01:47,825
+we can have a movie
+network as follows,
+
+38
+00:01:47,825 --> 00:01:51,365
+that takes as input
+features of the movie and
+
+39
+00:01:51,365 --> 00:01:53,060
+through a few layers of
+
+40
+00:01:53,060 --> 00:01:56,090
+a neural network
+is outputting v_m,
+
+41
+00:01:56,090 --> 00:01:59,440
+that vector that
+describes the movie.
+
+42
+00:01:59,440 --> 00:02:05,030
+Finally, we'll predict the
+rating of this user on
+
+43
+00:02:05,030 --> 00:02:10,850
+that movie as v_ u
+dot product with v_m.
+
+44
+00:02:10,850 --> 00:02:14,645
+Notice that the user network
+and the movie network can
+
+45
+00:02:14,645 --> 00:02:16,970
+hypothetically have
+different numbers of
+
+46
+00:02:16,970 --> 00:02:18,620
+hidden layers and
+different numbers
+
+47
+00:02:18,620 --> 00:02:20,090
+of units per hidden layer.
+
+48
+00:02:20,090 --> 00:02:22,190
+All the output layer needs to
+
+49
+00:02:22,190 --> 00:02:24,845
+have the same size of
+the same dimension.
+
+50
+00:02:24,845 --> 00:02:27,980
+In the description
+you've seen so far,
+
+51
+00:02:27,980 --> 00:02:33,560
+we were predicting the 1-5
+or 0-5 star movie rating.
+
+52
+00:02:33,560 --> 00:02:35,660
+If we had binary labels,
+
+53
+00:02:35,660 --> 00:02:39,710
+if y was to the user
+like or favor an item,
+
+54
+00:02:39,710 --> 00:02:43,819
+then you can also modify
+this algorithm to output.
+
+55
+00:02:43,819 --> 00:02:46,865
+Instead of v_u.v_m,
+
+56
+00:02:46,865 --> 00:02:49,040
+you can apply the
+sigmoid function
+
+57
+00:02:49,040 --> 00:02:51,170
+to that and use this to
+
+58
+00:02:51,170 --> 00:02:56,640
+predict the probability
+that's y^i,j is 1.
+
+59
+00:02:56,640 --> 00:02:58,610
+To flesh out this notation,
+
+60
+00:02:58,610 --> 00:03:00,740
+we can also add
+superscripts i and
+
+61
+00:03:00,740 --> 00:03:03,290
+j here if we want
+to emphasize that
+
+62
+00:03:03,290 --> 00:03:06,965
+this is the prediction
+by user j on movie
+
+63
+00:03:06,965 --> 00:03:10,100
+i. I've drawn here
+the user network
+
+64
+00:03:10,100 --> 00:03:13,310
+and the movie network as two
+separate neural networks.
+
+65
+00:03:13,310 --> 00:03:14,960
+But it turns out
+that we can actually
+
+66
+00:03:14,960 --> 00:03:16,670
+draw them together in
+
+67
+00:03:16,670 --> 00:03:20,590
+a single diagram as if it
+was a single neural network.
+
+68
+00:03:20,590 --> 00:03:22,635
+This is what it looks like.
+
+69
+00:03:22,635 --> 00:03:25,850
+On the upper portion
+of this diagram,
+
+70
+00:03:25,850 --> 00:03:28,145
+we have the user network which
+
+71
+00:03:28,145 --> 00:03:31,670
+inputs x_u and ends
+up computing v_u.
+
+72
+00:03:31,670 --> 00:03:34,250
+On the lower portion
+of this diagram,
+
+73
+00:03:34,250 --> 00:03:36,740
+we have what was
+the movie network,
+
+74
+00:03:36,740 --> 00:03:40,465
+the input is x_m and
+ends up computing v_m,
+
+75
+00:03:40,465 --> 00:03:45,335
+and these two vectors are
+then dot-product together.
+
+76
+00:03:45,335 --> 00:03:47,930
+This dot here
+represents dot product,
+
+77
+00:03:47,930 --> 00:03:51,635
+and this gives us
+our prediction.
+
+78
+00:03:51,635 --> 00:03:56,015
+Now, this model has
+a lot of parameters.
+
+79
+00:03:56,015 --> 00:03:58,490
+Each of these layers of
+a neural network has
+
+80
+00:03:58,490 --> 00:04:01,345
+a usual set of parameters
+of the neural network.
+
+81
+00:04:01,345 --> 00:04:04,470
+How do you train all
+the parameters of
+
+82
+00:04:04,470 --> 00:04:08,610
+both the user network
+and the movie network?
+
+83
+00:04:08,610 --> 00:04:13,235
+What we're going to do is
+construct a cost function J,
+
+84
+00:04:13,235 --> 00:04:15,470
+which is going to
+be very similar to
+
+85
+00:04:15,470 --> 00:04:16,670
+the cost function that you
+
+86
+00:04:16,670 --> 00:04:18,455
+saw in collaborative filtering,
+
+87
+00:04:18,455 --> 00:04:20,990
+which is assuming
+that you do have
+
+88
+00:04:20,990 --> 00:04:24,860
+some data of some users
+having rated some movies,
+
+89
+00:04:24,860 --> 00:04:27,590
+we're going to sum
+over all pairs i and
+
+90
+00:04:27,590 --> 00:04:30,905
+j of where you have labels,
+
+91
+00:04:30,905 --> 00:04:32,615
+where i,j equals 1
+
+92
+00:04:32,615 --> 00:04:36,270
+of the difference
+between the prediction.
+
+93
+00:04:36,270 --> 00:04:40,440
+That would be v_u^j
+dot product with
+
+94
+00:04:40,440 --> 00:04:46,455
+v_m^i minus y^ij squared.
+
+95
+00:04:46,455 --> 00:04:49,475
+The way we would
+train this model
+
+96
+00:04:49,475 --> 00:04:53,000
+is depending on the parameters
+of the neural network,
+
+97
+00:04:53,000 --> 00:04:55,730
+you end up with
+different vectors
+
+98
+00:04:55,730 --> 00:04:58,960
+here for the users
+and for the movies.
+
+99
+00:04:58,960 --> 00:05:02,090
+What we'd like to do is
+train the parameters
+
+100
+00:05:02,090 --> 00:05:04,760
+of the neural network
+so that you end up with
+
+101
+00:05:04,760 --> 00:05:08,720
+vectors for the users and for
+the movies that results in
+
+102
+00:05:08,720 --> 00:05:12,895
+small squared error into
+predictions you get out here.
+
+103
+00:05:12,895 --> 00:05:15,380
+To be clear, there's
+
+104
+00:05:15,380 --> 00:05:17,915
+no separate training procedure
+
+105
+00:05:17,915 --> 00:05:20,285
+for the user and movie networks.
+
+106
+00:05:20,285 --> 00:05:22,055
+This expression down here,
+
+107
+00:05:22,055 --> 00:05:25,205
+this is the cost
+function used to train
+
+108
+00:05:25,205 --> 00:05:29,090
+all the parameters of the
+user and the movie networks.
+
+109
+00:05:29,090 --> 00:05:32,120
+We're going to judge the two
+networks according to how
+
+110
+00:05:32,120 --> 00:05:36,100
+well v_u and v_m predict y^ij,
+
+111
+00:05:36,100 --> 00:05:38,135
+and with this cost function,
+
+112
+00:05:38,135 --> 00:05:40,520
+we're going to use
+gradient descent or
+
+113
+00:05:40,520 --> 00:05:43,070
+some other optimization
+algorithm to tune
+
+114
+00:05:43,070 --> 00:05:45,380
+the parameters of the
+neural network to cause
+
+115
+00:05:45,380 --> 00:05:48,640
+the cost function J to
+be as small as possible.
+
+116
+00:05:48,640 --> 00:05:51,335
+If you want to
+regularize this model,
+
+117
+00:05:51,335 --> 00:05:53,720
+we can also add the usual neural
+
+118
+00:05:53,720 --> 00:05:56,270
+network regularization term to
+
+119
+00:05:56,270 --> 00:05:58,370
+encourage the neural
+networks to keep
+
+120
+00:05:58,370 --> 00:06:01,570
+the values of their
+parameters small.
+
+121
+00:06:01,570 --> 00:06:04,115
+It turns out, after you've
+trained this model,
+
+122
+00:06:04,115 --> 00:06:07,640
+you can also use this
+to find similar items.
+
+123
+00:06:07,640 --> 00:06:09,740
+This is akin to
+what we have seen
+
+124
+00:06:09,740 --> 00:06:12,215
+with collaborative
+filtering features,
+
+125
+00:06:12,215 --> 00:06:13,850
+helping you find similar items
+
+126
+00:06:13,850 --> 00:06:16,560
+as well. Let's take a look.
+
+127
+00:06:16,720 --> 00:06:21,030
+V_u^j is a vector of
+length 32 that describes
+
+128
+00:06:21,030 --> 00:06:25,035
+a user j that have
+features x_ u^j.
+
+129
+00:06:25,035 --> 00:06:29,775
+Similarly, v^i_m is a vector
+
+130
+00:06:29,775 --> 00:06:31,590
+of length 32 that describes
+
+131
+00:06:31,590 --> 00:06:34,920
+a movie with these
+features over here.
+
+132
+00:06:34,920 --> 00:06:37,140
+Given a specific movie,
+
+133
+00:06:37,140 --> 00:06:41,490
+what if you want to find
+other movies similar to it?
+
+134
+00:06:41,490 --> 00:06:48,135
+Well, this vector v^i_m
+describes the movie i.
+
+135
+00:06:48,135 --> 00:06:51,425
+If you want to find other
+movies similar to it,
+
+136
+00:06:51,425 --> 00:06:56,944
+you can then look for other
+movies k so that the distance
+
+137
+00:06:56,944 --> 00:06:59,030
+between the vector describing
+
+138
+00:06:59,030 --> 00:07:02,510
+movie k and the vector
+describing movie i,
+
+139
+00:07:02,510 --> 00:07:05,920
+that the squared
+distance is small.
+
+140
+00:07:05,920 --> 00:07:09,380
+This expression plays
+a role similar to what
+
+141
+00:07:09,380 --> 00:07:12,740
+we had previously with
+collaborative filtering,
+
+142
+00:07:12,740 --> 00:07:16,790
+where we talked about finding
+a movie with features
+
+143
+00:07:16,790 --> 00:07:21,095
+x^k that was similar
+to the features x^i.
+
+144
+00:07:21,095 --> 00:07:22,715
+Thus, with this approach,
+
+145
+00:07:22,715 --> 00:07:26,950
+you can also find items
+similar to a given item.
+
+146
+00:07:26,950 --> 00:07:31,560
+One final note, this can be
+pre-computed ahead of time.
+
+147
+00:07:31,560 --> 00:07:32,885
+By that I mean,
+
+148
+00:07:32,885 --> 00:07:36,410
+you can run a compute
+server overnight to
+
+149
+00:07:36,410 --> 00:07:37,955
+go through the list of
+
+150
+00:07:37,955 --> 00:07:40,130
+all your movies and
+for every movie,
+
+151
+00:07:40,130 --> 00:07:44,330
+find similar movies to
+it, so that tomorrow,
+
+152
+00:07:44,330 --> 00:07:46,190
+if a user comes to
+the website and
+
+153
+00:07:46,190 --> 00:07:48,245
+they're browsing
+a specific movie,
+
+154
+00:07:48,245 --> 00:07:50,580
+you can already have
+pre-computed to
+
+155
+00:07:50,580 --> 00:07:52,655
+10 or 20 most similar movies
+
+156
+00:07:52,655 --> 00:07:54,560
+to show to the
+user at that time.
+
+157
+00:07:54,560 --> 00:07:57,080
+The fact that you can
+pre-compute ahead of
+
+158
+00:07:57,080 --> 00:07:59,780
+time what's similar
+to a given movie,
+
+159
+00:07:59,780 --> 00:08:01,310
+will turn out to be important
+
+160
+00:08:01,310 --> 00:08:03,260
+later when we talk about scaling
+
+161
+00:08:03,260 --> 00:08:07,880
+up this approach to a very
+large catalog of movies.
+
+162
+00:08:07,880 --> 00:08:10,775
+That's how you can use
+deep learning to build
+
+163
+00:08:10,775 --> 00:08:13,975
+a content-based
+filtering algorithm.
+
+164
+00:08:13,975 --> 00:08:15,950
+You might remember when we
+
+165
+00:08:15,950 --> 00:08:17,720
+were talking about
+decision trees
+
+166
+00:08:17,720 --> 00:08:18,830
+and the pros and cons of
+
+167
+00:08:18,830 --> 00:08:21,180
+decision trees versus
+neural networks.
+
+168
+00:08:21,180 --> 00:08:23,210
+I mentioned that one
+of the benefits of
+
+169
+00:08:23,210 --> 00:08:26,285
+neural networks is that
+it's easier to take
+
+170
+00:08:26,285 --> 00:08:27,680
+multiple neural networks and
+
+171
+00:08:27,680 --> 00:08:28,970
+put them together to make them
+
+172
+00:08:28,970 --> 00:08:32,125
+work in console to
+build a larger system.
+
+173
+00:08:32,125 --> 00:08:35,450
+What you just saw was
+actually an example of that,
+
+174
+00:08:35,450 --> 00:08:37,910
+where we could take
+a user network and
+
+175
+00:08:37,910 --> 00:08:40,310
+the movie network and
+put them together,
+
+176
+00:08:40,310 --> 00:08:42,935
+and then take the inner
+product of the outputs.
+
+177
+00:08:42,935 --> 00:08:44,480
+This ability to put
+
+178
+00:08:44,480 --> 00:08:47,690
+two neural networks
+together this how we've
+
+179
+00:08:47,690 --> 00:08:49,085
+managed to come up with
+
+180
+00:08:49,085 --> 00:08:50,885
+a more complex architecture
+
+181
+00:08:50,885 --> 00:08:53,405
+that turns out to
+be quite powerful.
+
+182
+00:08:53,405 --> 00:08:55,010
+One notes, if you're
+
+183
+00:08:55,010 --> 00:08:56,975
+implementing these
+algorithms in practice,
+
+184
+00:08:56,975 --> 00:08:58,940
+I find that developers often
+
+185
+00:08:58,940 --> 00:09:01,040
+end up spending a lot
+of time carefully
+
+186
+00:09:01,040 --> 00:09:03,470
+designing the features
+needed to feed
+
+187
+00:09:03,470 --> 00:09:06,130
+into these content-based
+filtering algorithms.
+
+188
+00:09:06,130 --> 00:09:08,740
+If we end up building one of
+these systems commercially,
+
+189
+00:09:08,740 --> 00:09:11,090
+it may be worth
+spending some time
+
+190
+00:09:11,090 --> 00:09:15,420
+engineering good features for
+this application as well.
+
+191
+00:09:15,680 --> 00:09:19,100
+In terms of these applications,
+
+192
+00:09:19,100 --> 00:09:20,720
+one limitation
+that the algorithm
+
+193
+00:09:20,720 --> 00:09:22,550
+as we've described
+it is it can be
+
+194
+00:09:22,550 --> 00:09:25,550
+computationally very
+expensive to run if you have
+
+195
+00:09:25,550 --> 00:09:27,290
+a large catalog of a lot of
+
+196
+00:09:27,290 --> 00:09:29,720
+different movies you
+may want to recommend.
+
+197
+00:09:29,720 --> 00:09:32,210
+In the next video, let's
+take a look at some of
+
+198
+00:09:32,210 --> 00:09:34,340
+the practical issues
+and how you can modify
+
+199
+00:09:34,340 --> 00:09:37,040
+this algorithm to make a
+scale that are working
+
+200
+00:09:37,040 --> 00:09:40,205
+on even very large
+item catalogs.
+
+201
+00:09:40,205 --> 00:09:43,260
+Let's go see that

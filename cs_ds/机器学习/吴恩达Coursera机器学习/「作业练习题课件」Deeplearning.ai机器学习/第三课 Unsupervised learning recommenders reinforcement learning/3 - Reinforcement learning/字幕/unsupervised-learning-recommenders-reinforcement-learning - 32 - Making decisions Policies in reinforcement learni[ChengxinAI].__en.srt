@@ -1,0 +1,244 @@
+1
+00:00:01,040 --> 00:00:03,195
+Let's formalize how
+
+2
+00:00:03,195 --> 00:00:05,760
+a reinforcement learning
+algorithm picks actions.
+
+3
+00:00:05,760 --> 00:00:08,010
+In this video, you'll
+learn about what is
+
+4
+00:00:08,010 --> 00:00:11,040
+a policy in reinforcement
+learning algorithm.
+
+5
+00:00:11,040 --> 00:00:12,195
+Let's take a look.
+
+6
+00:00:12,195 --> 00:00:15,780
+As we've seen, there are
+many different ways that you
+
+7
+00:00:15,780 --> 00:00:19,020
+can take actions in the
+reinforcement learning problem.
+
+8
+00:00:19,020 --> 00:00:21,990
+For example, we could decide
+
+9
+00:00:21,990 --> 00:00:25,605
+to always go for
+the nearer reward,
+
+10
+00:00:25,605 --> 00:00:29,070
+so you go left if this
+leftmost reward is
+
+11
+00:00:29,070 --> 00:00:33,250
+nearer or go right if this
+rightmost reward is nearer.
+
+12
+00:00:33,250 --> 00:00:37,490
+Another way we could choose
+actions is to always go for
+
+13
+00:00:37,490 --> 00:00:40,229
+the larger reward or
+
+14
+00:00:40,229 --> 00:00:43,470
+we could always go
+for smaller reward,
+
+15
+00:00:43,470 --> 00:00:44,945
+doesn't seem like a good idea,
+
+16
+00:00:44,945 --> 00:00:46,585
+but it is another option,
+
+17
+00:00:46,585 --> 00:00:49,160
+or you could choose to go left
+
+18
+00:00:49,160 --> 00:00:52,730
+unless you're just one step
+away from the lesser reward,
+
+19
+00:00:52,730 --> 00:00:54,905
+in which case, you
+go for that one.
+
+20
+00:00:54,905 --> 00:00:59,765
+In reinforcement learning,
+our goal is to come up with
+
+21
+00:00:59,765 --> 00:01:05,059
+a function which is
+called a policy Pi,
+
+22
+00:01:05,059 --> 00:01:08,165
+whose job it is to take as input
+
+23
+00:01:08,165 --> 00:01:11,345
+any state s and map it
+
+24
+00:01:11,345 --> 00:01:15,545
+to some action a that
+it wants us to take.
+
+25
+00:01:15,545 --> 00:01:19,745
+For example, for this
+policy here at the bottom,
+
+26
+00:01:19,745 --> 00:01:23,615
+this policy would say that
+if you're in state 2,
+
+27
+00:01:23,615 --> 00:01:27,230
+then it maps us to
+the left action.
+
+28
+00:01:27,230 --> 00:01:28,970
+If you're in state 3,
+
+29
+00:01:28,970 --> 00:01:30,710
+the policy says go left.
+
+30
+00:01:30,710 --> 00:01:33,450
+If you are in state 4 also go
+
+31
+00:01:33,450 --> 00:01:38,145
+left and if you're in
+state 5, go right.
+
+32
+00:01:38,145 --> 00:01:40,805
+Pi applied to state S,
+
+33
+00:01:40,805 --> 00:01:44,905
+tells us what action it wants
+us to take in that state.
+
+34
+00:01:44,905 --> 00:01:51,155
+The goal of reinforcement
+learning is to find a policy Pi
+
+35
+00:01:51,155 --> 00:01:53,810
+or Pi of S that tells
+you what action to
+
+36
+00:01:53,810 --> 00:01:57,175
+take in every state so as
+to maximize the return.
+
+37
+00:01:57,175 --> 00:02:00,260
+By the way, I don't
+know if policy is
+
+38
+00:02:00,260 --> 00:02:04,430
+the most descriptive
+term of what pi is,
+
+39
+00:02:04,430 --> 00:02:06,170
+but it's one of
+those terms that's
+
+40
+00:02:06,170 --> 00:02:08,255
+become standard in
+reinforcement learning.
+
+41
+00:02:08,255 --> 00:02:09,740
+Maybe calling Pi a
+
+42
+00:02:09,740 --> 00:02:12,350
+controller rather than
+a policy would be
+
+43
+00:02:12,350 --> 00:02:15,450
+more natural
+terminology but policy
+
+44
+00:02:15,450 --> 00:02:16,830
+is what everyone in
+
+45
+00:02:16,830 --> 00:02:19,105
+reinforcement learning
+now calls this.
+
+46
+00:02:19,105 --> 00:02:20,960
+In the last video, we've gone
+
+47
+00:02:20,960 --> 00:02:22,670
+through quite a few concepts in
+
+48
+00:02:22,670 --> 00:02:26,330
+reinforcement learning from
+states to actions to reward,
+
+49
+00:02:26,330 --> 00:02:28,145
+to returns, to policies.
+
+50
+00:02:28,145 --> 00:02:29,870
+Let's do a quick
+review of them in
+
+51
+00:02:29,870 --> 00:02:31,700
+the next video and
+then we'll go on to
+
+52
+00:02:31,700 --> 00:02:35,625
+start developing algorithms
+for finding that policies.
+
+53
+00:02:35,625 --> 00:02:38,160

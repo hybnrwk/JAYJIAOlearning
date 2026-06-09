@@ -1,0 +1,649 @@
+1
+00:00:02,131 --> 00:00:05,712
+Welcome to this final week of
+the machine learning specialization.
+
+2
+00:00:05,712 --> 00:00:09,399
+It's a little bit bittersweet for
+me that we're approaching the end of this
+
+3
+00:00:09,399 --> 00:00:12,223
+specialization, but
+I'm looking forward to this week,
+
+4
+00:00:12,223 --> 00:00:15,641
+sharing with you some exciting
+ideas about reinforcement learning.
+
+5
+00:00:15,641 --> 00:00:20,195
+In machine learning, reinforcement
+learning is one of those ideas that while
+
+6
+00:00:20,195 --> 00:00:23,921
+not very widely applied in
+commercial applications yet today,
+
+7
+00:00:23,921 --> 00:00:26,407
+is one of the pillars of machine learning.
+
+8
+00:00:26,407 --> 00:00:31,640
+And has lots of exciting research backing
+it up and improving it every single day.
+
+9
+00:00:31,640 --> 00:00:36,040
+So let's start by taking a look at
+what is reinforcement learning.
+
+10
+00:00:36,040 --> 00:00:38,040
+Let's start with an example.
+
+11
+00:00:38,040 --> 00:00:41,029
+Here's a picture of
+an autonomous helicopter.
+
+12
+00:00:41,029 --> 00:00:45,021
+This is actually the Stanford autonomous
+helicopter, weighs 32 pounds and
+
+13
+00:00:45,021 --> 00:00:47,448
+it's actually sitting
+in my office right now.
+
+14
+00:00:47,448 --> 00:00:51,850
+Like many other autonomous helicopters,
+it's instrumented with an onboard
+
+15
+00:00:51,850 --> 00:00:54,984
+computer, GPS, accelerometers,
+and gyroscopes and
+
+16
+00:00:54,984 --> 00:00:59,196
+the magnetic compass so it knows where
+it is at all times quite accurately.
+
+17
+00:00:59,196 --> 00:01:02,996
+And if I were to give you
+the keys to this helicopter and
+
+18
+00:01:02,996 --> 00:01:06,974
+ask you to write a program to fly it,
+how would you do so?
+
+19
+00:01:06,974 --> 00:01:11,357
+Radio controlled helicopters are
+controlled with joysticks like these and
+
+20
+00:01:11,357 --> 00:01:16,012
+so the task is ten times per second you're
+given the position and orientation and
+
+21
+00:01:16,012 --> 00:01:18,018
+speed and so on of the helicopter.
+
+22
+00:01:18,018 --> 00:01:22,837
+And you have to decide how to move these
+two control sticks in order to keep
+
+23
+00:01:22,837 --> 00:01:25,290
+the helicopter balanced in the air.
+
+24
+00:01:25,290 --> 00:01:25,980
+By the way,
+
+25
+00:01:25,980 --> 00:01:30,606
+I've flown radio controlled helicopters
+as well as quad rotor drones myself.
+
+26
+00:01:30,606 --> 00:01:34,375
+And radio controlled helicopters
+are actually quite a bit harder to fly,
+
+27
+00:01:34,375 --> 00:01:36,761
+quite a bit harder to
+keep balanced in the air.
+
+28
+00:01:36,761 --> 00:01:39,807
+So how do you write a program
+to do this automatically?
+
+29
+00:01:39,807 --> 00:01:42,324
+Let me show you a fun
+video of something we got
+
+30
+00:01:42,324 --> 00:01:44,720
+a Stanford autonomous helicopter to do.
+
+31
+00:01:44,720 --> 00:01:48,656
+Here's a video of it flying under
+the control of a reinforcement learning
+
+32
+00:01:48,656 --> 00:01:49,740
+algorithm.
+
+33
+00:01:49,740 --> 00:01:51,910
+And let me play the video.
+
+34
+00:01:51,910 --> 00:01:54,178
+I was actually the cameraman that day and
+
+35
+00:01:54,178 --> 00:01:57,380
+this is the helicopter flying
+on the computer control and
+
+36
+00:01:57,380 --> 00:02:00,940
+if I zoom out the video,
+you see the trees planted in the sky.
+
+37
+00:02:00,940 --> 00:02:02,893
+So using reinforcement learning,
+
+38
+00:02:02,893 --> 00:02:06,230
+we actually got this helicopter
+to learn to fly upside down.
+
+39
+00:02:06,230 --> 00:02:07,990
+We told it to fly upside down.
+
+40
+00:02:07,990 --> 00:02:12,938
+And so reinforced learning has been
+used to get helicopters to fly a wide
+
+41
+00:02:12,938 --> 00:02:16,940
+range of stunts or
+we call them aerobatic maneuvers.
+
+42
+00:02:16,940 --> 00:02:19,540
+By the way, if you're interested
+in seeing other videos,
+
+43
+00:02:19,540 --> 00:02:21,740
+you can also check them out at this URL.
+
+44
+00:02:21,740 --> 00:02:27,844
+So how do you get a helicopter to fly
+itself using reinforcement learning?
+
+45
+00:02:27,844 --> 00:02:32,510
+The task is given the position of
+the helicopter to decide how to
+
+46
+00:02:32,510 --> 00:02:34,454
+move the control sticks.
+
+47
+00:02:34,454 --> 00:02:39,437
+In reinforcement learning,
+we call the position and orientation and
+
+48
+00:02:39,437 --> 00:02:43,040
+speed and so
+on of the helicopter the state s.
+
+49
+00:02:43,040 --> 00:02:48,612
+And so the task is to find a function that
+maps from the state of the helicopter
+
+50
+00:02:48,612 --> 00:02:53,663
+to an action a, meaning how far to
+push the two control sticks in order
+
+51
+00:02:53,663 --> 00:02:59,640
+to keep the helicopter balanced in
+the air and flying and without crashing.
+
+52
+00:02:59,640 --> 00:03:05,390
+One way you could attempt this
+problem is to use supervised learning.
+
+53
+00:03:05,390 --> 00:03:09,440
+It turns out this is not a great approach
+for autonomous helicopter flying.
+
+54
+00:03:09,440 --> 00:03:15,155
+But you could say, well if we could get
+a bunch of observations of states and
+
+55
+00:03:15,155 --> 00:03:20,810
+maybe have an expert human pilot tell
+us what's the best action y to take.
+
+56
+00:03:20,810 --> 00:03:25,462
+You could then train a neural
+network using supervised learning to
+
+57
+00:03:25,462 --> 00:03:30,446
+directly learn the mapping from
+the states s which I'm calling x here,
+
+58
+00:03:30,446 --> 00:03:34,340
+to an action a which I'm
+calling the label y here.
+
+59
+00:03:34,340 --> 00:03:38,943
+But it turns out that when the helicopter
+is moving through the air is
+
+60
+00:03:38,943 --> 00:03:43,740
+actually very ambiguous, what is
+the exact one right action to take.
+
+61
+00:03:43,740 --> 00:03:47,074
+Do you tilt a bit to the left or
+a lot more to the left or
+
+62
+00:03:47,074 --> 00:03:50,590
+increase the helicopter
+stress a little bit or a lot?
+
+63
+00:03:50,590 --> 00:03:56,540
+It's actually very difficult to get
+a data set of x and the ideal action y.
+
+64
+00:03:56,540 --> 00:04:01,130
+So that's why for a lot of task of
+controlling a robot like a helicopter and
+
+65
+00:04:01,130 --> 00:04:05,645
+other robots, the supervised learning
+approach doesn't work well and
+
+66
+00:04:05,645 --> 00:04:08,640
+we instead use reinforcement learning.
+
+67
+00:04:08,640 --> 00:04:14,302
+Now a key input to a reinforcement
+learning is something called the reward or
+
+68
+00:04:14,302 --> 00:04:19,697
+the reward function which tells
+the helicopter when it's doing well and
+
+69
+00:04:19,697 --> 00:04:22,040
+when it's doing poorly.
+
+70
+00:04:22,040 --> 00:04:26,720
+So the way I like to think of the reward
+function is a bit like training a dog.
+
+71
+00:04:26,720 --> 00:04:29,939
+When I was growing up,
+my family had a dog and
+
+72
+00:04:29,939 --> 00:04:33,688
+it was my job to train the dog or
+the puppy to behave.
+
+73
+00:04:33,688 --> 00:04:35,719
+So how do you get a puppy to behave well?
+
+74
+00:04:35,719 --> 00:04:38,970
+Well, you can't demonstrate
+that much to the puppy.
+
+75
+00:04:38,970 --> 00:04:43,318
+Instead you let it do its thing and
+whenever it does something good,
+
+76
+00:04:43,318 --> 00:04:44,701
+you go, good dog.
+
+77
+00:04:44,701 --> 00:04:47,608
+And whenever they did something bad,
+you go, bad dog.
+
+78
+00:04:47,608 --> 00:04:52,032
+And then hopefully it learns by itself
+how to do more of the good dog and
+
+79
+00:04:52,032 --> 00:04:53,879
+fewer of the bad dog things.
+
+80
+00:04:53,879 --> 00:04:56,830
+So training with the reinforcement
+learning algorithm is like that.
+
+81
+00:04:56,830 --> 00:05:00,495
+When the helicopter's flying well,
+you go, good helicopter and
+
+82
+00:05:00,495 --> 00:05:03,858
+if it does something bad like crash,
+you go, bad helicopter.
+
+83
+00:05:03,858 --> 00:05:08,223
+And then it's the reinforcement learning
+algorithm's job to figure out how to get
+
+84
+00:05:08,223 --> 00:05:11,918
+more of the good helicopter and
+fewer of the bad helicopter outcomes.
+
+85
+00:05:11,918 --> 00:05:15,662
+One way to think of why
+reinforcement learning is so
+
+86
+00:05:15,662 --> 00:05:20,376
+powerful is you have to tell it what
+to do rather than how to do it.
+
+87
+00:05:20,376 --> 00:05:25,278
+And specifying the reward function rather
+than the optimal action gives you a lot
+
+88
+00:05:25,278 --> 00:05:28,171
+more flexibility in how
+you design the system.
+
+89
+00:05:28,171 --> 00:05:33,739
+Concretely for flying the helicopter,
+whenever it is flying well,
+
+90
+00:05:33,739 --> 00:05:39,024
+you may give it a reward of plus
+one every second it is flying well.
+
+91
+00:05:39,024 --> 00:05:43,984
+And maybe whenever it's flying poorly
+you may give it a negative reward or
+
+92
+00:05:43,984 --> 00:05:50,160
+if it ever crashes, you may give it a very
+large negative reward like negative 1,000.
+
+93
+00:05:50,160 --> 00:05:54,135
+And so this would incentivize
+the helicopter to spend a lot more
+
+94
+00:05:54,135 --> 00:05:57,640
+time flying well and
+hopefully to never crash.
+
+95
+00:05:57,640 --> 00:06:00,045
+But here's another fun video.
+
+96
+00:06:00,045 --> 00:06:05,971
+I was using the good dog bad dog analogy
+for reinforcement learning for many years.
+
+97
+00:06:05,971 --> 00:06:10,564
+And then one day I actually managed
+to get my hands on a robotic dog and
+
+98
+00:06:10,564 --> 00:06:14,917
+could actually use this reinforcement
+learning good dog bad dog
+
+99
+00:06:14,917 --> 00:06:18,718
+methodology to train a robot
+dog to get over obstacles.
+
+100
+00:06:18,718 --> 00:06:23,684
+So this is a video of a robot dog
+that using reinforcement learning,
+
+101
+00:06:23,684 --> 00:06:28,562
+which rewards it, moving toward
+the left of the screen has learned
+
+102
+00:06:28,562 --> 00:06:33,635
+how to place its feet carefully or
+climb over a variety of obstacles.
+
+103
+00:06:33,635 --> 00:06:37,796
+And if you think about what it
+takes to program a dog like this,
+
+104
+00:06:37,796 --> 00:06:41,078
+I have no idea,
+I really don't know how to tell it
+
+105
+00:06:41,078 --> 00:06:45,590
+what's the best way to place its
+legs to get over a given obstacle.
+
+106
+00:06:45,590 --> 00:06:50,530
+All of these things were figured out
+automatically by the robot just by giving
+
+107
+00:06:50,530 --> 00:06:52,734
+it rewards that incentivizes it,
+
+108
+00:06:52,734 --> 00:06:57,040
+making progress toward the goal
+on the left of the screen.
+
+109
+00:06:57,040 --> 00:07:01,875
+Today, reinforcement learning has been
+successfully applied to a variety of
+
+110
+00:07:01,875 --> 00:07:04,962
+applications ranging
+from controlling robots.
+
+111
+00:07:04,962 --> 00:07:09,798
+And in fact later this week in the
+practice lab, you implement for yourself
+
+112
+00:07:09,798 --> 00:07:15,340
+a reinforcement learning algorithm to
+land a lunar lander in simulation.
+
+113
+00:07:15,340 --> 00:07:18,630
+It's also been used for
+factory optimization.
+
+114
+00:07:18,630 --> 00:07:23,258
+How do you rearrange things in
+the factory to maximize throughput and
+
+115
+00:07:23,258 --> 00:07:26,541
+efficiency as well as
+financial stock trading.
+
+116
+00:07:26,541 --> 00:07:31,312
+For example, one of my friends was
+working on efficient stock execution.
+
+117
+00:07:31,312 --> 00:07:35,487
+So if you decided to sell a million
+shares over the next several days, well,
+
+118
+00:07:35,487 --> 00:07:39,664
+you may not want to dump a million shares
+on the stock market suddenly because
+
+119
+00:07:39,664 --> 00:07:41,650
+that will move prices against you.
+
+120
+00:07:41,650 --> 00:07:46,544
+So what's the best way to sequence out
+your trades over time so that you can sell
+
+121
+00:07:46,544 --> 00:07:51,840
+the shares you want to sell and hopefully
+get the best possible price for them?
+
+122
+00:07:51,840 --> 00:07:56,400
+Finally, there have also been many
+applications of reinforcement
+
+123
+00:07:56,400 --> 00:08:01,360
+learning to playing games, everything
+from checkers to chess to the card
+
+124
+00:08:01,360 --> 00:08:05,940
+game of bridge to go as well as for
+playing many video games.
+
+125
+00:08:05,940 --> 00:08:08,117
+So that's reinforcement learning.
+
+126
+00:08:08,117 --> 00:08:12,126
+Even though reinforcement learning
+is not used nearly as much
+
+127
+00:08:12,126 --> 00:08:17,440
+as supervised learning, it is still
+used in a few applications today.
+
+128
+00:08:17,440 --> 00:08:22,046
+And the key idea is rather than you
+needing to tell the algorithm what is
+
+129
+00:08:22,046 --> 00:08:27,201
+the right output y for every single input,
+all you have to do instead is specify
+
+130
+00:08:27,201 --> 00:08:32,620
+a reward function that tells it when it's
+doing well and when it's doing poorly.
+
+131
+00:08:32,620 --> 00:08:37,511
+And it's the job of the algorithm to
+automatically figure out how to choose
+
+132
+00:08:37,511 --> 00:08:38,523
+good actions.
+
+133
+00:08:38,523 --> 00:08:42,143
+With that, let's now go into
+the next video where we'll formalize
+
+134
+00:08:42,143 --> 00:08:46,274
+the reinforcement learning problem and
+also start to develop algorithms for
+
+135
+00:08:46,274 --> 00:08:48,260

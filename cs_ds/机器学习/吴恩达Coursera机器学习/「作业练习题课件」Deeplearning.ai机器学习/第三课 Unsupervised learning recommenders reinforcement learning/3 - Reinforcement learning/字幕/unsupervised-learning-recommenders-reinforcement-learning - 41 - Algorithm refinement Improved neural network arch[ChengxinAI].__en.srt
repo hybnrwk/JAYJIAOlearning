@@ -1,0 +1,315 @@
+1
+00:00:00,980 --> 00:00:03,435
+In the last video, we saw
+
+2
+00:00:03,435 --> 00:00:06,675
+a neural network
+architecture that will input
+
+3
+00:00:06,675 --> 00:00:09,090
+the state and action and attempt
+
+4
+00:00:09,090 --> 00:00:12,420
+to output the Q
+function, Q of s, a.
+
+5
+00:00:12,420 --> 00:00:14,430
+It turns out that
+there's a change to
+
+6
+00:00:14,430 --> 00:00:16,200
+neural network architecture that
+
+7
+00:00:16,200 --> 00:00:18,615
+make this algorithm
+much more efficient.
+
+8
+00:00:18,615 --> 00:00:21,600
+Most implementations
+of DQN actually use
+
+9
+00:00:21,600 --> 00:00:23,820
+this more efficient architecture
+
+10
+00:00:23,820 --> 00:00:26,625
+that we'll see in this
+video. Let's take a look.
+
+11
+00:00:26,625 --> 00:00:28,760
+This was the neural
+network architecture
+
+12
+00:00:28,760 --> 00:00:30,155
+we saw previously,
+
+13
+00:00:30,155 --> 00:00:35,225
+where it would input 12
+numbers and output Q of s, a.
+
+14
+00:00:35,225 --> 00:00:38,545
+Whenever we are in some state s,
+
+15
+00:00:38,545 --> 00:00:41,240
+we would have to carry
+out inference in
+
+16
+00:00:41,240 --> 00:00:44,090
+the neural network
+separately four times to
+
+17
+00:00:44,090 --> 00:00:47,420
+compute these four
+values so as to pick
+
+18
+00:00:47,420 --> 00:00:51,595
+the action a that gives
+us the largest Q value.
+
+19
+00:00:51,595 --> 00:00:54,890
+This is inefficient
+because we have to carry
+
+20
+00:00:54,890 --> 00:00:58,585
+our inference four times
+from every single state.
+
+21
+00:00:58,585 --> 00:01:01,190
+Instead, it turns out
+to be more efficient
+
+22
+00:01:01,190 --> 00:01:03,530
+to train a single
+neural network to
+
+23
+00:01:03,530 --> 00:01:08,600
+output all four of these
+values simultaneously.
+
+24
+00:01:08,600 --> 00:01:10,165
+This is what it looks like.
+
+25
+00:01:10,165 --> 00:01:12,080
+Here's a modified neural network
+
+26
+00:01:12,080 --> 00:01:14,315
+architecture where the input
+
+27
+00:01:14,315 --> 00:01:18,110
+is eight numbers corresponding
+
+28
+00:01:18,110 --> 00:01:21,125
+to the state of
+the lunar lander.
+
+29
+00:01:21,125 --> 00:01:22,820
+It then goes through
+the neural network
+
+30
+00:01:22,820 --> 00:01:25,070
+with 64 units in the
+first hidden layer,
+
+31
+00:01:25,070 --> 00:01:27,455
+64 units in the
+second hidden layer.
+
+32
+00:01:27,455 --> 00:01:32,070
+Now the output unit
+has four output units,
+
+33
+00:01:32,070 --> 00:01:35,270
+and the job of the neural
+network is to have
+
+34
+00:01:35,270 --> 00:01:38,550
+the four output
+units output Q of s,
+
+35
+00:01:38,550 --> 00:01:40,635
+nothing, Q of s, left,
+
+36
+00:01:40,635 --> 00:01:42,000
+Q of s, main,
+
+37
+00:01:42,000 --> 00:01:43,935
+and q of s, right.
+
+38
+00:01:43,935 --> 00:01:46,625
+The job of the neural
+network is to compute
+
+39
+00:01:46,625 --> 00:01:51,335
+simultaneously the Q value
+for all four possible actions
+
+40
+00:01:51,335 --> 00:01:54,200
+for when we are in the state
+
+41
+00:01:54,200 --> 00:01:57,020
+s. This turns out to
+be more efficient
+
+42
+00:01:57,020 --> 00:02:00,410
+because given the state
+s we can run inference
+
+43
+00:02:00,410 --> 00:02:04,235
+just once and get all
+four of these values,
+
+44
+00:02:04,235 --> 00:02:06,275
+and then very quickly
+pick the action
+
+45
+00:02:06,275 --> 00:02:09,470
+a that maximizes Q of s, a.
+
+46
+00:02:09,470 --> 00:02:12,335
+You notice also in
+Bellman's equations,
+
+47
+00:02:12,335 --> 00:02:15,905
+there's a step in which we
+have to compute max over
+
+48
+00:02:15,905 --> 00:02:19,610
+a prime Q of s prime a prime,
+
+49
+00:02:19,610 --> 00:02:21,410
+this maximizes a gamma
+and then there was
+
+50
+00:02:21,410 --> 00:02:23,705
+plus R of s up here.
+
+51
+00:02:23,705 --> 00:02:25,940
+This dual network also makes it
+
+52
+00:02:25,940 --> 00:02:28,070
+much more efficient
+to compute this
+
+53
+00:02:28,070 --> 00:02:30,530
+because we're getting
+Q of s prime a
+
+54
+00:02:30,530 --> 00:02:33,410
+prime for all actions a
+prime at the same time.
+
+55
+00:02:33,410 --> 00:02:35,780
+You can then just pick
+the max to compute
+
+56
+00:02:35,780 --> 00:02:37,175
+this value for
+
+57
+00:02:37,175 --> 00:02:39,530
+the right-hand side of
+Bellman's equations.
+
+58
+00:02:39,530 --> 00:02:41,854
+This change to the neural
+network architecture
+
+59
+00:02:41,854 --> 00:02:43,445
+makes the RN much
+more efficient,
+
+60
+00:02:43,445 --> 00:02:44,840
+and so we will be using
+
+61
+00:02:44,840 --> 00:02:48,115
+this architecture in
+the practice lab.
+
+62
+00:02:48,115 --> 00:02:49,970
+Next, there's one other
+
+63
+00:02:49,970 --> 00:02:51,390
+idea that'll help
+the algorithm a
+
+64
+00:02:51,390 --> 00:02:54,740
+lot which is something called
+an Epsilon-greedy policy,
+
+65
+00:02:54,740 --> 00:02:55,940
+which affects how you choose
+
+66
+00:02:55,940 --> 00:02:58,100
+actions even while
+you're still learning.
+
+67
+00:02:58,100 --> 00:02:59,720
+Let's take a look
+at the next video
+
+68
+00:02:59,720 --> 00:03:01,740

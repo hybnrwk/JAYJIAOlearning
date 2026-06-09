@@ -1,0 +1,551 @@
+1
+00:00:01,740 --> 00:00:06,617
+The very first step of the K means
+clustering algorithm, was to choose random
+
+2
+00:00:06,617 --> 00:00:12,040
+locations as the initial guesses for
+the cluster centroids mu one through mu K.
+
+3
+00:00:12,040 --> 00:00:15,250
+But how do you actually
+take that random guess.
+
+4
+00:00:15,250 --> 00:00:20,193
+Let's take a look at that in this video,
+as well as how you can take multiple
+
+5
+00:00:20,193 --> 00:00:23,980
+attempts at the initial guesses
+with mu one through mu K.
+
+6
+00:00:23,980 --> 00:00:27,350
+That will result in your finding
+a better set of clusters.
+
+7
+00:00:27,350 --> 00:00:31,666
+Let's take a look,
+here again is the K means algorithm and
+
+8
+00:00:31,666 --> 00:00:37,053
+in this video let's take a look at how
+you can implement this first step.
+
+9
+00:00:37,053 --> 00:00:41,859
+When running K means you should pretty
+much always choose the number of
+
+10
+00:00:41,859 --> 00:00:46,022
+cluster central's K to be
+lessened to training examples m.
+
+11
+00:00:46,022 --> 00:00:50,836
+It doesn't really make sense to have
+K greater than m because then there
+
+12
+00:00:50,836 --> 00:00:55,490
+won't even be enough training examples
+to have at least one training
+
+13
+00:00:55,490 --> 00:00:58,340
+example per cluster centroids.
+
+14
+00:00:58,340 --> 00:01:03,561
+So in our earlier example we had
+K equals two and m equals 30.
+
+15
+00:01:04,840 --> 00:01:09,598
+In order to choose the cluster centroids,
+
+16
+00:01:09,598 --> 00:01:16,940
+the most common way is to randomly
+pick K training examples.
+
+17
+00:01:16,940 --> 00:01:23,958
+So here is a training set where if I were
+to randomly pick two training examples,
+
+18
+00:01:23,958 --> 00:01:27,856
+maybe I end up picking this one and
+this one.
+
+19
+00:01:27,856 --> 00:01:35,140
+And then we would set new one through mu
+K equal to these K training examples.
+
+20
+00:01:35,140 --> 00:01:40,093
+So I might initialize my
+red cluster centroid here,
+
+21
+00:01:40,093 --> 00:01:45,045
+and initialize my blue
+cluster sent troy over here,
+
+22
+00:01:45,045 --> 00:01:48,773
+in the example where K was equal to two.
+
+23
+00:01:48,773 --> 00:01:55,044
+And it turns out that if this was
+your random initialization and
+
+24
+00:01:55,044 --> 00:01:59,775
+you were to run K means you
+pray end up with K means
+
+25
+00:01:59,775 --> 00:02:06,040
+deciding that these are the two
+classes in the data set.
+
+26
+00:02:06,040 --> 00:02:10,679
+Notes that this method of initializing the
+cost of central is a little bit different
+
+27
+00:02:10,679 --> 00:02:14,201
+than what I had used in
+the illustration in the earlier videos.
+
+28
+00:02:14,201 --> 00:02:18,243
+Where I was initializing the cluster
+centroids mu one and mu two to be just
+
+29
+00:02:18,243 --> 00:02:22,361
+random points rather than sitting on
+top of specific training examples.
+
+30
+00:02:24,040 --> 00:02:28,340
+I've done that to make the illustrations
+clearer in the earlier videos.
+
+31
+00:02:28,340 --> 00:02:32,805
+But what I'm showing in this slide is
+actually a much more commonly used way of
+
+32
+00:02:32,805 --> 00:02:35,151
+initializing the clusters centroids.
+
+33
+00:02:36,840 --> 00:02:43,258
+Now with this method there is a chance
+that you end up with an initialization of
+
+34
+00:02:43,258 --> 00:02:50,087
+the cluster centroids where the red cross
+is here and maybe the blue cross is here.
+
+35
+00:02:50,087 --> 00:02:55,818
+And depending on how you choose
+the random initial central centroids
+
+36
+00:02:55,818 --> 00:03:02,640
+kineys\g raw end up picking a difference
+set of causes for your data set.
+
+37
+00:03:02,640 --> 00:03:07,653
+Let's look at a slightly more complex
+example, where we're going to look
+
+38
+00:03:07,653 --> 00:03:12,761
+at this data set and try to find three
+clusters so k equals three in this data.
+
+39
+00:03:13,940 --> 00:03:20,289
+If you were to run K means with one random
+initialization of the cluster centroid,
+
+40
+00:03:20,289 --> 00:03:25,830
+you may get this result up here and
+this looks like a pretty good choice.
+
+41
+00:03:25,830 --> 00:03:30,231
+Pretty good clustering of the data
+into three different clusters.
+
+42
+00:03:30,231 --> 00:03:35,129
+But with a different initialization,
+say you had happened to initialize
+
+43
+00:03:35,129 --> 00:03:39,000
+two of the cluster centroids
+within this group of points.
+
+44
+00:03:39,000 --> 00:03:43,446
+And one within this group of points,
+after running k means you might
+
+45
+00:03:43,446 --> 00:03:48,040
+end up with this clustering,
+which doesn't look as good.
+
+46
+00:03:48,040 --> 00:03:53,204
+And this turns out to be a local optima,
+in which K-means is trying
+
+47
+00:03:53,204 --> 00:03:58,369
+to minimize the distortion cost function,
+that cost function J of
+
+48
+00:03:58,369 --> 00:04:04,140
+C one through CM and mu one through
+mu K that you saw in the last video.
+
+49
+00:04:04,140 --> 00:04:09,601
+But with this less fortunate
+choice of random initialization,
+
+50
+00:04:09,601 --> 00:04:14,061
+it had just happened to get
+stuck in a local minimum.
+
+51
+00:04:15,340 --> 00:04:18,893
+And here's another example
+of a local minimum,
+
+52
+00:04:18,893 --> 00:04:23,830
+where a different random initialization
+course came in to find this
+
+53
+00:04:23,830 --> 00:04:27,121
+clustering of the data
+into three clusters,
+
+54
+00:04:27,121 --> 00:04:32,251
+which again doesn't seem as good as
+the one that you saw up here on top.
+
+55
+00:04:33,540 --> 00:04:40,610
+So if you want to give k means multiple
+shots at finding the best local optimum.
+
+56
+00:04:40,610 --> 00:04:44,221
+If you want to try multiple
+random initialization, so
+
+57
+00:04:44,221 --> 00:04:49,440
+give it a better chance of finding
+this good clustering up on top.
+
+58
+00:04:49,440 --> 00:04:52,531
+One other thing you could
+do with the kings algorithm
+
+59
+00:04:52,531 --> 00:04:56,761
+is to run it multiple times and
+then to try to find the best local optima.
+
+60
+00:04:57,940 --> 00:05:02,806
+And it turns out that if you were
+to run k means three times say, and
+
+61
+00:05:02,806 --> 00:05:06,361
+end up with these three
+distinct clusterings.
+
+62
+00:05:06,361 --> 00:05:10,366
+Then one way to choose between
+these three solutions,
+
+63
+00:05:10,366 --> 00:05:15,241
+is to compute the cost function J for
+all three of these solutions,
+
+64
+00:05:15,241 --> 00:05:19,350
+all three of these choices of
+clusters found by k means.
+
+65
+00:05:19,350 --> 00:05:23,561
+And then to pick one of these
+three according to which one
+
+66
+00:05:23,561 --> 00:05:27,961
+of them gives you the lowest value for
+the cost function J.
+
+67
+00:05:29,740 --> 00:05:34,143
+And in fact, if you look at this
+grouping of clusters up here,
+
+68
+00:05:34,143 --> 00:05:39,760
+this green cross has relatively small
+square distances, all the green dots.
+
+69
+00:05:39,760 --> 00:05:44,820
+The red cross is relatively small distance
+and red dots and similarly the blue cross.
+
+70
+00:05:44,820 --> 00:05:50,740
+And so the cost function J will be
+relatively small for this example on top.
+
+71
+00:05:50,740 --> 00:05:57,350
+But here, the blue cross has larger
+distances to all of the blue dots.
+
+72
+00:05:57,350 --> 00:06:02,081
+And here the red cross has larger
+distances to all of the red dots,
+
+73
+00:06:02,081 --> 00:06:07,942
+which is why the cost function J, for
+these examples down below would be larger.
+
+74
+00:06:07,942 --> 00:06:11,512
+Which is why if you pick
+from these three options,
+
+75
+00:06:11,512 --> 00:06:16,540
+the one with the smallest distortion
+of the smallest cost function J.
+
+76
+00:06:16,540 --> 00:06:21,340
+You end up selecting this choice
+of the cluster centroids.
+
+77
+00:06:21,340 --> 00:06:26,332
+So let me write this out more formally
+into an algorithm, and wish you would
+
+78
+00:06:26,332 --> 00:06:31,181
+ranking means multiple times using
+different random initialization.
+
+79
+00:06:32,340 --> 00:06:38,815
+Here's the algorithm, if you want to
+use 100 random initialization for
+
+80
+00:06:38,815 --> 00:06:44,381
+K-means, then you would run
+100 times randomly initialized
+
+81
+00:06:44,381 --> 00:06:49,661
+K-means using the method that
+you saw earlier in this video.
+
+82
+00:06:50,740 --> 00:06:54,917
+Pick K training examples and
+let the cluster centuries
+
+83
+00:06:54,917 --> 00:06:59,382
+initially be the locations of
+those K training examples.
+
+84
+00:06:59,382 --> 00:07:05,108
+Using that random initialization,
+run the K-means algorithm to convergence.
+
+85
+00:07:05,108 --> 00:07:11,022
+And that will give you a choice of cluster
+assignments and cluster centroids.
+
+86
+00:07:11,022 --> 00:07:12,414
+And then finally,
+
+87
+00:07:12,414 --> 00:07:17,551
+you would compute the distortion
+compute the cost function as follows.
+
+88
+00:07:18,840 --> 00:07:21,340
+After doing this, say 100 times,
+
+89
+00:07:21,340 --> 00:07:26,946
+you would finally pick the set of
+clusters, that gave the lowest cost.
+
+90
+00:07:26,946 --> 00:07:31,603
+And it turns out that if you do
+this will often give you a much
+
+91
+00:07:31,603 --> 00:07:35,883
+better set of clusters,
+with a much lower distortion
+
+92
+00:07:35,883 --> 00:07:40,561
+function than if you were to
+run K means only a single time.
+
+93
+00:07:42,040 --> 00:07:45,540
+I plugged in the number up here as 100.
+
+94
+00:07:45,540 --> 00:07:47,441
+When I'm using this method,
+
+95
+00:07:47,441 --> 00:07:52,625
+doing this somewhere between say 50
+to 1000 times would be pretty common.
+
+96
+00:07:52,625 --> 00:07:56,899
+Where, if you run this procedure
+a lot more than 1000 times,
+
+97
+00:07:56,899 --> 00:07:59,710
+it tends to get computational expensive.
+
+98
+00:07:59,710 --> 00:08:05,240
+And you tend to have diminishing
+returns when you run it a lot of times.
+
+99
+00:08:05,240 --> 00:08:07,504
+Whereas trying at least maybe 50 or
+
+100
+00:08:07,504 --> 00:08:11,594
+100 random initializations,
+will often give you a much better
+
+101
+00:08:11,594 --> 00:08:16,361
+result than if you only had one shot at
+picking a good random initialization.
+
+102
+00:08:17,640 --> 00:08:22,416
+But with this technique you are much more
+likely to end up with this good choice
+
+103
+00:08:22,416 --> 00:08:23,679
+of clusters on top.
+
+104
+00:08:23,679 --> 00:08:27,440
+And these less superior local
+minima down at the bottom.
+
+105
+00:08:27,440 --> 00:08:30,933
+So that's it, when I'm using
+the K means algorithm myself,
+
+106
+00:08:30,933 --> 00:08:34,509
+I will almost always use more
+than one random initialization.
+
+107
+00:08:34,509 --> 00:08:39,178
+Because it just causes K means to do a
+much better job minimizing the distortion
+
+108
+00:08:39,178 --> 00:08:43,581
+cost function and finding a much better
+choice for the cost of centroids.
+
+109
+00:08:45,040 --> 00:08:47,544
+Before we wrap up our
+discussion of K means,
+
+110
+00:08:47,544 --> 00:08:51,220
+there's just one more video in
+which I hope to discuss with you.
+
+111
+00:08:51,220 --> 00:08:54,830
+The question of how do you choose
+the number of clusters centroids?
+
+112
+00:08:54,830 --> 00:08:57,540
+How do you choose the value of K?
+
+113
+00:08:57,540 --> 00:09:00,451
+Let's go on to the next video

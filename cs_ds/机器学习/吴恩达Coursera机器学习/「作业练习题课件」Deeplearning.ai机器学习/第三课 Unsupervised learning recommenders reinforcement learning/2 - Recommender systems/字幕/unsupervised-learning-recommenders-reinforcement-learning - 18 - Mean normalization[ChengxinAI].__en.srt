@@ -1,0 +1,569 @@
+1
+00:00:01,890 --> 00:00:05,922
+Back in the first course,
+you have seen how for linear regression,
+
+2
+00:00:05,922 --> 00:00:09,410
+future normalization can help
+the algorithm run faster.
+
+3
+00:00:09,410 --> 00:00:12,140
+In the case of building
+a recommended system
+
+4
+00:00:12,140 --> 00:00:15,680
+with numbers wide such as movie
+ratings from one to five or
+
+5
+00:00:15,680 --> 00:00:20,425
+zero to five stars, it turns out your
+algorithm will run more efficiently.
+
+6
+00:00:20,425 --> 00:00:25,490
+And also perform a bit better if you
+first carry out mean normalization.
+
+7
+00:00:25,490 --> 00:00:30,978
+That is if you normalize the movie ratings
+to have a consistent average value,
+
+8
+00:00:30,978 --> 00:00:33,660
+let's take a look at what that means.
+
+9
+00:00:33,660 --> 00:00:36,540
+So here's the data set
+that we've been using.
+
+10
+00:00:36,540 --> 00:00:41,699
+And down below is the cost function
+you used to learn the parameters for
+
+11
+00:00:41,699 --> 00:00:42,590
+the model.
+
+12
+00:00:42,590 --> 00:00:46,638
+In order to explain mean normalization,
+
+13
+00:00:46,638 --> 00:00:53,480
+Im ctually going to add fifth user
+Eve who has not yet rated any movies.
+
+14
+00:00:53,480 --> 00:00:58,237
+And you see in a little bit that
+adding mean normalization will
+
+15
+00:00:58,237 --> 00:01:02,930
+help the algorithm make better
+predictions on the user Eve.
+
+16
+00:01:02,930 --> 00:01:07,771
+In fact, if you were to train
+a collaborative filtering algorithm
+
+17
+00:01:07,771 --> 00:01:12,440
+on this data, then because we
+are trying to make the parameters w
+
+18
+00:01:12,440 --> 00:01:15,733
+small because of this regularization term.
+
+19
+00:01:15,733 --> 00:01:20,386
+If you were to run
+the algorithm on this dataset,
+
+20
+00:01:20,386 --> 00:01:26,174
+you actually end up with
+the parameters w for the fifth user,
+
+21
+00:01:26,174 --> 00:01:33,464
+for the user Eve to be equal to [0
+0] as well as quite likely b(5) = 0.
+
+22
+00:01:33,464 --> 00:01:38,260
+Because Eve hasn't rated any movies yet,
+the parameters w and
+
+23
+00:01:38,260 --> 00:01:43,329
+b don't affect this first term in
+the cost function because none of
+
+24
+00:01:43,329 --> 00:01:48,880
+Eve's movie's rating play a role in
+this squared error cost function.
+
+25
+00:01:48,880 --> 00:01:55,520
+And so minimizing this means making
+the parameters w as small as possible.
+
+26
+00:01:55,520 --> 00:01:57,221
+We didn't really regularize b.
+
+27
+00:01:57,221 --> 00:02:03,850
+But if you initialize b to 0 as the
+default, you end up with b(%) = 0 as well.
+
+28
+00:02:03,850 --> 00:02:09,333
+But if these are the parameters for
+user 5 that is for
+
+29
+00:02:09,333 --> 00:02:15,065
+Eve, then what the average
+will end up doing is predict
+
+30
+00:02:15,065 --> 00:02:23,070
+that all of Eve's movies ratings
+with be w(%).x for movie i + b(5).
+
+31
+00:02:23,070 --> 00:02:27,000
+And this is equal to 0 if w and
+b above equals 0.
+
+32
+00:02:27,000 --> 00:02:31,265
+And so this algorithm will predict that
+if you have a new user that has not yet
+
+33
+00:02:31,265 --> 00:02:35,258
+rated anything, we think they'll
+rate all movies with zero stars and
+
+34
+00:02:35,258 --> 00:02:37,900
+that's not particularly hopeful.
+
+35
+00:02:37,900 --> 00:02:42,561
+So in this video, we'll see that
+mean normalization will help this
+
+36
+00:02:42,561 --> 00:02:47,142
+algorithm come up with better
+predictions of the movie ratings for
+
+37
+00:02:47,142 --> 00:02:50,360
+a new user that has not yet
+rated any movies.
+
+38
+00:02:50,360 --> 00:02:53,566
+In order to describe mean normalization,
+
+39
+00:02:53,566 --> 00:02:58,730
+let me take all of the values here
+including all the question marks for
+
+40
+00:02:58,730 --> 00:03:02,841
+Eve and put them in a two
+dimensional matrix like this.
+
+41
+00:03:02,841 --> 00:03:07,368
+Just to write out all the ratings
+including the question marks in a more
+
+42
+00:03:07,368 --> 00:03:09,528
+sustained and more compact way.
+
+43
+00:03:09,528 --> 00:03:12,248
+To carry out mean normalization,
+
+44
+00:03:12,248 --> 00:03:16,747
+what we're going to do is take
+all of these ratings and for
+
+45
+00:03:16,747 --> 00:03:21,280
+each movie,
+compute the average rating that was given.
+
+46
+00:03:21,280 --> 00:03:26,830
+So movie one had two 5s and two 0s and
+so the average rating is 2.5.
+
+47
+00:03:26,830 --> 00:03:31,410
+Movie two had a 5 and a 0,
+so that averages out to 2.5.
+
+48
+00:03:31,410 --> 00:03:34,400
+Movie three 4 and 0 averages out to 2.
+
+49
+00:03:34,400 --> 00:03:38,810
+Movie four averages out to 2.25 rating.
+
+50
+00:03:38,810 --> 00:03:45,100
+And movie five not that popular,
+has an average 1.25 rating.
+
+51
+00:03:45,100 --> 00:03:47,891
+So I'm going to take all
+of these five numbers and
+
+52
+00:03:47,891 --> 00:03:52,328
+gather them into a vector which I'm
+going to call μ because this is the vector
+
+53
+00:03:52,328 --> 00:03:55,421
+of the average ratings that
+each of the movies had.
+
+54
+00:03:55,421 --> 00:03:59,437
+Averaging over just the users that
+did read that particular movie.
+
+55
+00:03:59,437 --> 00:04:04,599
+Instead of using these original 0
+to 5 star ratings over here, I'm
+
+56
+00:04:04,599 --> 00:04:10,834
+going to take this and subtract from every
+rating the mean rating that it was given.
+
+57
+00:04:10,834 --> 00:04:15,610
+So for example this movie rating was 5.
+
+58
+00:04:15,610 --> 00:04:20,519
+I'm going to subtract 2.5
+giving me 2.5 over here.
+
+59
+00:04:20,519 --> 00:04:23,031
+This movie had a 0 star rating.
+
+60
+00:04:23,031 --> 00:04:29,158
+I'm going to subtract 2.25 giving
+me a -2.25 rating and so on for all
+
+61
+00:04:29,158 --> 00:04:35,500
+of the now five users including the new
+user Eve as well as for all five movies.
+
+62
+00:04:35,500 --> 00:04:39,870
+Then these new values on the right
+become your new values of Y(i,j).
+
+63
+00:04:39,870 --> 00:04:45,372
+We're going to pretend that user 1 had
+given a 2.5 rating to movie one and
+
+64
+00:04:45,372 --> 00:04:48,230
+the -2.25 rating to movie four.
+
+65
+00:04:48,230 --> 00:04:53,119
+And using this, you can then learn w(j),
+
+66
+00:04:53,119 --> 00:04:59,065
+b(j) and x(i) same as before for
+user j on movie i,
+
+67
+00:04:59,065 --> 00:05:04,830
+you would predict w(j).x(i) + b(j).
+
+68
+00:05:04,830 --> 00:05:09,891
+But because we had subtracted off µi for
+movie i during this mean
+
+69
+00:05:09,891 --> 00:05:14,764
+normalization step,
+in order to predict not a negative star
+
+70
+00:05:14,764 --> 00:05:19,760
+rating which is impossible for
+user rates from 0 to 5 stars.
+
+71
+00:05:19,760 --> 00:05:26,000
+We have to add back this µi which is
+just the value we have subtracted out.
+
+72
+00:05:26,000 --> 00:05:31,024
+So as a concrete example,
+if we look at what happens with user
+
+73
+00:05:31,024 --> 00:05:36,340
+5 with the new user Eve because
+she had not yet rated any movies,
+
+74
+00:05:36,340 --> 00:05:42,870
+the average might learn parameters
+w(5) = [0 0] and say b(5) = 0.
+
+75
+00:05:42,870 --> 00:05:48,548
+And so
+if we look at the predicted rating for
+
+76
+00:05:48,548 --> 00:05:53,911
+movie one, we will predict that Eve will
+
+77
+00:05:53,911 --> 00:06:00,378
+rate it w(5).x1 + b(5) but this is 0 and
+
+78
+00:06:00,378 --> 00:06:05,300
+then + µ1 which is equal to 2.5.
+
+79
+00:06:05,300 --> 00:06:09,883
+So this seems more reasonable to think
+Eve is likely to rate this movie
+
+80
+00:06:09,883 --> 00:06:14,860
+2.5 rather than think Eve will rate
+all movie zero stars just because she
+
+81
+00:06:14,860 --> 00:06:16,940
+hasn't rated any movies yet.
+
+82
+00:06:16,940 --> 00:06:21,390
+And in fact the effect of this
+algorithm is it will cause
+
+83
+00:06:21,390 --> 00:06:26,033
+the initial guesses for
+the new user Eve to be just equal to
+
+84
+00:06:26,033 --> 00:06:31,200
+the mean of whatever other users
+have rated these five movies.
+
+85
+00:06:31,200 --> 00:06:35,921
+And that seems more reasonable to
+take the average rating of the movies
+
+86
+00:06:35,921 --> 00:06:40,020
+rather than to guess that all
+the ratings by Eve will be zero.
+
+87
+00:06:40,020 --> 00:06:44,937
+It turns out that by normalizing
+the mean of the different movies ratings
+
+88
+00:06:44,937 --> 00:06:47,920
+to be zero, the optimization algorithm for
+
+89
+00:06:47,920 --> 00:06:52,210
+the recommended system will also
+run just a little bit faster.
+
+90
+00:06:52,210 --> 00:06:55,818
+But it does make the algorithm
+behave much better for
+
+91
+00:06:55,818 --> 00:07:00,180
+users who have rated no movies or
+very small numbers of movies.
+
+92
+00:07:00,180 --> 00:07:04,040
+And the predictions will
+become more reasonable.
+
+93
+00:07:04,040 --> 00:07:05,100
+In this example,
+
+94
+00:07:05,100 --> 00:07:09,555
+what we did was normalize each of the rows
+of this matrix to have zero mean and
+
+95
+00:07:09,555 --> 00:07:14,900
+we saw this helps when there's a new user
+that hasn't rated a lot of movies yet.
+
+96
+00:07:14,900 --> 00:07:19,873
+There's one other alternative that
+you could use which is to instead
+
+97
+00:07:19,873 --> 00:07:23,920
+normalize the columns of this
+matrix to have zero mean.
+
+98
+00:07:23,920 --> 00:07:26,620
+And that would be
+a reasonable thing to do too.
+
+99
+00:07:26,620 --> 00:07:30,915
+But I think in this application,
+normalizing the rows so
+
+100
+00:07:30,915 --> 00:07:33,956
+that you can give reasonable ratings for
+
+101
+00:07:33,956 --> 00:07:39,270
+a new user seems more important
+than normalizing the columns.
+
+102
+00:07:39,270 --> 00:07:43,765
+Normalizing the columns would hope if
+there was a brand new movie that no one
+
+103
+00:07:43,765 --> 00:07:44,710
+has rated yet.
+
+104
+00:07:44,710 --> 00:07:48,151
+But if there's a brand new movie
+that no one has rated yet,
+
+105
+00:07:48,151 --> 00:07:52,859
+you probably shouldn't show that movie
+to too many users initially because you
+
+106
+00:07:52,859 --> 00:07:55,530
+don't know that much about that movie.
+
+107
+00:07:55,530 --> 00:08:00,445
+So normalizing columns the hope with
+the case of a movie with no ratings
+
+108
+00:08:00,445 --> 00:08:04,194
+seems less important to me
+than normalizing the rules
+
+109
+00:08:04,194 --> 00:08:09,140
+to hope with the case of a new user
+that's hardly rated any movies yet.
+
+110
+00:08:09,140 --> 00:08:13,469
+And when you are building your own
+recommended system in this week's
+
+111
+00:08:13,469 --> 00:08:17,530
+practice lab, normalizing just
+the roles should work fine.
+
+112
+00:08:17,530 --> 00:08:19,730
+So that's mean normalization.
+
+113
+00:08:19,730 --> 00:08:22,050
+It makes the algorithm
+run a little bit faster.
+
+114
+00:08:22,050 --> 00:08:26,544
+But even more important, it makes
+the algorithm give much better, much
+
+115
+00:08:26,544 --> 00:08:31,407
+more reasonable predictions when there
+are users that rated very few movies or
+
+116
+00:08:31,407 --> 00:08:32,820
+even no movies at all.
+
+117
+00:08:32,820 --> 00:08:37,324
+This implementation detail of mean
+normalization will make your recommended
+
+118
+00:08:37,324 --> 00:08:39,630
+system work much better.
+
+119
+00:08:39,630 --> 00:08:43,864
+Next, let's go into the next video to
+talk about how you can implement this for
+
+120
+00:08:43,864 --> 00:08:45,351

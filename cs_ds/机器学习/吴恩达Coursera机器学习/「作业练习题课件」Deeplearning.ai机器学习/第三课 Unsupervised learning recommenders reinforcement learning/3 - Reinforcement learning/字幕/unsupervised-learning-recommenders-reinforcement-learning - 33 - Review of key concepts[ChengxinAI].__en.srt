@@ -1,0 +1,552 @@
+1
+00:00:00,950 --> 00:00:04,590
+We've developed a reinforcement
+learning formalism
+
+2
+00:00:04,590 --> 00:00:08,310
+using the six state
+Mars rover example.
+
+3
+00:00:08,310 --> 00:00:11,640
+Let's do a quick review of
+the key concepts and also see
+
+4
+00:00:11,640 --> 00:00:13,470
+how this set of concepts can be
+
+5
+00:00:13,470 --> 00:00:15,990
+used for other
+applications as well.
+
+6
+00:00:15,990 --> 00:00:18,855
+Some of the concepts
+we've discussed
+
+7
+00:00:18,855 --> 00:00:22,730
+are states of a reinforcement
+learning problem,
+
+8
+00:00:22,730 --> 00:00:26,025
+the set of actions, the rewards,
+
+9
+00:00:26,025 --> 00:00:28,830
+a discount factor,
+then how rewards and
+
+10
+00:00:28,830 --> 00:00:30,450
+the discount factor altogether
+
+11
+00:00:30,450 --> 00:00:32,280
+use to compute the return,
+
+12
+00:00:32,280 --> 00:00:35,550
+and then finally, a
+policy whose job it
+
+13
+00:00:35,550 --> 00:00:39,030
+is to help you pick actions
+so as to maximize the return.
+
+14
+00:00:39,030 --> 00:00:40,800
+For the Mars rover example,
+
+15
+00:00:40,800 --> 00:00:43,320
+we had six states
+that we numbered
+
+16
+00:00:43,320 --> 00:00:48,270
+1-6 and the actions were
+to go left or to go right.
+
+17
+00:00:48,270 --> 00:00:51,920
+The rewards were 100
+for the leftmost state,
+
+18
+00:00:51,920 --> 00:00:53,720
+40 for the rightmost state,
+
+19
+00:00:53,720 --> 00:00:55,450
+and zero in between
+
+20
+00:00:55,450 --> 00:00:59,420
+and I was using a
+discount factor of 0.5.
+
+21
+00:00:59,420 --> 00:01:03,320
+The return was given by this
+formula and we could have
+
+22
+00:01:03,320 --> 00:01:05,105
+different policies Pi depict
+
+23
+00:01:05,105 --> 00:01:07,670
+actions depending on
+what state you're in.
+
+24
+00:01:07,670 --> 00:01:10,580
+This same formalism
+or states, actions,
+
+25
+00:01:10,580 --> 00:01:12,050
+rewards, and so on can be used
+
+26
+00:01:12,050 --> 00:01:14,195
+for many other
+applications as well.
+
+27
+00:01:14,195 --> 00:01:17,945
+Take the problem or find
+an autonomous helicopter.
+
+28
+00:01:17,945 --> 00:01:21,080
+To set a state
+would be the set of
+
+29
+00:01:21,080 --> 00:01:23,570
+possible positions
+and orientations and
+
+30
+00:01:23,570 --> 00:01:26,255
+speeds and so on
+of the helicopter.
+
+31
+00:01:26,255 --> 00:01:29,240
+The possible actions
+would be the set of
+
+32
+00:01:29,240 --> 00:01:30,665
+possible ways to move
+
+33
+00:01:30,665 --> 00:01:32,870
+the controls stick
+of a helicopter,
+
+34
+00:01:32,870 --> 00:01:36,875
+and the rewards may be a plus
+one if it's flying well,
+
+35
+00:01:36,875 --> 00:01:38,645
+and a negative 1,000
+
+36
+00:01:38,645 --> 00:01:41,140
+if it doesn't fall
+really bad or crashes.
+
+37
+00:01:41,140 --> 00:01:42,825
+Reward function that tells you
+
+38
+00:01:42,825 --> 00:01:45,015
+how well the
+helicopter is flying.
+
+39
+00:01:45,015 --> 00:01:47,030
+The discount factor, a number
+
+40
+00:01:47,030 --> 00:01:49,160
+slightly less than
+one maybe say,
+
+41
+00:01:49,160 --> 00:01:51,350
+0.99 and then based
+
+42
+00:01:51,350 --> 00:01:53,375
+on the rewards and
+the discount factor,
+
+43
+00:01:53,375 --> 00:01:57,620
+you compute the return
+using the same formula.
+
+44
+00:01:57,620 --> 00:01:59,690
+The job of a
+reinforcement learning
+
+45
+00:01:59,690 --> 00:02:01,400
+algorithm would be to find
+
+46
+00:02:01,400 --> 00:02:05,540
+some policy Pi of s so
+that given as input,
+
+47
+00:02:05,540 --> 00:02:07,430
+the position of
+the helicopter s,
+
+48
+00:02:07,430 --> 00:02:09,740
+it tells you what
+action to take.
+
+49
+00:02:09,740 --> 00:02:12,500
+That is, tells you how to
+move the control sticks.
+
+50
+00:02:12,500 --> 00:02:13,815
+Here's one more example.
+
+51
+00:02:13,815 --> 00:02:15,155
+Here's a game-playing one.
+
+52
+00:02:15,155 --> 00:02:16,340
+Say you want to use
+
+53
+00:02:16,340 --> 00:02:18,875
+reinforcement learning
+to learn to play chess.
+
+54
+00:02:18,875 --> 00:02:21,380
+The state of this problem would
+
+55
+00:02:21,380 --> 00:02:24,400
+be the position of all
+the pieces on the board.
+
+56
+00:02:24,400 --> 00:02:27,545
+By the way, if you play chess
+and know the rules well,
+
+57
+00:02:27,545 --> 00:02:30,485
+I know that's little
+bit more information
+
+58
+00:02:30,485 --> 00:02:31,700
+than just the position of
+
+59
+00:02:31,700 --> 00:02:33,470
+the pieces is
+important for chess,
+
+60
+00:02:33,470 --> 00:02:36,170
+but I'll simplify it a
+little bit for this video.
+
+61
+00:02:36,170 --> 00:02:40,505
+The actions are the possible
+legal moves in the game,
+
+62
+00:02:40,505 --> 00:02:44,000
+and then a common choice
+of reward would be if you
+
+63
+00:02:44,000 --> 00:02:47,705
+give your system a reward of
+plus one if it wins a game,
+
+64
+00:02:47,705 --> 00:02:50,105
+minus one if it loses the game,
+
+65
+00:02:50,105 --> 00:02:53,510
+and a reward of zero
+if it ties a game.
+
+66
+00:02:53,510 --> 00:02:56,990
+For chess, usually
+a discount factor
+
+67
+00:02:56,990 --> 00:02:58,700
+very close to one will be used,
+
+68
+00:02:58,700 --> 00:03:02,910
+so maybe 0.99 or even 0.995 or
+
+69
+00:03:02,910 --> 00:03:05,810
+0.999 and the return
+
+70
+00:03:05,810 --> 00:03:08,495
+uses the same formula as
+the other applications.
+
+71
+00:03:08,495 --> 00:03:12,470
+Once again, the goal is given
+
+72
+00:03:12,470 --> 00:03:17,885
+a board position to pick a
+good action using a policy Pi.
+
+73
+00:03:17,885 --> 00:03:21,890
+This formalism of a reinforcement
+learning application
+
+74
+00:03:21,890 --> 00:03:23,420
+actually has a name.
+
+75
+00:03:23,420 --> 00:03:26,465
+It's called a Markov
+decision process,
+
+76
+00:03:26,465 --> 00:03:27,590
+and I know that sounds like
+
+77
+00:03:27,590 --> 00:03:29,810
+a big technical
+complicated term.
+
+78
+00:03:29,810 --> 00:03:33,170
+But if you ever hear this
+term Markov decision process
+
+79
+00:03:33,170 --> 00:03:36,090
+or MDP for short,
+
+80
+00:03:36,090 --> 00:03:38,090
+that's just the formalism
+that we've been
+
+81
+00:03:38,090 --> 00:03:40,340
+talking about in the
+last few videos.
+
+82
+00:03:40,340 --> 00:03:43,430
+The term Markov in the MDP or
+
+83
+00:03:43,430 --> 00:03:47,150
+Markov decision process
+refers to that the future
+
+84
+00:03:47,150 --> 00:03:50,510
+only depends on the current
+state and not on anything
+
+85
+00:03:50,510 --> 00:03:52,070
+that might have occurred prior
+
+86
+00:03:52,070 --> 00:03:54,035
+to getting to the current state.
+
+87
+00:03:54,035 --> 00:03:57,290
+In other words, in a
+Markov decision process,
+
+88
+00:03:57,290 --> 00:04:00,380
+the future depends only
+on where you are now,
+
+89
+00:04:00,380 --> 00:04:02,335
+not on how you got here.
+
+90
+00:04:02,335 --> 00:04:03,995
+One other way to think of
+
+91
+00:04:03,995 --> 00:04:07,160
+the Markov decision
+process formalism is
+
+92
+00:04:07,160 --> 00:04:10,655
+that we have a robot or
+
+93
+00:04:10,655 --> 00:04:13,400
+some other agent that
+
+94
+00:04:13,400 --> 00:04:16,515
+we wish to control
+and what we get to do
+
+95
+00:04:16,515 --> 00:04:23,360
+is choose actions a and
+based on those actions,
+
+96
+00:04:23,360 --> 00:04:28,145
+something will happen in the
+world or in the environment,
+
+97
+00:04:28,145 --> 00:04:31,040
+such as our position in
+the world changes or we
+
+98
+00:04:31,040 --> 00:04:32,330
+get to sample a piece of
+
+99
+00:04:32,330 --> 00:04:34,535
+rock and execute the
+science mission.
+
+100
+00:04:34,535 --> 00:04:36,950
+The way we choose
+the action a is with
+
+101
+00:04:36,950 --> 00:04:41,205
+a policy Pi and based on
+what happens in the world,
+
+102
+00:04:41,205 --> 00:04:43,280
+we then get to see or we
+
+103
+00:04:43,280 --> 00:04:46,010
+observe back what
+state we're in,
+
+104
+00:04:46,010 --> 00:04:51,275
+as well as what rewards
+are that we get.
+
+105
+00:04:51,275 --> 00:04:54,920
+You sometimes see different
+authors use a diagram like
+
+106
+00:04:54,920 --> 00:04:58,610
+this to represent the
+Markov decision process or
+
+107
+00:04:58,610 --> 00:05:02,045
+the MDP formalism but this
+is just another way of
+
+108
+00:05:02,045 --> 00:05:04,070
+illustrating the set of concepts
+
+109
+00:05:04,070 --> 00:05:06,170
+that you learn about in
+the last few videos.
+
+110
+00:05:06,170 --> 00:05:11,120
+You now know how a reinforcement
+learning problem works.
+
+111
+00:05:11,120 --> 00:05:13,580
+In the next video
+we'll start to develop
+
+112
+00:05:13,580 --> 00:05:16,210
+an algorithm for
+picking good actions.
+
+113
+00:05:16,210 --> 00:05:19,370
+The first step toward that
+will be to define and then
+
+114
+00:05:19,370 --> 00:05:20,795
+eventually learn to compute
+
+115
+00:05:20,795 --> 00:05:23,000
+the state action value function.
+
+116
+00:05:23,000 --> 00:05:25,850
+This turns out to be one
+of the key quantities
+
+117
+00:05:25,850 --> 00:05:29,065
+for when we want to develop
+a learning algorithm.
+
+118
+00:05:29,065 --> 00:05:32,120
+Let's go onto the next
+video to see what is this,
+
+119
+00:05:32,120 --> 00:05:35,100

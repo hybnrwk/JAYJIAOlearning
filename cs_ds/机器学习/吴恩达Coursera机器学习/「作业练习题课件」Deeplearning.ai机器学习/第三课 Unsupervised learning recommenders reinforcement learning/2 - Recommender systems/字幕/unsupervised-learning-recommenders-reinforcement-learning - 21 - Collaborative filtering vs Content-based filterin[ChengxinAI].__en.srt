@@ -1,0 +1,947 @@
+1
+00:00:01,220 --> 00:00:05,160
+In this video, we'll start
+to develop a second type of
+
+2
+00:00:05,160 --> 00:00:06,810
+recommender system called
+
+3
+00:00:06,810 --> 00:00:09,345
+a content-based
+filtering algorithm.
+
+4
+00:00:09,345 --> 00:00:11,790
+To get started, let's
+compare and contrast
+
+5
+00:00:11,790 --> 00:00:13,950
+the collaborative filtering
+approach that we'll be
+
+6
+00:00:13,950 --> 00:00:15,240
+looking at so far with
+
+7
+00:00:15,240 --> 00:00:17,505
+this new content-based
+filtering approach.
+
+8
+00:00:17,505 --> 00:00:18,660
+Let's take a look.
+
+9
+00:00:18,660 --> 00:00:21,045
+With collaborative filtering,
+
+10
+00:00:21,045 --> 00:00:25,260
+the general approach is that
+we would recommend items to
+
+11
+00:00:25,260 --> 00:00:27,270
+you based on ratings of
+
+12
+00:00:27,270 --> 00:00:30,735
+users who gave similar
+ratings as you.
+
+13
+00:00:30,735 --> 00:00:32,880
+We have some number of users
+
+14
+00:00:32,880 --> 00:00:35,505
+give some ratings
+for some items,
+
+15
+00:00:35,505 --> 00:00:37,440
+and the algorithm
+figures out how to use
+
+16
+00:00:37,440 --> 00:00:40,500
+that to recommend
+new items to you.
+
+17
+00:00:40,500 --> 00:00:44,225
+In contrast, content-based
+filtering takes
+
+18
+00:00:44,225 --> 00:00:46,310
+a different approach to
+
+19
+00:00:46,310 --> 00:00:48,805
+deciding what to
+recommend to you.
+
+20
+00:00:48,805 --> 00:00:51,065
+A content-based
+filtering algorithm
+
+21
+00:00:51,065 --> 00:00:53,330
+will recommend items
+to you based on
+
+22
+00:00:53,330 --> 00:00:55,220
+the features of users and
+
+23
+00:00:55,220 --> 00:00:58,235
+features of the items
+to find a good match.
+
+24
+00:00:58,235 --> 00:00:59,600
+In other words, it
+
+25
+00:00:59,600 --> 00:01:03,665
+requires having some
+features of each user,
+
+26
+00:01:03,665 --> 00:01:05,300
+as well as some features of
+
+27
+00:01:05,300 --> 00:01:08,570
+each item and it uses
+those features to try to
+
+28
+00:01:08,570 --> 00:01:10,370
+decide which items and
+
+29
+00:01:10,370 --> 00:01:13,620
+users might be a good
+match for each other.
+
+30
+00:01:13,620 --> 00:01:15,980
+With a content-based
+filtering algorithm,
+
+31
+00:01:15,980 --> 00:01:20,260
+you still have data where
+users have rated some items.
+
+32
+00:01:20,260 --> 00:01:22,490
+Well, content-based filtering
+
+33
+00:01:22,490 --> 00:01:24,405
+will continue to use r, i,
+
+34
+00:01:24,405 --> 00:01:28,850
+j to denote whether
+or not user j has
+
+35
+00:01:28,850 --> 00:01:33,650
+rated item i and will
+continue to use y i,
+
+36
+00:01:33,650 --> 00:01:35,780
+j to denote the rating
+
+37
+00:01:35,780 --> 00:01:39,140
+that user j is given
+item i if it's defined.
+
+38
+00:01:39,140 --> 00:01:41,315
+But the key to
+
+39
+00:01:41,315 --> 00:01:43,475
+content-based filtering is that
+
+40
+00:01:43,475 --> 00:01:45,695
+we will be able to
+make good use of
+
+41
+00:01:45,695 --> 00:01:50,030
+features of the user
+and of the items to
+
+42
+00:01:50,030 --> 00:01:52,160
+find better matches than
+
+43
+00:01:52,160 --> 00:01:53,690
+potentially a pure collaborative
+
+44
+00:01:53,690 --> 00:01:55,640
+filtering approach
+might be able to.
+
+45
+00:01:55,640 --> 00:01:57,575
+Let's take a look
+at how this works.
+
+46
+00:01:57,575 --> 00:01:59,780
+In the case of movie
+recommendations,
+
+47
+00:01:59,780 --> 00:02:01,730
+here are some
+examples of features.
+
+48
+00:02:01,730 --> 00:02:04,250
+You may know the
+age of the user,
+
+49
+00:02:04,250 --> 00:02:08,360
+or you may have the
+gender of the user.
+
+50
+00:02:08,360 --> 00:02:11,765
+This could be a one-hot feature
+
+51
+00:02:11,765 --> 00:02:14,240
+similar to what you saw
+when we were talking
+
+52
+00:02:14,240 --> 00:02:16,280
+about decision trees where you
+
+53
+00:02:16,280 --> 00:02:18,395
+could have a one-hot
+feature with
+
+54
+00:02:18,395 --> 00:02:20,270
+the values based on whether
+
+55
+00:02:20,270 --> 00:02:22,670
+the user's
+self-identified gender
+
+56
+00:02:22,670 --> 00:02:25,330
+is male or female or unknown,
+
+57
+00:02:25,330 --> 00:02:29,565
+and you may know the
+country of the user.
+
+58
+00:02:29,565 --> 00:02:31,865
+If there are about 200 countries
+
+59
+00:02:31,865 --> 00:02:33,230
+in the world then also be
+
+60
+00:02:33,230 --> 00:02:37,850
+a one-hot feature with
+about 200 possible values.
+
+61
+00:02:37,850 --> 00:02:39,860
+You can also look at
+past behaviors of
+
+62
+00:02:39,860 --> 00:02:43,085
+the user to construct
+this feature vector.
+
+63
+00:02:43,085 --> 00:02:45,035
+For example, if you look at
+
+64
+00:02:45,035 --> 00:02:47,675
+the top thousand movies
+in your catalog,
+
+65
+00:02:47,675 --> 00:02:51,500
+you might construct a thousand
+features that tells you of
+
+66
+00:02:51,500 --> 00:02:53,570
+the thousand most
+popular movies in
+
+67
+00:02:53,570 --> 00:02:56,815
+the world which of these
+has the user watch.
+
+68
+00:02:56,815 --> 00:03:00,530
+In fact, you can also take
+ratings the user might
+
+69
+00:03:00,530 --> 00:03:04,600
+have already given in order
+to construct new features.
+
+70
+00:03:04,600 --> 00:03:07,895
+It turns out that if you
+have a set of movies
+
+71
+00:03:07,895 --> 00:03:11,465
+and if you know what
+genre each movie is in,
+
+72
+00:03:11,465 --> 00:03:13,625
+then the average rating
+
+73
+00:03:13,625 --> 00:03:16,295
+per genre that the
+user has given.
+
+74
+00:03:16,295 --> 00:03:21,065
+Of all the romance movies
+that the user has rated,
+
+75
+00:03:21,065 --> 00:03:22,530
+what was the average rating?
+
+76
+00:03:22,530 --> 00:03:25,595
+Of all the action movies
+that the user has rated,
+
+77
+00:03:25,595 --> 00:03:27,245
+what was the average rating?
+
+78
+00:03:27,245 --> 00:03:29,755
+And so on for all
+the other genres.
+
+79
+00:03:29,755 --> 00:03:34,985
+This too can be a powerful
+feature to describe the user.
+
+80
+00:03:34,985 --> 00:03:38,600
+One interesting thing about
+this feature is that it
+
+81
+00:03:38,600 --> 00:03:42,850
+actually depends on the ratings
+that the user had given.
+
+82
+00:03:42,850 --> 00:03:44,225
+But there's nothing
+wrong with that.
+
+83
+00:03:44,225 --> 00:03:46,280
+Constructing a
+feature vector that
+
+84
+00:03:46,280 --> 00:03:48,740
+depends on the user's ratings is
+
+85
+00:03:48,740 --> 00:03:50,720
+a completely fine way to
+
+86
+00:03:50,720 --> 00:03:53,600
+develop a feature vector
+to describe that user.
+
+87
+00:03:53,600 --> 00:03:57,290
+With features like these
+you can then come up
+
+88
+00:03:57,290 --> 00:04:01,060
+with a feature vector
+x subscript u,
+
+89
+00:04:01,060 --> 00:04:04,560
+use as a user superscript
+j for user j.
+
+90
+00:04:04,560 --> 00:04:06,980
+Similarly, you can also
+come up with a set of
+
+91
+00:04:06,980 --> 00:04:09,890
+features for each
+movie of each item,
+
+92
+00:04:09,890 --> 00:04:12,650
+such as what was the
+year of the movie?
+
+93
+00:04:12,650 --> 00:04:16,280
+What's the genre or genres
+of the movie of known?
+
+94
+00:04:16,280 --> 00:04:19,475
+If there are critic
+reviews of the movie,
+
+95
+00:04:19,475 --> 00:04:22,760
+you can construct one
+or multiple features to
+
+96
+00:04:22,760 --> 00:04:24,380
+capture something about what
+
+97
+00:04:24,380 --> 00:04:26,360
+the critics are saying
+about the movie.
+
+98
+00:04:26,360 --> 00:04:29,060
+Or once again, you
+can actually take
+
+99
+00:04:29,060 --> 00:04:32,735
+user ratings of the movie
+to construct a feature of,
+
+100
+00:04:32,735 --> 00:04:35,375
+say, the average
+rating of this movie.
+
+101
+00:04:35,375 --> 00:04:38,975
+This feature again
+depends on the ratings
+
+102
+00:04:38,975 --> 00:04:42,560
+that users are given but again,
+
+103
+00:04:42,560 --> 00:04:43,805
+does nothing wrong with that.
+
+104
+00:04:43,805 --> 00:04:45,500
+You can construct a feature for
+
+105
+00:04:45,500 --> 00:04:47,360
+a given movie that
+
+106
+00:04:47,360 --> 00:04:50,090
+depends on the ratings
+that movie had received,
+
+107
+00:04:50,090 --> 00:04:51,950
+such as the average
+rating of the movie.
+
+108
+00:04:51,950 --> 00:04:54,065
+Or if you wish,
+you can also have
+
+109
+00:04:54,065 --> 00:04:56,960
+average rating per country or
+
+110
+00:04:56,960 --> 00:04:59,810
+average rating per user
+demographic as they
+
+111
+00:04:59,810 --> 00:05:01,280
+want to construct other types of
+
+112
+00:05:01,280 --> 00:05:03,095
+features of the movies as well.
+
+113
+00:05:03,095 --> 00:05:05,405
+With this, for each movie,
+
+114
+00:05:05,405 --> 00:05:07,580
+you can then construct
+a feature vector,
+
+115
+00:05:07,580 --> 00:05:10,450
+which I'm going to
+denote x subscript m,
+
+116
+00:05:10,450 --> 00:05:12,125
+m stands for movie,
+
+117
+00:05:12,125 --> 00:05:14,795
+and superscript i for movie i.
+
+118
+00:05:14,795 --> 00:05:16,430
+Given features like this,
+
+119
+00:05:16,430 --> 00:05:20,530
+the task is to try to
+figure out whether
+
+120
+00:05:20,530 --> 00:05:26,965
+a given movie i is going to
+be good match for user j.
+
+121
+00:05:26,965 --> 00:05:29,230
+Notice that the
+user features and
+
+122
+00:05:29,230 --> 00:05:33,610
+movie features can be
+very different in size.
+
+123
+00:05:33,610 --> 00:05:37,480
+For example, maybe the
+user features could be
+
+124
+00:05:37,480 --> 00:05:41,230
+1500 numbers and
+the movie features
+
+125
+00:05:41,230 --> 00:05:43,370
+could be just 50 numbers.
+
+126
+00:05:43,370 --> 00:05:46,000
+That's okay too. In
+content-based filtering,
+
+127
+00:05:46,000 --> 00:05:48,520
+we're going to develop an
+algorithm that learns to
+
+128
+00:05:48,520 --> 00:05:51,250
+match users and movies.
+
+129
+00:05:51,250 --> 00:05:53,650
+Previously, we were predicting
+
+130
+00:05:53,650 --> 00:05:56,110
+the rating of user j on movie
+
+131
+00:05:56,110 --> 00:06:02,520
+i as wj dot products
+of xi plus bj.
+
+132
+00:06:02,520 --> 00:06:06,920
+In order to develop
+content-based filtering,
+
+133
+00:06:06,920 --> 00:06:08,780
+I'm going to get rid of bj.
+
+134
+00:06:08,780 --> 00:06:10,400
+It turns out this won't hurt
+
+135
+00:06:10,400 --> 00:06:12,755
+the performance of the
+content-based filtering at all.
+
+136
+00:06:12,755 --> 00:06:20,095
+Instead of writing wj for a
+user j and xi for a movie i,
+
+137
+00:06:20,095 --> 00:06:21,860
+I'm instead going to just
+
+138
+00:06:21,860 --> 00:06:25,320
+replace this notation with vj_u.
+
+139
+00:06:25,430 --> 00:06:28,865
+This v here stands for a vector.
+
+140
+00:06:28,865 --> 00:06:31,880
+There'll be a list of
+numbers computed for
+
+141
+00:06:31,880 --> 00:06:36,880
+user j and the u subscript
+here stands for user.
+
+142
+00:06:36,880 --> 00:06:38,445
+Instead of xi,
+
+143
+00:06:38,445 --> 00:06:42,560
+I'm going to compute a
+separate vector subscript m,
+
+144
+00:06:42,560 --> 00:06:44,555
+to stand for the movie and
+
+145
+00:06:44,555 --> 00:06:48,590
+for movie is what a
+superscript stands for.
+
+146
+00:06:48,590 --> 00:06:52,715
+Vj_u as a vector as
+a list of numbers
+
+147
+00:06:52,715 --> 00:06:58,160
+computed from the
+features of user j
+
+148
+00:06:58,160 --> 00:07:03,335
+and vi_m is a list of
+numbers computed from
+
+149
+00:07:03,335 --> 00:07:05,510
+the features like
+the ones you saw on
+
+150
+00:07:05,510 --> 00:07:08,885
+the previous slide of movie i.
+
+151
+00:07:08,885 --> 00:07:11,390
+If we're able to come up with
+
+152
+00:07:11,390 --> 00:07:14,185
+an appropriate choice
+of these vectors,
+
+153
+00:07:14,185 --> 00:07:16,380
+vj_u and vi_m,
+
+154
+00:07:16,380 --> 00:07:19,310
+then hopefully the dot product
+
+155
+00:07:19,310 --> 00:07:20,930
+between these two
+vectors will be
+
+156
+00:07:20,930 --> 00:07:22,010
+a good prediction of
+
+157
+00:07:22,010 --> 00:07:25,550
+the rating that user
+j gives movie i.
+
+158
+00:07:25,550 --> 00:07:28,550
+Just illustrate what
+a learning algorithm
+
+159
+00:07:28,550 --> 00:07:30,235
+could come up with.
+
+160
+00:07:30,235 --> 00:07:34,445
+If v, u, that is a user vector,
+
+161
+00:07:34,445 --> 00:07:38,060
+turns out to capture
+the user's preferences,
+
+162
+00:07:38,060 --> 00:07:40,125
+say is 4.9,
+
+163
+00:07:40,125 --> 00:07:42,375
+0.1, and so on.
+
+164
+00:07:42,375 --> 00:07:43,950
+Lists of numbers like that.
+
+165
+00:07:43,950 --> 00:07:46,715
+The first number captures
+
+166
+00:07:46,715 --> 00:07:49,085
+how much do they
+like romance movies.
+
+167
+00:07:49,085 --> 00:07:51,740
+Then the second number
+captures how much do they
+
+168
+00:07:51,740 --> 00:07:54,590
+like action movies and so on.
+
+169
+00:07:54,590 --> 00:08:01,625
+Then v_m, the movie
+vector is 4.5, 0.2,
+
+170
+00:08:01,625 --> 00:08:04,640
+and so on and so forth
+of these numbers
+
+171
+00:08:04,640 --> 00:08:07,445
+capturing how much is
+this a romance movie,
+
+172
+00:08:07,445 --> 00:08:10,310
+how much is this an
+action movie, and so on.
+
+173
+00:08:10,310 --> 00:08:12,200
+Then the dot product,
+
+174
+00:08:12,200 --> 00:08:14,180
+which multiplies these lists of
+
+175
+00:08:14,180 --> 00:08:17,300
+numbers element-wise
+and then takes a sum,
+
+176
+00:08:17,300 --> 00:08:19,610
+hopefully, will give
+a sense of how much
+
+177
+00:08:19,610 --> 00:08:23,785
+this particular user will
+like this particular movie.
+
+178
+00:08:23,785 --> 00:08:28,610
+The challenges given features
+of a user, say xj_u,
+
+179
+00:08:28,610 --> 00:08:32,570
+how can we compute
+this vector vj_u that
+
+180
+00:08:32,570 --> 00:08:34,640
+represents succinctly or
+
+181
+00:08:34,640 --> 00:08:37,175
+compactly the
+user's preferences?
+
+182
+00:08:37,175 --> 00:08:39,860
+Similarly given
+features of a movie,
+
+183
+00:08:39,860 --> 00:08:42,870
+how can we compute vi_m?
+
+184
+00:08:42,870 --> 00:08:45,840
+Notice that whereas x_u
+
+185
+00:08:45,840 --> 00:08:48,905
+and x_m could be
+different in size,
+
+186
+00:08:48,905 --> 00:08:50,945
+one could be very long
+lists of numbers,
+
+187
+00:08:50,945 --> 00:08:52,550
+one could be much shorter list,
+
+188
+00:08:52,550 --> 00:08:56,375
+v here have to be the same size.
+
+189
+00:08:56,375 --> 00:08:58,400
+Because if you want to take
+
+190
+00:08:58,400 --> 00:09:00,770
+a dot product
+between v_u and v_m,
+
+191
+00:09:00,770 --> 00:09:02,360
+then both of them have to
+
+192
+00:09:02,360 --> 00:09:04,310
+have the same dimensions such as
+
+193
+00:09:04,310 --> 00:09:08,760
+maybe both of these
+are say 32 numbers.
+
+194
+00:09:08,760 --> 00:09:12,260
+To summarize, in
+collaborative filtering,
+
+195
+00:09:12,260 --> 00:09:16,780
+we had number of users give
+ratings of different items.
+
+196
+00:09:16,780 --> 00:09:19,700
+In contrast, in
+content-based filtering,
+
+197
+00:09:19,700 --> 00:09:23,690
+we have features of users
+and features of items and we
+
+198
+00:09:23,690 --> 00:09:25,040
+want to find a way to find
+
+199
+00:09:25,040 --> 00:09:28,210
+good matches between the
+users and the items.
+
+200
+00:09:28,210 --> 00:09:32,225
+The way we're going to do so
+is to compute these vectors,
+
+201
+00:09:32,225 --> 00:09:36,425
+v_u for the users and v_m for
+the items over the movies,
+
+202
+00:09:36,425 --> 00:09:37,970
+and then take dot
+products between
+
+203
+00:09:37,970 --> 00:09:39,965
+them to try to
+find good matches.
+
+204
+00:09:39,965 --> 00:09:42,830
+How do we compute
+the v_u and v_m?
+
+205
+00:09:42,830 --> 00:09:46,200
+Let's take a look at

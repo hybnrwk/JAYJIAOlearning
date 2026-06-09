@@ -1,0 +1,719 @@
+1
+00:00:00,999 --> 00:00:05,773
+Now that you've seen how the Gaussian or
+the normal distribution works for
+
+2
+00:00:05,773 --> 00:00:10,562
+a single number, we're ready to build
+our anomaly detection algorithm.
+
+3
+00:00:10,562 --> 00:00:12,188
+Let's dive in.
+
+4
+00:00:12,188 --> 00:00:16,120
+You have a training set x1 through xm,
+
+5
+00:00:16,120 --> 00:00:20,539
+where here each example
+x has end features.
+
+6
+00:00:20,539 --> 00:00:24,545
+So, each example x is
+a vector within numbers.
+
+7
+00:00:24,545 --> 00:00:27,838
+In the case of the airplane
+engine example,
+
+8
+00:00:27,838 --> 00:00:32,831
+we had two features corresponding
+to the heat and the vibrations.
+
+9
+00:00:32,831 --> 00:00:37,107
+And so, each of these excise would
+be a two dimensional vector and
+
+10
+00:00:37,107 --> 00:00:38,610
+n would be equal to 2.
+
+11
+00:00:38,610 --> 00:00:42,632
+But for many practical applications
+n can be much larger and
+
+12
+00:00:42,632 --> 00:00:46,661
+you might do this with dozens or
+even hundreds of features.
+
+13
+00:00:46,661 --> 00:00:51,489
+Given this training set,
+what we would like to do is to carry
+
+14
+00:00:51,489 --> 00:00:55,256
+out density estimation and
+all that means is,
+
+15
+00:00:55,256 --> 00:01:00,300
+we will build a model or
+estimate the probability for p(x).
+
+16
+00:01:00,300 --> 00:01:05,635
+What's the probability of
+any given feature vector?
+
+17
+00:01:05,635 --> 00:01:11,389
+And our model for
+p(x) is going to be as follows,
+
+18
+00:01:11,389 --> 00:01:18,521
+x is a feature vector with values x1,
+x2 and so on down to xn.
+
+19
+00:01:18,521 --> 00:01:24,364
+And I'm going to model p(x)
+as the probability of x1,
+
+20
+00:01:24,364 --> 00:01:27,529
+times the probability of x2,
+
+21
+00:01:27,529 --> 00:01:33,128
+times the probably of x3
+times the probability of xn,
+
+22
+00:01:33,128 --> 00:01:37,777
+for the n th features
+in the feature vectors.
+
+23
+00:01:37,777 --> 00:01:42,915
+If you've taken an advanced class
+in probably in statistics before,
+
+24
+00:01:42,915 --> 00:01:47,791
+you may recognize that this equation
+corresponds to assuming that
+
+25
+00:01:47,791 --> 00:01:53,120
+the features x1, x2 and so
+on up to xm are statistically independent.
+
+26
+00:01:53,120 --> 00:01:57,093
+But it turns out this algorithm often
+works fine even that the features
+
+27
+00:01:57,093 --> 00:01:59,801
+are not actually
+statistically independent.
+
+28
+00:01:59,801 --> 00:02:03,292
+But if you don't understand what I
+just said, don't worry about it.
+
+29
+00:02:03,292 --> 00:02:09,299
+Understanding physical independence is
+not needed to fully complete discuss and
+
+30
+00:02:09,299 --> 00:02:14,444
+also, be able to very effectively
+use anomaly detection algorithm.
+
+31
+00:02:14,444 --> 00:02:17,939
+Now, to fill in this
+equation a little bit more,
+
+32
+00:02:17,939 --> 00:02:23,740
+we are saying that the probability of all
+the features of this vector features x,
+
+33
+00:02:23,740 --> 00:02:28,716
+is the product of p(x) 1 and
+p(x2) and so on up through p(xn).
+
+34
+00:02:28,716 --> 00:02:33,098
+And in order to model
+the probability of x1,
+
+35
+00:02:33,098 --> 00:02:40,248
+say the heat feature in this example
+we're going to have two parameters,
+
+36
+00:02:40,248 --> 00:02:44,303
+new 1 and sigma 1 or sigma squared is 1.
+
+37
+00:02:44,303 --> 00:02:51,451
+And what that means is we're going to
+estimate, the mean of the feature x1 and
+
+38
+00:02:51,451 --> 00:02:56,000
+also the variance of feature x1 and
+that will be new 1 and sigma 1.
+
+39
+00:02:56,000 --> 00:02:59,174
+To model p(x2) x2 is a totally different
+
+40
+00:02:59,174 --> 00:03:03,473
+feature measuring the vibrations
+of the airplane engine.
+
+41
+00:03:03,473 --> 00:03:07,308
+We're going to have two
+different parameters,
+
+42
+00:03:07,308 --> 00:03:11,524
+which I'm going to write as mu 2,
+sigma 2 squared.
+
+43
+00:03:11,524 --> 00:03:16,015
+And it turns out this will correspond
+to the mean or the average of
+
+44
+00:03:16,015 --> 00:03:21,273
+the vibration feature and the variance
+of the vibration feature and so on.
+
+45
+00:03:21,273 --> 00:03:26,480
+If you have additional
+features mu 3 sigma 3
+
+46
+00:03:26,480 --> 00:03:31,557
+squared up through mu n and
+sigma n squared.
+
+47
+00:03:31,557 --> 00:03:36,096
+In case you're wondering why
+we multiply probabilities,
+
+48
+00:03:36,096 --> 00:03:40,281
+maybe here's 1 example that
+could build intuition.
+
+49
+00:03:40,281 --> 00:03:45,326
+Suppose for
+an aircraft engine there's a 1/10
+
+50
+00:03:45,326 --> 00:03:50,017
+chance that it is really hot,
+unusually hot and
+
+51
+00:03:50,017 --> 00:03:56,248
+maybe there is a 1 in 20 chance
+that it vibrates really hard.
+
+52
+00:03:56,248 --> 00:04:00,980
+Then, what is the chance that it runs
+really hot and vibrates really hard.
+
+53
+00:04:00,980 --> 00:04:08,448
+We're saying that the chance of that
+is 1/10 times 1/20 which is 1/200.
+
+54
+00:04:08,448 --> 00:04:13,225
+So it's really unlikely to get an engine
+that both fronts really hot and
+
+55
+00:04:13,225 --> 00:04:14,823
+vibrates really hard.
+
+56
+00:04:14,823 --> 00:04:17,288
+It's the product of these two probabilities
+
+57
+00:04:17,288 --> 00:04:21,665
+A somewhat more compact way to
+write this equation up here,
+
+58
+00:04:23,665 --> 00:04:26,980
+is to say that this is equal to,
+
+59
+00:04:26,980 --> 00:04:31,838
+the product from j =1 through n of p(xj).
+
+60
+00:04:31,838 --> 00:04:37,537
+Would parameters mu j and sigma squared j.
+
+61
+00:04:38,368 --> 00:04:43,708
+And this symbol here is a lot like
+the summation symbol except that
+
+62
+00:04:43,708 --> 00:04:48,759
+whereas the summation symbol
+corresponds to addition, this
+
+63
+00:04:48,759 --> 00:04:55,577
+symbol here corresponds to multiplying
+these terms over here for j =1 through n.
+
+64
+00:04:55,577 --> 00:05:00,045
+So let's put it all together
+to see how you can build in
+
+65
+00:05:00,045 --> 00:05:02,734
+the nominee detection system.
+
+66
+00:05:02,734 --> 00:05:06,985
+The first step is to choose
+features xi that you
+
+67
+00:05:06,985 --> 00:05:11,680
+think might be indicative
+of anomalous examples.
+
+68
+00:05:11,680 --> 00:05:15,189
+Having come up with
+the features you want to use,
+
+69
+00:05:15,189 --> 00:05:19,040
+you would then fit the parameters
+mu 1 through mu n and
+
+70
+00:05:19,040 --> 00:05:24,616
+sigma square 1 through sigma squared n,
+for the n features in your data set.
+
+71
+00:05:25,398 --> 00:05:31,170
+As you might guess, the parameter
+mu j will be just the average
+
+72
+00:05:31,170 --> 00:05:36,942
+of xj of the feature j of all
+the examples in your training set.
+
+73
+00:05:36,942 --> 00:05:41,365
+And sigma square j will be
+the average of the square
+
+74
+00:05:41,365 --> 00:05:45,895
+difference between the feature and
+the value mu j,
+
+75
+00:05:45,895 --> 00:05:48,311
+that you just computed.
+
+76
+00:05:48,311 --> 00:05:53,213
+And by the way,
+if you have a vectorized implementation,
+
+77
+00:05:53,213 --> 00:05:59,513
+you can also compute mu as the average
+of the training examples as follows,
+
+78
+00:05:59,513 --> 00:06:02,927
+we're here, x and mu are both vectors.
+
+79
+00:06:02,927 --> 00:06:07,750
+And so this would be the vectorized
+way of computing mu 1 through mu and
+
+80
+00:06:07,750 --> 00:06:09,240
+all at the same time.
+
+81
+00:06:09,240 --> 00:06:14,023
+And by estimating these parameters
+on your unlabeled training set,
+
+82
+00:06:14,023 --> 00:06:17,906
+you've now computed all
+the parameters of your model.
+
+83
+00:06:17,906 --> 00:06:22,228
+Finally, when you are given a new example,
+x test or
+
+84
+00:06:22,228 --> 00:06:25,960
+I'm just going to write
+a new example as x here,
+
+85
+00:06:25,960 --> 00:06:31,480
+what you would do is compute p(x) and
+see if it's large or small.
+
+86
+00:06:31,480 --> 00:06:36,437
+So p(x) as you saw on the last slide
+is the product from j = 1 through
+
+87
+00:06:36,437 --> 00:06:40,038
+n of the probability of
+the individual features.
+
+88
+00:06:40,038 --> 00:06:46,315
+So p(x) j with parameters mu j and
+single square j.
+
+89
+00:06:46,315 --> 00:06:52,057
+And if you substitute in, the formula for
+this probability, you end
+
+90
+00:06:52,057 --> 00:06:58,889
+up with this expression 1 over root 2 pi
+sigma j of e to this expression over here.
+
+91
+00:06:58,889 --> 00:07:04,640
+And so xj are the features,
+this is a j feature of your new example,
+
+92
+00:07:04,640 --> 00:07:11,648
+mu j and sigma j are numbers or parameters
+you have computed in the previous step.
+
+93
+00:07:11,648 --> 00:07:18,013
+And if you compute out this formula,
+you get some number for p(x).
+
+94
+00:07:19,802 --> 00:07:25,022
+And the final step is to see
+a p(x) is less than epsilon.
+
+95
+00:07:25,022 --> 00:07:28,383
+And if it is then you flag
+that it is an anomaly.
+
+96
+00:07:29,622 --> 00:07:34,667
+1 intuition behind what this album
+is doing is that it will tend to
+
+97
+00:07:34,667 --> 00:07:40,812
+flag an example as anomalous if 1 or more
+of the features are either very large or
+
+98
+00:07:40,812 --> 00:07:46,222
+very small relative to what it
+has seen in the training set.
+
+99
+00:07:46,222 --> 00:07:51,412
+So for each of the features x j, you're
+fitting a Gaussian distribution like this.
+
+100
+00:07:51,412 --> 00:07:56,755
+And so if even 1 of the features
+of the new example was
+
+101
+00:07:56,755 --> 00:08:01,992
+way out here, say,
+then P f xJ would be very small.
+
+102
+00:08:01,992 --> 00:08:07,479
+And if just 1 of the terms in this product
+is very small, then this overall product,
+
+103
+00:08:07,479 --> 00:08:12,913
+when you multiply together will tend to be
+very small and does p(x) will be small.
+
+104
+00:08:13,512 --> 00:08:18,037
+And what anomaly detection is
+doing into the algorithm is
+
+105
+00:08:18,037 --> 00:08:23,128
+a systematic way of quantifying whether or
+not this new example x
+
+106
+00:08:23,128 --> 00:08:28,812
+has any features that are unusually
+large or unusually small.
+
+107
+00:08:28,812 --> 00:08:34,746
+Now, let's take a look at what all
+this actually means on 1 example,
+
+108
+00:08:34,746 --> 00:08:38,783
+Here's the data set with features x 1 and
+x 2.
+
+109
+00:08:39,832 --> 00:08:44,498
+And you notice that the features
+x 1 take on a much larger range
+
+110
+00:08:44,498 --> 00:08:47,023
+of values than the features x 2.
+
+111
+00:08:48,172 --> 00:08:53,153
+If you were to compute the meme of
+the Features x 1, you end up with five,
+
+112
+00:08:53,153 --> 00:08:55,622
+which is why you want is equal to 1.
+
+113
+00:08:55,622 --> 00:09:00,140
+And it turns out that for
+this data said, if you compute sigma 1,
+
+114
+00:09:00,140 --> 00:09:02,742
+it will be equal to about 2.
+
+115
+00:09:02,742 --> 00:09:07,695
+And if you were to compute mu to
+the average of the features on next
+
+116
+00:09:07,695 --> 00:09:11,641
+to the average is three and
+similarly is variance or
+
+117
+00:09:11,641 --> 00:09:15,500
+standard deviation is much smaller,
+which is why Sigma 2 is equal to 1.
+
+118
+00:09:15,502 --> 00:09:20,618
+So that corresponds to this
+Gaussian distribution for
+
+119
+00:09:20,618 --> 00:09:25,732
+x 1 and
+this Gaussian distribution for x 2.
+
+120
+00:09:25,732 --> 00:09:30,680
+If you were to actually
+multiply p(x) 1 and p(x) 2,
+
+121
+00:09:30,680 --> 00:09:36,968
+then you end up with this three D
+surface plot for p(x) where any point,
+
+122
+00:09:36,968 --> 00:09:42,362
+the height of this is the product
+of p(x) 1 times p(x) 2.
+
+123
+00:09:42,362 --> 00:09:46,162
+For the corresponding values of x 1 and
+x 2.
+
+124
+00:09:46,162 --> 00:09:52,852
+And this signifies that values where
+p(x) is higher or more likely.
+
+125
+00:09:52,852 --> 00:09:56,922
+So, values near the middle
+kind of here are more likely.
+
+126
+00:09:56,922 --> 00:10:02,303
+Whereas values far out here,
+values out here are much less likely.
+
+127
+00:10:02,303 --> 00:10:03,863
+I have much lower chance.
+
+128
+00:10:05,132 --> 00:10:10,428
+Now, let me pick to test examples,
+the first 1 here,
+
+129
+00:10:10,428 --> 00:10:17,362
+I'm going to write this x test 1 and
+the second 1 down here as x test 2.
+
+130
+00:10:17,362 --> 00:10:21,633
+And let's see which of these 2 examples
+the album will flag as anomalous.
+
+131
+00:10:22,772 --> 00:10:30,222
+I'm going to pick The Parameter
+ε to be equal to 0.02.
+
+132
+00:10:30,222 --> 00:10:34,158
+And if you were to compute p(x) test 1,
+
+133
+00:10:34,158 --> 00:10:40,573
+it turns out to be about 0.4 and
+this is much bigger than epsilon.
+
+134
+00:10:40,573 --> 00:10:44,832
+And so the album will say this looks okay,
+doesn't look like an anomaly.
+
+135
+00:10:44,832 --> 00:10:49,325
+Whereas in contrast,
+if you were to compute p(x) for
+
+136
+00:10:49,325 --> 00:10:54,599
+this point down here corresponding
+to x 1 equals about eight and
+
+137
+00:10:54,599 --> 00:10:56,763
+x 2 equals about 0.5.
+
+138
+00:10:58,012 --> 00:11:03,823
+Kind of down here,
+then p(x) test 2 is 0.0021.
+
+139
+00:11:03,823 --> 00:11:06,603
+So this is much smaller than epsilon.
+
+140
+00:11:06,603 --> 00:11:10,882
+And so the album will flag
+this as a likely anomaly.
+
+141
+00:11:10,882 --> 00:11:17,252
+So, pretty much as you might hope it
+decides that x test 1 looks pretty normal.
+
+142
+00:11:17,252 --> 00:11:22,043
+Whereas excess to which is much further
+away than anything you see in the training
+
+143
+00:11:22,043 --> 00:11:25,222
+set looks like it could be an anomaly.
+
+144
+00:11:25,222 --> 00:11:30,542
+So you've seen the process of how to
+build an anomaly detection system.
+
+145
+00:11:30,542 --> 00:11:33,362
+But how do you choose
+the parameter epsilon?
+
+146
+00:11:33,362 --> 00:11:37,770
+And how do you know if your anomaly
+detection system is working well in
+
+147
+00:11:37,770 --> 00:11:42,330
+the next video, let's dive a little
+bit more deeply into the process of
+
+148
+00:11:42,330 --> 00:11:47,282
+developing and evaluating the performance
+of an anomaly detection system.
+
+149
+00:11:47,282 --> 00:11:49,232

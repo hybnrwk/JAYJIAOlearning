@@ -1,0 +1,378 @@
+1
+00:00:02,258 --> 00:00:06,326
+Welcome to this second to last week of
+the machine learning specialization.
+
+2
+00:00:06,326 --> 00:00:11,340
+I'm really happy that together,
+almost all the way to the finish line.
+
+3
+00:00:11,340 --> 00:00:14,958
+What we'll do this week is
+discuss recommended systems.
+
+4
+00:00:14,958 --> 00:00:18,596
+This is one of the topics that has
+received quite a bit of attention
+
+5
+00:00:18,596 --> 00:00:19,400
+in academia.
+
+6
+00:00:19,400 --> 00:00:21,320
+But the commercial impact and
+
+7
+00:00:21,320 --> 00:00:26,464
+the actual number of practical use cases
+of recommended systems seems to me to be
+
+8
+00:00:26,464 --> 00:00:32,240
+even vastly greater than the amount of
+attention it has received in academia.
+
+9
+00:00:32,240 --> 00:00:36,940
+Every time you go to an online
+shopping website like Amazon or
+
+10
+00:00:36,940 --> 00:00:41,639
+a movie streaming sites like Netflix or
+go to one of the apps or
+
+11
+00:00:41,639 --> 00:00:43,959
+sites that do food delivery.
+
+12
+00:00:43,959 --> 00:00:48,186
+Many of these sites will recommend things
+to you that they think you may want to buy
+
+13
+00:00:48,186 --> 00:00:50,395
+or movies they think you
+may want to watch or
+
+14
+00:00:50,395 --> 00:00:53,189
+restaurants that they think
+you may want to try out.
+
+15
+00:00:53,189 --> 00:00:54,773
+And for many companies,
+
+16
+00:00:54,773 --> 00:00:59,006
+a large fraction of sales is driven
+by their recommended systems.
+
+17
+00:00:59,006 --> 00:01:05,050
+So today for many companies, the economics
+or the value driven by recommended systems
+
+18
+00:01:05,050 --> 00:01:10,454
+is very large and so what we're doing this
+week is take a look at how they work.
+
+19
+00:01:10,454 --> 00:01:14,605
+So with that let's dive in and take
+a look at what is a recommended system.
+
+20
+00:01:14,605 --> 00:01:20,428
+I'm going to use as a running example, the
+application of predicting movie ratings.
+
+21
+00:01:20,428 --> 00:01:24,652
+So say you run a large
+movie streaming website and
+
+22
+00:01:24,652 --> 00:01:29,296
+your users have rated movies
+using one to five stars.
+
+23
+00:01:29,296 --> 00:01:33,386
+And so in a typical recommended
+system you have a set of users,
+
+24
+00:01:33,386 --> 00:01:36,783
+here we have four users Alice,
+Bob Carol and Dave.
+
+25
+00:01:36,783 --> 00:01:39,614
+Which have numbered users 1,2,3,4.
+
+26
+00:01:39,614 --> 00:01:43,310
+As well as a set of movies Love at last,
+Romance forever,
+
+27
+00:01:43,310 --> 00:01:48,084
+Cute puppies of love and then Nonstop
+car chases and Sword versus karate.
+
+28
+00:01:48,084 --> 00:01:53,482
+And what the users have done is rated
+these movies one to five stars.
+
+29
+00:01:53,482 --> 00:01:57,276
+Or in fact to make some of these
+examples a little bit easier.
+
+30
+00:01:57,276 --> 00:02:01,440
+I'm not going to let them rate
+the movies from zero to five stars.
+
+31
+00:02:01,440 --> 00:02:06,440
+So say Alice has rated Love and last
+five stars, Romance forever five stars.
+
+32
+00:02:06,440 --> 00:02:08,762
+Maybe she has not yet
+watched cute puppies of love so
+
+33
+00:02:08,762 --> 00:02:10,340
+you don't have a rating for that.
+
+34
+00:02:10,340 --> 00:02:13,971
+And I'm going to denote that
+via a question mark and
+
+35
+00:02:13,971 --> 00:02:20,140
+she thinks nonstop car chases and sword
+versus karate deserve zero stars bob.
+
+36
+00:02:20,140 --> 00:02:23,185
+Race at five stars has not watched that,
+so
+
+37
+00:02:23,185 --> 00:02:27,003
+you don't have a rating
+race at four stars, 0,0.
+
+38
+00:02:27,003 --> 00:02:31,482
+Carol on the other hand,
+things that deserve zero stars has not
+
+39
+00:02:31,482 --> 00:02:35,707
+watched that zero stars and
+she loves nonstop car chases and
+
+40
+00:02:35,707 --> 00:02:40,640
+swords versus karate and
+Dave raise the movies as follows.
+
+41
+00:02:40,640 --> 00:02:44,040
+In the typical recommended system,
+
+42
+00:02:44,040 --> 00:02:49,650
+you have some number of users
+as well as some number of items.
+
+43
+00:02:49,650 --> 00:02:55,831
+In this case the items are movies that
+you want to recommend to the users.
+
+44
+00:02:55,831 --> 00:03:00,308
+And even though I'm using movies in this
+example, the same logic or the same thing.
+
+45
+00:03:00,308 --> 00:03:04,980
+Work for recommending anything from
+products or website myself to restaurants,
+
+46
+00:03:04,980 --> 00:03:08,772
+to even which media articles,
+the social media articles to show,
+
+47
+00:03:08,772 --> 00:03:11,640
+to the user that may be
+more interesting for them.
+
+48
+00:03:11,640 --> 00:03:18,880
+The notation I'm going to use is I'm going
+to use nu to denote the number of users.
+
+49
+00:03:18,880 --> 00:03:23,903
+So in this example nu is equal to
+four because you have four users and
+
+50
+00:03:23,903 --> 00:03:28,680
+nm to denote the number of movies or
+really the number of items.
+
+51
+00:03:28,680 --> 00:03:33,199
+So in this example nm is equal to
+five because we have five movies.
+
+52
+00:03:33,199 --> 00:03:38,246
+I'm going to set r(i,j)=1,
+
+53
+00:03:38,246 --> 00:03:42,254
+if user j has rated movie i.
+
+54
+00:03:42,254 --> 00:03:48,398
+So for example, use a one
+Dallas Alice has rated movie one but
+
+55
+00:03:48,398 --> 00:03:53,581
+has not rated movie three and
+so r(1,1) =1,
+
+56
+00:03:53,581 --> 00:03:57,316
+because she has rated movie one, but
+
+57
+00:03:57,316 --> 00:04:04,340
+r( 3,1)=0 because she has not
+rated movie number three.
+
+58
+00:04:04,340 --> 00:04:05,828
+Then finally I'm going to use y(i,j).
+
+59
+00:04:05,828 --> 00:04:10,759
+J to denote the rating
+given by user j to movie i.
+
+60
+00:04:10,759 --> 00:04:11,985
+So for example,
+
+61
+00:04:11,985 --> 00:04:17,951
+this rating here would be that movie three
+was rated by user 2 to be equal to four.
+
+62
+00:04:19,040 --> 00:04:23,353
+Notice that not every user rates
+every movie and it's important for
+
+63
+00:04:23,353 --> 00:04:26,930
+the system to know which users
+have rated which movies.
+
+64
+00:04:26,930 --> 00:04:33,299
+That's why we're going to define
+r(i,j)=1 if user j has rated movie i and
+
+65
+00:04:33,299 --> 00:04:37,940
+will be equal to zero if user
+j has not rated movie i.
+
+66
+00:04:37,940 --> 00:04:42,635
+So with this framework for recommended
+systems one possible way to approach
+
+67
+00:04:42,635 --> 00:04:46,940
+the problem is to look at the movies
+that users have not rated.
+
+68
+00:04:46,940 --> 00:04:52,396
+And to try to predict how users would
+rate those movies because then we can try
+
+69
+00:04:52,396 --> 00:04:57,864
+to recommend to users things that they
+are more likely to rate as five stars.
+
+70
+00:04:57,864 --> 00:05:01,568
+And in the next video we'll start
+to develop an algorithm for
+
+71
+00:05:01,568 --> 00:05:02,882
+doing exactly that.
+
+72
+00:05:02,882 --> 00:05:04,703
+But making one very special assumption.
+
+73
+00:05:04,703 --> 00:05:09,609
+Which is we're going to assume temporarily
+that we have access to features or
+
+74
+00:05:09,609 --> 00:05:14,513
+extra information about the movies such
+as which movies are romance movies,
+
+75
+00:05:14,513 --> 00:05:16,638
+which movies are action movies.
+
+76
+00:05:16,638 --> 00:05:20,000
+And using that will start
+to develop an algorithm.
+
+77
+00:05:20,000 --> 00:05:24,322
+But later this week will actually come
+back and ask what if we don't have these
+
+78
+00:05:24,322 --> 00:05:28,240
+features, how can you still
+get the algorithm to work then?
+
+79
+00:05:28,240 --> 00:05:31,861
+But let's go on to the next video to

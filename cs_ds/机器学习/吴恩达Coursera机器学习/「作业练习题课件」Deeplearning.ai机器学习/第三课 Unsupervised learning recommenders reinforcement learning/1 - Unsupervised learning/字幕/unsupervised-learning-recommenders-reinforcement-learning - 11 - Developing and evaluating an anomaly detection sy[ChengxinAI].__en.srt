@@ -1,0 +1,1144 @@
+1
+00:00:00,920 --> 00:00:04,290
+I'd like to share with you
+some practical tips for
+
+2
+00:00:04,290 --> 00:00:07,275
+developing an anomaly
+detection system.
+
+3
+00:00:07,275 --> 00:00:10,290
+One of the key ideas
+will be that if you
+
+4
+00:00:10,290 --> 00:00:13,110
+can have a way to
+evaluate a system,
+
+5
+00:00:13,110 --> 00:00:14,640
+even as it's being developed,
+
+6
+00:00:14,640 --> 00:00:17,070
+you'll be able to make
+decisions and change
+
+7
+00:00:17,070 --> 00:00:19,725
+the system and improve
+it much more quickly.
+
+8
+00:00:19,725 --> 00:00:21,825
+Let's take a look
+at what that means.
+
+9
+00:00:21,825 --> 00:00:24,224
+When you are developing
+a learning algorithm,
+
+10
+00:00:24,224 --> 00:00:26,790
+say choosing different
+features or trying
+
+11
+00:00:26,790 --> 00:00:29,445
+different values of the
+parameters like epsilon,
+
+12
+00:00:29,445 --> 00:00:33,060
+making decisions about
+whether or not to change
+
+13
+00:00:33,060 --> 00:00:34,890
+a feature in a certain way or to
+
+14
+00:00:34,890 --> 00:00:37,515
+increase or decrease epsilon
+or other parameters,
+
+15
+00:00:37,515 --> 00:00:40,320
+making those decisions is
+much easier if you have
+
+16
+00:00:40,320 --> 00:00:43,535
+a way of evaluating the
+learning algorithm.
+
+17
+00:00:43,535 --> 00:00:47,810
+This is sometimes called
+real number evaluation,
+
+18
+00:00:47,810 --> 00:00:49,400
+meaning that if you can
+
+19
+00:00:49,400 --> 00:00:51,395
+quickly change the
+algorithm in some way,
+
+20
+00:00:51,395 --> 00:00:52,940
+such as change a
+feature or change
+
+21
+00:00:52,940 --> 00:00:55,430
+a parameter and have a way of
+
+22
+00:00:55,430 --> 00:00:57,620
+computing a number that tells
+
+23
+00:00:57,620 --> 00:01:00,050
+you if the algorithm
+got better or worse,
+
+24
+00:01:00,050 --> 00:01:02,660
+then it makes it much
+easier to decide
+
+25
+00:01:02,660 --> 00:01:03,950
+whether or not to stick
+
+26
+00:01:03,950 --> 00:01:05,875
+with that change
+to the algorithm.
+
+27
+00:01:05,875 --> 00:01:09,530
+This is how it's often
+done in anomaly detection.
+
+28
+00:01:09,530 --> 00:01:12,020
+Which is, even
+though we've mainly
+
+29
+00:01:12,020 --> 00:01:14,705
+been talking about
+unlabeled data,
+
+30
+00:01:14,705 --> 00:01:17,510
+I'm going to change
+that assumption a bit
+
+31
+00:01:17,510 --> 00:01:20,810
+and assume that we have
+some labeled data,
+
+32
+00:01:20,810 --> 00:01:23,270
+including just a small number
+
+33
+00:01:23,270 --> 00:01:27,280
+usually of previously
+observed anomalies.
+
+34
+00:01:27,280 --> 00:01:31,265
+Maybe after making airplane
+engines for a few years,
+
+35
+00:01:31,265 --> 00:01:33,890
+you've just seen a
+few airplane engines
+
+36
+00:01:33,890 --> 00:01:35,675
+that were anomalous,
+
+37
+00:01:35,675 --> 00:01:39,920
+and for examples that
+you know are anomalous,
+
+38
+00:01:39,920 --> 00:01:42,740
+I'm going to associate a label y
+
+39
+00:01:42,740 --> 00:01:45,860
+equals 1 to indicate
+this anomalous,
+
+40
+00:01:45,860 --> 00:01:49,624
+and for examples that
+we think are normal,
+
+41
+00:01:49,624 --> 00:01:54,005
+I'm going to associate
+the label y equals 0.
+
+42
+00:01:54,005 --> 00:01:56,630
+The training set that
+
+43
+00:01:56,630 --> 00:01:59,400
+the anomaly detection
+algorithm will learn from is
+
+44
+00:01:59,400 --> 00:02:04,690
+still this unlabeled training
+set of x1 through xm,
+
+45
+00:02:04,690 --> 00:02:09,020
+and I'm going to think
+of all of these examples
+
+46
+00:02:09,020 --> 00:02:10,805
+as ones that we'll just
+
+47
+00:02:10,805 --> 00:02:14,240
+assume are normal
+and not anomalous,
+
+48
+00:02:14,240 --> 00:02:16,585
+so y is equal to 0.
+
+49
+00:02:16,585 --> 00:02:18,305
+In practice, you have
+
+50
+00:02:18,305 --> 00:02:20,060
+a few anomalous examples
+
+51
+00:02:20,060 --> 00:02:21,935
+where to slip into
+this training set,
+
+52
+00:02:21,935 --> 00:02:24,695
+your algorithm will
+still usually do okay.
+
+53
+00:02:24,695 --> 00:02:27,610
+To evaluate your algorithm,
+
+54
+00:02:27,610 --> 00:02:29,960
+come up with a way for you
+
+55
+00:02:29,960 --> 00:02:32,660
+to have a real
+number evaluation,
+
+56
+00:02:32,660 --> 00:02:38,225
+it turns out to be very useful
+if you have a small number
+
+57
+00:02:38,225 --> 00:02:41,205
+of anomalous examples so
+
+58
+00:02:41,205 --> 00:02:43,940
+that you can create a
+cross validation set,
+
+59
+00:02:43,940 --> 00:02:46,490
+which I'm going
+to denote x_cv^1,
+
+60
+00:02:46,490 --> 00:02:50,395
+y_cv^1 through
+x_cv^mcv, y_cv^mcv.
+
+61
+00:02:50,395 --> 00:02:52,700
+This is similar
+notation as you had
+
+62
+00:02:52,700 --> 00:02:55,790
+seen in the second course
+of this specialization.
+
+63
+00:02:55,790 --> 00:02:58,760
+As similarly, have a test set
+
+64
+00:02:58,760 --> 00:03:03,155
+of some number of examples where
+
+65
+00:03:03,155 --> 00:03:07,250
+both the cross validation
+and test sets hopefully
+
+66
+00:03:07,250 --> 00:03:11,865
+includes a few
+anomalous examples.
+
+67
+00:03:11,865 --> 00:03:14,690
+In other words, the cross
+validation and test sets will
+
+68
+00:03:14,690 --> 00:03:17,810
+have a few examples
+of y equals 1,
+
+69
+00:03:17,810 --> 00:03:21,385
+but also a lot of examples
+where y is equal to 0.
+
+70
+00:03:21,385 --> 00:03:23,645
+Again, in practice,
+
+71
+00:03:23,645 --> 00:03:26,940
+anomaly detection algorithm
+will work okay if
+
+72
+00:03:26,940 --> 00:03:30,545
+there are some examples that
+are actually anomalous,
+
+73
+00:03:30,545 --> 00:03:33,670
+but there were accidentally
+labeled with y equals 0.
+
+74
+00:03:33,670 --> 00:03:38,320
+Let's illustrate this with
+the aircraft engine example.
+
+75
+00:03:38,320 --> 00:03:40,804
+Let's say you have
+been manufacturing
+
+76
+00:03:40,804 --> 00:03:42,980
+aircraft engines for
+years and so you've
+
+77
+00:03:42,980 --> 00:03:47,590
+collected data from 10,000
+good or normal engines,
+
+78
+00:03:47,590 --> 00:03:51,320
+but over the years you
+had also collected data
+
+79
+00:03:51,320 --> 00:03:55,465
+from 20 flawed or
+anomalous engines.
+
+80
+00:03:55,465 --> 00:03:58,490
+Usually the number of
+anomalous engines,
+
+81
+00:03:58,490 --> 00:04:00,140
+that is y equals 1,
+
+82
+00:04:00,140 --> 00:04:02,575
+will be much smaller.
+
+83
+00:04:02,575 --> 00:04:05,450
+It will not be a typical to
+
+84
+00:04:05,450 --> 00:04:08,870
+apply this type of algorithm
+with anywhere from,
+
+85
+00:04:08,870 --> 00:04:13,600
+say, 2-50 known anomalies.
+
+86
+00:04:13,600 --> 00:04:15,890
+We're going to take
+this dataset and
+
+87
+00:04:15,890 --> 00:04:17,900
+break it up into a training set,
+
+88
+00:04:17,900 --> 00:04:19,235
+a cross validation set,
+
+89
+00:04:19,235 --> 00:04:21,770
+and the test set.
+Here's one example.
+
+90
+00:04:21,770 --> 00:04:24,365
+I'm going to put 6,000
+
+91
+00:04:24,365 --> 00:04:26,885
+good engines into
+the training set.
+
+92
+00:04:26,885 --> 00:04:30,470
+Again, if there are couple
+of anomalous engines
+
+93
+00:04:30,470 --> 00:04:33,620
+that got slipped into this
+set is actually okay,
+
+94
+00:04:33,620 --> 00:04:36,145
+I wouldn't worry too
+much about that.
+
+95
+00:04:36,145 --> 00:04:40,395
+Then let's put 2,000
+good engines and
+
+96
+00:04:40,395 --> 00:04:44,675
+10 of the known anomalies into
+the cross-validation set,
+
+97
+00:04:44,675 --> 00:04:47,650
+and a separate 2,000 good and 10
+
+98
+00:04:47,650 --> 00:04:50,960
+anomalous engines
+into the test set.
+
+99
+00:04:50,960 --> 00:04:53,555
+What you can do then is
+
+100
+00:04:53,555 --> 00:04:57,005
+train the algorithm
+on the training set,
+
+101
+00:04:57,005 --> 00:05:00,870
+fit the Gaussian distributions
+to these 6,000 examples
+
+102
+00:05:00,870 --> 00:05:04,535
+and then on the
+cross-validation set,
+
+103
+00:05:04,535 --> 00:05:07,295
+you can see how many of
+
+104
+00:05:07,295 --> 00:05:11,540
+the anomalous engines
+it correctly flags.
+
+105
+00:05:11,540 --> 00:05:15,485
+For example, you could use
+the cross validation set
+
+106
+00:05:15,485 --> 00:05:19,010
+to tune the parameter
+epsilon and set it
+
+107
+00:05:19,010 --> 00:05:22,195
+higher or lower depending
+
+108
+00:05:22,195 --> 00:05:25,820
+on whether the algorithm
+seems to be reliably
+
+109
+00:05:25,820 --> 00:05:29,480
+detecting these 10 anomalies
+without taking too
+
+110
+00:05:29,480 --> 00:05:31,160
+many of these 2,000 good
+
+111
+00:05:31,160 --> 00:05:34,420
+engines and flagging
+them as anomalies.
+
+112
+00:05:34,420 --> 00:05:37,760
+After you have tuned the
+parameter epsilon and
+
+113
+00:05:37,760 --> 00:05:40,250
+maybe also added
+or subtracted or
+
+114
+00:05:40,250 --> 00:05:45,740
+tuned to features X_J you can
+then take the algorithm and
+
+115
+00:05:45,740 --> 00:05:48,605
+evaluate it on your
+test set to see
+
+116
+00:05:48,605 --> 00:05:52,145
+how many of these 10
+anomalous engines it finds,
+
+117
+00:05:52,145 --> 00:05:54,800
+as well as how many
+mistakes it makes by
+
+118
+00:05:54,800 --> 00:05:57,915
+flagging the good engines
+as anomalous ones.
+
+119
+00:05:57,915 --> 00:06:00,295
+Notice that this is still
+
+120
+00:06:00,295 --> 00:06:03,815
+primarily an unsupervised
+learning algorithm
+
+121
+00:06:03,815 --> 00:06:07,590
+because the training sets
+really has no labels or
+
+122
+00:06:07,590 --> 00:06:09,930
+they all have labels
+that we're assuming to
+
+123
+00:06:09,930 --> 00:06:12,330
+be y equals 0 and so we
+
+124
+00:06:12,330 --> 00:06:14,370
+learned from the
+training set by fitting
+
+125
+00:06:14,370 --> 00:06:16,230
+the Gaussian distributions as
+
+126
+00:06:16,230 --> 00:06:18,245
+you saw in the previous video.
+
+127
+00:06:18,245 --> 00:06:20,050
+But it turns out
+if you're building
+
+128
+00:06:20,050 --> 00:06:22,600
+a practical anomaly
+detection system,
+
+129
+00:06:22,600 --> 00:06:27,550
+having a small number of
+anomalies to use to evaluate
+
+130
+00:06:27,550 --> 00:06:30,040
+the algorithm that your
+cross validation and test
+
+131
+00:06:30,040 --> 00:06:33,565
+sets is very helpful for
+tuning the algorithm.
+
+132
+00:06:33,565 --> 00:06:38,230
+Because the number of flawed
+engines is so small there's
+
+133
+00:06:38,230 --> 00:06:40,925
+one other alternative
+that I often see
+
+134
+00:06:40,925 --> 00:06:43,855
+people use for
+anomaly detection,
+
+135
+00:06:43,855 --> 00:06:46,645
+which is to not use a test set,
+
+136
+00:06:46,645 --> 00:06:48,445
+like to have just a training set
+
+137
+00:06:48,445 --> 00:06:50,470
+and a cross-validation set.
+
+138
+00:06:50,470 --> 00:06:52,435
+In this example, you will set
+
+139
+00:06:52,435 --> 00:06:54,805
+train on 6,000 good engines,
+
+140
+00:06:54,805 --> 00:06:56,650
+but take the remainder
+of the data,
+
+141
+00:06:56,650 --> 00:06:58,510
+the 4,000 remaining good
+
+142
+00:06:58,510 --> 00:07:00,715
+engines as well as
+all the anomalies,
+
+143
+00:07:00,715 --> 00:07:03,325
+and put them in the
+cross validation set.
+
+144
+00:07:03,325 --> 00:07:05,965
+You would then tune
+the parameters Epsilon
+
+145
+00:07:05,965 --> 00:07:08,590
+and add or subtract
+fictious x_j to try to
+
+146
+00:07:08,590 --> 00:07:10,780
+get it to do as well as possible
+
+147
+00:07:10,780 --> 00:07:13,955
+as evaluated on the
+cross validation set.
+
+148
+00:07:13,955 --> 00:07:17,265
+If you have very
+few flawed engines,
+
+149
+00:07:17,265 --> 00:07:20,845
+so if you had only
+two flawed engines,
+
+150
+00:07:20,845 --> 00:07:22,800
+then this really makes sense to
+
+151
+00:07:22,800 --> 00:07:25,805
+put all of that in the
+cross validation set.
+
+152
+00:07:25,805 --> 00:07:28,390
+You just don't have
+enough data to create
+
+153
+00:07:28,390 --> 00:07:30,325
+a totally separate test set
+
+154
+00:07:30,325 --> 00:07:32,935
+that is distinct from your
+cross-validation set.
+
+155
+00:07:32,935 --> 00:07:35,130
+The downside of this alternative
+
+156
+00:07:35,130 --> 00:07:37,970
+here is that after you've
+tuned your algorithm,
+
+157
+00:07:37,970 --> 00:07:42,040
+you don't have a fair
+way to tell how well
+
+158
+00:07:42,040 --> 00:07:43,510
+this will actually do on
+
+159
+00:07:43,510 --> 00:07:46,255
+future examples because you
+don't have the test set.
+
+160
+00:07:46,255 --> 00:07:48,430
+But when your dataset is small,
+
+161
+00:07:48,430 --> 00:07:50,830
+especially when the number
+of anomalies you have,
+
+162
+00:07:50,830 --> 00:07:52,145
+your dataset is small,
+
+163
+00:07:52,145 --> 00:07:54,895
+this might be the best
+alternative you have.
+
+164
+00:07:54,895 --> 00:07:58,330
+I see this done quite
+often as well when
+
+165
+00:07:58,330 --> 00:07:59,815
+you just don't have enough data
+
+166
+00:07:59,815 --> 00:08:01,900
+to create a separate test set.
+
+167
+00:08:01,900 --> 00:08:03,850
+If this is the case,
+
+168
+00:08:03,850 --> 00:08:05,530
+just be aware that there's
+
+169
+00:08:05,530 --> 00:08:07,195
+a higher risk that you will have
+
+170
+00:08:07,195 --> 00:08:08,440
+over-fit some of your
+
+171
+00:08:08,440 --> 00:08:11,525
+decisions around Epsilon
+and choice of features
+
+172
+00:08:11,525 --> 00:08:13,570
+and so on to the
+cross-validation set
+
+173
+00:08:13,570 --> 00:08:15,535
+and so its performance on
+
+174
+00:08:15,535 --> 00:08:17,435
+real data in the future may not
+
+175
+00:08:17,435 --> 00:08:20,845
+be as good as you
+were expecting.
+
+176
+00:08:20,845 --> 00:08:22,600
+Now, let's take
+
+177
+00:08:22,600 --> 00:08:25,390
+a closer look at how
+to actually evaluate
+
+178
+00:08:25,390 --> 00:08:27,845
+the algorithm on your
+cross-validation sets or
+
+179
+00:08:27,845 --> 00:08:30,580
+on the test set.
+Here's what you'd do.
+
+180
+00:08:30,580 --> 00:08:35,200
+You would first fit the model
+p of x on the training set.
+
+181
+00:08:35,200 --> 00:08:38,539
+This was a 6,000 examples
+of goods engines.
+
+182
+00:08:38,539 --> 00:08:43,225
+Then on any cross validation
+or test example x,
+
+183
+00:08:43,225 --> 00:08:48,925
+you would compute p of x and
+you will predict y equals 1.
+
+184
+00:08:48,925 --> 00:08:51,370
+That is anomalous if p of x is
+
+185
+00:08:51,370 --> 00:08:54,520
+less than Epsilon and
+you predict y is 0,
+
+186
+00:08:54,520 --> 00:08:59,140
+if p of x is greater than
+or equal to Epsilon.
+
+187
+00:08:59,140 --> 00:09:03,740
+Based on this, you can now
+look at how accurately
+
+188
+00:09:03,740 --> 00:09:06,545
+this algorithm's predictions on
+
+189
+00:09:06,545 --> 00:09:10,920
+the cross validation or test
+set matches the labels,
+
+190
+00:09:10,920 --> 00:09:15,485
+y you have in the cross
+validation or the test sets.
+
+191
+00:09:15,485 --> 00:09:18,010
+In the third week of
+the second course,
+
+192
+00:09:18,010 --> 00:09:22,505
+we had had a couple of optional
+videos on how to handle
+
+193
+00:09:22,505 --> 00:09:25,045
+highly skewed data distributions
+
+194
+00:09:25,045 --> 00:09:28,555
+where the number of
+positive examples,
+
+195
+00:09:28,555 --> 00:09:31,060
+y equals 1, can be
+much smaller than
+
+196
+00:09:31,060 --> 00:09:34,490
+the number of negative
+examples where y equals 0.
+
+197
+00:09:34,490 --> 00:09:36,750
+This is the case as well for
+
+198
+00:09:36,750 --> 00:09:39,245
+many anomaly detection in
+the applications where
+
+199
+00:09:39,245 --> 00:09:40,840
+the number of anomalies in
+
+200
+00:09:40,840 --> 00:09:43,795
+your cross-validation
+set is much smaller.
+
+201
+00:09:43,795 --> 00:09:45,220
+In our previous example,
+
+202
+00:09:45,220 --> 00:09:49,810
+we had maybe 10 positive
+examples and 2,000
+
+203
+00:09:49,810 --> 00:09:51,580
+negative examples because we had
+
+204
+00:09:51,580 --> 00:09:55,220
+10 anomalies and 2,000
+normal examples.
+
+205
+00:09:55,220 --> 00:09:57,605
+If you saw those
+optional videos,
+
+206
+00:09:57,605 --> 00:09:59,980
+you may recall
+that we saw it can
+
+207
+00:09:59,980 --> 00:10:02,585
+be useful to compute things
+like the true positive,
+
+208
+00:10:02,585 --> 00:10:03,850
+false positive, false negative,
+
+209
+00:10:03,850 --> 00:10:05,670
+and true negative [inaudible].
+
+210
+00:10:05,670 --> 00:10:07,525
+Also compute precision recall or
+
+211
+00:10:07,525 --> 00:10:10,960
+F_1 score and that these
+are alternative metrics and
+
+212
+00:10:10,960 --> 00:10:13,180
+classification accuracy
+that could work
+
+213
+00:10:13,180 --> 00:10:17,270
+better when your data
+distribution is very skewed.
+
+214
+00:10:17,270 --> 00:10:19,485
+If you saw that video,
+
+215
+00:10:19,485 --> 00:10:21,970
+you might consider
+applying those types of
+
+216
+00:10:21,970 --> 00:10:25,250
+evaluation metrics as
+well to tell how well
+
+217
+00:10:25,250 --> 00:10:27,850
+your learning algorithm
+is doing at finding
+
+218
+00:10:27,850 --> 00:10:30,725
+that small handful
+of anomalies or
+
+219
+00:10:30,725 --> 00:10:34,090
+positive examples amidst
+this much larger set
+
+220
+00:10:34,090 --> 00:10:37,580
+of negative examples of
+normal plane engines.
+
+221
+00:10:37,580 --> 00:10:39,365
+If you didn't watch that video,
+
+222
+00:10:39,365 --> 00:10:41,015
+don't worry about it. It's okay.
+
+223
+00:10:41,015 --> 00:10:42,970
+The intuition I hope you get
+
+224
+00:10:42,970 --> 00:10:46,595
+is to use the cross-validation
+set to just look at
+
+225
+00:10:46,595 --> 00:10:49,060
+how many anomalies
+is finding and also
+
+226
+00:10:49,060 --> 00:10:50,960
+how many normal engines is
+
+227
+00:10:50,960 --> 00:10:53,545
+incorrectly flagging
+as an anomaly.
+
+228
+00:10:53,545 --> 00:10:55,755
+Then to just use that to try to
+
+229
+00:10:55,755 --> 00:11:00,020
+choose a good choice for
+the parameter Epsilon.
+
+230
+00:11:00,020 --> 00:11:03,515
+You find that the
+practical process
+
+231
+00:11:03,515 --> 00:11:06,520
+of building an anomaly
+detection system is much
+
+232
+00:11:06,520 --> 00:11:08,515
+easier if you actually have
+
+233
+00:11:08,515 --> 00:11:10,060
+just a small number of
+
+234
+00:11:10,060 --> 00:11:13,360
+labeled examples of
+known anomalies.
+
+235
+00:11:13,360 --> 00:11:15,814
+Now, this does
+raise the question,
+
+236
+00:11:15,814 --> 00:11:17,845
+if you have a few
+labeled examples,
+
+237
+00:11:17,845 --> 00:11:19,360
+since you'll still be using
+
+238
+00:11:19,360 --> 00:11:21,350
+an unsupervised
+learning algorithm,
+
+239
+00:11:21,350 --> 00:11:23,615
+why not take those
+labeled examples
+
+240
+00:11:23,615 --> 00:11:26,275
+and use a supervised
+learning algorithm instead?
+
+241
+00:11:26,275 --> 00:11:28,330
+In the next video,
+let's take a look
+
+242
+00:11:28,330 --> 00:11:30,400
+at a comparison between
+
+243
+00:11:30,400 --> 00:11:33,070
+anomaly detection and
+supervised learning
+
+244
+00:11:33,070 --> 00:11:35,810
+and when you might prefer
+one over the other.
+
+245
+00:11:35,810 --> 00:11:38,750

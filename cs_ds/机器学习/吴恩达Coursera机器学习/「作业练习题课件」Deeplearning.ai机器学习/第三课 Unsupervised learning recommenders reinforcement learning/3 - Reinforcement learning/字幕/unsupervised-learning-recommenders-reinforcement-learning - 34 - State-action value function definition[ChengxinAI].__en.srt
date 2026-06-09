@@ -1,0 +1,733 @@
+1
+00:00:01,890 --> 00:00:05,867
+when we start to develop reinforcement
+learning hours later this week,
+
+2
+00:00:05,867 --> 00:00:10,430
+you see that there's a key quantity that
+reinforcement learning arrows will try to
+
+3
+00:00:10,430 --> 00:00:13,831
+compute and that's called
+the state action value function.
+
+4
+00:00:13,831 --> 00:00:16,525
+Let's take a look at
+what this function is.
+
+5
+00:00:16,525 --> 00:00:20,969
+The state action value function
+is a function typically
+
+6
+00:00:20,969 --> 00:00:23,814
+denoted by the letter uppercase Q.
+
+7
+00:00:23,814 --> 00:00:28,975
+And it's a function of a state
+you might be in as well as
+
+8
+00:00:28,975 --> 00:00:34,613
+the action you might choose to
+take in that state and QFSA.
+
+9
+00:00:34,613 --> 00:00:38,963
+Will give a number that equals the return.
+
+10
+00:00:38,963 --> 00:00:41,376
+If you start in that state.
+
+11
+00:00:41,376 --> 00:00:45,896
+S and take the action A just once and
+after taking
+
+12
+00:00:45,896 --> 00:00:50,872
+action A once you then
+behave optimally after that.
+
+13
+00:00:50,872 --> 00:00:55,374
+So after that you take whatever actions
+will result in the highest possible
+
+14
+00:00:55,374 --> 00:00:55,953
+return.
+
+15
+00:00:55,953 --> 00:00:59,779
+Now you might be thinking there's
+something a little bit strange about this
+
+16
+00:00:59,779 --> 00:01:03,019
+definition because how do we know
+what is the optimal behavior?
+
+17
+00:01:03,019 --> 00:01:07,750
+And if we knew what the auto behavior, if
+we already knew what's the best action to
+
+18
+00:01:07,750 --> 00:01:11,191
+take in every state,
+why do we still need to compute Q of SA.
+
+19
+00:01:11,191 --> 00:01:13,433
+Because we already have the auto policy.
+
+20
+00:01:13,433 --> 00:01:17,303
+So I do want to acknowledge that there's
+something a little bit strange about this
+
+21
+00:01:17,303 --> 00:01:17,985
+definition.
+
+22
+00:01:17,985 --> 00:01:22,328
+There's almost something a little bit
+circular about this definition, but
+
+23
+00:01:22,328 --> 00:01:26,939
+rest assured When we look at specific
+reinforcement learning outcomes later will
+
+24
+00:01:26,939 --> 00:01:31,414
+resolve this slightly circular definition
+and will come up with a way to compute
+
+25
+00:01:31,414 --> 00:01:35,193
+the Q function even before we've
+come up with the optimal policy.
+
+26
+00:01:35,193 --> 00:01:37,008
+But you see that in a later video.
+
+27
+00:01:37,008 --> 00:01:39,247
+So don't worry about this for now.
+
+28
+00:01:39,247 --> 00:01:44,509
+Let's look at an example we saw
+previously that this is a pretty
+
+29
+00:01:44,509 --> 00:01:50,781
+good policy Go left from stage 2, 3 and
+four and go right from State five.
+
+30
+00:01:50,781 --> 00:01:55,199
+It turns out that this is
+actually the optimal policy for
+
+31
+00:01:55,199 --> 00:02:01,509
+the mars rover application When the
+discount factor gamma is 0.5, so Q of S.
+
+32
+00:02:01,509 --> 00:02:06,906
+A will be equal to the total
+return If you start from say that
+
+33
+00:02:06,906 --> 00:02:12,095
+take the action A and
+then behave optimally after that.
+
+34
+00:02:12,095 --> 00:02:15,272
+Meaning take actions
+according to this policy.
+
+35
+00:02:15,272 --> 00:02:18,828
+Shown over here,
+let's figure out what Q of s,a.
+
+36
+00:02:18,828 --> 00:02:21,436
+Is for a few different states.
+
+37
+00:02:21,436 --> 00:02:26,146
+Let's look at say Q of state too.
+
+38
+00:02:26,146 --> 00:02:31,405
+And what if we take the action to go
+right well if you're in state two and
+
+39
+00:02:31,405 --> 00:02:34,702
+you go right then you end
+up at state three And
+
+40
+00:02:34,702 --> 00:02:40,321
+then after that you behave optimally
+you're going to go left from ST three and
+
+41
+00:02:40,321 --> 00:02:45,969
+then go left from state to and
+then eventually you get the reward of 100.
+
+42
+00:02:45,969 --> 00:02:51,285
+In this case, the rewards you get
+would be zero from state to zero
+
+43
+00:02:51,285 --> 00:02:56,403
+when you get to stay three zero
+when you get back to state two and
+
+44
+00:02:56,403 --> 00:03:01,423
+then 100 when you finally get
+to the terminal state one and
+
+45
+00:03:01,423 --> 00:03:06,347
+so the return will be zero
+plus 0.5 times that plus 0.5
+
+46
+00:03:06,347 --> 00:03:10,505
+squared times ac plus 0.5 cubed times 100.
+
+47
+00:03:10,505 --> 00:03:14,633
+And this turns out to be 12.5 And so
+
+48
+00:03:14,633 --> 00:03:19,669
+Q of ST two of going
+right as equal to 12.5.
+
+49
+00:03:19,669 --> 00:03:24,238
+Note that this passes, no judgment on
+whether going right is a good idea or not.
+
+50
+00:03:24,238 --> 00:03:28,449
+It's actually not that good an idea
+from state to to go right, but
+
+51
+00:03:28,449 --> 00:03:32,585
+it just faithfully reports out
+the return if you take action A and
+
+52
+00:03:32,585 --> 00:03:34,974
+then behave optimally afterwards.
+
+53
+00:03:34,974 --> 00:03:36,571
+Here's another example.
+
+54
+00:03:36,571 --> 00:03:41,644
+If you're in state to and
+you were to go left, then the sequence
+
+55
+00:03:41,644 --> 00:03:47,800
+of rewards you get will be zero when
+you're in state two followed by 100.
+
+56
+00:03:47,800 --> 00:03:52,966
+And so
+the return is zero plus 0.5 times 100
+
+57
+00:03:52,966 --> 00:03:59,526
+that's equal to 50 in order to
+write down The values of QSA.
+
+58
+00:03:59,526 --> 00:04:05,266
+In this diagram,
+I'm going to write 12.5 here on the right
+
+59
+00:04:05,266 --> 00:04:10,155
+to denote that this is Q of
+state to going to the right.
+
+60
+00:04:10,155 --> 00:04:14,867
+And then when I write a little
+50 here on the left to denote
+
+61
+00:04:14,867 --> 00:04:19,866
+that this is Q of ST two and
+going to the left just to take one more
+
+62
+00:04:19,866 --> 00:04:24,500
+example What if we're in ST four and
+we decide to go left.
+
+63
+00:04:24,500 --> 00:04:27,370
+Well if you're in stage four you go left,
+
+64
+00:04:27,370 --> 00:04:31,224
+you get rewards zero and
+then you take action left here.
+
+65
+00:04:31,224 --> 00:04:35,952
+So zero gain, take action left here,
+zero and then 100.
+
+66
+00:04:35,952 --> 00:04:43,491
+So Q of four Left results in rewards zero
+because the first action is left and
+
+67
+00:04:43,491 --> 00:04:51,999
+then because we followed the optimal
+policy afterwards You can reward 00 100.
+
+68
+00:04:51,999 --> 00:04:55,254
+And so
+the return is zero plus 00.5 times that.
+
+69
+00:04:55,254 --> 00:04:59,721
+Plus 4.5 squared times that
+plus 0.5 Q times that.
+
+70
+00:04:59,721 --> 00:05:03,438
+Which is therefore equal to 12.5.
+
+71
+00:05:03,438 --> 00:05:06,436
+So Q4 left is 12.5.
+
+72
+00:05:06,436 --> 00:05:10,522
+I'm going to write this year as 12.5.
+
+73
+00:05:10,522 --> 00:05:15,664
+And it turns out if you were to carry
+out this exercise for all of the other
+
+74
+00:05:15,664 --> 00:05:21,169
+states and all of the other actions,
+you end up with this being the Q of s,a.
+
+75
+00:05:21,169 --> 00:05:26,621
+For different states and different actions
+And then finally at the Terminal State.
+
+76
+00:05:26,621 --> 00:05:32,423
+Well it doesn't matter what you do, you
+just get that terminal reward 100 or 40.
+
+77
+00:05:32,423 --> 00:05:35,638
+So just write down those
+terminal awards over here.
+
+78
+00:05:35,638 --> 00:05:37,730
+So this is Q of s,a.
+
+79
+00:05:37,730 --> 00:05:42,487
+For every state state one through six and
+for the two actions,
+
+80
+00:05:42,487 --> 00:05:44,877
+action left and action right.
+
+81
+00:05:44,877 --> 00:05:51,676
+Because the state action value function
+is almost always noted by the letter Q.
+
+82
+00:05:51,676 --> 00:05:55,839
+This is also often called the Q function.
+
+83
+00:05:55,839 --> 00:05:56,658
+So the terms Q.
+
+84
+00:05:56,658 --> 00:06:01,189
+Function and state action value
+function are used interchangeably and
+
+85
+00:06:01,189 --> 00:06:05,127
+it tells you what are your returns or
+really what is the value?
+
+86
+00:06:05,127 --> 00:06:06,536
+How good is it?
+
+87
+00:06:06,536 --> 00:06:11,522
+Just take action A and ST S and
+then behave optimally after that.
+
+88
+00:06:11,522 --> 00:06:16,459
+Now it turns out that once you can
+compute the Q function this will
+
+89
+00:06:16,459 --> 00:06:19,391
+give you a way to pick actions as well.
+
+90
+00:06:19,391 --> 00:06:21,819
+Here's the policy and return.
+
+91
+00:06:21,819 --> 00:06:24,770
+And here are the values two of s,a.
+
+92
+00:06:24,770 --> 00:06:26,413
+From the previous slide.
+
+93
+00:06:26,413 --> 00:06:32,323
+You notice one interesting thing when
+you look at the different states which
+
+94
+00:06:32,323 --> 00:06:37,507
+is that if you take state to taking
+the action left results in a,q.
+
+95
+00:06:37,507 --> 00:06:42,193
+Value or state action value of 50 which is
+actually the best possible return you can
+
+96
+00:06:42,193 --> 00:06:43,388
+get from that state.
+
+97
+00:06:43,388 --> 00:06:45,969
+In state three two of s,a.
+
+98
+00:06:45,969 --> 00:06:50,271
+for the action left also
+gives you that higher return
+
+99
+00:06:50,271 --> 00:06:55,175
+is therefore the action left
+gives you the return you want.
+
+100
+00:06:55,175 --> 00:06:59,967
+And in state five is actually
+the action going to the right that
+
+101
+00:06:59,967 --> 00:07:02,925
+gives you that higher return of 20.
+
+102
+00:07:02,925 --> 00:07:08,659
+So it turns out that the best
+possible return from any state S.
+
+103
+00:07:08,659 --> 00:07:11,949
+Is the largest value of Q,F, S.
+
+104
+00:07:11,949 --> 00:07:13,681
+A maximizing over A.
+
+105
+00:07:13,681 --> 00:07:19,737
+Just to make sure this is clear what
+I'm saying is that in say stay for
+
+106
+00:07:19,737 --> 00:07:24,642
+There is two of state four
+left which is 12.5 And q.
+
+107
+00:07:24,642 --> 00:07:29,328
+of state four right,
+Which turns out to be 10.
+
+108
+00:07:29,328 --> 00:07:33,767
+And the larger of these two
+values which is 12.5 Is
+
+109
+00:07:33,767 --> 00:07:37,725
+the best possible return
+from that state four.
+
+110
+00:07:37,725 --> 00:07:41,815
+In other words the highest return you
+can hope to get from State four is 12.5.
+
+111
+00:07:41,815 --> 00:07:45,943
+And it's actually the larger of
+these two numbers 12.5 and 10.
+
+112
+00:07:45,943 --> 00:07:52,256
+And moreover, if you want your
+Mars Rover to enjoy a return of 12.5
+
+113
+00:07:52,256 --> 00:07:58,361
+rather than say 10 then the action
+you should take is the action A.
+
+114
+00:07:58,361 --> 00:08:01,881
+That gives you the larger
+value of Q of s,a.
+
+115
+00:08:01,881 --> 00:08:05,506
+So the best possible action
+status is the action A.
+
+116
+00:08:05,506 --> 00:08:10,118
+That actually maximizes Q, of s,a.
+
+117
+00:08:10,118 --> 00:08:16,560
+So this might give you a hint for
+why computing Q, of s,a.
+
+118
+00:08:16,560 --> 00:08:22,083
+Is an important part of the reinforcement
+learning algorithm that will build later.
+
+119
+00:08:22,083 --> 00:08:25,600
+Namely if you have a way
+of computing Q of s,a.
+
+120
+00:08:25,600 --> 00:08:29,861
+For every state and for
+every action then when you're in
+
+121
+00:08:29,861 --> 00:08:34,766
+some state s all you have to do is
+look at the different actions A.
+
+122
+00:08:34,766 --> 00:08:36,143
+And pick the action A.
+
+123
+00:08:36,143 --> 00:08:38,608
+That maximizes Q of s,a.
+
+124
+00:08:38,608 --> 00:08:39,587
+And so pi F.
+
+125
+00:08:39,587 --> 00:08:42,262
+S can just pick the action A.
+
+126
+00:08:42,262 --> 00:08:44,908
+That gives the largest value of Q of s,a.
+
+127
+00:08:44,908 --> 00:08:47,734
+And that will turn out
+to be a good action.
+
+128
+00:08:47,734 --> 00:08:50,401
+In fact it turned out to
+be the optimal action.
+
+129
+00:08:50,401 --> 00:08:54,101
+Another intuition about why
+this makes sense is Qof s,a.
+
+130
+00:08:54,101 --> 00:08:58,366
+Is returned if you sudden status and
+take the action A.
+
+131
+00:08:58,366 --> 00:09:00,765
+And then behave optimally after that.
+
+132
+00:09:00,765 --> 00:09:04,549
+So in order to earn
+the biggest possible return,
+
+133
+00:09:04,549 --> 00:09:07,978
+what you really want is
+to take the action A.
+
+134
+00:09:07,978 --> 00:09:12,699
+That results in the biggest total return.
+
+135
+00:09:12,699 --> 00:09:15,949
+That's why if only we have
+a way of computing Q f s,a.
+
+136
+00:09:15,949 --> 00:09:20,118
+For every state taking the action
+aid that maximizes return under
+
+137
+00:09:20,118 --> 00:09:24,990
+these circumstances seems like it's
+the best action to take in that state.
+
+138
+00:09:24,990 --> 00:09:27,081
+Although this isn't something
+you need to know for this.
+
+139
+00:09:27,081 --> 00:09:32,842
+Cause I want to mention also that if you
+look online or look at the reinforcement
+
+140
+00:09:32,842 --> 00:09:38,450
+learning literature, sometimes you
+also see this Q function written as Q.
+
+141
+00:09:38,450 --> 00:09:40,632
+Star instead of Q.
+
+142
+00:09:40,632 --> 00:09:45,553
+And this Q function is sometimes
+also called the optimal Q function.
+
+143
+00:09:45,553 --> 00:09:50,103
+These terms just refer to the Q
+function exactly as we've defined it.
+
+144
+00:09:50,103 --> 00:09:53,061
+So if you look at the reinforcement
+learning literature and read about Q.
+
+145
+00:09:53,061 --> 00:09:54,424
+Star or the Q function,
+
+146
+00:09:54,424 --> 00:09:59,067
+that just means the state action value
+function that we've been talking about.
+
+147
+00:09:59,067 --> 00:10:02,391
+But for the purposes of this course
+you don't need to worry about this.
+
+148
+00:10:02,391 --> 00:10:07,550
+So to summarize if you
+can compute Q of s,a.
+
+149
+00:10:07,550 --> 00:10:10,349
+For every state and every action,
+
+150
+00:10:10,349 --> 00:10:15,375
+then that gives us a good way to
+compute the auto policy pi of S.
+
+151
+00:10:15,375 --> 00:10:20,437
+So that's the state action value
+function or the Q function.
+
+152
+00:10:20,437 --> 00:10:24,965
+We'll talk later about how to come up
+with an algorithm to compute them despite
+
+153
+00:10:24,965 --> 00:10:28,824
+the slightly circular aspect of
+the definition of the Q function.
+
+154
+00:10:28,824 --> 00:10:33,439
+But first let's take a look at the next
+video at some specific examples of what
+
+155
+00:10:33,439 --> 00:10:34,863
+these values Q of s,a.
+
+156
+00:10:34,863 --> 00:10:35,860

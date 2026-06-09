@@ -1,0 +1,856 @@
+1
+00:00:01,160 --> 00:00:05,100
+In some applications,
+when you take an action,
+
+2
+00:00:05,100 --> 00:00:08,655
+the outcome is not always
+completely reliable.
+
+3
+00:00:08,655 --> 00:00:11,610
+For example, if you
+command your Mars rover to
+
+4
+00:00:11,610 --> 00:00:14,460
+go left maybe there's a
+little bit of a rock slide,
+
+5
+00:00:14,460 --> 00:00:16,590
+or maybe the floor is
+really slippery and so
+
+6
+00:00:16,590 --> 00:00:18,915
+it slips and goes in
+the wrong direction.
+
+7
+00:00:18,915 --> 00:00:21,225
+In practice, many robots don't
+
+8
+00:00:21,225 --> 00:00:23,460
+always manage to do
+exactly what you
+
+9
+00:00:23,460 --> 00:00:25,740
+tell them because
+of wind blowing
+
+10
+00:00:25,740 --> 00:00:28,650
+and off course and the wheel
+slipping or something else.
+
+11
+00:00:28,650 --> 00:00:30,930
+There's a generalization of
+
+12
+00:00:30,930 --> 00:00:32,430
+the reinforcement
+learning framework
+
+13
+00:00:32,430 --> 00:00:33,765
+we've talked about so far,
+
+14
+00:00:33,765 --> 00:00:37,800
+which models random or
+stochastic environments.
+
+15
+00:00:37,800 --> 00:00:39,225
+In this optional video,
+
+16
+00:00:39,225 --> 00:00:40,380
+we'll talk about how
+
+17
+00:00:40,380 --> 00:00:42,555
+these reinforcement
+learning problems work,
+
+18
+00:00:42,555 --> 00:00:46,190
+continuing with our simplifying
+Mars Rover example,
+
+19
+00:00:46,190 --> 00:00:50,600
+let's say you take the action
+and command it to go left.
+
+20
+00:00:50,600 --> 00:00:53,315
+Most of the time you'll
+succeed but what if
+
+21
+00:00:53,315 --> 00:00:56,375
+10 percent of the time
+or 0.1 of the time,
+
+22
+00:00:56,375 --> 00:00:59,180
+it actually ends up accidentally
+
+23
+00:00:59,180 --> 00:01:02,740
+slipping and going in
+the opposite direction?
+
+24
+00:01:02,740 --> 00:01:04,880
+If you command it to go left,
+
+25
+00:01:04,880 --> 00:01:07,549
+it has a 90 percent
+chance or 0.9
+
+26
+00:01:07,549 --> 00:01:10,370
+chance of correctly going
+in the left direction.
+
+27
+00:01:10,370 --> 00:01:12,890
+But the 0.1 chance of actually
+
+28
+00:01:12,890 --> 00:01:16,100
+heading to the right
+so that it has
+
+29
+00:01:16,100 --> 00:01:18,630
+a 9 percent chance of
+ending up in say three in
+
+30
+00:01:18,630 --> 00:01:20,550
+this example and a
+10 percent chance
+
+31
+00:01:20,550 --> 00:01:22,275
+of ending up in state five.
+
+32
+00:01:22,275 --> 00:01:24,980
+Conversely, if you
+were to command it to
+
+33
+00:01:24,980 --> 00:01:27,560
+go right and take
+the action, right,
+
+34
+00:01:27,560 --> 00:01:31,310
+it has a 0.9 chance
+of ending up in state
+
+35
+00:01:31,310 --> 00:01:35,900
+five and 0.1 chance of
+ending up in state three.
+
+36
+00:01:35,900 --> 00:01:40,370
+This would be an example of
+a stochastic environment.
+
+37
+00:01:40,370 --> 00:01:42,380
+Let's see what happens in
+
+38
+00:01:42,380 --> 00:01:44,570
+this reinforcement
+learning problem.
+
+39
+00:01:44,570 --> 00:01:48,785
+Let's say you use this
+policy shown here,
+
+40
+00:01:48,785 --> 00:01:51,930
+where you go left in stages
+
+41
+00:01:51,930 --> 00:01:56,655
+2 3 4 and go rights or try
+to go right in state five.
+
+42
+00:01:56,655 --> 00:01:58,955
+If you were to
+start in state four
+
+43
+00:01:58,955 --> 00:02:01,835
+and you were to
+follow this policy,
+
+44
+00:02:01,835 --> 00:02:04,160
+then the actual sequence of
+
+45
+00:02:04,160 --> 00:02:06,905
+states you visit may be random.
+
+46
+00:02:06,905 --> 00:02:08,975
+For example, in state four,
+
+47
+00:02:08,975 --> 00:02:10,565
+you will go left,
+
+48
+00:02:10,565 --> 00:02:13,085
+and maybe your loop and lucky,
+
+49
+00:02:13,085 --> 00:02:15,580
+and it actually gets
+the state three,
+
+50
+00:02:15,580 --> 00:02:17,390
+and then you try
+to go left again,
+
+51
+00:02:17,390 --> 00:02:19,670
+and maybe it
+actually gets there.
+
+52
+00:02:19,670 --> 00:02:21,200
+You tell it to go left again,
+
+53
+00:02:21,200 --> 00:02:23,360
+and it gets to that state.
+
+54
+00:02:23,360 --> 00:02:24,710
+If this is what happens,
+
+55
+00:02:24,710 --> 00:02:30,640
+you end up with the
+sequence of rewards 000100.
+
+56
+00:02:30,640 --> 00:02:33,740
+But if you were to try
+this exact same policy
+
+57
+00:02:33,740 --> 00:02:34,895
+a second time,
+
+58
+00:02:34,895 --> 00:02:37,310
+maybe you're a
+little less lucky,
+
+59
+00:02:37,310 --> 00:02:39,380
+the second time you start here.
+
+60
+00:02:39,380 --> 00:02:41,645
+Try to go left and
+see it succeeds
+
+61
+00:02:41,645 --> 00:02:44,210
+so a zero from state four
+zero from state three,
+
+62
+00:02:44,210 --> 00:02:45,830
+hear you tell it to go left,
+
+63
+00:02:45,830 --> 00:02:48,110
+but you've got unlucky
+this time and the robot
+
+64
+00:02:48,110 --> 00:02:51,830
+slips and ends up heading
+back to state four instead.
+
+65
+00:02:51,830 --> 00:02:54,785
+Then you're taught to
+call left, and left,
+
+66
+00:02:54,785 --> 00:02:58,190
+and left, and eventually
+get to that reward of 100.
+
+67
+00:02:58,190 --> 00:02:59,840
+In that case, this will
+
+68
+00:02:59,840 --> 00:03:02,550
+be the sequence of
+rewards you observe.
+
+69
+00:03:02,550 --> 00:03:06,915
+This one from four to three
+to four three two then one,
+
+70
+00:03:06,915 --> 00:03:08,550
+or is even possible,
+
+71
+00:03:08,550 --> 00:03:10,250
+if you tell from
+state four to go
+
+72
+00:03:10,250 --> 00:03:12,515
+left following the
+policy you may get
+
+73
+00:03:12,515 --> 00:03:14,720
+unlucky even on the
+first step and you end
+
+74
+00:03:14,720 --> 00:03:17,345
+up going to state five
+because it slipped.
+
+75
+00:03:17,345 --> 00:03:20,060
+Then state five, you
+command it to go right,
+
+76
+00:03:20,060 --> 00:03:21,995
+and it succeeds as
+you end up here.
+
+77
+00:03:21,995 --> 00:03:24,020
+In this case, the sequence of
+
+78
+00:03:24,020 --> 00:03:26,585
+rewards you see will be 0040,
+
+79
+00:03:26,585 --> 00:03:28,525
+because it went
+from four to five,
+
+80
+00:03:28,525 --> 00:03:30,310
+and then states six,
+
+81
+00:03:30,310 --> 00:03:33,920
+we had previously
+written out the return
+
+82
+00:03:33,920 --> 00:03:37,915
+as this sum of
+discounted rewards.
+
+83
+00:03:37,915 --> 00:03:39,575
+But when
+
+84
+00:03:39,575 --> 00:03:42,680
+the reinforcement learning
+problem is stochastic,
+
+85
+00:03:42,680 --> 00:03:45,575
+there isn't one sequence of
+rewards that you see for
+
+86
+00:03:45,575 --> 00:03:49,670
+sure instead you see this
+sequence of different rewards.
+
+87
+00:03:49,670 --> 00:03:53,750
+In a stochastic reinforcement
+learning problem,
+
+88
+00:03:53,750 --> 00:03:55,970
+what we're interested in is not
+
+89
+00:03:55,970 --> 00:03:59,810
+maximizing the return because
+that's a random number.
+
+90
+00:03:59,810 --> 00:04:02,615
+What we're interested
+in is maximizing
+
+91
+00:04:02,615 --> 00:04:06,725
+the average value of the
+sum of discounted rewards.
+
+92
+00:04:06,725 --> 00:04:10,625
+By average value, I mean if
+you were to take your policy
+
+93
+00:04:10,625 --> 00:04:12,500
+and try it out a thousand
+
+94
+00:04:12,500 --> 00:04:15,140
+times or a 100,000 times
+or a million times,
+
+95
+00:04:15,140 --> 00:04:17,540
+you get lots of different
+reward sequences like
+
+96
+00:04:17,540 --> 00:04:19,865
+that and if you were
+to take the average
+
+97
+00:04:19,865 --> 00:04:21,965
+over all of these
+different sequences
+
+98
+00:04:21,965 --> 00:04:24,635
+of the sum of
+discounted rewards,
+
+99
+00:04:24,635 --> 00:04:28,770
+then that's what we call
+the expected return.
+
+100
+00:04:28,770 --> 00:04:31,565
+In statistics, the term expected
+
+101
+00:04:31,565 --> 00:04:34,610
+is just another way
+of saying average.
+
+102
+00:04:34,610 --> 00:04:39,679
+But what this means is we want
+to maximize what we expect
+
+103
+00:04:39,679 --> 00:04:42,170
+to get on average in
+
+104
+00:04:42,170 --> 00:04:44,810
+terms of the sum of
+discounted rewards.
+
+105
+00:04:44,810 --> 00:04:47,750
+The mathematical
+notation for this is to
+
+106
+00:04:47,750 --> 00:04:50,690
+write this as E. E stands
+
+107
+00:04:50,690 --> 00:04:57,110
+for expected value of R1 plus
+Gamma R2 plus, and so on.
+
+108
+00:04:57,110 --> 00:05:00,740
+The job of reinforcement
+learning algorithm is to choose
+
+109
+00:05:00,740 --> 00:05:03,290
+a policy Pi to maximize
+
+110
+00:05:03,290 --> 00:05:07,625
+the average or the expected
+sum of discounted rewards.
+
+111
+00:05:07,625 --> 00:05:09,830
+To summarize, when you have
+
+112
+00:05:09,830 --> 00:05:12,230
+a stochastic reinforcement
+learning problem or
+
+113
+00:05:12,230 --> 00:05:14,855
+a stochastic Markov
+decision process
+
+114
+00:05:14,855 --> 00:05:16,790
+the goal is to choose a policy
+
+115
+00:05:16,790 --> 00:05:18,620
+to tell us what
+action to take in
+
+116
+00:05:18,620 --> 00:05:22,025
+state S so as to maximize
+the expected return.
+
+117
+00:05:22,025 --> 00:05:24,590
+The last way that this changes,
+
+118
+00:05:24,590 --> 00:05:25,910
+what we've talked about is it
+
+119
+00:05:25,910 --> 00:05:29,385
+modifies Bellman
+equation a little bit.
+
+120
+00:05:29,385 --> 00:05:31,025
+Here's the Bellman equation
+
+121
+00:05:31,025 --> 00:05:32,750
+exactly as we've written down.
+
+122
+00:05:32,750 --> 00:05:34,775
+But the difference now is that
+
+123
+00:05:34,775 --> 00:05:37,175
+when you take the
+action a in state s,
+
+124
+00:05:37,175 --> 00:05:40,195
+the next state s prime
+you get to is random.
+
+125
+00:05:40,195 --> 00:05:42,650
+When you're in state 3
+and you tell it to go
+
+126
+00:05:42,650 --> 00:05:46,130
+left the next state s prime
+it could be the state 2,
+
+127
+00:05:46,130 --> 00:05:49,040
+or it could be the state 4.
+
+128
+00:05:49,040 --> 00:05:51,199
+S prime is now random,
+
+129
+00:05:51,199 --> 00:05:53,690
+which is why we also put
+
+130
+00:05:53,690 --> 00:05:57,785
+an average operator or
+unexpected operator here.
+
+131
+00:05:57,785 --> 00:06:01,610
+We say that the total
+return from state s,
+
+132
+00:06:01,610 --> 00:06:04,955
+taking action a, once in
+a behaving optimally,
+
+133
+00:06:04,955 --> 00:06:07,835
+is equal to the reward
+you get right away,
+
+134
+00:06:07,835 --> 00:06:09,395
+also called the immediate reward
+
+135
+00:06:09,395 --> 00:06:11,300
+plus the discount factor,
+
+136
+00:06:11,300 --> 00:06:14,690
+Gamma plus what you
+expect to get on
+
+137
+00:06:14,690 --> 00:06:18,185
+average of the future returns.
+
+138
+00:06:18,185 --> 00:06:22,160
+If you want to sharpen
+your intuition about what
+
+139
+00:06:22,160 --> 00:06:23,210
+happens with these
+
+140
+00:06:23,210 --> 00:06:26,165
+stochastic reinforcement
+learning problems.
+
+141
+00:06:26,165 --> 00:06:28,535
+You'd go back to
+the optional lab
+
+142
+00:06:28,535 --> 00:06:30,350
+that I had shown you just now,
+
+143
+00:06:30,350 --> 00:06:33,620
+where this parameter
+misstep problem is
+
+144
+00:06:33,620 --> 00:06:37,580
+the probability of
+your Mars Rover
+
+145
+00:06:37,580 --> 00:06:39,490
+going in the opposite direction,
+
+146
+00:06:39,490 --> 00:06:41,250
+than you had commanded it to.
+
+147
+00:06:41,250 --> 00:06:44,780
+If we said misstep
+prop two is 0.1 and
+
+148
+00:06:44,780 --> 00:06:48,875
+re-execute the Notebook
+and so these numbers
+
+149
+00:06:48,875 --> 00:06:52,330
+up here are the optimal return
+
+150
+00:06:52,330 --> 00:06:56,450
+if you were to take the
+best possible actions,
+
+151
+00:06:56,450 --> 00:07:00,740
+take this optimal policy but
+the robot were to step in
+
+152
+00:07:00,740 --> 00:07:03,470
+the wrong direction 10
+percent of the time
+
+153
+00:07:03,470 --> 00:07:07,325
+and these are the q values
+for this stochastic NTP.
+
+154
+00:07:07,325 --> 00:07:09,920
+Notice that these values
+are now a little bit
+
+155
+00:07:09,920 --> 00:07:11,630
+lower because you can't
+
+156
+00:07:11,630 --> 00:07:14,045
+control the robot
+as well as before.
+
+157
+00:07:14,045 --> 00:07:16,730
+The q values, as well
+as the optimal returns,
+
+158
+00:07:16,730 --> 00:07:18,430
+have gone down a bit.
+
+159
+00:07:18,430 --> 00:07:22,265
+In fact, if you were to increase
+the misstep probability,
+
+160
+00:07:22,265 --> 00:07:23,930
+say 40 percent of
+
+161
+00:07:23,930 --> 00:07:26,240
+the time the robot doesn't
+even go into directions.
+
+162
+00:07:26,240 --> 00:07:29,075
+You're commanding it to only
+60 percent of the time.
+
+163
+00:07:29,075 --> 00:07:30,830
+It goes where you told it to,
+
+164
+00:07:30,830 --> 00:07:34,100
+then these values end
+up even lower because
+
+165
+00:07:34,100 --> 00:07:37,315
+your degree of control over
+the robot has decreased.
+
+166
+00:07:37,315 --> 00:07:39,230
+I encourage you to play with
+
+167
+00:07:39,230 --> 00:07:42,110
+the optional lab and
+change the value of
+
+168
+00:07:42,110 --> 00:07:44,900
+the misstep probability
+and see how that
+
+169
+00:07:44,900 --> 00:07:48,515
+affects the for return or
+the auto expected return,
+
+170
+00:07:48,515 --> 00:07:51,790
+as well as the Q
+values, q of s a.
+
+171
+00:07:51,790 --> 00:07:55,115
+Now, in everything
+we've done so far,
+
+172
+00:07:55,115 --> 00:07:58,295
+we've been using this
+Markov decision process,
+
+173
+00:07:58,295 --> 00:08:01,385
+this Mars rover with
+just six states.
+
+174
+00:08:01,385 --> 00:08:03,440
+For many practical applications,
+
+175
+00:08:03,440 --> 00:08:06,145
+the number of states
+will be much larger.
+
+176
+00:08:06,145 --> 00:08:07,475
+In the next video,
+
+177
+00:08:07,475 --> 00:08:09,995
+we'll take the
+reinforcement learning or
+
+178
+00:08:09,995 --> 00:08:11,690
+Markov decision
+process framework
+
+179
+00:08:11,690 --> 00:08:13,400
+we've talked about so far and
+
+180
+00:08:13,400 --> 00:08:14,900
+generalize it to this much
+
+181
+00:08:14,900 --> 00:08:17,270
+richer and maybe even
+more interesting set of
+
+182
+00:08:17,270 --> 00:08:19,550
+problems with much larger and in
+
+183
+00:08:19,550 --> 00:08:22,265
+particular with
+continuous state spaces,
+
+184
+00:08:22,265 --> 00:08:25,440
+let's take a look at

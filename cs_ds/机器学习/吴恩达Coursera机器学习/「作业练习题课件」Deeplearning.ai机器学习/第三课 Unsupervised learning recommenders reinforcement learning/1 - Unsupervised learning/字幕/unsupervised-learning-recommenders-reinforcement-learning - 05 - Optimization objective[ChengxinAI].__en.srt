@@ -1,0 +1,724 @@
+1
+00:00:01,340 --> 00:00:07,230
+In the earlier courses, courses one and two
+of the specialization, you saw a lot of
+
+2
+00:00:07,230 --> 00:00:13,140
+supervised learning algorithms as taking
+training set posing a cost function.
+
+3
+00:00:13,140 --> 00:00:14,786
+And then using grading descent or
+
+4
+00:00:14,786 --> 00:00:18,340
+some other algorithms to
+optimize that cost function.
+
+5
+00:00:18,340 --> 00:00:21,321
+It turns out that the key
+means algorithm that
+
+6
+00:00:21,321 --> 00:00:26,340
+you saw in the last video is also
+optimizing a specific cost function.
+
+7
+00:00:26,340 --> 00:00:31,032
+Although the optimization algorithm that
+it uses to optimize that is not creating
+
+8
+00:00:31,032 --> 00:00:35,740
+dissent is actually the algorithm that
+you already saw in the last video.
+
+9
+00:00:35,740 --> 00:00:38,240
+Let's take a look at what all this means.
+
+10
+00:00:38,240 --> 00:00:42,651
+Let's take a look at what is
+the cost function for a means,
+
+11
+00:00:42,651 --> 00:00:46,974
+to get started as a reminder
+this is a notation we've been
+
+12
+00:00:46,974 --> 00:00:50,420
+using whereas CI is
+the index of the cluster.
+
+13
+00:00:50,420 --> 00:00:55,923
+So CI is some number from one
+Su K of the index of the cluster
+
+14
+00:00:55,923 --> 00:01:01,200
+to which training example XI
+is currently assigned and
+
+15
+00:01:01,200 --> 00:01:05,470
+new K is the location
+of cluster centroid k.
+
+16
+00:01:05,470 --> 00:01:10,527
+Let me introduce one
+more piece of notation,
+
+17
+00:01:10,527 --> 00:01:15,140
+which is when lower case K equals CI.
+
+18
+00:01:15,140 --> 00:01:19,173
+So mu subscript CI is
+the cluster centroid of
+
+19
+00:01:19,173 --> 00:01:24,640
+the cluster to which example
+XI has been assigned.
+
+20
+00:01:24,640 --> 00:01:30,357
+So for example, if I were to look at some
+training example C train example 10 and
+
+21
+00:01:30,357 --> 00:01:34,982
+I were to ask What's the location
+of the constant century to which
+
+22
+00:01:34,982 --> 00:01:39,040
+the 10th training example
+has been assigned?
+
+23
+00:01:39,040 --> 00:01:41,750
+Well, I would then look up C10.
+
+24
+00:01:41,750 --> 00:01:43,771
+This will give me a number from one to K.
+
+25
+00:01:43,771 --> 00:01:48,897
+That tells me was example 10
+assigned to the red or the blue or
+
+26
+00:01:48,897 --> 00:01:54,121
+some other cluster centroid,
+and then mu subscript C- 10 is
+
+27
+00:01:54,121 --> 00:02:00,540
+the location of the cluster centroid
+to which extent has been assigned.
+
+28
+00:02:00,540 --> 00:02:05,757
+So armed with this notation,
+let me now write out
+
+29
+00:02:05,757 --> 00:02:12,004
+the cost function that K means
+turns out to be minimizing.
+
+30
+00:02:12,004 --> 00:02:18,640
+The cost function J,
+which is a function of C1 through CM.
+
+31
+00:02:18,640 --> 00:02:23,631
+These are all the assignments of
+points to clusters Androids as
+
+32
+00:02:23,631 --> 00:02:26,940
+well as new one through mu capsule K.
+
+33
+00:02:26,940 --> 00:02:31,763
+These are the locations of all
+the clusters centroid is defined as
+
+34
+00:02:31,763 --> 00:02:34,940
+this expression on the right.
+
+35
+00:02:34,940 --> 00:02:40,186
+It is the average, so
+one over M some from Michael's
+
+36
+00:02:40,186 --> 00:02:46,983
+one to him of the squared distance
+between every training example XI
+
+37
+00:02:46,983 --> 00:02:53,198
+as I goes from one through M it
+is a square distance between X I.
+
+38
+00:02:53,198 --> 00:02:55,550
+And Nu subscript C high.
+
+39
+00:02:55,550 --> 00:03:00,548
+So this quantity up here, in other words,
+the cost function good for
+
+40
+00:03:00,548 --> 00:03:07,040
+Kenyans is the average squared distance
+between every training example XI.
+
+41
+00:03:07,040 --> 00:03:11,917
+And the location of the cluster centroid
+to which the training example exile has
+
+42
+00:03:11,917 --> 00:03:12,960
+been assigned.
+
+43
+00:03:12,960 --> 00:03:17,770
+So for this example up here we've
+been measuring the distance
+
+44
+00:03:17,770 --> 00:03:20,840
+between X10 and mu subscript C10.
+
+45
+00:03:20,840 --> 00:03:26,270
+The cluster centroid to which extent has
+been assigned and taking the square of
+
+46
+00:03:26,270 --> 00:03:32,204
+that distance and that would be one of the
+terms over here that we're averaging over.
+
+47
+00:03:32,204 --> 00:03:36,824
+And it turns out that what the K means
+album is doing is trying to find
+
+48
+00:03:36,824 --> 00:03:41,778
+assignments of points of clusters
+centroid as well as find locations of
+
+49
+00:03:41,778 --> 00:03:45,841
+clusters centroid that
+minimizes the squared distance.
+
+50
+00:03:45,841 --> 00:03:50,123
+Visually, here's what you
+saw part way into the run
+
+51
+00:03:50,123 --> 00:03:53,240
+of K means in the earlier video.
+
+52
+00:03:53,240 --> 00:03:55,501
+And at this step the cost function.
+
+53
+00:03:55,501 --> 00:04:00,192
+If you were to computer it would be to
+look at everyone at the blue points and
+
+54
+00:04:00,192 --> 00:04:03,300
+measure these distances and
+computer square.
+
+55
+00:04:03,300 --> 00:04:07,693
+And then also similarly look at
+every one of the red points and
+
+56
+00:04:07,693 --> 00:04:11,322
+compute these distances and
+compute the square.
+
+57
+00:04:11,322 --> 00:04:17,578
+And then the average of the squares
+of all of these differences for
+
+58
+00:04:17,578 --> 00:04:23,491
+the red and the blue points is
+the value of the cost function J,
+
+59
+00:04:23,491 --> 00:04:30,340
+at this particular configuration
+of the parameters for kings.
+
+60
+00:04:30,340 --> 00:04:34,239
+And what they will do on every
+step is try to update the cluster
+
+61
+00:04:34,239 --> 00:04:37,390
+assignments C1 through
+C30 in this example.
+
+62
+00:04:37,390 --> 00:04:41,740
+Or update the positions of
+the cluster centralism, U1 and U2.
+
+63
+00:04:41,740 --> 00:04:45,340
+In order to keep on reducing
+this cost function J.
+
+64
+00:04:45,340 --> 00:04:49,195
+By the way,
+this cost function J also has a name in
+
+65
+00:04:49,195 --> 00:04:54,340
+the literature is called
+the distortion function.
+
+66
+00:04:54,340 --> 00:04:56,180
+I don't know that this is a great name.
+
+67
+00:04:56,180 --> 00:05:00,780
+But if you hear someone talk about the key
+news algorithm and the distortion or
+
+68
+00:05:00,780 --> 00:05:05,551
+the distortion cost function, that's
+just what this formula J is computing.
+
+69
+00:05:06,940 --> 00:05:09,881
+Let's now take a deeper
+look at the algorithm and
+
+70
+00:05:09,881 --> 00:05:13,630
+why the algorithm is trying to
+minimize this cost function J.
+
+71
+00:05:13,630 --> 00:05:17,882
+Or why is trying to minimize
+the distortion here on top of copied over
+
+72
+00:05:17,882 --> 00:05:20,651
+the cost function from the previous slide.
+
+73
+00:05:21,740 --> 00:05:26,316
+It turns out that the first part of K
+means where you assign points to cluster
+
+74
+00:05:26,316 --> 00:05:27,940
+centroid.
+
+75
+00:05:27,940 --> 00:05:32,880
+That turns out to be trying
+to update C1 through CM.
+
+76
+00:05:32,880 --> 00:05:36,922
+To try to minimize the cost
+function J as much as possible
+
+77
+00:05:36,922 --> 00:05:40,740
+while holding new one through mu K fix.
+
+78
+00:05:40,740 --> 00:05:45,814
+And the second step, in contrast
+where you move the custom centroid,
+
+79
+00:05:45,814 --> 00:05:49,780
+it turns out that is trying
+to leave C1 through CM fix.
+
+80
+00:05:49,780 --> 00:05:55,267
+But to update new one through mu K to
+try to minimize the cost function or
+
+81
+00:05:55,267 --> 00:05:58,160
+the distortion as much as possible.
+
+82
+00:05:58,160 --> 00:06:00,372
+Let's take a look at why this is the case.
+
+83
+00:06:00,372 --> 00:06:05,865
+During the first step, if you want to
+choose the values of C1 through CM or
+
+84
+00:06:05,865 --> 00:06:10,740
+save a particular value of
+Ci to try to minimize this.
+
+85
+00:06:10,740 --> 00:06:15,420
+Well, what would make Xi minus
+
+86
+00:06:15,420 --> 00:06:19,940
+mu CI as small as possible?
+
+87
+00:06:19,940 --> 00:06:25,740
+This is the distance or the square
+distance between a training example XI.
+
+88
+00:06:25,740 --> 00:06:29,961
+And the location of the class is
+central to which has been assigned.
+
+89
+00:06:31,040 --> 00:06:36,335
+So if you want to minimize this
+distance or the square distance,
+
+90
+00:06:36,335 --> 00:06:41,051
+what you should do is assign
+XI to the closest sanctuary.
+
+91
+00:06:42,240 --> 00:06:47,443
+So to take a simplified example,
+if you have two clusters centroid say
+
+92
+00:06:47,443 --> 00:06:53,540
+close to central is one and two and
+just a single training example, XI.
+
+93
+00:06:53,540 --> 00:06:57,112
+If you were to sign it
+to cluster central one,
+
+94
+00:06:57,112 --> 00:07:02,851
+this square distance here would be
+this large distance, well squared.
+
+95
+00:07:04,440 --> 00:07:08,749
+And if you were to sign it too close to
+central to then this square distance would
+
+96
+00:07:08,749 --> 00:07:11,840
+be the square of this
+much smaller distance.
+
+97
+00:07:11,840 --> 00:07:15,490
+So if you want to minimize this term,
+you will take X I and
+
+98
+00:07:15,490 --> 00:07:21,740
+assign it to the closer centroid, which is
+exactly what the album is doing up here.
+
+99
+00:07:21,740 --> 00:07:26,726
+So that's why the step where you sign
+points to cluster century is choosing
+
+100
+00:07:26,726 --> 00:07:29,269
+the values for CI to try to minimize J.
+
+101
+00:07:29,269 --> 00:07:33,909
+Without changing, we went through
+the UK for now, but just choosing
+
+102
+00:07:33,909 --> 00:07:38,961
+the values of C1 through CM to try to
+make these terms as small as possible.
+
+103
+00:07:40,540 --> 00:07:45,408
+How about the second step of
+the K-means algorithm that is to
+
+104
+00:07:45,408 --> 00:07:47,802
+move to clusters centroids?
+
+105
+00:07:47,802 --> 00:07:53,473
+It turns out that choosing mu K to be
+average and the mean of the points
+
+106
+00:07:53,473 --> 00:08:00,540
+assigned is the choice of these terms
+mu that will minimize this expression.
+
+107
+00:08:00,540 --> 00:08:03,076
+To take a simplified example,
+
+108
+00:08:03,076 --> 00:08:08,990
+say you have a cluster with just two
+points aside to it shown as follows.
+
+109
+00:08:08,990 --> 00:08:12,573
+And so with the closest centroid here,
+
+110
+00:08:12,573 --> 00:08:17,786
+the average of the square
+distances would be a distance of
+
+111
+00:08:17,786 --> 00:08:23,670
+one here squared plus this distance here,
+which is 9 squared.
+
+112
+00:08:23,670 --> 00:08:26,340
+And then you take the average
+of these two numbers.
+
+113
+00:08:26,340 --> 00:08:32,033
+And so that turns out to
+be one half of 1 plus 81,
+
+114
+00:08:32,033 --> 00:08:35,740
+which turns out to be 41.
+
+115
+00:08:35,740 --> 00:08:40,574
+But if you were to take the average
+of these two points, so
+
+116
+00:08:40,574 --> 00:08:43,820
+1+ 11/2, that's equal to 6.
+
+117
+00:08:43,820 --> 00:08:48,514
+And if you were to move
+the cluster centroid over here to
+
+118
+00:08:48,514 --> 00:08:53,312
+middle than the average of
+these two square distances,
+
+119
+00:08:53,312 --> 00:08:57,680
+turns out to be a distance of five and
+five years.
+
+120
+00:08:57,680 --> 00:09:04,930
+So you end up with one half of 5 squared
+plus 5 squared, which is equal to 25.
+
+121
+00:09:04,930 --> 00:09:09,240
+And this is a much smaller
+average squared distance than 41.
+
+122
+00:09:09,240 --> 00:09:13,702
+And in fact, you can play around with
+the location of this cluster centroid and
+
+123
+00:09:13,702 --> 00:09:17,028
+maybe convince yourself that
+taking this mean location.
+
+124
+00:09:17,028 --> 00:09:20,830
+This average location in the middle
+of these two training examples,
+
+125
+00:09:20,830 --> 00:09:25,140
+that is really the value that
+minimizes the square distance.
+
+126
+00:09:25,140 --> 00:09:30,219
+So the fact that the K-means algorithm
+is optimizing a cost function J
+
+127
+00:09:30,219 --> 00:09:35,840
+means that it is guaranteed to converge,
+that is on every single iteration.
+
+128
+00:09:35,840 --> 00:09:41,205
+The distortion cost function should go
+down or stay the same, but if it ever
+
+129
+00:09:41,205 --> 00:09:46,326
+fails to go down or stay the same,
+in the worst case, if it ever goes up.
+
+130
+00:09:46,326 --> 00:09:51,142
+That means there's a bug in the code,
+it should never go up because
+
+131
+00:09:51,142 --> 00:09:55,012
+every single step of K means
+is setting the value CI and
+
+132
+00:09:55,012 --> 00:09:58,640
+mu K to try to reduce the cost function.
+
+133
+00:09:58,640 --> 00:10:02,025
+Also, if the cost function
+ever stops going down,
+
+134
+00:10:02,025 --> 00:10:05,969
+that also gives you one way to
+test if K means has converged.
+
+135
+00:10:05,969 --> 00:10:09,610
+Once there's a single duration
+where it stays the same.
+
+136
+00:10:09,610 --> 00:10:14,832
+That usually means K means has converged
+and you should just stop running the album
+
+137
+00:10:14,832 --> 00:10:19,234
+even further or in some rare cases
+you will run K means for a long time.
+
+138
+00:10:19,234 --> 00:10:24,213
+And the cost function of the distortion
+is just going down very, very slowly, and
+
+139
+00:10:24,213 --> 00:10:28,616
+that's a bit like great inter sent
+where maybe running even longer might
+
+140
+00:10:28,616 --> 00:10:29,360
+help a bit.
+
+141
+00:10:29,360 --> 00:10:34,210
+But if the rate at which the cost function
+is going down has become very, very slow.
+
+142
+00:10:34,210 --> 00:10:36,700
+You might also just say
+this is good enough.
+
+143
+00:10:36,700 --> 00:10:39,725
+I'm just going to say it's
+close enough to convergence and
+
+144
+00:10:39,725 --> 00:10:44,440
+not spend even more compute cycles
+running the album for even longer.
+
+145
+00:10:44,440 --> 00:10:48,657
+So these are some of the ways that
+computing the cost function is helpful
+
+146
+00:10:48,657 --> 00:10:52,240
+helps you figure out if
+the album has converged.
+
+147
+00:10:52,240 --> 00:10:55,785
+It turns out that there's
+one other very useful way
+
+148
+00:10:55,785 --> 00:10:58,589
+to take advantage of the cost function,
+
+149
+00:10:58,589 --> 00:11:04,840
+which is to use multiple different random
+initialization of the cluster centroid.
+
+150
+00:11:04,840 --> 00:11:09,300
+It turns out if you do this, you can often
+find much better clusters using K means,
+
+151
+00:11:09,300 --> 00:11:12,160
+let's take a look at the next

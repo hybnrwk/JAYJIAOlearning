@@ -1,0 +1,479 @@
+1
+00:00:01,664 --> 00:00:05,903
+Let's take a look at what the K-means
+clustering algorithm does.
+
+2
+00:00:05,903 --> 00:00:08,224
+Let me start with an example.
+
+3
+00:00:08,224 --> 00:00:13,218
+Here I've plotted a data set with
+30 unlabeled training examples.
+
+4
+00:00:13,218 --> 00:00:15,294
+So there are 30 points.
+
+5
+00:00:15,294 --> 00:00:19,752
+And what we like to do is run
+K-means on this data set.
+
+6
+00:00:19,752 --> 00:00:25,440
+The first thing that the K-means algorithm
+does is it will take a random guess
+
+7
+00:00:25,440 --> 00:00:31,142
+at where might be the centers of the two
+clusters that you might ask it to find.
+
+8
+00:00:31,142 --> 00:00:36,120
+In this example I'm going to ask
+it to try to find two clusters.
+
+9
+00:00:36,120 --> 00:00:38,647
+Later in this week we'll talk about how
+
+10
+00:00:38,647 --> 00:00:41,487
+you might decide how
+many clusters to find.
+
+11
+00:00:41,487 --> 00:00:46,660
+But the very first step is it
+will randomly pick two points,
+
+12
+00:00:46,660 --> 00:00:51,520
+which I've shown here as a red cross and
+the blue cross,
+
+13
+00:00:51,520 --> 00:00:56,186
+at where might be the centers
+of two different clusters.
+
+14
+00:00:56,186 --> 00:01:00,383
+This is just a random initial guess and
+they're not particularly good guesses.
+
+15
+00:01:00,383 --> 00:01:02,209
+But it's a start.
+
+16
+00:01:02,209 --> 00:01:07,005
+One thing I hope you take away from
+this video is that K-means will
+
+17
+00:01:07,005 --> 00:01:09,805
+repeatedly do two different things.
+
+18
+00:01:09,805 --> 00:01:13,273
+The first is assign points
+to cluster centroids and
+
+19
+00:01:13,273 --> 00:01:15,941
+the second is move cluster centroids.
+
+20
+00:01:15,941 --> 00:01:18,130
+Let's take a look at what this means.
+
+21
+00:01:18,130 --> 00:01:25,185
+The first of the two steps is it will
+go through each of these points and
+
+22
+00:01:25,185 --> 00:01:31,767
+look at whether it is closer to
+the red cross or to the blue cross.
+
+23
+00:01:31,767 --> 00:01:36,669
+The very first thing that K-means
+does is it will take a random guess
+
+24
+00:01:36,669 --> 00:01:39,602
+at where are the centers of the cluster?
+
+25
+00:01:39,602 --> 00:01:45,493
+And the centers of the cluster
+are called cluster centroids.
+
+26
+00:01:45,493 --> 00:01:50,379
+After it's made an initial guess
+at where the cluster centroid is,
+
+27
+00:01:50,379 --> 00:01:57,082
+it will go through all of these examples,
+x(1) through x(30), my 30 data points.
+
+28
+00:01:57,082 --> 00:02:02,019
+And for each of them it will check if it
+is closer to the red cluster centroid,
+
+29
+00:02:02,019 --> 00:02:06,725
+shown by the red cross, or if it's
+closer to the blue cluster centroid,
+
+30
+00:02:06,725 --> 00:02:08,371
+shown by the blue cross.
+
+31
+00:02:08,371 --> 00:02:13,071
+And it will assign each of these
+points to whichever of the cluster
+
+32
+00:02:13,071 --> 00:02:15,044
+centroids It is closer to.
+
+33
+00:02:15,044 --> 00:02:19,916
+I'm going to illustrate that by
+painting each of these examples,
+
+34
+00:02:19,916 --> 00:02:24,788
+each of these little round dots,
+either red or blue, depending on
+
+35
+00:02:24,788 --> 00:02:30,185
+whether that example is closer to
+the red or to the blue cluster centroid.
+
+36
+00:02:30,185 --> 00:02:34,371
+So this point up here is closer to the red
+centroid, which is why it's painted red.
+
+37
+00:02:34,371 --> 00:02:39,063
+Whereas this point down there is
+closer to the blue cluster centroid,
+
+38
+00:02:39,063 --> 00:02:41,696
+which is why I've now painted it blue.
+
+39
+00:02:41,696 --> 00:02:47,576
+So that was the first of the two things
+that K-means does over and over.
+
+40
+00:02:47,576 --> 00:02:50,277
+Which is a sign points
+to clusters centroids.
+
+41
+00:02:50,277 --> 00:02:55,582
+And all that means is it will associate
+which I'm illustrating with the color,
+
+42
+00:02:55,582 --> 00:02:58,600
+every point of one of
+the cluster centroids.
+
+43
+00:02:58,600 --> 00:03:02,926
+The second of the two steps
+that K-means does is,
+
+44
+00:03:02,926 --> 00:03:08,396
+it'll look at all of the red points and
+take an average of them.
+
+45
+00:03:08,396 --> 00:03:13,249
+And it will move the red cross
+to whatever is the average
+
+46
+00:03:13,249 --> 00:03:18,010
+location of the red dots,
+which turns out to be here.
+
+47
+00:03:18,010 --> 00:03:23,125
+And so the red cross, that is the red
+cluster centroid will move here.
+
+48
+00:03:23,125 --> 00:03:25,559
+And then we do the same thing for
+all the blue dots.
+
+49
+00:03:25,559 --> 00:03:29,604
+Look at all the blue dots, and
+take an average of them, and
+
+50
+00:03:29,604 --> 00:03:31,842
+move the blue cross over there.
+
+51
+00:03:31,842 --> 00:03:37,878
+So you now have a new location for
+the blue cluster centroid as well.
+
+52
+00:03:37,878 --> 00:03:41,730
+In the next video we'll look at
+the mathematical formulas for
+
+53
+00:03:41,730 --> 00:03:43,590
+how to do both of these steps.
+
+54
+00:03:43,590 --> 00:03:48,451
+But now that you have these new and
+hopefully slightly improved guesses for
+
+55
+00:03:48,451 --> 00:03:51,305
+the locations of the to cluster centroids,
+
+56
+00:03:51,305 --> 00:03:55,333
+we'll look through all of
+the 30 training examples again.
+
+57
+00:03:55,333 --> 00:03:59,716
+And check for every one of them,
+whether it's closer to the red or
+
+58
+00:03:59,716 --> 00:04:03,074
+the blue cluster centroid for
+the new locations.
+
+59
+00:04:03,074 --> 00:04:08,100
+And then we will associate them which
+are indicated by the color again,
+
+60
+00:04:08,100 --> 00:04:11,298
+every point to the closer
+cluster centroid.
+
+61
+00:04:11,298 --> 00:04:15,469
+And if you do that, you see that
+the field points change color.
+
+62
+00:04:15,469 --> 00:04:18,466
+So for example, this point is colored red,
+
+63
+00:04:18,466 --> 00:04:22,767
+because it was closer to the red
+cluster centroid previously.
+
+64
+00:04:22,767 --> 00:04:25,770
+But if we now look again,
+it's now actually closer to
+
+65
+00:04:25,770 --> 00:04:30,533
+the blue cluster centroid, because the
+blue and red cluster centroids have moved.
+
+66
+00:04:30,533 --> 00:04:35,078
+So if we go through and
+associate each point with the closer
+
+67
+00:04:35,078 --> 00:04:38,430
+cluster centroids, you end up with this.
+
+68
+00:04:38,430 --> 00:04:42,636
+And then we just repeat
+the second part of K-means again.
+
+69
+00:04:42,636 --> 00:04:48,941
+Which is look at all of the red dots and
+compute the average.
+
+70
+00:04:48,941 --> 00:04:51,387
+And also look at all of the blue dots and
+
+71
+00:04:51,387 --> 00:04:54,838
+compute the average location
+of all of the blue dots.
+
+72
+00:04:54,838 --> 00:05:00,314
+And it turns out that you end up
+moving the red cross over there and
+
+73
+00:05:00,314 --> 00:05:02,552
+the blue cross over here.
+
+74
+00:05:02,552 --> 00:05:03,769
+And we repeat.
+
+75
+00:05:03,769 --> 00:05:06,858
+Let's look at all of the points again and
+we color them,
+
+76
+00:05:06,858 --> 00:05:11,078
+either red or blue, depending on which
+cluster centroid that is closer to.
+
+77
+00:05:11,078 --> 00:05:13,087
+So you end up with this.
+
+78
+00:05:13,087 --> 00:05:18,083
+And then again, look at all of the red
+dots and take their average location,
+
+79
+00:05:18,083 --> 00:05:22,219
+and look at all the blue dots and
+take the average location, and
+
+80
+00:05:22,219 --> 00:05:24,898
+move the clusters to the new locations.
+
+81
+00:05:24,898 --> 00:05:29,634
+And it turns out that if you were to keep
+on repeating these two steps, that is
+
+82
+00:05:29,634 --> 00:05:34,370
+look at each point and assign it to
+the nearest cluster centroid and then also
+
+83
+00:05:34,370 --> 00:05:39,108
+move each cluster centroid to the mean
+of all the points with the same color.
+
+84
+00:05:39,108 --> 00:05:43,788
+If you keep on doing those two steps,
+you find that there are no more changes to
+
+85
+00:05:43,788 --> 00:05:48,120
+the colors of the points or to
+the locations of the clusters centroids.
+
+86
+00:05:48,120 --> 00:05:52,968
+And so this means that at this point
+the K-means clustering algorithm has
+
+87
+00:05:52,968 --> 00:05:53,838
+converged.
+
+88
+00:05:53,838 --> 00:05:58,525
+Because applying those two steps over and
+over, results in no further
+
+89
+00:05:58,525 --> 00:06:02,577
+changes to either the assignment
+to point to the centroids or
+
+90
+00:06:02,577 --> 00:06:05,286
+the location of the cluster centroids.
+
+91
+00:06:05,286 --> 00:06:09,445
+In this example, it looks like
+K-means has done a pretty good job.
+
+92
+00:06:09,445 --> 00:06:14,780
+It has found that these points up
+here correspond to one cluster,
+
+93
+00:06:14,780 --> 00:06:19,634
+and these points down here
+correspond to a second cluster.
+
+94
+00:06:19,634 --> 00:06:24,073
+So now you've seen an illustration
+of how K-means works.
+
+95
+00:06:24,073 --> 00:06:28,538
+The two key steps are, assign every
+point to the cluster centroid,
+
+96
+00:06:28,538 --> 00:06:31,921
+depending on what cluster
+centroid is nearest to.
+
+97
+00:06:31,921 --> 00:06:35,867
+And second move each cluster
+centroid to the average or
+
+98
+00:06:35,867 --> 00:06:39,569
+the mean of all the points
+that were assigned to it.
+
+99
+00:06:39,569 --> 00:06:42,999
+In the next video,
+we'll look at how to formalize this and
+
+100
+00:06:42,999 --> 00:06:46,857
+write out the algorithm that does
+what you just saw in this video.
+
+101
+00:06:46,857 --> 00:06:48,661

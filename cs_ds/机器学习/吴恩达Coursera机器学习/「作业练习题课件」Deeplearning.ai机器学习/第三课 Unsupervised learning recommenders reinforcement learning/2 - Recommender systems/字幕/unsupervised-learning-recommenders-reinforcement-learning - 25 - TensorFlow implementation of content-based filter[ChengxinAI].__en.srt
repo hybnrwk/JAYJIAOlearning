@@ -1,0 +1,476 @@
+1
+00:00:00,800 --> 00:00:04,140
+In the practice lab, you
+see how to implement
+
+2
+00:00:04,140 --> 00:00:06,689
+content-based filtering
+in TensorFlow.
+
+3
+00:00:06,689 --> 00:00:08,580
+What I'd like to
+do in this video
+
+4
+00:00:08,580 --> 00:00:10,650
+is just set through
+of you a few of
+
+5
+00:00:10,650 --> 00:00:12,540
+the key concepts in the code
+
+6
+00:00:12,540 --> 00:00:15,135
+that you get to play
+with. Let's take a look.
+
+7
+00:00:15,135 --> 00:00:17,790
+Recall that our code
+has started with
+
+8
+00:00:17,790 --> 00:00:22,470
+a user network as well
+as a movie that's work.
+
+9
+00:00:22,470 --> 00:00:26,070
+The way you can implement
+this in TensorFlow is,
+
+10
+00:00:26,070 --> 00:00:29,070
+it's very similar to
+how we have previously
+
+11
+00:00:29,070 --> 00:00:34,095
+implemented a neural network
+with a set of dense layers.
+
+12
+00:00:34,095 --> 00:00:36,255
+We're going to use
+a sequential model.
+
+13
+00:00:36,255 --> 00:00:38,160
+We then in this example have
+
+14
+00:00:38,160 --> 00:00:39,570
+two dense layers with
+
+15
+00:00:39,570 --> 00:00:41,685
+the number of hidden
+units specified here,
+
+16
+00:00:41,685 --> 00:00:46,750
+and the final layer has 32
+units and output's 32 numbers.
+
+17
+00:00:46,750 --> 00:00:49,010
+Then for the movie network,
+
+18
+00:00:49,010 --> 00:00:51,650
+I'm going to call it
+the item network,
+
+19
+00:00:51,650 --> 00:00:53,570
+because the movies
+are the items here,
+
+20
+00:00:53,570 --> 00:00:55,360
+this is what the
+code looks like.
+
+21
+00:00:55,360 --> 00:00:59,180
+Once again, we have coupled
+dense hidden layers,
+
+22
+00:00:59,180 --> 00:01:01,700
+followed by this layer,
+
+23
+00:01:01,700 --> 00:01:04,235
+which outputs 32 numbers.
+
+24
+00:01:04,235 --> 00:01:06,020
+For the hidden layers, we'll use
+
+25
+00:01:06,020 --> 00:01:08,885
+our default choice of
+activation function,
+
+26
+00:01:08,885 --> 00:01:12,020
+which is the relu
+activation function.
+
+27
+00:01:12,020 --> 00:01:15,095
+Next, we need to tell
+
+28
+00:01:15,095 --> 00:01:17,510
+TensorFlow Keras how to
+
+29
+00:01:17,510 --> 00:01:20,510
+feed the user features
+or the item features,
+
+30
+00:01:20,510 --> 00:01:23,930
+that is the movie features
+to the two neural networks.
+
+31
+00:01:23,930 --> 00:01:26,030
+This is the syntax for doing so.
+
+32
+00:01:26,030 --> 00:01:30,140
+That extracts out the
+input features for
+
+33
+00:01:30,140 --> 00:01:33,210
+the user and then
+feeds it to the user
+
+34
+00:01:33,210 --> 00:01:36,725
+and that we had defined
+up here to compute vu,
+
+35
+00:01:36,725 --> 00:01:39,330
+the vector for the user.
+
+36
+00:01:39,330 --> 00:01:41,690
+Then one additional step
+that turns out to make
+
+37
+00:01:41,690 --> 00:01:45,155
+this algorithm work a bit
+better is at this line here,
+
+38
+00:01:45,155 --> 00:01:49,540
+which normalizes the vector
+vu to have length one.
+
+39
+00:01:49,540 --> 00:01:51,500
+This normalizes the length,
+
+40
+00:01:51,500 --> 00:01:53,180
+also called the l2 norm,
+
+41
+00:01:53,180 --> 00:01:54,830
+but basically the length of
+
+42
+00:01:54,830 --> 00:01:57,520
+the vector vu to
+be equal to one.
+
+43
+00:01:57,520 --> 00:02:00,785
+Then we do the same thing
+for the item network,
+
+44
+00:02:00,785 --> 00:02:02,150
+for the movie network.
+
+45
+00:02:02,150 --> 00:02:06,770
+This extract out the item
+features and feeds it to
+
+46
+00:02:06,770 --> 00:02:10,705
+the item neural network
+that we defined up there
+
+47
+00:02:10,705 --> 00:02:15,960
+This computes the
+movie vector vm.
+
+48
+00:02:15,960 --> 00:02:18,080
+Then finally, the step also
+
+49
+00:02:18,080 --> 00:02:21,305
+normalizes that vector
+to have length one.
+
+50
+00:02:21,305 --> 00:02:25,670
+After having computed vu and vm,
+
+51
+00:02:25,670 --> 00:02:27,830
+we then have to take
+
+52
+00:02:27,830 --> 00:02:30,470
+the dot product between
+these two vectors.
+
+53
+00:02:30,470 --> 00:02:32,630
+This is the syntax for doing so.
+
+54
+00:02:32,630 --> 00:02:36,395
+Keras has a special layer type,
+
+55
+00:02:36,395 --> 00:02:40,550
+notice we had here tf
+keras layers dense,
+
+56
+00:02:40,550 --> 00:02:43,800
+here this is tf
+keras layers dot.
+
+57
+00:02:43,800 --> 00:02:46,370
+It turns out that there's
+a special Keras layer,
+
+58
+00:02:46,370 --> 00:02:49,370
+they just takes a dot
+product between two numbers.
+
+59
+00:02:49,370 --> 00:02:50,900
+We're going to use that to take
+
+60
+00:02:50,900 --> 00:02:56,005
+the dot product between
+the vectors vu and vm.
+
+61
+00:02:56,005 --> 00:02:59,880
+This gives the output
+of the neural network.
+
+62
+00:02:59,880 --> 00:03:02,570
+This gives the final prediction.
+
+63
+00:03:02,570 --> 00:03:05,090
+Finally, to tell keras
+
+64
+00:03:05,090 --> 00:03:07,690
+what are the inputs and
+outputs of the model,
+
+65
+00:03:07,690 --> 00:03:09,455
+this line tells it that
+
+66
+00:03:09,455 --> 00:03:12,650
+the overall model is
+a model with inputs
+
+67
+00:03:12,650 --> 00:03:15,020
+being the user features and
+
+68
+00:03:15,020 --> 00:03:17,660
+the movie or the item
+features and the output,
+
+69
+00:03:17,660 --> 00:03:21,115
+this is output that we
+just defined up above.
+
+70
+00:03:21,115 --> 00:03:24,680
+The cost function that we'll
+use to train this model
+
+71
+00:03:24,680 --> 00:03:28,600
+is going to be the mean
+squared error cost function.
+
+72
+00:03:28,600 --> 00:03:31,325
+These are the key
+code snippets for
+
+73
+00:03:31,325 --> 00:03:35,465
+implementing content-based
+filtering as a neural network.
+
+74
+00:03:35,465 --> 00:03:38,180
+You see the rest of the code in
+
+75
+00:03:38,180 --> 00:03:40,430
+the practice lab but
+
+76
+00:03:40,430 --> 00:03:42,710
+hopefully you'll be
+able to play with
+
+77
+00:03:42,710 --> 00:03:46,250
+that and see how all these
+code snippets fit together
+
+78
+00:03:46,250 --> 00:03:48,890
+into working TensorFlow
+implementation
+
+79
+00:03:48,890 --> 00:03:51,115
+of a content-based
+filtering algorithm.
+
+80
+00:03:51,115 --> 00:03:52,400
+It turns out that there's
+
+81
+00:03:52,400 --> 00:03:54,590
+one other step that I didn't
+talk about previously,
+
+82
+00:03:54,590 --> 00:03:55,640
+but if you do this,
+
+83
+00:03:55,640 --> 00:03:59,170
+which is normalize the
+length of the vector vu,
+
+84
+00:03:59,170 --> 00:04:02,115
+that makes the algorithm
+work a bit better.
+
+85
+00:04:02,115 --> 00:04:06,185
+TensorFlows has this
+l2 normalized motion
+
+86
+00:04:06,185 --> 00:04:08,725
+that normalizes the vector,
+
+87
+00:04:08,725 --> 00:04:12,185
+is also called normalizing
+the l2 norm of the vector,
+
+88
+00:04:12,185 --> 00:04:13,955
+hence the name of the function.
+
+89
+00:04:13,955 --> 00:04:16,985
+That's it. Thanks for
+sticking with me through
+
+90
+00:04:16,985 --> 00:04:19,800
+all this material on
+recommender systems,
+
+91
+00:04:19,800 --> 00:04:21,765
+it is an exciting technology.
+
+92
+00:04:21,765 --> 00:04:23,780
+I hope you enjoy playing with
+
+93
+00:04:23,780 --> 00:04:27,230
+these ideas and codes in the
+practice labs for this week.
+
+94
+00:04:27,230 --> 00:04:29,720
+That takes us to the lots of
+
+95
+00:04:29,720 --> 00:04:32,150
+these videos on
+recommender systems and to
+
+96
+00:04:32,150 --> 00:04:34,340
+the end of the next to
+
+97
+00:04:34,340 --> 00:04:37,000
+final week for this
+specialization.
+
+98
+00:04:37,000 --> 00:04:39,620
+I look forward to seeing
+you next week as well.
+
+99
+00:04:39,620 --> 00:04:41,750
+We'll talk about the
+exciting technology
+
+100
+00:04:41,750 --> 00:04:43,235
+of reinforcement learning.
+
+101
+00:04:43,235 --> 00:04:45,050
+Hope you have fun with
+the quizzes and with
+
+102
+00:04:45,050 --> 00:04:46,310
+the practice labs and I
+
+103
+00:04:46,310 --> 00:04:48,840
+look forward to

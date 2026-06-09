@@ -1,0 +1,988 @@
+1
+00:00:01,400 --> 00:00:05,220
+In order to apply
+anomaly detection,
+
+2
+00:00:05,220 --> 00:00:08,535
+we're going to need to use
+the Gaussian distribution,
+
+3
+00:00:08,535 --> 00:00:12,120
+which is also called the
+normal distribution.
+
+4
+00:00:12,120 --> 00:00:14,700
+When you hear me
+say either Gaussian
+
+5
+00:00:14,700 --> 00:00:16,814
+distribution or
+normal distribution,
+
+6
+00:00:16,814 --> 00:00:19,035
+they mean exactly
+the same thing.
+
+7
+00:00:19,035 --> 00:00:22,365
+If you've heard the
+bell-shaped distribution,
+
+8
+00:00:22,365 --> 00:00:24,885
+that also refers
+to the same thing.
+
+9
+00:00:24,885 --> 00:00:26,010
+But if you haven't heard of
+
+10
+00:00:26,010 --> 00:00:28,380
+the bell-shaped distribution,
+that's fine too.
+
+11
+00:00:28,380 --> 00:00:30,270
+But let's take a look at what is
+
+12
+00:00:30,270 --> 00:00:33,645
+the Gaussian or the
+normal distribution.
+
+13
+00:00:33,645 --> 00:00:35,415
+Say x is a number,
+
+14
+00:00:35,415 --> 00:00:37,980
+and if x is a random number,
+
+15
+00:00:37,980 --> 00:00:40,004
+sometimes called the
+random variable,
+
+16
+00:00:40,004 --> 00:00:42,630
+x can take on random values.
+
+17
+00:00:42,630 --> 00:00:45,605
+If the probability
+of x is given by
+
+18
+00:00:45,605 --> 00:00:48,620
+a Gaussian or
+normal distribution
+
+19
+00:00:48,620 --> 00:00:51,155
+with mean parameter Mu,
+
+20
+00:00:51,155 --> 00:00:55,045
+and with variance Sigma squared.
+
+21
+00:00:55,045 --> 00:00:59,120
+What that means is that
+the probability of
+
+22
+00:00:59,120 --> 00:01:04,040
+x looks like a curve
+that goes like this.
+
+23
+00:01:04,040 --> 00:01:06,230
+The center or the middle of
+
+24
+00:01:06,230 --> 00:01:10,790
+the curve is given
+by the mean Mu,
+
+25
+00:01:10,790 --> 00:01:15,920
+and the standard deviation or
+the width of this curve is
+
+26
+00:01:15,920 --> 00:01:20,355
+given by that variance
+parameter Sigma.
+
+27
+00:01:20,355 --> 00:01:22,690
+Technically, Sigma is called
+
+28
+00:01:22,690 --> 00:01:24,820
+the standard deviation
+and the square of
+
+29
+00:01:24,820 --> 00:01:26,710
+Sigma or Sigma squared is
+
+30
+00:01:26,710 --> 00:01:29,440
+called the variance
+of the distribution.
+
+31
+00:01:29,440 --> 00:01:32,200
+This curve here shows what
+
+32
+00:01:32,200 --> 00:01:35,290
+is p of x or the
+probability of x.
+
+33
+00:01:35,290 --> 00:01:37,735
+If you've heard of the
+bell-shaped curve,
+
+34
+00:01:37,735 --> 00:01:40,870
+this is that bell-shaped
+curve because a lot
+
+35
+00:01:40,870 --> 00:01:43,880
+of classic bells say
+
+36
+00:01:43,880 --> 00:01:46,390
+in towers were shaped like
+
+37
+00:01:46,390 --> 00:01:50,140
+this with the bell clapper
+hanging down here,
+
+38
+00:01:50,140 --> 00:01:52,240
+and so the shape
+of this curve is
+
+39
+00:01:52,240 --> 00:01:54,880
+vaguely reminiscent
+of the shape of
+
+40
+00:01:54,880 --> 00:01:56,695
+the large bells that
+
+41
+00:01:56,695 --> 00:02:00,255
+you will still find in
+some old buildings today.
+
+42
+00:02:00,255 --> 00:02:03,155
+Better looking than
+my hand-drawn one.
+
+43
+00:02:03,155 --> 00:02:05,260
+There's a picture of
+the Liberty Bell.
+
+44
+00:02:05,260 --> 00:02:07,570
+Indeed, the Liberty
+Bell's shape on
+
+45
+00:02:07,570 --> 00:02:11,350
+top is vaguely
+bell-shaped curve.
+
+46
+00:02:11,350 --> 00:02:15,745
+If you're wondering what
+does p of x really means?
+
+47
+00:02:15,745 --> 00:02:18,420
+Here's one way to interpret it.
+
+48
+00:02:18,420 --> 00:02:22,030
+It means that if you
+were to get, say,
+
+49
+00:02:22,030 --> 00:02:25,900
+100 numbers drawn from this
+probability distribution,
+
+50
+00:02:25,900 --> 00:02:27,700
+and you were to plot
+
+51
+00:02:27,700 --> 00:02:31,000
+a histogram of these 100 numbers
+
+52
+00:02:31,000 --> 00:02:32,440
+drawn from this distribution,
+
+53
+00:02:32,440 --> 00:02:34,975
+you might get a histogram
+that looks like this.
+
+54
+00:02:34,975 --> 00:02:37,850
+It looks vaguely bell-shaped.
+
+55
+00:02:37,930 --> 00:02:42,970
+What this curve on the
+left indicates is not
+
+56
+00:02:42,970 --> 00:02:45,010
+if you have just 100 examples
+
+57
+00:02:45,010 --> 00:02:47,475
+or 1,000 or a million
+or a billion.
+
+58
+00:02:47,475 --> 00:02:51,580
+But if you had a practically
+infinite number of examples,
+
+59
+00:02:51,580 --> 00:02:53,920
+and you were to
+draw a histogram of
+
+60
+00:02:53,920 --> 00:02:55,810
+this practically
+infinite number of
+
+61
+00:02:55,810 --> 00:02:59,505
+examples with a very
+fine histogram bin.
+
+62
+00:02:59,505 --> 00:03:01,480
+Then you end up with
+
+63
+00:03:01,480 --> 00:03:05,545
+essentially this bell-shaped
+curve here on the left.
+
+64
+00:03:05,545 --> 00:03:10,595
+The formula for p of x is
+given by this expression;
+
+65
+00:03:10,595 --> 00:03:15,665
+p of x equals 1 over
+square root 2 Pi.
+
+66
+00:03:15,665 --> 00:03:20,970
+Pi here is that 3.14159
+or it's about 22 over 7.
+
+67
+00:03:20,970 --> 00:03:25,255
+Ratio of a circle's diameter
+circumference times
+
+68
+00:03:25,255 --> 00:03:31,510
+Sigma times e to the
+negative x minus Mu,
+
+69
+00:03:31,510 --> 00:03:36,285
+the mean parameter squared
+divided by 2 Sigma squared.
+
+70
+00:03:36,285 --> 00:03:40,635
+For any given value
+of Mu and Sigma,
+
+71
+00:03:40,635 --> 00:03:44,560
+if you were to plot this
+function as a function of x,
+
+72
+00:03:44,560 --> 00:03:46,585
+you get this type of
+bell-shaped curve
+
+73
+00:03:46,585 --> 00:03:48,865
+that is centered at Mu,
+
+74
+00:03:48,865 --> 00:03:51,355
+and with the width of
+this bell-shaped curve
+
+75
+00:03:51,355 --> 00:03:55,720
+being determined by
+the parameter Sigma.
+
+76
+00:03:55,720 --> 00:03:59,470
+Now let's look at a few
+examples of how changing Mu
+
+77
+00:03:59,470 --> 00:04:03,480
+and Sigma will affect the
+Gaussian distribution.
+
+78
+00:04:03,480 --> 00:04:09,070
+First, let me set Mu equals
+0 and Sigma equals 1.
+
+79
+00:04:09,070 --> 00:04:13,845
+Here's my plot of the Gaussian
+distribution with mean 0,
+
+80
+00:04:13,845 --> 00:04:15,015
+Mu equals 0,
+
+81
+00:04:15,015 --> 00:04:18,405
+and standard deviation
+Sigma equals 1.
+
+82
+00:04:18,405 --> 00:04:22,720
+You notice that this
+distribution is centered at zero
+
+83
+00:04:22,720 --> 00:04:28,145
+and that is the standard
+deviation Sigma is equal to 1.
+
+84
+00:04:28,145 --> 00:04:34,630
+Now, let's reduce the standard
+deviation Sigma to 0.5.
+
+85
+00:04:34,630 --> 00:04:38,085
+If you plot the
+Gaussian distribution
+
+86
+00:04:38,085 --> 00:04:41,265
+with Mu equals 0 and
+Sigma equals 0.5,
+
+87
+00:04:41,265 --> 00:04:43,110
+it now it looks like this.
+
+88
+00:04:43,110 --> 00:04:44,910
+Notice that it's
+still centered at
+
+89
+00:04:44,910 --> 00:04:46,945
+zero because Mu is zero.
+
+90
+00:04:46,945 --> 00:04:50,130
+But it's become a
+much thinner curve
+
+91
+00:04:50,130 --> 00:04:54,520
+because Sigma is now 1.5.
+
+92
+00:04:54,520 --> 00:04:57,105
+You might recall that Sigma
+
+93
+00:04:57,105 --> 00:05:00,100
+is the standard
+deviation is 0.5,
+
+94
+00:05:00,100 --> 00:05:03,715
+whereas Sigma squared is
+also called the variance.
+
+95
+00:05:03,715 --> 00:05:08,415
+That's equal to 0.5
+squared or 0.25.
+
+96
+00:05:08,415 --> 00:05:10,875
+You may have heard
+that probabilities
+
+97
+00:05:10,875 --> 00:05:12,690
+always have to sum up to one,
+
+98
+00:05:12,690 --> 00:05:14,310
+so that's why the area under
+
+99
+00:05:14,310 --> 00:05:16,455
+the curve is always
+equal to one,
+
+100
+00:05:16,455 --> 00:05:18,450
+which is why when
+
+101
+00:05:18,450 --> 00:05:21,150
+the Gaussian distribution
+becomes skinnier,
+
+102
+00:05:21,150 --> 00:05:23,505
+it has to become taller as well.
+
+103
+00:05:23,505 --> 00:05:26,595
+Let's look at another
+value of Mu and Sigma.
+
+104
+00:05:26,595 --> 00:05:30,120
+Now, I'm going to
+increase Sigma to 2,
+
+105
+00:05:30,120 --> 00:05:34,995
+so the standard deviation
+is 2 and the variance is 4.
+
+106
+00:05:34,995 --> 00:05:38,610
+This now creates a much
+wider distribution
+
+107
+00:05:38,610 --> 00:05:43,070
+because Sigma here
+is now much larger,
+
+108
+00:05:43,070 --> 00:05:46,250
+and because it's now a wider
+distribution is become
+
+109
+00:05:46,250 --> 00:05:47,930
+shorter as well because the area
+
+110
+00:05:47,930 --> 00:05:50,710
+under the curve is
+still equals 1.
+
+111
+00:05:50,710 --> 00:05:56,655
+Finally, let's try changing
+the mean parameter Mu,
+
+112
+00:05:56,655 --> 00:06:00,450
+and I'll leave Sigma equals 0.5.
+
+113
+00:06:00,450 --> 00:06:03,030
+In this case, the center of
+
+114
+00:06:03,030 --> 00:06:07,440
+the distribution Mu moves
+over here to the right.
+
+115
+00:06:07,440 --> 00:06:09,360
+But the width of
+
+116
+00:06:09,360 --> 00:06:11,700
+the distribution is
+the same as the one on
+
+117
+00:06:11,700 --> 00:06:13,680
+top because the
+standard deviation is
+
+118
+00:06:13,680 --> 00:06:16,905
+0.5 in both of these
+cases on the right.
+
+119
+00:06:16,905 --> 00:06:20,760
+This is how different
+choices of Mu and
+
+120
+00:06:20,760 --> 00:06:24,205
+Sigma affect the
+Gaussian distribution.
+
+121
+00:06:24,205 --> 00:06:27,364
+When you're applying this
+to anomaly detection,
+
+122
+00:06:27,364 --> 00:06:29,075
+here's what you have to do.
+
+123
+00:06:29,075 --> 00:06:32,860
+You are given a
+dataset of m examples,
+
+124
+00:06:32,860 --> 00:06:37,185
+and here x is just a number.
+
+125
+00:06:37,185 --> 00:06:41,490
+Here, are plots of the training
+sets with 11 examples.
+
+126
+00:06:41,490 --> 00:06:45,120
+What we have to do is
+try to estimate what
+
+127
+00:06:45,120 --> 00:06:48,420
+a good choice is for
+the mean parameter Mu,
+
+128
+00:06:48,420 --> 00:06:53,050
+as well as for the variance
+parameter Sigma squared.
+
+129
+00:06:53,050 --> 00:06:55,185
+Given a dataset like this,
+
+130
+00:06:55,685 --> 00:06:57,095
+it would seem that
+
+131
+00:06:57,095 --> 00:07:00,695
+a Gaussian distribution
+maybe looking like
+
+132
+00:07:00,695 --> 00:07:02,900
+that with a center
+
+133
+00:07:02,900 --> 00:07:06,440
+here and a standard
+deviation like that.
+
+134
+00:07:06,440 --> 00:07:09,650
+This might be a pretty
+good fit to the data.
+
+135
+00:07:09,650 --> 00:07:12,185
+The way you would compute Mu
+
+136
+00:07:12,185 --> 00:07:14,660
+and Sigma squared mathematically is
+
+137
+00:07:14,660 --> 00:07:16,040
+our estimate for Mu will be
+
+138
+00:07:16,040 --> 00:07:19,460
+just the average of all
+the training examples.
+
+139
+00:07:19,460 --> 00:07:22,400
+It's 1 over m times sum from i
+
+140
+00:07:22,400 --> 00:07:24,050
+equals 1 through m of
+
+141
+00:07:24,050 --> 00:07:26,585
+the values of your
+training examples.
+
+142
+00:07:26,585 --> 00:07:29,590
+The value we will use to
+estimate Sigma squared
+
+143
+00:07:29,590 --> 00:07:31,945
+will be the average of
+
+144
+00:07:31,945 --> 00:07:34,510
+the squared difference
+between two examples,
+
+145
+00:07:34,510 --> 00:07:39,635
+and that Mu that you just
+estimated here on the left.
+
+146
+00:07:39,635 --> 00:07:42,870
+It turns out that if you
+implement these two formulas
+
+147
+00:07:42,870 --> 00:07:44,490
+encodes with this value for
+
+148
+00:07:44,490 --> 00:07:47,055
+Mu and this value
+for Sigma squared,
+
+149
+00:07:47,055 --> 00:07:48,300
+then you pretty much get
+
+150
+00:07:48,300 --> 00:07:51,500
+the Gaussian distribution
+that I hand drew on top.
+
+151
+00:07:51,500 --> 00:07:54,010
+This will give you
+a choice of Mu and
+
+152
+00:07:54,010 --> 00:07:56,950
+Sigma for a Gaussian
+distribution so
+
+153
+00:07:56,950 --> 00:07:58,360
+that it looks like
+
+154
+00:07:58,360 --> 00:08:00,340
+the 11 training
+samples might have
+
+155
+00:08:00,340 --> 00:08:03,205
+been drawn from this
+Gaussian distribution.
+
+156
+00:08:03,205 --> 00:08:05,955
+If you've taken an
+advanced statistics class,
+
+157
+00:08:05,955 --> 00:08:07,545
+you may have heard that
+
+158
+00:08:07,545 --> 00:08:10,320
+these formulas for Mu
+and Sigma squared are
+
+159
+00:08:10,320 --> 00:08:12,420
+technically called the
+maximum likelihood
+
+160
+00:08:12,420 --> 00:08:15,045
+estimates for Mu and Sigma.
+
+161
+00:08:15,045 --> 00:08:17,340
+Some statistics
+classes will tell
+
+162
+00:08:17,340 --> 00:08:19,515
+you to use the formula 1
+
+163
+00:08:19,515 --> 00:08:24,570
+over n minus 1 instead of
+1 over m. In practice,
+
+164
+00:08:24,570 --> 00:08:26,700
+using 1 over m or 1 over n
+
+165
+00:08:26,700 --> 00:08:29,175
+minus 1 makes very
+little difference.
+
+166
+00:08:29,175 --> 00:08:31,170
+I always use 1 over m,
+
+167
+00:08:31,170 --> 00:08:34,890
+but just some other
+properties of dividing
+
+168
+00:08:34,890 --> 00:08:39,120
+by m minus 1 that some
+statisticians prefer.
+
+169
+00:08:39,120 --> 00:08:41,040
+But if you don't
+understand what they
+
+170
+00:08:41,040 --> 00:08:42,900
+just said, don't worry about it.
+
+171
+00:08:42,900 --> 00:08:46,800
+All you need to know is that
+if you set Mu according to
+
+172
+00:08:46,800 --> 00:08:48,900
+this formula and Sigma
+
+173
+00:08:48,900 --> 00:08:51,240
+squared according
+to this formula,
+
+174
+00:08:51,240 --> 00:08:53,385
+you'd get a pretty
+good estimate of
+
+175
+00:08:53,385 --> 00:08:55,770
+Mu and Sigma and in particular,
+
+176
+00:08:55,770 --> 00:08:58,320
+you get a Gaussian
+distribution that will be
+
+177
+00:08:58,320 --> 00:09:02,220
+a possible probability
+distribution in terms
+
+178
+00:09:02,220 --> 00:09:04,620
+of what's the
+probability distribution
+
+179
+00:09:04,620 --> 00:09:06,915
+that the training
+examples had come from.
+
+180
+00:09:06,915 --> 00:09:10,245
+You can probably guess
+what comes next.
+
+181
+00:09:10,245 --> 00:09:14,415
+If you were to get an
+example over here,
+
+182
+00:09:14,415 --> 00:09:18,660
+then p of x is pretty high.
+
+183
+00:09:18,660 --> 00:09:21,015
+Whereas if you were
+to get an example,
+
+184
+00:09:21,015 --> 00:09:24,915
+we are here, then p
+of x is pretty low,
+
+185
+00:09:24,915 --> 00:09:27,780
+which is why we would
+consider this example,
+
+186
+00:09:27,780 --> 00:09:30,210
+okay, not really anomalous,
+
+187
+00:09:30,210 --> 00:09:31,830
+not a lot like the other ones.
+
+188
+00:09:31,830 --> 00:09:34,410
+Whereas an example
+we are here to be
+
+189
+00:09:34,410 --> 00:09:37,230
+pretty unusual compared to
+the examples we've seen,
+
+190
+00:09:37,230 --> 00:09:40,935
+and therefore more
+anomalous because p of x,
+
+191
+00:09:40,935 --> 00:09:42,480
+which is the height
+of this curve,
+
+192
+00:09:42,480 --> 00:09:45,210
+is much lower over here
+on the left compared
+
+193
+00:09:45,210 --> 00:09:49,185
+to this point over here,
+closer to the middle.
+
+194
+00:09:49,185 --> 00:09:54,150
+Now, we've done this only
+for when x is a number,
+
+195
+00:09:54,150 --> 00:09:56,235
+as if you had only
+a single feature
+
+196
+00:09:56,235 --> 00:09:58,515
+for your anomaly
+detection problem.
+
+197
+00:09:58,515 --> 00:10:01,890
+For practical anomaly
+detection applications,
+
+198
+00:10:01,890 --> 00:10:05,610
+you usually have a lot
+of different features.
+
+199
+00:10:05,610 --> 00:10:09,230
+You've now seen how the
+Gaussian distribution works.
+
+200
+00:10:09,230 --> 00:10:11,740
+If x is a single number,
+
+201
+00:10:11,740 --> 00:10:13,495
+this corresponds to if,
+
+202
+00:10:13,495 --> 00:10:15,610
+say you had just one feature
+
+203
+00:10:15,610 --> 00:10:18,385
+for your anomaly
+detection problem.
+
+204
+00:10:18,385 --> 00:10:21,565
+But for practical anomaly
+detection applications,
+
+205
+00:10:21,565 --> 00:10:23,710
+you will have many features,
+
+206
+00:10:23,710 --> 00:10:28,105
+two or three or some even
+larger number n of features.
+
+207
+00:10:28,105 --> 00:10:31,270
+Let's take what you saw for
+a single Gaussian and use
+
+208
+00:10:31,270 --> 00:10:32,440
+it to build a more
+
+209
+00:10:32,440 --> 00:10:34,780
+sophisticated anomaly
+detection algorithm.
+
+210
+00:10:34,780 --> 00:10:37,270
+They can handle
+multiple features.
+
+211
+00:10:37,270 --> 00:10:40,160
+Let's go do that

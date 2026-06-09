@@ -1,0 +1,1030 @@
+1
+00:00:01,100 --> 00:00:03,330
+You saw in the last video,
+
+2
+00:00:03,330 --> 00:00:04,500
+what are the states of
+
+3
+00:00:04,500 --> 00:00:06,405
+reinforcement
+learning application,
+
+4
+00:00:06,405 --> 00:00:08,850
+as well as how depending
+on the actions
+
+5
+00:00:08,850 --> 00:00:11,250
+you take you go through
+different states,
+
+6
+00:00:11,250 --> 00:00:14,190
+and also get to enjoy
+different rewards.
+
+7
+00:00:14,190 --> 00:00:17,490
+But how do you know if a
+particular set of rewards is
+
+8
+00:00:17,490 --> 00:00:20,520
+better or worse than a
+different set of rewards?
+
+9
+00:00:20,520 --> 00:00:22,830
+The return in
+reinforcement learning,
+
+10
+00:00:22,830 --> 00:00:24,345
+which we'll define
+in this video,
+
+11
+00:00:24,345 --> 00:00:26,325
+allows us to capture that.
+
+12
+00:00:26,325 --> 00:00:27,645
+As we go through this,
+
+13
+00:00:27,645 --> 00:00:29,910
+one analogy that you
+might find helpful
+
+14
+00:00:29,910 --> 00:00:31,800
+is if you imagine
+
+15
+00:00:31,800 --> 00:00:33,870
+you have a five-dollar
+bill at your feet,
+
+16
+00:00:33,870 --> 00:00:35,340
+you can reach down and pick up,
+
+17
+00:00:35,340 --> 00:00:37,785
+or half an hour across town,
+
+18
+00:00:37,785 --> 00:00:41,025
+you can walk half an hour and
+pick up a 10-dollar bill.
+
+19
+00:00:41,025 --> 00:00:43,770
+Which one would you
+rather go after?
+
+20
+00:00:43,770 --> 00:00:47,085
+Ten dollars is much
+better than five dollars,
+
+21
+00:00:47,085 --> 00:00:48,900
+but if you need to
+walk for half an hour
+
+22
+00:00:48,900 --> 00:00:50,570
+to go and get that
+10-dollar bill,
+
+23
+00:00:50,570 --> 00:00:51,680
+then maybe it'd be more
+
+24
+00:00:51,680 --> 00:00:54,575
+convenient to just pick up
+the five-dollar bill instead.
+
+25
+00:00:54,575 --> 00:00:58,730
+The concept of a return captures
+that rewards you can get
+
+26
+00:00:58,730 --> 00:01:00,740
+quicker are maybe
+more attractive than
+
+27
+00:01:00,740 --> 00:01:03,070
+rewards that take you
+a long time to get to.
+
+28
+00:01:03,070 --> 00:01:05,635
+Let's take a look at
+exactly how that works.
+
+29
+00:01:05,635 --> 00:01:08,055
+Here's a Mars Rover example.
+
+30
+00:01:08,055 --> 00:01:11,345
+If starting from state
+4 you go to the left,
+
+31
+00:01:11,345 --> 00:01:14,030
+we saw that the
+rewards you get would
+
+32
+00:01:14,030 --> 00:01:16,715
+be zero on the first
+step from state 4,
+
+33
+00:01:16,715 --> 00:01:18,370
+zero from state 3,
+
+34
+00:01:18,370 --> 00:01:19,815
+zero from state 2,
+
+35
+00:01:19,815 --> 00:01:23,790
+and then 100 at state
+1, the terminal state.
+
+36
+00:01:23,790 --> 00:01:28,315
+The return is defined as the sum
+
+37
+00:01:28,315 --> 00:01:32,305
+of these rewards but weighted
+by one additional factor,
+
+38
+00:01:32,305 --> 00:01:34,970
+which is called the
+discount factor.
+
+39
+00:01:34,970 --> 00:01:39,080
+The discount factor is a number
+a little bit less than 1.
+
+40
+00:01:39,080 --> 00:01:41,975
+Let me pick 0.9 as
+the discount factor.
+
+41
+00:01:41,975 --> 00:01:44,010
+I'm going to weight the reward
+
+42
+00:01:44,010 --> 00:01:45,360
+in the first step is just zero,
+
+43
+00:01:45,360 --> 00:01:48,100
+the reward in the second
+step is a discount factor,
+
+44
+00:01:48,100 --> 00:01:50,860
+0.9 times that reward,
+
+45
+00:01:50,860 --> 00:01:54,940
+and then plus the discount
+factor^2 times that reward,
+
+46
+00:01:54,940 --> 00:01:59,335
+and then plus the discount
+factor^3 times that reward.
+
+47
+00:01:59,335 --> 00:02:00,880
+If you calculate this out,
+
+48
+00:02:00,880 --> 00:02:08,540
+this turns out to be 0.729
+times 100, which is 72.9.
+
+49
+00:02:08,540 --> 00:02:13,280
+The more general formula
+for the return is that if
+
+50
+00:02:13,280 --> 00:02:15,620
+your robot goes through
+some sequence of
+
+51
+00:02:15,620 --> 00:02:19,475
+states and gets reward
+R_1 on the first step,
+
+52
+00:02:19,475 --> 00:02:21,620
+and R_2 on the second step,
+
+53
+00:02:21,620 --> 00:02:24,035
+and R_3 on the third step,
+
+54
+00:02:24,035 --> 00:02:25,805
+and so on,
+
+55
+00:02:25,805 --> 00:02:31,875
+then the return is R_1 plus
+the discount factor Gamma,
+
+56
+00:02:31,875 --> 00:02:33,939
+this Greek alphabet Gamma
+
+57
+00:02:33,939 --> 00:02:36,770
+which I've set to
+0.9 in this example,
+
+58
+00:02:36,770 --> 00:02:38,990
+the Gamma times R_2
+
+59
+00:02:38,990 --> 00:02:43,490
+plus Gamma^2 times R_3
+plus Gamma^3 times R_4,
+
+60
+00:02:43,490 --> 00:02:48,115
+and so on, until you get
+to the terminal state.
+
+61
+00:02:48,115 --> 00:02:52,730
+What the discount factor
+Gamma does is it has
+
+62
+00:02:52,730 --> 00:02:55,010
+the effect of making
+
+63
+00:02:55,010 --> 00:02:56,795
+the reinforcement
+learning algorithm
+
+64
+00:02:56,795 --> 00:02:58,370
+a little bit impatient.
+
+65
+00:02:58,370 --> 00:03:01,670
+Because the return
+gives full credit to
+
+66
+00:03:01,670 --> 00:03:05,510
+the first reward is 100
+percent is 1 times R_1,
+
+67
+00:03:05,510 --> 00:03:08,090
+but then it gives a
+little bit less credit to
+
+68
+00:03:08,090 --> 00:03:09,755
+the reward you get
+at the second step
+
+69
+00:03:09,755 --> 00:03:11,585
+is multiplied by 0.9,
+
+70
+00:03:11,585 --> 00:03:13,580
+and then even less
+credit to the reward you
+
+71
+00:03:13,580 --> 00:03:15,680
+get at the next time step R_3,
+
+72
+00:03:15,680 --> 00:03:18,380
+and so on, and so
+getting rewards
+
+73
+00:03:18,380 --> 00:03:22,630
+sooner results in a higher
+value for the total return.
+
+74
+00:03:22,630 --> 00:03:25,155
+In many reinforcement
+learning algorithms,
+
+75
+00:03:25,155 --> 00:03:26,240
+a common choice for
+
+76
+00:03:26,240 --> 00:03:29,495
+the discount factor will be
+a number pretty close to 1,
+
+77
+00:03:29,495 --> 00:03:34,890
+like 0.9, or 0.99,
+or even 0.999.
+
+78
+00:03:34,890 --> 00:03:36,820
+But for illustrative purposes
+
+79
+00:03:36,820 --> 00:03:39,110
+in the running example
+I'm going to use,
+
+80
+00:03:39,110 --> 00:03:43,625
+I'm actually going to use
+a discount factor of 0.5.
+
+81
+00:03:43,625 --> 00:03:46,980
+This very heavily
+down weights or
+
+82
+00:03:46,980 --> 00:03:50,235
+very heavily we say discounts
+rewards in the future,
+
+83
+00:03:50,235 --> 00:03:53,480
+because with every additional
+parsing timestamp,
+
+84
+00:03:53,480 --> 00:03:55,820
+you get only half
+as much credit as
+
+85
+00:03:55,820 --> 00:03:59,380
+rewards that you would have
+gotten one step earlier.
+
+86
+00:03:59,380 --> 00:04:02,090
+If Gamma were equal to 0.5,
+
+87
+00:04:02,090 --> 00:04:05,000
+the return under the example
+above would have been
+
+88
+00:04:05,000 --> 00:04:09,305
+0 plus 0.5 times 0,
+
+89
+00:04:09,305 --> 00:04:11,045
+replacing this equation on top,
+
+90
+00:04:11,045 --> 00:04:17,965
+plus 0.5^2 0 plus
+0.5^3 times 100.
+
+91
+00:04:17,965 --> 00:04:21,660
+That's lost reward because
+state 1 to terminal state,
+
+92
+00:04:21,660 --> 00:04:26,100
+and this turns out to
+be a return of 12.5.
+
+93
+00:04:26,100 --> 00:04:30,110
+In financial applications,
+the discount factor also has
+
+94
+00:04:30,110 --> 00:04:32,240
+a very natural interpretation as
+
+95
+00:04:32,240 --> 00:04:35,200
+the interest rate or the
+time value of money.
+
+96
+00:04:35,200 --> 00:04:38,225
+If you can have a dollar today,
+
+97
+00:04:38,225 --> 00:04:40,910
+that may be worth
+a little bit more
+
+98
+00:04:40,910 --> 00:04:43,280
+than if you could only get
+a dollar in the future.
+
+99
+00:04:43,280 --> 00:04:46,225
+Because even a dollar today
+you can put in the bank,
+
+100
+00:04:46,225 --> 00:04:47,960
+earn some interest,
+and end up with
+
+101
+00:04:47,960 --> 00:04:50,080
+a little bit more
+money a year from now.
+
+102
+00:04:50,080 --> 00:04:52,235
+For financial
+applications, often,
+
+103
+00:04:52,235 --> 00:04:55,310
+that discount factor
+represents how much less
+
+104
+00:04:55,310 --> 00:04:56,870
+is a dollar in the future where
+
+105
+00:04:56,870 --> 00:04:58,870
+I've compared to a dollar today.
+
+106
+00:04:58,870 --> 00:05:02,650
+Let's look at some concrete
+examples of returns.
+
+107
+00:05:02,650 --> 00:05:05,855
+The return you get
+depends on the rewards,
+
+108
+00:05:05,855 --> 00:05:08,945
+and the rewards depends
+on the actions you take,
+
+109
+00:05:08,945 --> 00:05:12,860
+and so the return depends
+on the actions you take.
+
+110
+00:05:12,860 --> 00:05:17,615
+Let's use our usual example
+and say for this example,
+
+111
+00:05:17,615 --> 00:05:21,465
+I'm going to always
+go to the left.
+
+112
+00:05:21,465 --> 00:05:24,430
+We already saw
+previously that if
+
+113
+00:05:24,430 --> 00:05:27,985
+the robot were to
+start off in state 4,
+
+114
+00:05:27,985 --> 00:05:30,070
+the return is 12.5 as
+
+115
+00:05:30,070 --> 00:05:32,415
+we worked out on
+the previous slide.
+
+116
+00:05:32,415 --> 00:05:37,250
+It turns out that if it were
+to start off in say three,
+
+117
+00:05:37,250 --> 00:05:40,490
+the return would be
+25 because it gets
+
+118
+00:05:40,490 --> 00:05:44,480
+to the 100 reward
+one step sooner,
+
+119
+00:05:44,480 --> 00:05:47,060
+and so it's discounted less.
+
+120
+00:05:47,060 --> 00:05:49,430
+If it were to start
+off in state 2,
+
+121
+00:05:49,430 --> 00:05:51,320
+the return would be 50.
+
+122
+00:05:51,320 --> 00:05:53,990
+If it were to just start
+off and state 1, well,
+
+123
+00:05:53,990 --> 00:05:56,420
+it gets the reward
+of 100 right away,
+
+124
+00:05:56,420 --> 00:05:57,965
+so it's not discounted low.
+
+125
+00:05:57,965 --> 00:05:59,600
+The return if we
+were to start out in
+
+126
+00:05:59,600 --> 00:06:01,700
+state 1 will be 100,
+
+127
+00:06:01,700 --> 00:06:05,450
+and then the return in
+these two states are 6.25.
+
+128
+00:06:05,450 --> 00:06:07,640
+It turns out if you
+start off in state 6,
+
+129
+00:06:07,640 --> 00:06:08,915
+which is terminal state,
+
+130
+00:06:08,915 --> 00:06:14,135
+you just get the reward
+and thus the return of 40.
+
+131
+00:06:14,135 --> 00:06:17,390
+Now, if you were to take a
+different set of actions,
+
+132
+00:06:17,390 --> 00:06:20,345
+the returns would
+actually be different.
+
+133
+00:06:20,345 --> 00:06:25,100
+For example, if we were to
+always go to the right,
+
+134
+00:06:25,100 --> 00:06:26,884
+if those were our actions,
+
+135
+00:06:26,884 --> 00:06:31,835
+then if you were to start in
+state 4, get a reward of 0.
+
+136
+00:06:31,835 --> 00:06:34,940
+Then you get to state
+5, get a reward of 0,
+
+137
+00:06:34,940 --> 00:06:36,485
+and it gets to state 6,
+
+138
+00:06:36,485 --> 00:06:38,450
+and get a reward of 40.
+
+139
+00:06:38,450 --> 00:06:43,235
+In this case, the return
+would be 0 plus 0.5,
+
+140
+00:06:43,235 --> 00:06:48,965
+the discount factor times 0
+plus 0.5 squared times 40,
+
+141
+00:06:48,965 --> 00:06:53,375
+and that turns out to be
+equal to 0.5 squared is 1/4,
+
+142
+00:06:53,375 --> 00:06:55,910
+so 1/4 of 40 is 10.
+
+143
+00:06:55,910 --> 00:06:58,100
+The return from this state,
+
+144
+00:06:58,100 --> 00:07:00,080
+from state 4 is 10.
+
+145
+00:07:00,080 --> 00:07:01,190
+If you were to take actions,
+
+146
+00:07:01,190 --> 00:07:03,275
+always go to the right.
+
+147
+00:07:03,275 --> 00:07:05,045
+Through similar reasoning,
+
+148
+00:07:05,045 --> 00:07:07,175
+the return from
+this state is 20,
+
+149
+00:07:07,175 --> 00:07:09,485
+the return from
+this state is five,
+
+150
+00:07:09,485 --> 00:07:12,425
+the return from
+this state is 2.5,
+
+151
+00:07:12,425 --> 00:07:13,760
+and then the return,
+
+152
+00:07:13,760 --> 00:07:15,920
+the determinant state is is 140.
+
+153
+00:07:15,920 --> 00:07:17,960
+By the way,
+
+154
+00:07:17,960 --> 00:07:20,165
+if these numbers don't
+fully make sense,
+
+155
+00:07:20,165 --> 00:07:21,650
+feel free to pause the video and
+
+156
+00:07:21,650 --> 00:07:23,360
+double-check the
+math and see if you
+
+157
+00:07:23,360 --> 00:07:25,355
+can convince yourself that these
+
+158
+00:07:25,355 --> 00:07:27,815
+are the appropriate
+values for the return.
+
+159
+00:07:27,815 --> 00:07:30,230
+For if you start from
+different states,
+
+160
+00:07:30,230 --> 00:07:33,750
+and if you were to
+always go to the right.
+
+161
+00:07:33,750 --> 00:07:37,700
+We see that it would
+always go to the right.
+
+162
+00:07:37,700 --> 00:07:42,260
+The return you expect to get
+is lower for most states.
+
+163
+00:07:42,260 --> 00:07:44,675
+Maybe always going
+to the right isn't
+
+164
+00:07:44,675 --> 00:07:48,695
+as good an idea as always
+going to the left.
+
+165
+00:07:48,695 --> 00:07:50,690
+But it turns out that we
+
+166
+00:07:50,690 --> 00:07:52,295
+don't have to always
+go to the left,
+
+167
+00:07:52,295 --> 00:07:53,885
+always go to the right.
+
+168
+00:07:53,885 --> 00:07:57,740
+We could also decide if
+you're in state 2, go left.
+
+169
+00:07:57,740 --> 00:07:59,720
+If your in state 3, go left.
+
+170
+00:07:59,720 --> 00:08:01,460
+If you're in state 4, go left.
+
+171
+00:08:01,460 --> 00:08:03,020
+But if you're in state 5,
+
+172
+00:08:03,020 --> 00:08:05,945
+then you're so close
+to this reward.
+
+173
+00:08:05,945 --> 00:08:07,670
+Let's go right.
+
+174
+00:08:07,670 --> 00:08:10,955
+This will be a different
+way of choosing
+
+175
+00:08:10,955 --> 00:08:14,240
+actions to take based on
+what state you're in.
+
+176
+00:08:14,240 --> 00:08:17,750
+It turns out that the return
+
+177
+00:08:17,750 --> 00:08:24,245
+you get from the different
+states will be 100, 50, 25,
+
+178
+00:08:24,245 --> 00:08:28,655
+12.5, 20, and 40.
+
+179
+00:08:28,655 --> 00:08:31,790
+Just to illustrate one case.
+
+180
+00:08:31,790 --> 00:08:34,235
+If you were to start
+off in state 5,
+
+181
+00:08:34,235 --> 00:08:35,930
+here you would go to the right,
+
+182
+00:08:35,930 --> 00:08:38,090
+and so the rewards
+you get would be
+
+183
+00:08:38,090 --> 00:08:41,240
+zero first in state
+5, and then 4.
+
+184
+00:08:41,240 --> 00:08:44,750
+The return is zero,
+the first reward,
+
+185
+00:08:44,750 --> 00:08:49,355
+plus the discount factor is
+0.5 times 40, which is 20,
+
+186
+00:08:49,355 --> 00:08:51,260
+which is why the return
+from this status
+
+187
+00:08:51,260 --> 00:08:54,875
+20 if you take
+actions shown here.
+
+188
+00:08:54,875 --> 00:08:57,470
+To summarize, the return in
+
+189
+00:08:57,470 --> 00:08:59,600
+reinforcement
+learning is the sum
+
+190
+00:08:59,600 --> 00:09:01,640
+of the rewards that
+the system gets,
+
+191
+00:09:01,640 --> 00:09:03,965
+weighted by the discount factor,
+
+192
+00:09:03,965 --> 00:09:06,695
+where rewards in the
+far future are weighted
+
+193
+00:09:06,695 --> 00:09:10,175
+by the discount factor
+raised to a higher power.
+
+194
+00:09:10,175 --> 00:09:12,260
+Now, this actually has
+
+195
+00:09:12,260 --> 00:09:14,090
+an interesting
+effect when you have
+
+196
+00:09:14,090 --> 00:09:16,160
+systems with negative rewards.
+
+197
+00:09:16,160 --> 00:09:17,705
+In the example we went through,
+
+198
+00:09:17,705 --> 00:09:20,615
+all the rewards were
+zero or positive.
+
+199
+00:09:20,615 --> 00:09:23,690
+But if there are any
+rewards are negative,
+
+200
+00:09:23,690 --> 00:09:25,700
+then the discount
+factor actually
+
+201
+00:09:25,700 --> 00:09:27,650
+incentivizes the system to
+
+202
+00:09:27,650 --> 00:09:29,615
+push out the negative rewards
+
+203
+00:09:29,615 --> 00:09:31,910
+as far into the
+future as possible.
+
+204
+00:09:31,910 --> 00:09:33,905
+Taking a financial example,
+
+205
+00:09:33,905 --> 00:09:36,545
+if you had to pay someone $10,
+
+206
+00:09:36,545 --> 00:09:39,290
+maybe that's a negative
+reward of minus 10.
+
+207
+00:09:39,290 --> 00:09:43,520
+But if you could postpone
+payment by a few years,
+
+208
+00:09:43,520 --> 00:09:44,930
+then you're actually better off
+
+209
+00:09:44,930 --> 00:09:47,780
+because $10 a few
+years from now,
+
+210
+00:09:47,780 --> 00:09:50,540
+because of the interest
+rate is actually worth
+
+211
+00:09:50,540 --> 00:09:54,545
+less than $10 that
+you had to pay today.
+
+212
+00:09:54,545 --> 00:09:56,960
+For systems with
+negative rewards,
+
+213
+00:09:56,960 --> 00:09:59,705
+it causes the algorithm
+to try to push
+
+214
+00:09:59,705 --> 00:10:01,325
+out the make the rewards
+
+215
+00:10:01,325 --> 00:10:03,530
+as far into the
+future as possible.
+
+216
+00:10:03,530 --> 00:10:06,350
+For financial applications
+and for other applications,
+
+217
+00:10:06,350 --> 00:10:07,670
+that actually turns out
+
+218
+00:10:07,670 --> 00:10:09,230
+to be right thing for
+the system to do.
+
+219
+00:10:09,230 --> 00:10:11,630
+You now know what
+
+220
+00:10:11,630 --> 00:10:13,870
+is the return in
+reinforcement learning,
+
+221
+00:10:13,870 --> 00:10:15,380
+let's go on to the next video to
+
+222
+00:10:15,380 --> 00:10:19,260
+formalize the goal of

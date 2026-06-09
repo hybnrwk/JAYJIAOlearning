@@ -1446,10 +1446,10 @@ print(0)
 
 对二分类问题，可以用 confusion matrix：
 
-| | Actual 1 | Actual 0 |
-|---|---:|---:|
-| Predicted 1 | True Positive | False Positive |
-| Predicted 0 | False Negative | True Negative |
+|             |       Actual 1 |       Actual 0 |
+| ----------- | -------------: | -------------: |
+| Predicted 1 |  True Positive | False Positive |
+| Predicted 0 | False Negative |  True Negative |
 
 四个术语：
 

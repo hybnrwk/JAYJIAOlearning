@@ -1,0 +1,692 @@
+1
+00:00:01,904 --> 00:00:06,778
+So let's take a look at how we can
+develop a recommended system if we had
+
+2
+00:00:06,778 --> 00:00:10,343
+features of each item, or
+features of each movie.
+
+3
+00:00:10,343 --> 00:00:15,259
+So here's the same data set that we
+had previously with the four users
+
+4
+00:00:15,259 --> 00:00:18,750
+having rated some but
+not all of the five movies.
+
+5
+00:00:18,750 --> 00:00:22,550
+What if we additionally have
+features of the movies?
+
+6
+00:00:22,550 --> 00:00:27,668
+So here I've added two features X1 and
+X2, that tell us how much
+
+7
+00:00:27,668 --> 00:00:33,829
+each of these is a romance movie, and
+how much each of these is an action movie.
+
+8
+00:00:33,829 --> 00:00:37,472
+So for example Love at Last
+is a very romantic movie, so
+
+9
+00:00:37,472 --> 00:00:42,004
+this feature takes on 0.9, but
+it's not at all an action movie.
+
+10
+00:00:42,004 --> 00:00:45,245
+So this feature takes on 0.
+
+11
+00:00:45,245 --> 00:00:50,034
+But it turns out Nonstop Car chases has
+just a little bit of romance in it.
+
+12
+00:00:50,034 --> 00:00:54,023
+So it's 0.1, but it has a ton of action.
+
+13
+00:00:54,023 --> 00:00:57,619
+So that feature takes on the value of 1.0.
+
+14
+00:00:57,619 --> 00:01:04,050
+So you recall that I had used the notation
+nu to denote the number of users,
+
+15
+00:01:04,050 --> 00:01:09,157
+which is 4 and m to denote
+the number of movies which is 5.
+
+16
+00:01:09,157 --> 00:01:14,003
+I'm going to also introduce n to denote
+the number of features we have here.
+
+17
+00:01:14,003 --> 00:01:19,897
+And so n=2, because we have two
+features X1 and X2 for each movie.
+
+18
+00:01:19,897 --> 00:01:25,520
+With these features we have for
+example that the features for
+
+19
+00:01:25,520 --> 00:01:31,372
+movie one, that is the movie Love at Last,
+would be 0.90.
+
+20
+00:01:31,372 --> 00:01:35,406
+And the features for the third movie
+
+21
+00:01:35,406 --> 00:01:40,661
+Cute Puppies of Love would be 0.99 and 0.
+
+22
+00:01:40,661 --> 00:01:46,248
+And let's start by taking a look at
+how we might make predictions for
+
+23
+00:01:46,248 --> 00:01:48,415
+Alice's movie ratings.
+
+24
+00:01:48,415 --> 00:01:52,767
+So for user one, that is Alice,
+
+25
+00:01:52,767 --> 00:01:57,606
+let's say we predict the rating for
+
+26
+00:01:57,606 --> 00:02:01,163
+movie i as w.X(i)+b.
+
+27
+00:02:01,163 --> 00:02:05,395
+So this is just a lot
+like linear regression.
+
+28
+00:02:05,395 --> 00:02:12,072
+For example if we end up choosing
+the parameter w(1)=[5,0] and
+
+29
+00:02:12,072 --> 00:02:16,012
+say b(1)=0, then the prediction for
+
+30
+00:02:16,012 --> 00:02:22,827
+movie three where
+the features are 0.99 and 0,
+
+31
+00:02:22,827 --> 00:02:28,067
+which is just copied from here,
+first feature 0.99, second feature 0.
+
+32
+00:02:28,067 --> 00:02:35,003
+Our prediction would be w.X(3)+b=0.99
+
+33
+00:02:35,003 --> 00:02:38,871
+times 5 plus 0 times zero,
+
+34
+00:02:38,871 --> 00:02:44,365
+which turns out to be equal to 4.95.
+
+35
+00:02:44,365 --> 00:02:46,650
+And this rating seems pretty plausible.
+
+36
+00:02:46,650 --> 00:02:51,951
+It looks like Alice has given high ratings
+to Love at Last and Romance Forever,
+
+37
+00:02:51,951 --> 00:02:57,091
+to two highly romantic movies, but
+given low ratings to the action movies,
+
+38
+00:02:57,091 --> 00:02:59,921
+Nonstop Car Chases and Swords vs Karate.
+
+39
+00:02:59,921 --> 00:03:02,577
+So if we look at Cute Puppies of Love,
+
+40
+00:03:02,577 --> 00:03:08,000
+well predicting that she might rate
+that 4.95 seems quite plausible.
+
+41
+00:03:08,000 --> 00:03:10,804
+And so these parameters w and b for
+
+42
+00:03:10,804 --> 00:03:16,827
+Alice seems like a reasonable model for
+predicting her movie ratings.
+
+43
+00:03:16,827 --> 00:03:21,517
+Just add a little the notation
+because we have not just one user but
+
+44
+00:03:21,517 --> 00:03:24,936
+multiple users, or
+really nu equals 4 users.
+
+45
+00:03:24,936 --> 00:03:31,596
+I'm going to add a superscript 1 here to
+denote that this is the parameter w(1) for
+
+46
+00:03:31,596 --> 00:03:35,124
+user 1 and
+add a super strip 1 there as well.
+
+47
+00:03:35,124 --> 00:03:41,014
+And similarly here and here as well,
+so that we would actually have
+
+48
+00:03:41,014 --> 00:03:46,176
+different parameters for
+each of the 4 users on data set.
+
+49
+00:03:46,176 --> 00:03:51,791
+And more generally in this
+model we can for user j,
+
+50
+00:03:51,791 --> 00:03:58,076
+not just user 1 now,
+we can predict user j's rating for
+
+51
+00:03:58,076 --> 00:04:02,376
+movie i as w(j).X(i)+b(j).
+
+52
+00:04:02,376 --> 00:04:05,194
+So here the parameters w(j) and
+
+53
+00:04:05,194 --> 00:04:10,427
+b(j) are the parameters used
+to predict user j's rating for
+
+54
+00:04:10,427 --> 00:04:16,477
+movie i which is a function of X(i),
+which is the features of movie i.
+
+55
+00:04:16,477 --> 00:04:21,271
+And this is a lot like linear regression,
+except that we're fitting a different
+
+56
+00:04:21,271 --> 00:04:25,097
+linear regression model for
+each of the 4 users in the dataset.
+
+57
+00:04:25,097 --> 00:04:30,451
+So let's take a look at how we can
+formulate the cost function for
+
+58
+00:04:30,451 --> 00:04:31,948
+this algorithm.
+
+59
+00:04:31,948 --> 00:04:37,060
+As a reminder on notation
+is that r(i.,j)=1
+
+60
+00:04:37,060 --> 00:04:41,452
+if user j has rated movie i or
+0 otherwise.
+
+61
+00:04:41,452 --> 00:04:46,221
+And y(i,j)=rating given
+by user j on movie i.
+
+62
+00:04:46,221 --> 00:04:51,617
+And on the previous side we defined w(j),
+b(j) as the parameters for user j.
+
+63
+00:04:51,617 --> 00:04:56,717
+And X(i) as the feature vector for
+movie i.
+
+64
+00:04:56,717 --> 00:05:00,429
+So the model we have is for user j and
+
+65
+00:05:00,429 --> 00:05:06,836
+movie i predict the rating
+to be w(j).X(i)+b(j).
+
+66
+00:05:06,836 --> 00:05:10,624
+I'm going to introduce just
+one new piece of notation,
+
+67
+00:05:10,624 --> 00:05:16,194
+which is I'm going to use m(j) to denote
+the number of movies rated by user j.
+
+68
+00:05:16,194 --> 00:05:21,281
+So if the user has rated 4 movies,
+then m(j) would be equal to 4.
+
+69
+00:05:21,281 --> 00:05:25,990
+And if the user has rated 3 movies
+then m(j) would be equal to 3.
+
+70
+00:05:25,990 --> 00:05:31,716
+So what we'd like to do is to
+learn the parameters w(j) and
+
+71
+00:05:31,716 --> 00:05:35,388
+b(j), given the data that we have.
+
+72
+00:05:35,388 --> 00:05:40,806
+That is given the ratings a user
+has given of a set of movies.
+
+73
+00:05:40,806 --> 00:05:46,791
+So the average we're going to use is
+very similar to linear regression.
+
+74
+00:05:46,791 --> 00:05:51,258
+So let's write out the cost function for
+learning the parameters w(j) and
+
+75
+00:05:51,258 --> 00:05:52,805
+b(j) for a given user j.
+
+76
+00:05:52,805 --> 00:05:56,385
+And let's just focus on one
+user on user j for now.
+
+77
+00:05:56,385 --> 00:06:01,411
+I'm going to use the mean
+squared error criteria.
+
+78
+00:06:01,411 --> 00:06:08,263
+So the cost will be the prediction,
+which is w(j).X(i)+b(j)
+
+79
+00:06:08,263 --> 00:06:13,035
+minus the actual rating
+that the user had given.
+
+80
+00:06:13,035 --> 00:06:17,894
+So minus y(i,j) squared.
+
+81
+00:06:17,894 --> 00:06:21,595
+And we're trying to
+choose parameters w and
+
+82
+00:06:21,595 --> 00:06:26,995
+b to minimize the squared error
+between the predicted rating and
+
+83
+00:06:26,995 --> 00:06:30,207
+the actual rating that was observed.
+
+84
+00:06:30,207 --> 00:06:35,043
+But the user hasn't rated all the movies,
+so
+
+85
+00:06:35,043 --> 00:06:40,259
+if we're going to sum over this,
+we're going to
+
+86
+00:06:40,259 --> 00:06:46,253
+sum over only over the values
+of i where r(i,j)=1.
+
+87
+00:06:46,253 --> 00:06:53,995
+So we're going to sum only over the movies
+i that user j has actually rated.
+
+88
+00:06:53,995 --> 00:06:59,639
+So that's what this denotes,
+sum of all values of i where r(i,j)=1.
+
+89
+00:06:59,639 --> 00:07:03,610
+Meaning that user j has
+rated that movie i.
+
+90
+00:07:03,610 --> 00:07:11,956
+And then finally we can take
+the usual normalization 1 over m(j).
+
+91
+00:07:11,956 --> 00:07:15,626
+And this is very much like
+the cost function we have for
+
+92
+00:07:15,626 --> 00:07:19,963
+linear regression with m or
+really m(j) training examples.
+
+93
+00:07:19,963 --> 00:07:24,583
+Where you're summing over the m(j) movies
+for which you have a rating taking
+
+94
+00:07:24,583 --> 00:07:28,233
+a squared error and
+the normalizing by this 1 over 2m(j).
+
+95
+00:07:28,233 --> 00:07:32,894
+And this is going to be a cost
+
+96
+00:07:32,894 --> 00:07:38,375
+function J of w(j), b(j).
+
+97
+00:07:38,375 --> 00:07:42,765
+And if we minimize this as
+a function of w(j) and b(j),
+
+98
+00:07:42,765 --> 00:07:48,957
+then you should come up with a pretty
+good choice of parameters w(i) and b(j).
+
+99
+00:07:48,957 --> 00:07:51,840
+For making predictions for
+user j's ratings.
+
+100
+00:07:51,840 --> 00:07:54,633
+Let me have just one more
+term to this cost function,
+
+101
+00:07:54,633 --> 00:07:57,811
+which is the regularization
+term to prevent overfitting.
+
+102
+00:07:57,811 --> 00:08:03,314
+And so
+here's our usual regularization parameter,
+
+103
+00:08:03,314 --> 00:08:06,494
+lambda divided by 2m(j) and
+
+104
+00:08:06,494 --> 00:08:12,619
+then times as sum of the squared
+values of the parameters w.
+
+105
+00:08:12,619 --> 00:08:16,100
+And so
+n is a number of numbers in X(i) and
+
+106
+00:08:16,100 --> 00:08:20,287
+that's the same as a number
+of numbers in w(j).
+
+107
+00:08:20,287 --> 00:08:25,296
+If you were to minimize this cost
+function J as a function of w and
+
+108
+00:08:25,296 --> 00:08:29,452
+b, you should get a pretty
+good set of parameters for
+
+109
+00:08:29,452 --> 00:08:33,350
+predicting user j's ratings for
+other movies.
+
+110
+00:08:33,350 --> 00:08:39,250
+Now, before moving on, it turns out
+that for recommended systems it would
+
+111
+00:08:39,250 --> 00:08:44,591
+be convenient to actually eliminate
+this division by m(j) term,
+
+112
+00:08:44,591 --> 00:08:48,264
+m(j) is just a constant
+in this expression.
+
+113
+00:08:48,264 --> 00:08:50,387
+And so, even if you take it out,
+
+114
+00:08:50,387 --> 00:08:53,473
+you should end up with
+the same value of w and b.
+
+115
+00:08:53,473 --> 00:08:58,396
+Now let me take this cost function
+down here to the bottom and
+
+116
+00:08:58,396 --> 00:09:00,569
+copy it to the next slide.
+
+117
+00:09:00,569 --> 00:09:04,753
+So we have that to learn
+the parameters w(j), b(j) for user j.
+
+118
+00:09:04,753 --> 00:09:11,615
+We would minimize this cost function
+as a function of w(j) and b(j).
+
+119
+00:09:11,615 --> 00:09:14,677
+But instead of focusing on a single user,
+
+120
+00:09:14,677 --> 00:09:19,325
+let's look at how we learn
+the parameters for all of the users.
+
+121
+00:09:19,325 --> 00:09:21,073
+To learn the parameters w(1), b(1), w(2),
+
+122
+00:09:21,073 --> 00:09:23,631
+b(2),...,w(nu), b(nu),
+
+123
+00:09:23,631 --> 00:09:30,608
+we would take this cost function on
+top and sum it over all the nu users.
+
+124
+00:09:30,608 --> 00:09:37,647
+So we would have sum from
+j=1 one to nu of the same
+
+125
+00:09:37,647 --> 00:09:44,009
+cost function that we
+had written up above.
+
+126
+00:09:44,009 --> 00:09:47,345
+And this becomes the cost for
+
+127
+00:09:47,345 --> 00:09:53,186
+learning all the parameters for
+all of the users.
+
+128
+00:09:53,186 --> 00:09:55,456
+And if we use gradient descent or
+
+129
+00:09:55,456 --> 00:10:00,922
+any other optimization algorithm to
+minimize this as a function of w(1),
+
+130
+00:10:00,922 --> 00:10:05,883
+b(1) all the way through w(nu),
+b(nu), then you have a pretty
+
+131
+00:10:05,883 --> 00:10:10,948
+good set of parameters for predicting
+movie ratings for all the users.
+
+132
+00:10:10,948 --> 00:10:16,736
+And you may notice that this algorithm
+is a lot like linear regression,
+
+133
+00:10:16,736 --> 00:10:22,829
+where that plays a role similar to
+the output f(x) of linear regression.
+
+134
+00:10:22,829 --> 00:10:30,707
+Only now we're training a different linear
+regression model for each of the nu users.
+
+135
+00:10:30,707 --> 00:10:35,757
+So that's how you can learn parameters and
+predict movie ratings,
+
+136
+00:10:35,757 --> 00:10:39,310
+if you had access to these features X1 and
+X2.
+
+137
+00:10:39,310 --> 00:10:43,382
+That tell you how much is each of
+the movies, a romance movie, and
+
+138
+00:10:43,382 --> 00:10:46,284
+how much is each of
+the movies an action movie?
+
+139
+00:10:46,284 --> 00:10:48,247
+But where do these features come from?
+
+140
+00:10:48,247 --> 00:10:53,206
+And what if you don't have access to such
+features that give you enough detail
+
+141
+00:10:53,206 --> 00:10:56,734
+about the movies with wish
+to make these predictions?
+
+142
+00:10:56,734 --> 00:11:00,630
+In the next video, we'll look at
+the modification of this algorithm.
+
+143
+00:11:00,630 --> 00:11:04,547
+They'll let you make predictions
+that you make recommendations.
+
+144
+00:11:04,547 --> 00:11:09,072
+Even if you don't have an advanced
+features that describe the items of
+
+145
+00:11:09,072 --> 00:11:13,606
+the movies in sufficient detail to
+run the algorithm that we just saw.
+
+146
+00:11:13,606 --> 00:11:16,880
+Let's go on and

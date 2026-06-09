@@ -1,0 +1,551 @@
+1
+00:00:00,566 --> 00:00:05,318
+Today's recommended systems will sometimes
+need to pick a handful of items to
+
+2
+00:00:05,318 --> 00:00:06,111
+recommend.
+
+3
+00:00:06,111 --> 00:00:11,206
+From a catalog of thousands or millions or
+10s of millions or even more items.
+
+4
+00:00:11,206 --> 00:00:15,570
+How do you do this efficiently
+computationally, let's take a look.
+
+5
+00:00:15,570 --> 00:00:18,210
+Here's in your network we've been
+
+6
+00:00:18,210 --> 00:00:22,792
+using to make predictions about
+how a user might rate an item.
+
+7
+00:00:22,792 --> 00:00:29,325
+Today a large movie streaming site
+may have thousands of movies or
+
+8
+00:00:29,325 --> 00:00:34,213
+a system that is trying to
+decide what ad to show.
+
+9
+00:00:34,213 --> 00:00:38,678
+May have a catalog of millions
+of ads to choose from.
+
+10
+00:00:38,678 --> 00:00:45,842
+Or a music streaming sites may have 10s
+of millions of songs to choose from.
+
+11
+00:00:45,842 --> 00:00:49,177
+And large online shopping
+sites can have millions or
+
+12
+00:00:49,177 --> 00:00:52,448
+even 10s of millions of
+products to choose from.
+
+13
+00:00:52,448 --> 00:00:58,529
+When a user shows up on your website,
+they have some feature Xu.
+
+14
+00:00:58,529 --> 00:01:02,629
+But if you need to take thousands
+of millions of items to feed
+
+15
+00:01:02,629 --> 00:01:07,061
+through this neural network in
+order to compute in the product.
+
+16
+00:01:07,061 --> 00:01:10,068
+To figure out which products
+you should recommend,
+
+17
+00:01:10,068 --> 00:01:12,746
+then having to run neural
+network inference.
+
+18
+00:01:12,746 --> 00:01:17,498
+Thousands of millions of times every
+time a user shows up on your website
+
+19
+00:01:17,498 --> 00:01:20,120
+becomes computational e infeasible.
+
+20
+00:01:20,120 --> 00:01:24,358
+Many law scale recommended
+systems are implemented as two
+
+21
+00:01:24,358 --> 00:01:28,520
+steps which are called the retrieval and
+ranking steps.
+
+22
+00:01:28,520 --> 00:01:33,271
+The idea is during the retrieval
+step will generate
+
+23
+00:01:33,271 --> 00:01:37,368
+a large list of plausible item candidates.
+
+24
+00:01:37,368 --> 00:01:42,337
+That tries to cover a lot of possible
+things you might recommend to the user and
+
+25
+00:01:42,337 --> 00:01:44,874
+it's okay during the retrieval step.
+
+26
+00:01:44,874 --> 00:01:49,849
+If you include a lot of items that
+the user is not likely to like and
+
+27
+00:01:49,849 --> 00:01:53,445
+then during the ranking
+step will fine tune and
+
+28
+00:01:53,445 --> 00:01:56,965
+pick the best items to
+recommend to the user.
+
+29
+00:01:56,965 --> 00:02:02,197
+So here's an example, during the retrieval
+step we might do something like.
+
+30
+00:02:02,197 --> 00:02:06,255
+For each of the last 10
+movies that the user has
+
+31
+00:02:06,255 --> 00:02:10,024
+watched find the 10 most similar movies.
+
+32
+00:02:10,024 --> 00:02:14,859
+So this means for
+example if a user has watched
+
+33
+00:02:14,859 --> 00:02:20,078
+the movie I with vector VIM
+you can find the movies
+
+34
+00:02:20,078 --> 00:02:24,802
+hey with vector VKM that
+is similar to that.
+
+35
+00:02:24,802 --> 00:02:29,118
+And as you saw in the last video
+finding the similar movies,
+
+36
+00:02:29,118 --> 00:02:31,808
+the given movie can be pre computed.
+
+37
+00:02:31,808 --> 00:02:35,268
+So having pre computed the most
+similar movies to give a movie,
+
+38
+00:02:35,268 --> 00:02:38,219
+you can just pull up the results
+using a look up table.
+
+39
+00:02:38,219 --> 00:02:42,208
+This would give you an initial set of
+maybe somewhat plausible movies to
+
+40
+00:02:42,208 --> 00:02:45,277
+recommend to user that just
+showed up on your website.
+
+41
+00:02:45,277 --> 00:02:49,067
+Additionally you might
+decide to add to it for
+
+42
+00:02:49,067 --> 00:02:53,668
+whatever are the most viewed
+three genres of the user.
+
+43
+00:02:53,668 --> 00:02:57,578
+Say that the user has watched
+a lot of romance movies and
+
+44
+00:02:57,578 --> 00:03:01,403
+a lot of comedy movies and
+a lot of historical dramas.
+
+45
+00:03:01,403 --> 00:03:06,376
+Then we would add to the list of
+possible item candidates the top 10
+
+46
+00:03:06,376 --> 00:03:09,178
+movies in each of these three genres.
+
+47
+00:03:09,178 --> 00:03:13,120
+And then maybe we will also
+add to this list the top
+
+48
+00:03:13,120 --> 00:03:16,302
+20 movies in the country of the user.
+
+49
+00:03:16,302 --> 00:03:19,904
+So this retrieval step can
+be done very quickly and
+
+50
+00:03:19,904 --> 00:03:25,155
+you may end up with a list of 100 or
+maybe 100s of plausible movies.
+
+51
+00:03:25,155 --> 00:03:27,281
+To recommend to the user and
+
+52
+00:03:27,281 --> 00:03:31,631
+hopefully this list will
+recommend some good options.
+
+53
+00:03:31,631 --> 00:03:36,980
+But it's also okay if it includes some
+options that the user won't like at all.
+
+54
+00:03:36,980 --> 00:03:41,655
+The goal of the retrieval step
+is to ensure broad coverage to
+
+55
+00:03:41,655 --> 00:03:46,153
+have enough movies at least
+have many good ones in there.
+
+56
+00:03:46,153 --> 00:03:51,899
+Finally, we would then take all the items
+we retrieve during the retrieval step and
+
+57
+00:03:51,899 --> 00:03:53,716
+combine them into a list.
+
+58
+00:03:53,716 --> 00:03:57,859
+Removing two cookers and removing items
+that the user has already washed or
+
+59
+00:03:57,859 --> 00:04:00,029
+that the user has already purchased and
+
+60
+00:04:00,029 --> 00:04:02,739
+that you may not want to
+recommend to them again.
+
+61
+00:04:02,739 --> 00:04:05,906
+The second step of this
+is then the ranking step.
+
+62
+00:04:05,906 --> 00:04:11,109
+During the ranking step you will take the
+list retrieved during the retrieval step.
+
+63
+00:04:11,109 --> 00:04:15,435
+So this may be just hundreds
+of possible movies and
+
+64
+00:04:15,435 --> 00:04:18,531
+rank them using the learned model.
+
+65
+00:04:18,531 --> 00:04:23,241
+And what that means is you will
+feed the user feature vector and
+
+66
+00:04:23,241 --> 00:04:27,148
+the movie feature actor
+into this neural network.
+
+67
+00:04:27,148 --> 00:04:33,051
+And for each of the user movie
+pairs compute the predicted rating.
+
+68
+00:04:33,051 --> 00:04:37,949
+And based on this, you now have
+all of the se 100 plus movies,
+
+69
+00:04:37,949 --> 00:04:42,589
+the ones that the user is most
+likely to give a high rating to.
+
+70
+00:04:42,589 --> 00:04:47,000
+And then you can just display the rank
+list of items to the user depending on
+
+71
+00:04:47,000 --> 00:04:49,073
+what you think the user will give.
+
+72
+00:04:49,073 --> 00:04:53,950
+The highest rating to one
+additional optimization is that
+
+73
+00:04:53,950 --> 00:04:56,049
+if you have computed VM.
+
+74
+00:04:56,049 --> 00:05:01,609
+For all the movies in advance,
+then all you need to do is to do inference
+
+75
+00:05:01,609 --> 00:05:06,530
+on this part of the neural network
+a single time to compute VU.
+
+76
+00:05:06,530 --> 00:05:11,336
+And then take that VU they just computed
+for the user on your website right now.
+
+77
+00:05:11,336 --> 00:05:14,429
+And take the inner product between VU and
+VM.
+
+78
+00:05:14,429 --> 00:05:18,292
+For the movies that you have
+retrieved during the retrieval step.
+
+79
+00:05:18,292 --> 00:05:21,412
+So this computation can be
+done relatively quickly.
+
+80
+00:05:21,412 --> 00:05:25,795
+If the retrieval step just
+brings up say 100s of movies,
+
+81
+00:05:25,795 --> 00:05:28,688
+one of the decisions you need to make for
+
+82
+00:05:28,688 --> 00:05:34,490
+this album is how many items do you want
+to retrieve during the retrieval step?
+
+83
+00:05:34,490 --> 00:05:38,629
+To feed into the more
+accurate ranking step.
+
+84
+00:05:38,629 --> 00:05:40,405
+During the retrieval step,
+
+85
+00:05:40,405 --> 00:05:44,550
+retrieving more items will tend
+to result in better performance.
+
+86
+00:05:44,550 --> 00:05:49,150
+But the algorithm will end up
+being slower to analyze or
+
+87
+00:05:49,150 --> 00:05:54,150
+to optimize the trade off between
+how many items to retrieve
+
+88
+00:05:54,150 --> 00:05:58,258
+to retrieve 100 or 500 or 1000 items.
+
+89
+00:05:58,258 --> 00:06:03,077
+I would recommend carrying out offline
+experiments to see how much retrieving
+
+90
+00:06:03,077 --> 00:06:06,956
+additional items results in
+more relevant recommendations.
+
+91
+00:06:06,956 --> 00:06:12,184
+And in particular,
+if the estimated probability that YIJ.
+
+92
+00:06:12,184 --> 00:06:16,160
+Is equal to one according to
+your neural network model.
+
+93
+00:06:16,160 --> 00:06:20,929
+Or if the estimated rating of Y
+being high of the retrieve items
+
+94
+00:06:20,929 --> 00:06:26,079
+according to your model's prediction
+ends up being much higher.
+
+95
+00:06:26,079 --> 00:06:31,956
+If only you were to retrieve say 500
+items instead of only 100 items,
+
+96
+00:06:31,956 --> 00:06:36,354
+then that would argue for
+maybe retrieving more items.
+
+97
+00:06:36,354 --> 00:06:38,792
+Even if it slows down the album a bit.
+
+98
+00:06:38,792 --> 00:06:43,875
+But with the separate retrieval step and
+the ranking step, this allows
+
+99
+00:06:43,875 --> 00:06:49,474
+many recommended systems today to give
+both fast as well as accurate results.
+
+100
+00:06:49,474 --> 00:06:54,704
+Because the retrieval step tries to
+prune out a lot of items that are just
+
+101
+00:06:54,704 --> 00:06:59,602
+not worth doing the more detailed
+influence and inner product on.
+
+102
+00:06:59,602 --> 00:07:03,789
+And then the ranking step makes
+a more careful prediction for
+
+103
+00:07:03,789 --> 00:07:08,892
+what are the items that the user is
+actually likely to enjoy so that's it.
+
+104
+00:07:08,892 --> 00:07:13,508
+This is how you make your
+recommended system work efficiently
+
+105
+00:07:13,508 --> 00:07:18,486
+even on very large catalogs of movies or
+products or what have you.
+
+106
+00:07:18,486 --> 00:07:24,167
+Now, it turns out that as commercially
+important as our recommended systems,
+
+107
+00:07:24,167 --> 00:07:29,449
+there are some significant ethical
+issues associated with them as well.
+
+108
+00:07:29,449 --> 00:07:33,867
+And unfortunately there have been
+recommended systems that have
+
+109
+00:07:33,867 --> 00:07:34,917
+created harm.
+
+110
+00:07:34,917 --> 00:07:37,882
+So as you build your
+own recommended system,
+
+111
+00:07:37,882 --> 00:07:42,183
+I hope you take an ethical approach and
+use it to serve your users.
+
+112
+00:07:42,183 --> 00:07:44,958
+And society as large as
+well as yourself and
+
+113
+00:07:44,958 --> 00:07:47,742
+the company that you might be working for.
+
+114
+00:07:47,742 --> 00:07:51,927
+Let's take a look at the ethical issues
+associated with recommended systems in
+
+115
+00:07:51,927 --> 00:07:52,680

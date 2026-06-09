@@ -1,0 +1,585 @@
+1
+00:00:02,853 --> 00:00:07,363
+When you have a few positive
+examples with Michael's 1 and
+
+2
+00:00:07,363 --> 00:00:10,981
+a large number of negative
+examples say y = 0?
+
+3
+00:00:10,981 --> 00:00:15,641
+When should you use anomaly detection and
+when should you use supervised learning?
+
+4
+00:00:15,641 --> 00:00:19,032
+The decision is actually quite
+subtle in some applications.
+
+5
+00:00:19,032 --> 00:00:22,852
+So let me share with you some thoughts and
+some suggestions for
+
+6
+00:00:22,852 --> 00:00:26,019
+how to pick between these
+two types of algorithms.
+
+7
+00:00:26,019 --> 00:00:31,820
+And anomaly detection algorithm will
+typically be the more appropriate
+
+8
+00:00:31,820 --> 00:00:36,860
+choice when you have a very small
+number of positive examples,
+
+9
+00:00:36,860 --> 00:00:40,586
+0-20 positive examples is not uncommon.
+
+10
+00:00:40,586 --> 00:00:45,345
+And a relatively large
+number of negative examples
+
+11
+00:00:45,345 --> 00:00:49,337
+with which to try to build a model for
+p of x.
+
+12
+00:00:49,337 --> 00:00:51,850
+When you recall that the parameters for
+
+13
+00:00:51,850 --> 00:00:56,509
+p of x are learned only from the negative
+examples and this much smaller.
+
+14
+00:00:56,509 --> 00:01:00,836
+So the positive examples is only used
+in your cross validation set and
+
+15
+00:01:00,836 --> 00:01:04,057
+test set for parameter tuning and
+for evaluation.
+
+16
+00:01:04,057 --> 00:01:07,918
+In contrast, if you have
+a larger number of positive and
+
+17
+00:01:07,918 --> 00:01:13,113
+negative examples, then supervised
+learning might be more applicable.
+
+18
+00:01:13,113 --> 00:01:18,393
+Now, even if you have only 20
+positive training examples,
+
+19
+00:01:18,393 --> 00:01:23,482
+it might be okay to apply
+a supervised learning algorithm.
+
+20
+00:01:23,482 --> 00:01:27,612
+But it turns out that the way anomaly
+detection looks at the data set
+
+21
+00:01:27,612 --> 00:01:32,497
+versus the way supervised learning looks
+at the data set are quite different.
+
+22
+00:01:32,497 --> 00:01:37,571
+She is the main difference,
+which is that if you think there are many
+
+23
+00:01:37,571 --> 00:01:43,378
+different types of an obvious or
+many different types of positive examples.
+
+24
+00:01:43,378 --> 00:01:47,430
+Then anomaly detection might
+be more appropriate when there
+
+25
+00:01:47,430 --> 00:01:51,409
+are many different ways for
+an aircraft engine to go wrong.
+
+26
+00:01:51,409 --> 00:01:54,985
+And if tomorrow there may
+be a brand new way for
+
+27
+00:01:54,985 --> 00:01:59,141
+an aircraft engine to have
+something wrong with it.
+
+28
+00:01:59,141 --> 00:02:04,089
+Then your 20 say positive examples
+may not cover all of the ways that
+
+29
+00:02:04,089 --> 00:02:06,657
+an aircraft engine could go wrong.
+
+30
+00:02:06,657 --> 00:02:10,616
+That makes it hard for any algorithm
+to learn from the small set of
+
+31
+00:02:10,616 --> 00:02:15,548
+positive examples what the anomalies,
+what the positive examples look like.
+
+32
+00:02:15,548 --> 00:02:18,570
+And future anomalies may
+look nothing like any
+
+33
+00:02:18,570 --> 00:02:21,603
+of the anomalous examples we've seen so
+far.
+
+34
+00:02:21,603 --> 00:02:24,701
+If you believe this to be true for
+your problem,
+
+35
+00:02:24,701 --> 00:02:28,970
+then I would gravitate to using
+an anomaly detection algorithm.
+
+36
+00:02:28,970 --> 00:02:34,084
+Because what anomaly detection does is
+it looks at the normal examples that
+
+37
+00:02:34,084 --> 00:02:39,048
+is the y = 0 negative examples and
+just try to model what they look like.
+
+38
+00:02:39,048 --> 00:02:43,558
+And anything that deviates a lot
+from normal It flags as an anomaly.
+
+39
+00:02:43,558 --> 00:02:46,097
+Including if there's a brand new way for
+
+40
+00:02:46,097 --> 00:02:50,813
+an aircraft engine to fail that had
+never been seen before in your data set.
+
+41
+00:02:50,813 --> 00:02:55,484
+In contrast, supervised learning has
+a different way of looking at the problem.
+
+42
+00:02:55,484 --> 00:02:59,581
+When you're applying supervised
+learning ideally you would hope to have
+
+43
+00:02:59,581 --> 00:03:01,233
+enough positive examples for
+
+44
+00:03:01,233 --> 00:03:04,877
+the average to get a sense of what
+the positive examples are like.
+
+45
+00:03:04,877 --> 00:03:10,147
+And with supervised learning,
+we tend to assume that the future positive
+
+46
+00:03:10,147 --> 00:03:14,833
+examples are likely to be similar
+to the ones in the training set.
+
+47
+00:03:14,833 --> 00:03:18,729
+So let me illustrate
+this with one example,
+
+48
+00:03:18,729 --> 00:03:23,691
+if you are using a system to find,
+say financial fraud.
+
+49
+00:03:23,691 --> 00:03:26,844
+There are many different
+ways unfortunately that
+
+50
+00:03:26,844 --> 00:03:30,458
+some individuals are trying
+to commit financial fraud.
+
+51
+00:03:30,458 --> 00:03:33,067
+And unfortunately there are new types of
+
+52
+00:03:33,067 --> 00:03:36,833
+financial fraud attempts every
+few months or every year.
+
+53
+00:03:36,833 --> 00:03:42,559
+And what that means is that because
+they keep on popping up completely new.
+
+54
+00:03:42,559 --> 00:03:47,271
+And unique forms of financial fraud
+anomaly detection is often used to just
+
+55
+00:03:47,271 --> 00:03:52,530
+look for anything that's different,
+then transactions we've seen in the past.
+
+56
+00:03:52,530 --> 00:03:57,715
+In contrast, if you look at the problem
+of email spam detection, well,
+
+57
+00:03:57,715 --> 00:04:02,906
+there are many different types of
+spam email, but even over many years.
+
+58
+00:04:02,906 --> 00:04:06,955
+Spam emails keep on trying
+to sell similar things or
+
+59
+00:04:06,955 --> 00:04:10,353
+get you to go to similar websites and
+so on.
+
+60
+00:04:10,353 --> 00:04:14,848
+Spam email that you will get in
+the next few days is much more likely
+
+61
+00:04:14,848 --> 00:04:18,875
+to be similar to spam emails
+that you have seen in the past.
+
+62
+00:04:18,875 --> 00:04:22,346
+So that's why supervised
+learning works well for
+
+63
+00:04:22,346 --> 00:04:26,476
+spam because it's trying to
+detect more of the types of spam
+
+64
+00:04:26,476 --> 00:04:31,204
+emails that you have probably seen
+in the past in your training set.
+
+65
+00:04:31,204 --> 00:04:35,729
+Whereas if you're trying to detect brand
+new types of fraud that have never been
+
+66
+00:04:35,729 --> 00:04:39,323
+seen before in the nominate section,
+maybe more applicable.
+
+67
+00:04:39,323 --> 00:04:42,496
+Let's go through a few more examples.
+
+68
+00:04:42,496 --> 00:04:48,693
+We have already seen fraud detection
+being one use case of anomaly detection.
+
+69
+00:04:48,693 --> 00:04:54,079
+Although supervised learning is used to
+find previously observed forms of fraud.
+
+70
+00:04:54,079 --> 00:04:58,780
+And we've seen email spam
+classification typically being address
+
+71
+00:04:58,780 --> 00:05:00,849
+using supervised learning.
+
+72
+00:05:00,849 --> 00:05:05,181
+You've also seen the example
+of manufacturing where
+
+73
+00:05:05,181 --> 00:05:09,423
+you may want to find new
+previously unseen defects.
+
+74
+00:05:09,423 --> 00:05:11,544
+Such as if there are brand new ways for
+
+75
+00:05:11,544 --> 00:05:15,589
+an aircraft engine to fail in the future
+that you still want to detect.
+
+76
+00:05:15,589 --> 00:05:20,704
+Even if you don't have any positive
+example like that in your training set.
+
+77
+00:05:20,704 --> 00:05:25,031
+It turns out that the manufacturing
+supervised learning is also used to find
+
+78
+00:05:25,031 --> 00:05:25,647
+defects.
+
+79
+00:05:25,647 --> 00:05:29,390
+The more for finding known and
+previously seen defects.
+
+80
+00:05:29,390 --> 00:05:34,272
+For example, if you are a smartphone
+maker, you're making cell phones.
+
+81
+00:05:34,272 --> 00:05:37,286
+And you know that
+occasionally your machine for
+
+82
+00:05:37,286 --> 00:05:41,891
+making the case of the smartphone
+will accidentally stretch the cover.
+
+83
+00:05:41,891 --> 00:05:47,169
+So stretches are a common defect
+on smartphones and so you can get
+
+84
+00:05:47,169 --> 00:05:53,835
+enough training examples of stretched
+smartphones responding to label y =1.
+
+85
+00:05:53,835 --> 00:05:57,996
+And just train the system to decide
+if a new smartphone that you just
+
+86
+00:05:57,996 --> 00:06:00,465
+manufactured has any stretches in it.
+
+87
+00:06:00,465 --> 00:06:04,996
+And the difference is if you just see
+stretch smartphones over and over and
+
+88
+00:06:04,996 --> 00:06:07,920
+you want to check if your
+phones are stretched,
+
+89
+00:06:07,920 --> 00:06:10,350
+then supervised learning works well.
+
+90
+00:06:10,350 --> 00:06:13,411
+Whereas if you suspect that they're
+going to be brand new ways for
+
+91
+00:06:13,411 --> 00:06:17,179
+something to go wrong in the future,
+then anomaly detection will work well.
+
+92
+00:06:17,179 --> 00:06:22,003
+Some other examples you've heard me talk
+about monitoring machines in the data
+
+93
+00:06:22,003 --> 00:06:25,105
+center, especially
+the machine's been hacked.
+
+94
+00:06:25,105 --> 00:06:29,294
+It can behave differently in a brand
+new way unlike any previous way in his
+
+95
+00:06:29,294 --> 00:06:29,991
+behavior.
+
+96
+00:06:29,991 --> 00:06:34,261
+So that would feel more like
+an anomaly detection application.
+
+97
+00:06:34,261 --> 00:06:38,929
+In fact, one theme is that many
+security related applications because
+
+98
+00:06:38,929 --> 00:06:43,074
+hackers are often finding brand
+new ways to hack into systems.
+
+99
+00:06:43,074 --> 00:06:47,028
+Many security related applications
+will use anomaly detection.
+
+100
+00:06:47,028 --> 00:06:51,768
+Whereas returning to supervised learning,
+if you want to learn to predict
+
+101
+00:06:51,768 --> 00:06:57,123
+the weather well, there's only a handful
+types of weather that you typically see.
+
+102
+00:06:57,123 --> 00:06:59,708
+Is it sunny, rainy, is it going to snow?
+
+103
+00:06:59,708 --> 00:07:03,189
+And so because you see the same
+output labels over and over,
+
+104
+00:07:03,189 --> 00:07:07,028
+weather prediction would tend to
+be a supervised learning task.
+
+105
+00:07:07,028 --> 00:07:11,113
+Or if you want to use the symptoms of
+the patient to see if the patient has
+
+106
+00:07:11,113 --> 00:07:13,823
+a specific disease that
+you've seen before.
+
+107
+00:07:13,823 --> 00:07:18,000
+Then that would also tend to be
+a supervised learning application.
+
+108
+00:07:18,000 --> 00:07:22,818
+So I hope that gives you a framework for
+deciding when you have a small set of
+
+109
+00:07:22,818 --> 00:07:27,345
+positive examples as well as maybe
+a large set of negative examples.
+
+110
+00:07:27,345 --> 00:07:30,966
+Whether to use anomaly detection or
+supervised learning.
+
+111
+00:07:30,966 --> 00:07:35,309
+Anomaly detection tries to find brand
+new positive examples that may be unlike
+
+112
+00:07:35,309 --> 00:07:37,094
+anything you've seen before.
+
+113
+00:07:37,094 --> 00:07:40,950
+Where supervised learning looks
+at your positive examples and
+
+114
+00:07:40,950 --> 00:07:45,529
+tries to decide if a future example is
+similar to the positive examples that
+
+115
+00:07:45,529 --> 00:07:46,996
+you've already seen.
+
+116
+00:07:46,996 --> 00:07:52,144
+Now, it turns out that when building
+an anomaly detection algorithm, the choice
+
+117
+00:07:52,144 --> 00:07:57,002
+of features is very important and
+when building anomaly detection systems.
+
+118
+00:07:57,002 --> 00:08:00,901
+I often spend a bit of time trying
+to tune the features I use for
+
+119
+00:08:00,901 --> 00:08:02,825
+the system in the next video.
+
+120
+00:08:02,825 --> 00:08:07,118
+Let me share some practical tips on how
+to tune the features you feed to anomaly
+
+121
+00:08:07,118 --> 00:08:08,451

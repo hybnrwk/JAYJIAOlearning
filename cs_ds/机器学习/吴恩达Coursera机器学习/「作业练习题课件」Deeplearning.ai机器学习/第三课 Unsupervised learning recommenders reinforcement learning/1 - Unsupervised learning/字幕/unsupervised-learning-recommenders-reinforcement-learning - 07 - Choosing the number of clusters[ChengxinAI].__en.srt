@@ -1,0 +1,736 @@
+1
+00:00:01,400 --> 00:00:06,225
+The k-means algorithm requires
+as one of its inputs, k,
+
+2
+00:00:06,225 --> 00:00:08,790
+the number of clusters
+you want it to find,
+
+3
+00:00:08,790 --> 00:00:11,820
+but how do you decide how
+many clusters to used.
+
+4
+00:00:11,820 --> 00:00:13,770
+Do you want two clusters
+or three clusters of
+
+5
+00:00:13,770 --> 00:00:16,785
+five clusters or 10
+clusters? Let's take a look.
+
+6
+00:00:16,785 --> 00:00:18,990
+For a lot of
+clustering problems,
+
+7
+00:00:18,990 --> 00:00:23,655
+the right value of K
+is truly ambiguous.
+
+8
+00:00:23,655 --> 00:00:25,650
+If I were to show
+
+9
+00:00:25,650 --> 00:00:28,230
+different people the
+same data set and ask,
+
+10
+00:00:28,230 --> 00:00:30,390
+how many clusters do you see?
+
+11
+00:00:30,390 --> 00:00:33,360
+There will definitely be
+people that will say,
+
+12
+00:00:33,360 --> 00:00:36,515
+it looks like there are
+two distinct clusters
+
+13
+00:00:36,515 --> 00:00:38,530
+and they will be right.
+
+14
+00:00:38,530 --> 00:00:42,030
+There would also be
+others that will see
+
+15
+00:00:42,030 --> 00:00:47,085
+actually four distinct clusters.
+
+16
+00:00:47,085 --> 00:00:49,710
+They would also be right.
+
+17
+00:00:49,710 --> 00:00:51,995
+Because clustering is
+
+18
+00:00:51,995 --> 00:00:55,415
+unsupervised learning
+algorithm you're not given
+
+19
+00:00:55,415 --> 00:00:58,100
+the quote right
+answers in the form
+
+20
+00:00:58,100 --> 00:01:01,445
+of specific labels
+to try to replicate.
+
+21
+00:01:01,445 --> 00:01:05,690
+There are lots of applications
+where the data itself
+
+22
+00:01:05,690 --> 00:01:08,030
+does not give a clear indicator
+
+23
+00:01:08,030 --> 00:01:10,495
+for how many clusters
+there are in it.
+
+24
+00:01:10,495 --> 00:01:12,920
+I think it truly is ambiguous if
+
+25
+00:01:12,920 --> 00:01:15,530
+this data has two or four,
+
+26
+00:01:15,530 --> 00:01:18,170
+or maybe three clusters.
+
+27
+00:01:18,170 --> 00:01:20,060
+If you take say, the red one
+
+28
+00:01:20,060 --> 00:01:22,340
+here and the two
+blue ones here say.
+
+29
+00:01:22,340 --> 00:01:25,820
+If you look at the academic
+literature on K-means,
+
+30
+00:01:25,820 --> 00:01:29,450
+there are a few techniques
+to try to automatically
+
+31
+00:01:29,450 --> 00:01:31,160
+choose the number of
+
+32
+00:01:31,160 --> 00:01:34,100
+clusters to use for a
+certain application.
+
+33
+00:01:34,100 --> 00:01:36,200
+I'll briefly mention one here
+
+34
+00:01:36,200 --> 00:01:38,735
+that you may see
+others refer to,
+
+35
+00:01:38,735 --> 00:01:40,085
+although I had to say,
+
+36
+00:01:40,085 --> 00:01:44,845
+I personally do not use
+this method myself.
+
+37
+00:01:44,845 --> 00:01:48,485
+But one way to try to
+choose the value of K
+
+38
+00:01:48,485 --> 00:01:52,280
+is called the elbow method and
+
+39
+00:01:52,280 --> 00:01:54,800
+what that does is you would run
+
+40
+00:01:54,800 --> 00:01:58,850
+K-means with a
+variety of values of
+
+41
+00:01:58,850 --> 00:02:01,700
+K and plot the cost function or
+
+42
+00:02:01,700 --> 00:02:03,875
+the distortion function J
+
+43
+00:02:03,875 --> 00:02:06,430
+as a function of the
+number of clusters.
+
+44
+00:02:06,430 --> 00:02:08,660
+What you find is
+that when you have
+
+45
+00:02:08,660 --> 00:02:11,390
+very few clusters,
+say one cluster,
+
+46
+00:02:11,390 --> 00:02:14,070
+the distortion function or
+the cost function J will be
+
+47
+00:02:14,070 --> 00:02:17,705
+high and as you increase
+the number of clusters,
+
+48
+00:02:17,705 --> 00:02:22,785
+it will go down,
+maybe as follows.
+
+49
+00:02:22,785 --> 00:02:24,595
+and if the curve looks like this,
+
+50
+00:02:24,595 --> 00:02:26,350
+you say, well, it looks
+
+51
+00:02:26,350 --> 00:02:28,300
+like the cost function
+is decreasing
+
+52
+00:02:28,300 --> 00:02:30,610
+rapidly until we get
+to three clusters
+
+53
+00:02:30,610 --> 00:02:33,340
+but the decrease is
+more slowly after that.
+
+54
+00:02:33,340 --> 00:02:35,410
+Let's choose K equals
+
+55
+00:02:35,410 --> 00:02:38,680
+3 and this is called
+an elbow, by the way,
+
+56
+00:02:38,680 --> 00:02:41,980
+because think of it as analogous
+
+57
+00:02:41,980 --> 00:02:47,360
+to that's your hand and
+that's your elbow over here.
+
+58
+00:02:47,810 --> 00:02:50,340
+Plotting the cost function as
+
+59
+00:02:50,340 --> 00:02:51,890
+a function of K could help,
+
+60
+00:02:51,890 --> 00:02:53,340
+it could help you
+gain some insight.
+
+61
+00:02:53,340 --> 00:02:56,040
+I personally hardly ever
+
+62
+00:02:56,040 --> 00:02:58,170
+use the the elbow
+method myself to
+
+63
+00:02:58,170 --> 00:03:00,205
+choose the right
+number of clusters
+
+64
+00:03:00,205 --> 00:03:02,745
+because I think for a
+lot of applications,
+
+65
+00:03:02,745 --> 00:03:04,950
+the right number of
+clusters is truly
+
+66
+00:03:04,950 --> 00:03:07,380
+ambiguous and you
+find that a lot of
+
+67
+00:03:07,380 --> 00:03:10,230
+cost functions look
+like this with
+
+68
+00:03:10,230 --> 00:03:13,460
+just decreases smoothly and it
+
+69
+00:03:13,460 --> 00:03:16,650
+doesn't have a clear
+elbow by wish you
+
+70
+00:03:16,650 --> 00:03:19,995
+could use to pick the
+value of K. By the way,
+
+71
+00:03:19,995 --> 00:03:22,725
+one technique that does
+not work is to choose
+
+72
+00:03:22,725 --> 00:03:25,860
+K so as to minimize
+the cost function
+
+73
+00:03:25,860 --> 00:03:27,990
+J because doing so
+
+74
+00:03:27,990 --> 00:03:30,330
+would cause you to almost
+always just choose
+
+75
+00:03:30,330 --> 00:03:33,720
+the largest possible
+value of K because having
+
+76
+00:03:33,720 --> 00:03:35,520
+more clusters will pretty much
+
+77
+00:03:35,520 --> 00:03:38,185
+always reduce the
+cost function J.
+
+78
+00:03:38,185 --> 00:03:40,590
+Choosing K to minimize
+
+79
+00:03:40,590 --> 00:03:43,320
+the cost function J is
+not a good technique.
+
+80
+00:03:43,320 --> 00:03:47,075
+How do you choose the
+value of K and practice?
+
+81
+00:03:47,075 --> 00:03:51,100
+Often you're running K-means
+in order to get clusters
+
+82
+00:03:51,100 --> 00:03:54,910
+to use for some later or
+some downstream purpose.
+
+83
+00:03:54,910 --> 00:03:57,190
+That is, you're going to
+take the clusters and do
+
+84
+00:03:57,190 --> 00:03:59,830
+something with those clusters.
+
+85
+00:03:59,830 --> 00:04:02,440
+What I usually do and
+what I recommend you
+
+86
+00:04:02,440 --> 00:04:05,050
+do is to evaluate K-means
+
+87
+00:04:05,050 --> 00:04:07,540
+based on how well it performs
+
+88
+00:04:07,540 --> 00:04:11,010
+for that later
+downstream purpose.
+
+89
+00:04:11,010 --> 00:04:15,160
+Let me illustrate to the
+example of t-shirt sizing.
+
+90
+00:04:15,160 --> 00:04:18,100
+One thing you could
+do is run K-means
+
+91
+00:04:18,100 --> 00:04:20,785
+on this data set to
+find the clusters,
+
+92
+00:04:20,785 --> 00:04:23,810
+in which case you
+may find clusters
+
+93
+00:04:23,810 --> 00:04:27,205
+like that and this would be
+how you size your small,
+
+94
+00:04:27,205 --> 00:04:29,470
+medium, and large t-shirts,
+
+95
+00:04:29,470 --> 00:04:32,620
+but how many t-shirt
+sizes should there be?
+
+96
+00:04:32,620 --> 00:04:34,300
+Well, it's ambiguous.
+
+97
+00:04:34,300 --> 00:04:38,725
+If you were to also run
+K-means with five clusters,
+
+98
+00:04:38,725 --> 00:04:43,670
+you might get clusters
+that look like this.
+
+99
+00:04:43,670 --> 00:04:45,320
+This will let shoe size
+
+100
+00:04:45,320 --> 00:04:47,380
+t-shirts according
+to extra small,
+
+101
+00:04:47,380 --> 00:04:51,280
+small, medium, large,
+and extra large.
+
+102
+00:04:51,280 --> 00:04:53,590
+Both of these are
+completely valid
+
+103
+00:04:53,590 --> 00:04:56,200
+and completely fine groupings
+
+104
+00:04:56,200 --> 00:04:58,205
+of the data into clusters,
+
+105
+00:04:58,205 --> 00:05:00,175
+but whether you want to use
+
+106
+00:05:00,175 --> 00:05:03,250
+three clusters or
+five clusters can
+
+107
+00:05:03,250 --> 00:05:05,560
+now be decided
+based on what makes
+
+108
+00:05:05,560 --> 00:05:08,515
+sense for your t-shirt business.
+
+109
+00:05:08,515 --> 00:05:11,725
+Does a trade-off between how
+well the t-shirts will fit,
+
+110
+00:05:11,725 --> 00:05:15,760
+depending on whether you have
+three sizes or five sizes,
+
+111
+00:05:15,760 --> 00:05:19,750
+but there will be extra costs
+as well associated with
+
+112
+00:05:19,750 --> 00:05:22,180
+manufacturing and
+shipping five types of
+
+113
+00:05:22,180 --> 00:05:25,420
+t-shirts instead of three
+different types of t-shirts.
+
+114
+00:05:25,420 --> 00:05:27,850
+What I would do in
+this case is to run
+
+115
+00:05:27,850 --> 00:05:31,260
+K-means with K equals
+3 and K equals 5
+
+116
+00:05:31,260 --> 00:05:35,350
+and then look at these
+two solutions to
+
+117
+00:05:35,350 --> 00:05:37,480
+see based on the trade-off
+
+118
+00:05:37,480 --> 00:05:40,660
+between fits of t-shirts
+with more sizes,
+
+119
+00:05:40,660 --> 00:05:42,969
+results in better fit versus
+
+120
+00:05:42,969 --> 00:05:46,450
+the extra cost of making
+more t-shirts where making
+
+121
+00:05:46,450 --> 00:05:49,380
+fewer t-shirts is simpler
+and less expensive to
+
+122
+00:05:49,380 --> 00:05:52,755
+try to decide what makes sense
+for the t-shirt business.
+
+123
+00:05:52,755 --> 00:05:55,665
+When you get to the
+programming exercise,
+
+124
+00:05:55,665 --> 00:05:58,305
+you also see there
+an application
+
+125
+00:05:58,305 --> 00:06:01,320
+of K-means to image compression.
+
+126
+00:06:01,320 --> 00:06:04,710
+This is actually one of the
+most fun visual examples
+
+127
+00:06:04,710 --> 00:06:05,835
+of K-means and there
+
+128
+00:06:05,835 --> 00:06:07,940
+you see that there'll
+be a trade-off
+
+129
+00:06:07,940 --> 00:06:10,000
+between the quality of
+the compressed image,
+
+130
+00:06:11,130 --> 00:06:13,835
+that is, how good
+the image looks
+
+131
+00:06:13,835 --> 00:06:16,195
+versus how much you can
+compress the image
+
+132
+00:06:16,195 --> 00:06:17,370
+to save the space.
+
+133
+00:06:18,000 --> 00:06:20,265
+In that program exercise,
+
+134
+00:06:20,265 --> 00:06:21,900
+you see that you can use
+
+135
+00:06:21,900 --> 00:06:25,320
+that trade-off to maybe
+manually decide what's
+
+136
+00:06:25,320 --> 00:06:26,760
+the best value of K
+
+137
+00:06:26,760 --> 00:06:28,530
+based on how good do
+you want the image to
+
+138
+00:06:28,530 --> 00:06:31,110
+look versus how large
+
+139
+00:06:31,110 --> 00:06:33,740
+you want the compress
+image size to be.
+
+140
+00:06:33,740 --> 00:06:37,875
+That's it for the K-means
+clustering algorithm.
+
+141
+00:06:37,875 --> 00:06:39,255
+Congrats on learning
+
+142
+00:06:39,255 --> 00:06:41,680
+your first unsupervised
+learning algorithm.
+
+143
+00:06:41,680 --> 00:06:44,550
+You now know not just how
+to do supervised learning,
+
+144
+00:06:44,550 --> 00:06:46,790
+but also unsupervised learning.
+
+145
+00:06:46,790 --> 00:06:50,025
+I hope you also have fun
+with the practice lab,
+
+146
+00:06:50,025 --> 00:06:52,290
+is actually one of the
+most fun exercises
+
+147
+00:06:52,290 --> 00:06:54,935
+I know of the K-means.
+
+148
+00:06:54,935 --> 00:06:57,795
+With that, we're
+ready to move on to
+
+149
+00:06:57,795 --> 00:07:00,915
+our second unsupervised
+learning algorithm,
+
+150
+00:07:00,915 --> 00:07:03,030
+which is a non-linear detection.
+
+151
+00:07:03,030 --> 00:07:05,055
+How do you look at
+the data set and find
+
+152
+00:07:05,055 --> 00:07:08,010
+unusual or anomalous
+things in it.
+
+153
+00:07:08,010 --> 00:07:10,155
+This turns out to be another,
+
+154
+00:07:10,155 --> 00:07:12,960
+one of the most commercially
+important applications
+
+155
+00:07:12,960 --> 00:07:14,400
+of unsupervised learning.
+
+156
+00:07:14,400 --> 00:07:15,900
+I've used this myself many
+
+157
+00:07:15,900 --> 00:07:17,940
+times in many different
+applications.
+
+158
+00:07:17,940 --> 00:07:19,920
+Let's go on to the next video to
+
+159
+00:07:19,920 --> 00:07:22,690

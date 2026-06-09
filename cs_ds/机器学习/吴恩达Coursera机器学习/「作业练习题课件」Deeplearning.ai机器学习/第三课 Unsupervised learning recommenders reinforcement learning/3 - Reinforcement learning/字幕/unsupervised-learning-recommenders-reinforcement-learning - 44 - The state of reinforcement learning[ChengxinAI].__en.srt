@@ -1,0 +1,206 @@
+1
+00:00:02,140 --> 00:00:05,930
+Reinforcement learning is
+an exciting set of technologies.
+
+2
+00:00:05,930 --> 00:00:10,386
+In fact, when I was working on my
+PhD thesis reinforcement learning
+
+3
+00:00:10,386 --> 00:00:12,360
+was the subject of my thesis.
+
+4
+00:00:12,360 --> 00:00:15,533
+So I was and
+still am excited about these ideas.
+
+5
+00:00:15,533 --> 00:00:20,896
+Despite all the research momentum and
+excitement behind reinforcement learning
+
+6
+00:00:20,896 --> 00:00:25,644
+though, I think there is a bit or
+maybe sometimes a lot of hype around it.
+
+7
+00:00:25,644 --> 00:00:31,354
+So what I hope to do is share with you
+a practical sense of where reinforcement
+
+8
+00:00:31,354 --> 00:00:35,919
+learning is today in terms of
+his utility for applications.
+
+9
+00:00:35,919 --> 00:00:40,889
+One of the reasons for some of the hype
+about reinforcement learning is, it turns
+
+10
+00:00:40,889 --> 00:00:45,657
+out many of the research publications
+have been on simulated environments.
+
+11
+00:00:45,657 --> 00:00:50,036
+And having worked in both simulations and
+on real robots myself,
+
+12
+00:00:50,036 --> 00:00:54,971
+I can tell you that it's much easier
+to get a reinforcement learning album
+
+13
+00:00:54,971 --> 00:00:59,940
+to work in a simulation or
+in a video game than in a real robot.
+
+14
+00:00:59,940 --> 00:01:04,788
+So a lot of developers have commented
+that even after they got it to work in
+
+15
+00:01:04,788 --> 00:01:08,763
+simulation, it turned out to
+be surprisingly challenging
+
+16
+00:01:08,763 --> 00:01:13,340
+to get something to work in
+the real world or the real robot.
+
+17
+00:01:13,340 --> 00:01:16,776
+And so if you apply these
+algorithms to a real application,
+
+18
+00:01:16,776 --> 00:01:21,449
+this is one limitation that I hope you pay
+attention to to make sure what you do does
+
+19
+00:01:21,449 --> 00:01:23,740
+work on the real application.
+
+20
+00:01:23,740 --> 00:01:27,771
+Second, despite all the media coverage
+about reinforcement learning,
+
+21
+00:01:27,771 --> 00:01:32,519
+today there are far fewer applications of
+reinforcement learning than supervised and
+
+22
+00:01:32,519 --> 00:01:34,440
+unsupervised learning.
+
+23
+00:01:34,440 --> 00:01:37,178
+So if you are building
+a practical application,
+
+24
+00:01:37,178 --> 00:01:39,983
+the odds that you will find
+supervised learning or
+
+25
+00:01:39,983 --> 00:01:43,389
+unsupervised learning useful or
+the right tool for the job,
+
+26
+00:01:43,389 --> 00:01:48,540
+is much higher than the odds that you
+would end up using reinforcement learning.
+
+27
+00:01:48,540 --> 00:01:53,070
+I have used reinforcement learning a few
+times myself especially on robotic control
+
+28
+00:01:53,070 --> 00:01:57,341
+applications, but in my day to day applied
+work, I end up using supervising and
+
+29
+00:01:57,341 --> 00:01:59,151
+supervised learning much more.
+
+30
+00:02:00,240 --> 00:02:04,443
+There is a lot of exciting research
+in reinforcement learning right now,
+
+31
+00:02:04,443 --> 00:02:07,630
+and I think the potential of
+reinforcement learning for
+
+32
+00:02:07,630 --> 00:02:10,139
+future applications is very large.
+
+33
+00:02:10,139 --> 00:02:14,688
+And reinforcement learning still
+remains one of the major pillars of
+
+34
+00:02:14,688 --> 00:02:16,028
+machine learning.
+
+35
+00:02:16,028 --> 00:02:20,528
+And so having it as a framework as
+you develop your own machine learning
+
+36
+00:02:20,528 --> 00:02:24,953
+algorithms, I hope will make you
+more effective at building working
+
+37
+00:02:24,953 --> 00:02:27,840
+machine learning systems as well.
+
+38
+00:02:27,840 --> 00:02:32,764
+So I hope you've enjoyed this week's
+materials on reinforcement learning, and
+
+39
+00:02:32,764 --> 00:02:37,940
+specifically I hope you have fun getting
+the lunar lander to land for yourself.
+
+40
+00:02:37,940 --> 00:02:42,697
+I hope will be a satisfying experience
+when you implement an algorithm and
+
+41
+00:02:42,697 --> 00:02:47,926
+then see that lunar lander land safely on
+the moon because of code that you wrote.
+
+42
+00:02:47,926 --> 00:02:51,370
+That brings us towards the end
+of this specialization.
+
+43
+00:02:51,370 --> 00:02:53,950
+Let's go on to the last

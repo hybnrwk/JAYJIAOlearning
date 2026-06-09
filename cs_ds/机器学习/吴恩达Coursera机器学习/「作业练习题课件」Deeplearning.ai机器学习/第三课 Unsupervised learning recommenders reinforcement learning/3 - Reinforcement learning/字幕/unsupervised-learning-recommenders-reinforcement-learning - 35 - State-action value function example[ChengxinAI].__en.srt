@@ -1,0 +1,363 @@
+1
+00:00:01,952 --> 00:00:03,673
+Using the state-action
+value function example.
+
+2
+00:00:03,673 --> 00:00:07,711
+You're seeing what
+the values of QSA are like.
+
+3
+00:00:07,711 --> 00:00:13,563
+In order to keep holding our intuition
+about reinforcement learning problems and
+
+4
+00:00:13,563 --> 00:00:19,597
+how the values of QSA change depending on
+the problem will provided an optional lab.
+
+5
+00:00:19,597 --> 00:00:24,061
+That lets you play around modify
+the [INAUDIBLE] example and see for
+
+6
+00:00:24,061 --> 00:00:26,182
+yourself how QSA will change.
+
+7
+00:00:26,182 --> 00:00:27,640
+Let's take a look.
+
+8
+00:00:27,640 --> 00:00:32,640
+Here's a Jupyter Notebook that I hope
+you play with after watching this video.
+
+9
+00:00:32,640 --> 00:00:37,415
+I'm going to run these helper functions,
+now notice here that this
+
+10
+00:00:37,415 --> 00:00:42,720
+specifies the number six that the two
+actions so I wouldn't change these.
+
+11
+00:00:42,720 --> 00:00:47,749
+And this specifies the terminal left
+in the terminal right rewards which
+
+12
+00:00:47,749 --> 00:00:52,880
+has been 140 and then zero was
+the rewards of the intermediate states.
+
+13
+00:00:52,880 --> 00:00:55,283
+The discount factor gamble 0.5.
+
+14
+00:00:55,283 --> 00:00:57,838
+And let's ignore
+the misstep probability for
+
+15
+00:00:57,838 --> 00:01:00,272
+now we'll talk about
+that in a later video.
+
+16
+00:01:00,272 --> 00:01:06,879
+And with these values if you run
+this code this will compute and
+
+17
+00:01:06,879 --> 00:01:13,504
+visualize the optimal policy as
+well as the Q function Q of SA.
+
+18
+00:01:13,504 --> 00:01:18,051
+You learn later about how to develop
+a learning algorithm to estimate or
+
+19
+00:01:18,051 --> 00:01:19,731
+compute Q of SA yourself.
+
+20
+00:01:19,731 --> 00:01:24,788
+So for now don't worry about what code
+we have written to compute Q of SA.
+
+21
+00:01:24,788 --> 00:01:31,000
+But you see that the values here Q of SA
+are the values we saw in the lecture.
+
+22
+00:01:31,000 --> 00:01:33,250
+Now here's where the fun starts.
+
+23
+00:01:33,250 --> 00:01:37,740
+Let's change around some of the values and
+see how these things change.
+
+24
+00:01:37,740 --> 00:01:42,085
+I'm going to update the terminal
+right reward to a much
+
+25
+00:01:42,085 --> 00:01:45,140
+smaller value says only 10.
+
+26
+00:01:45,140 --> 00:01:50,096
+If I now rerun the code,
+look at how Q of SA changes and
+
+27
+00:01:50,096 --> 00:01:53,826
+now thinks that if you're in state 5.
+
+28
+00:01:53,826 --> 00:01:58,777
+Then if you go left and
+behave optimally you get 6.25.
+
+29
+00:01:58,777 --> 00:02:00,222
+Whereas if you go right and
+
+30
+00:02:00,222 --> 00:02:03,319
+behave also the after that you
+get a return of only five.
+
+31
+00:02:03,319 --> 00:02:08,039
+So now when the reward at the right is so
+small it's only 10.
+
+32
+00:02:08,039 --> 00:02:12,526
+Even when you're so
+close to you rather go left all the way.
+
+33
+00:02:12,526 --> 00:02:17,761
+And in fact the auto policy is now
+to go left from every single state.
+
+34
+00:02:17,761 --> 00:02:18,834
+Let's make some other changes.
+
+35
+00:02:18,834 --> 00:02:22,610
+I'm going to change the terminal
+right reward back to 40.
+
+36
+00:02:22,610 --> 00:02:27,403
+But let me change
+the discount factor to 0.9,
+
+37
+00:02:27,403 --> 00:02:32,140
+with a discount factor
+that's closer to one.
+
+38
+00:02:32,140 --> 00:02:38,104
+This makes the Mars Rover less impatient
+is willing to take longer to hold out for
+
+39
+00:02:38,104 --> 00:02:43,089
+a higher reward because rewards in
+the future are not multiplied by
+
+40
+00:02:43,089 --> 00:02:48,270
+0.5 to some high power is multiplied
+by 0.9 to some high power.
+
+41
+00:02:48,270 --> 00:02:53,819
+And so is willing to be more patients,
+because rewards in the future are not
+
+42
+00:02:53,819 --> 00:03:00,340
+discounted or multiplied by as small
+a number as when the discount was 0.5.
+
+43
+00:03:00,340 --> 00:03:02,640
+So let's rerun the code.
+
+44
+00:03:02,640 --> 00:03:08,515
+And now you see this is Q of SA for
+the different states and
+
+45
+00:03:08,515 --> 00:03:13,265
+now for
+state 5 going left actually gives you
+
+46
+00:03:13,265 --> 00:03:18,397
+a higher reward of 65.61 compared to 36.
+
+47
+00:03:18,397 --> 00:03:22,760
+Notice by the way that 36 is 0.9
+times this terminal reward of 40.
+
+48
+00:03:22,760 --> 00:03:24,676
+So these numbers make sense.
+
+49
+00:03:24,676 --> 00:03:29,890
+But when a small patient is willing to go
+to the left, even when you're in state 5.
+
+50
+00:03:29,890 --> 00:03:35,071
+Now let's change gamma to a much
+smaller number like 0 .3.
+
+51
+00:03:35,071 --> 00:03:38,390
+So this very heavily discounts
+rewards in the future.
+
+52
+00:03:38,390 --> 00:03:40,857
+This makes it incredibly impatient.
+
+53
+00:03:40,857 --> 00:03:44,402
+So let me rerun this code and
+now the behavior has changed.
+
+54
+00:03:44,402 --> 00:03:48,222
+Noticed that now in
+state 4 is not going to
+
+55
+00:03:48,222 --> 00:03:53,133
+have the patience to go for
+the larger 100 reward,
+
+56
+00:03:53,133 --> 00:03:58,730
+because the discount factor
+gamma is now so small is 0.3.
+
+57
+00:03:58,730 --> 00:04:03,626
+It would rather go for the reward of 40
+even though it's a much smaller reward is
+
+58
+00:04:03,626 --> 00:04:06,291
+closer and that's whether we choose to do.
+
+59
+00:04:06,291 --> 00:04:11,085
+So I hope that you can get a sense by
+playing around with these numbers yourself
+
+60
+00:04:11,085 --> 00:04:12,580
+and running this code.
+
+61
+00:04:12,580 --> 00:04:18,246
+How the values of Q of SA change
+as was how the optimal return
+
+62
+00:04:18,246 --> 00:04:23,700
+which you notice is the larger
+of these two numbers QSA.
+
+63
+00:04:23,700 --> 00:04:29,155
+How that changes as well as how
+the optimal policy also changes.
+
+64
+00:04:29,155 --> 00:04:33,647
+So I hope you go and play with
+the optional lab and change the reward
+
+65
+00:04:33,647 --> 00:04:38,807
+function and change the discount factor
+gamma and try a different values.
+
+66
+00:04:38,807 --> 00:04:42,270
+And see for
+yourself how the values of Q of SA change,
+
+67
+00:04:42,270 --> 00:04:45,974
+how the optimal return from
+different states change and
+
+68
+00:04:45,974 --> 00:04:50,414
+how the auto policy changes
+depending on these different values.
+
+69
+00:04:50,414 --> 00:04:55,020
+And by doing so, I hope that will
+sharpen your intuition about how
+
+70
+00:04:55,020 --> 00:04:59,966
+these different quantities are affected
+depending on the rewards and
+
+71
+00:04:59,966 --> 00:05:03,349
+so on in reinforcement
+learning application.
+
+72
+00:05:03,349 --> 00:05:06,406
+After you play to the lab,
+we then be ready to come back and
+
+73
+00:05:06,406 --> 00:05:10,810
+talk about what's probably the single
+most important equation in reinforcement
+
+74
+00:05:10,810 --> 00:05:14,540
+learning, which is something
+called the bellman equation.
+
+75
+00:05:14,540 --> 00:05:18,024
+So I hope you have fun playing
+with the optional lab and
+
+76
+00:05:18,024 --> 00:05:22,061
+after that let's come back to

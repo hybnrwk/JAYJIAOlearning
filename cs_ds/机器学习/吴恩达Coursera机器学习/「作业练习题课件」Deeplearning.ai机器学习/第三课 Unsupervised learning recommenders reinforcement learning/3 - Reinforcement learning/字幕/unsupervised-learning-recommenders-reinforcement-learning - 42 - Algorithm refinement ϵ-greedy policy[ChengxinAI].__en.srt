@@ -1,0 +1,932 @@
+1
+00:00:01,820 --> 00:00:05,085
+The learning algorithm
+that we developed,
+
+2
+00:00:05,085 --> 00:00:07,245
+even while you're
+still learning how
+
+3
+00:00:07,245 --> 00:00:09,870
+to approximate Q(s,a),
+
+4
+00:00:09,870 --> 00:00:13,695
+you need to take some
+actions in the lunar lander.
+
+5
+00:00:13,695 --> 00:00:15,465
+How do you pick those actions
+
+6
+00:00:15,465 --> 00:00:16,755
+while you're still learning?
+
+7
+00:00:16,755 --> 00:00:19,170
+The most common way
+to do so is to use
+
+8
+00:00:19,170 --> 00:00:21,900
+something called an
+Epsilon-greedy policy.
+
+9
+00:00:21,900 --> 00:00:24,030
+Let's take a look
+at how that works.
+
+10
+00:00:24,030 --> 00:00:27,270
+Here's the algorithm
+that you saw earlier.
+
+11
+00:00:27,270 --> 00:00:29,805
+One of the steps in
+the algorithm is
+
+12
+00:00:29,805 --> 00:00:33,300
+to take actions in
+the lunar lander.
+
+13
+00:00:33,300 --> 00:00:36,225
+When the learning algorithm
+is still running,
+
+14
+00:00:36,225 --> 00:00:37,890
+we don't really know what's
+
+15
+00:00:37,890 --> 00:00:39,810
+the best action to
+take in every state.
+
+16
+00:00:39,810 --> 00:00:42,225
+If we did, we'd already
+be done learning.
+
+17
+00:00:42,225 --> 00:00:44,930
+But even while we're still
+learning and don't have
+
+18
+00:00:44,930 --> 00:00:48,020
+a very good estimate
+of Q(s,a) yet,
+
+19
+00:00:48,020 --> 00:00:49,955
+how do we take actions
+
+20
+00:00:49,955 --> 00:00:52,280
+in this step of the
+learning algorithm?
+
+21
+00:00:52,280 --> 00:00:54,150
+Let's look at some options.
+
+22
+00:00:54,150 --> 00:00:56,405
+When you're in some state s,
+
+23
+00:00:56,405 --> 00:00:59,720
+we might not want to take
+actions totally at random
+
+24
+00:00:59,720 --> 00:01:03,740
+because that will
+often be a bad action.
+
+25
+00:01:03,740 --> 00:01:09,320
+One natural option would be
+to pick whenever in state s,
+
+26
+00:01:09,320 --> 00:01:13,705
+pick an action a that
+maximizes Q(s,a).
+
+27
+00:01:13,705 --> 00:01:16,700
+We may say, even
+if Q(s,a) is not
+
+28
+00:01:16,700 --> 00:01:19,430
+a great estimate
+of the Q function,
+
+29
+00:01:19,430 --> 00:01:22,805
+let's just do our best
+and use our current guess
+
+30
+00:01:22,805 --> 00:01:26,885
+of Q(s,a) and pick the
+action a that maximizes it.
+
+31
+00:01:26,885 --> 00:01:29,990
+It turns out this may work okay,
+
+32
+00:01:29,990 --> 00:01:32,705
+but isn't the best option.
+
+33
+00:01:32,705 --> 00:01:36,025
+Instead, here's what
+is commonly done.
+
+34
+00:01:36,025 --> 00:01:37,420
+Here's option 2,
+
+35
+00:01:37,420 --> 00:01:39,305
+which is most of the time,
+
+36
+00:01:39,305 --> 00:01:42,305
+let's say with
+probability of 0.95,
+
+37
+00:01:42,305 --> 00:01:47,335
+pick the action that
+maximizes Q(s,a).
+
+38
+00:01:47,335 --> 00:01:49,610
+Most of the time we try to pick
+
+39
+00:01:49,610 --> 00:01:52,670
+a good action using our
+current guess of Q(s,a).
+
+40
+00:01:52,670 --> 00:01:55,340
+But the small fraction
+of the time, let's say,
+
+41
+00:01:55,340 --> 00:01:56,960
+five percent of the time,
+
+42
+00:01:56,960 --> 00:01:59,390
+we'll pick an action a randomly.
+
+43
+00:01:59,390 --> 00:02:02,675
+Why do we want to occasionally
+pick an action randomly?
+
+44
+00:02:02,675 --> 00:02:05,190
+Well, here's why.
+Suppose there's
+
+45
+00:02:05,190 --> 00:02:08,880
+some strange reason that
+Q(s,a) was initialized
+
+46
+00:02:08,880 --> 00:02:11,970
+randomly so that the
+learning algorithm thinks
+
+47
+00:02:11,970 --> 00:02:15,570
+that firing the main thruster
+is never a good idea.
+
+48
+00:02:15,570 --> 00:02:18,395
+Maybe the neural
+network parameters
+
+49
+00:02:18,395 --> 00:02:20,805
+were initialized so that Q(s,
+
+50
+00:02:20,805 --> 00:02:25,130
+main) is always very low.
+
+51
+00:02:25,130 --> 00:02:26,615
+If that's the case,
+
+52
+00:02:26,615 --> 00:02:28,340
+then the neural network,
+
+53
+00:02:28,340 --> 00:02:29,990
+because it's trying
+to pick the action
+
+54
+00:02:29,990 --> 00:02:31,970
+a that maximizes Q(s,a),
+
+55
+00:02:31,970 --> 00:02:35,450
+it will never ever try
+firing the main thruster.
+
+56
+00:02:35,450 --> 00:02:39,125
+Because it never ever tries
+firing the main thruster,
+
+57
+00:02:39,125 --> 00:02:41,030
+it will never learn that firing
+
+58
+00:02:41,030 --> 00:02:44,245
+the main thruster is actually
+sometimes a good idea.
+
+59
+00:02:44,245 --> 00:02:47,525
+Because of the random
+initialization,
+
+60
+00:02:47,525 --> 00:02:50,930
+if the neural network somehow
+initially gets stuck in
+
+61
+00:02:50,930 --> 00:02:52,100
+this mind that some things are
+
+62
+00:02:52,100 --> 00:02:54,650
+bad idea, just by chance,
+
+63
+00:02:54,650 --> 00:02:56,690
+then option 1,
+
+64
+00:02:56,690 --> 00:02:59,810
+it means that it will never
+try out those actions and
+
+65
+00:02:59,810 --> 00:03:01,610
+discover that maybe is
+
+66
+00:03:01,610 --> 00:03:04,055
+actually a good idea
+to take that action,
+
+67
+00:03:04,055 --> 00:03:06,430
+like fire the main
+thrusters sometimes.
+
+68
+00:03:06,430 --> 00:03:08,765
+Under option 2 on every step,
+
+69
+00:03:08,765 --> 00:03:11,990
+we have some small
+probability of trying out
+
+70
+00:03:11,990 --> 00:03:15,320
+different actions so that
+the neural network can
+
+71
+00:03:15,320 --> 00:03:20,120
+learn to overcome its own
+possible preconceptions
+
+72
+00:03:20,120 --> 00:03:21,440
+about what might be
+
+73
+00:03:21,440 --> 00:03:24,440
+a bad idea that turns
+out not to be the case.
+
+74
+00:03:24,440 --> 00:03:27,770
+This idea of picking
+actions randomly is
+
+75
+00:03:27,770 --> 00:03:31,150
+sometimes called an
+exploration step.
+
+76
+00:03:31,150 --> 00:03:33,620
+Because we're going to try
+
+77
+00:03:33,620 --> 00:03:35,795
+out something that may
+not be the best idea,
+
+78
+00:03:35,795 --> 00:03:37,190
+but we're going to just try out
+
+79
+00:03:37,190 --> 00:03:39,065
+some action in some
+circumstances,
+
+80
+00:03:39,065 --> 00:03:41,870
+explore and learn more
+about an action in
+
+81
+00:03:41,870 --> 00:03:43,580
+the circumstance
+where we may not have
+
+82
+00:03:43,580 --> 00:03:45,730
+had as much experience before.
+
+83
+00:03:45,730 --> 00:03:49,105
+Taking an action that
+maximizes Q(s,a),
+
+84
+00:03:49,105 --> 00:03:54,680
+sometimes this is called a
+greedy action because we're
+
+85
+00:03:54,680 --> 00:04:00,155
+trying to actually maximize
+our return by picking this.
+
+86
+00:04:00,155 --> 00:04:02,630
+Or in the reinforcement
+learning literature,
+
+87
+00:04:02,630 --> 00:04:07,845
+sometimes you'll also hear
+this as an exploitation step.
+
+88
+00:04:07,845 --> 00:04:10,490
+I know that exploitation
+is not a good thing,
+
+89
+00:04:10,490 --> 00:04:13,160
+nobody should ever
+explore anyone else.
+
+90
+00:04:13,160 --> 00:04:15,380
+But historically, this
+was the term used
+
+91
+00:04:15,380 --> 00:04:17,360
+in reinforcement
+learning to say,
+
+92
+00:04:17,360 --> 00:04:18,800
+let's exploit everything we've
+
+93
+00:04:18,800 --> 00:04:20,735
+learned to do the best we can.
+
+94
+00:04:20,735 --> 00:04:22,880
+In the reinforcement
+learning literature,
+
+95
+00:04:22,880 --> 00:04:25,040
+sometimes you hear
+people talk about
+
+96
+00:04:25,040 --> 00:04:28,265
+the exploration versus
+exploitation trade-off,
+
+97
+00:04:28,265 --> 00:04:30,290
+which refers to how often do
+
+98
+00:04:30,290 --> 00:04:32,270
+you take actions
+randomly or take
+
+99
+00:04:32,270 --> 00:04:36,260
+actions that may not be the
+best in order to learn more,
+
+100
+00:04:36,260 --> 00:04:40,340
+versus trying to maximize
+your return by say,
+
+101
+00:04:40,340 --> 00:04:43,180
+taking the action that
+maximizes Q (s,a).
+
+102
+00:04:43,180 --> 00:04:46,780
+This approach, that is
+option 2, has a name,
+
+103
+00:04:46,780 --> 00:04:51,135
+is called an
+Epsilon-greedy policy,
+
+104
+00:04:51,135 --> 00:04:53,375
+where here Epsilon is
+
+105
+00:04:53,375 --> 00:04:58,750
+0.05 is the probability of
+picking an action randomly.
+
+106
+00:04:58,750 --> 00:05:02,585
+This is the most
+common way to make
+
+107
+00:05:02,585 --> 00:05:05,285
+your reinforcement
+learning algorithm
+
+108
+00:05:05,285 --> 00:05:07,045
+explore a little bit,
+
+109
+00:05:07,045 --> 00:05:09,400
+even whilst
+occasionally or maybe
+
+110
+00:05:09,400 --> 00:05:11,855
+most of the time
+taking greedy actions.
+
+111
+00:05:11,855 --> 00:05:14,780
+By the way, lot of people
+have commented that
+
+112
+00:05:14,780 --> 00:05:18,080
+the name Epsilon-greedy
+policy is confusing because
+
+113
+00:05:18,080 --> 00:05:21,380
+you're actually being greedy
+95 percent of the time,
+
+114
+00:05:21,380 --> 00:05:22,985
+not five percent of the time.
+
+115
+00:05:22,985 --> 00:05:26,525
+So maybe 1 minus
+Epsilon-greedy policy,
+
+116
+00:05:26,525 --> 00:05:28,290
+because it's 95 percent greedy,
+
+117
+00:05:28,290 --> 00:05:30,470
+five percent exploring, that's
+
+118
+00:05:30,470 --> 00:05:32,990
+actually a more accurate
+description of the algorithm.
+
+119
+00:05:32,990 --> 00:05:35,165
+But for historical reasons,
+
+120
+00:05:35,165 --> 00:05:38,785
+the name Epsilon-greedy
+policy is what has stuck.
+
+121
+00:05:38,785 --> 00:05:41,360
+This is the name that
+people use to refer to
+
+122
+00:05:41,360 --> 00:05:43,835
+the policy that explores
+
+123
+00:05:43,835 --> 00:05:46,520
+actually Epsilon fraction
+of the time rather
+
+124
+00:05:46,520 --> 00:05:49,765
+than this greedy Epsilon
+fraction of the time.
+
+125
+00:05:49,765 --> 00:05:52,760
+Lastly, one of the trick
+that's sometimes used in
+
+126
+00:05:52,760 --> 00:05:56,165
+reinforcement learning is
+to start off Epsilon high.
+
+127
+00:05:56,165 --> 00:05:59,930
+Initially, you are taking
+
+128
+00:05:59,930 --> 00:06:01,655
+random actions a lot at
+
+129
+00:06:01,655 --> 00:06:04,925
+a time and then
+gradually decrease it,
+
+130
+00:06:04,925 --> 00:06:07,520
+so that over time you are
+
+131
+00:06:07,520 --> 00:06:10,280
+less likely to take
+actions randomly and
+
+132
+00:06:10,280 --> 00:06:11,960
+more likely to use
+
+133
+00:06:11,960 --> 00:06:14,015
+your improving estimates of
+
+134
+00:06:14,015 --> 00:06:16,970
+the Q-function to
+pick good actions.
+
+135
+00:06:16,970 --> 00:06:20,795
+For example, in the
+lunar lander exercise,
+
+136
+00:06:20,795 --> 00:06:23,405
+you might start off with
+Epsilon very, very high,
+
+137
+00:06:23,405 --> 00:06:26,120
+maybe even Epsilon equals 1.0.
+
+138
+00:06:26,120 --> 00:06:27,890
+You're just picking
+actions completely at
+
+139
+00:06:27,890 --> 00:06:29,660
+random initially and then
+
+140
+00:06:29,660 --> 00:06:34,380
+gradually decrease it all
+the way down to say 0.01,
+
+141
+00:06:34,380 --> 00:06:36,095
+so that eventually you're
+
+142
+00:06:36,095 --> 00:06:38,600
+taking greedy actions
+99 percent of
+
+143
+00:06:38,600 --> 00:06:40,400
+the time and acting
+
+144
+00:06:40,400 --> 00:06:43,775
+randomly only a very small
+one percent of the time.
+
+145
+00:06:43,775 --> 00:06:46,400
+If this seems complicated,
+don't worry about it.
+
+146
+00:06:46,400 --> 00:06:47,705
+We'll provide the code
+
+147
+00:06:47,705 --> 00:06:52,765
+in the Jupiter lab that
+shows you how to do this.
+
+148
+00:06:52,765 --> 00:06:54,410
+If you were to implement
+
+149
+00:06:54,410 --> 00:06:56,975
+the algorithm as we've
+described it with
+
+150
+00:06:56,975 --> 00:06:59,720
+the more efficient neural
+network architecture and with
+
+151
+00:06:59,720 --> 00:07:02,765
+an Epsilon-greedy
+exploration policy,
+
+152
+00:07:02,765 --> 00:07:06,280
+you find that they work pretty
+well on the lunar lander.
+
+153
+00:07:06,280 --> 00:07:08,990
+One of the things
+that I've noticed for
+
+154
+00:07:08,990 --> 00:07:10,580
+reinforcement
+learning algorithm is
+
+155
+00:07:10,580 --> 00:07:12,965
+that compared to
+supervised learning,
+
+156
+00:07:12,965 --> 00:07:14,720
+they're more finicky in terms
+
+157
+00:07:14,720 --> 00:07:16,910
+of the choice of
+hyper parameters.
+
+158
+00:07:16,910 --> 00:07:19,610
+For example, in
+supervised learning,
+
+159
+00:07:19,610 --> 00:07:22,910
+if you set the learning rate
+a little bit too small,
+
+160
+00:07:22,910 --> 00:07:25,475
+then maybe the algorithm
+will take longer to learn.
+
+161
+00:07:25,475 --> 00:07:27,410
+Maybe it takes three
+times as long to train,
+
+162
+00:07:27,410 --> 00:07:30,680
+which is annoying, but
+maybe not that bad.
+
+163
+00:07:30,680 --> 00:07:32,870
+Whereas in
+reinforcement learning,
+
+164
+00:07:32,870 --> 00:07:34,905
+find that if you set
+
+165
+00:07:34,905 --> 00:07:37,340
+the value of Epsilon
+not quite as well,
+
+166
+00:07:37,340 --> 00:07:39,620
+or set other parameters
+not quite as well,
+
+167
+00:07:39,620 --> 00:07:42,290
+it doesn't take three
+times as long to learn.
+
+168
+00:07:42,290 --> 00:07:46,070
+It may take 10 times or a
+100 times as long to learn.
+
+169
+00:07:46,070 --> 00:07:48,440
+Reinforcement
+learning algorithms,
+
+170
+00:07:48,440 --> 00:07:49,340
+I think because they're are
+
+171
+00:07:49,340 --> 00:07:52,190
+less mature than supervised
+learning algorithms,
+
+172
+00:07:52,190 --> 00:07:53,690
+are much more finicky to
+
+173
+00:07:53,690 --> 00:07:55,955
+little choices of
+parameters like that,
+
+174
+00:07:55,955 --> 00:08:01,040
+and it actually sometimes is
+frankly more frustrating to
+
+175
+00:08:01,040 --> 00:08:02,240
+tune these parameters with
+
+176
+00:08:02,240 --> 00:08:04,310
+reinforcement learning
+algorithm compared
+
+177
+00:08:04,310 --> 00:08:06,720
+to a supervised
+learning algorithm.
+
+178
+00:08:06,720 --> 00:08:08,840
+But again, if you're
+worried about
+
+179
+00:08:08,840 --> 00:08:11,315
+the practice lab, the
+program exercise,
+
+180
+00:08:11,315 --> 00:08:12,860
+we'll give you a sense of
+
+181
+00:08:12,860 --> 00:08:15,590
+good parameters to use
+in the program exercise
+
+182
+00:08:15,590 --> 00:08:17,240
+so that you should
+be able to do that
+
+183
+00:08:17,240 --> 00:08:19,970
+and successfully learn
+the lunar lander,
+
+184
+00:08:19,970 --> 00:08:22,190
+hopefully without
+too many problems.
+
+185
+00:08:22,190 --> 00:08:24,605
+In the next optional video,
+
+186
+00:08:24,605 --> 00:08:27,995
+I want us to drive a couple
+more algorithm refinements,
+
+187
+00:08:27,995 --> 00:08:32,045
+mini batching, and also
+using soft updates.
+
+188
+00:08:32,045 --> 00:08:34,475
+Even without these
+additional refinements,
+
+189
+00:08:34,475 --> 00:08:36,170
+the algorithm will work okay,
+
+190
+00:08:36,170 --> 00:08:38,270
+but these are additional
+refinements that make
+
+191
+00:08:38,270 --> 00:08:40,810
+the algorithm run much faster.
+
+192
+00:08:40,810 --> 00:08:43,350
+It's okay if you
+skip this video,
+
+193
+00:08:43,350 --> 00:08:45,080
+we've provided
+everything you need in
+
+194
+00:08:45,080 --> 00:08:48,080
+the practice lab to hopefully
+successfully complete it.
+
+195
+00:08:48,080 --> 00:08:50,390
+But if you're interested
+in learning about more of
+
+196
+00:08:50,390 --> 00:08:51,650
+these details of two
+
+197
+00:08:51,650 --> 00:08:53,375
+named reinforcement
+learning algorithms,
+
+198
+00:08:53,375 --> 00:08:56,585
+then come with me and let's
+see in the next video,
+
+199
+00:08:56,585 --> 00:08:59,970

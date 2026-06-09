@@ -1,0 +1,359 @@
+1
+00:00:01,490 --> 00:00:04,830
+Welcome to this third
+and final course of
+
+2
+00:00:04,830 --> 00:00:07,695
+this specialization on
+unsupervised learning,
+
+3
+00:00:07,695 --> 00:00:10,515
+recommender systems, and
+reinforcement learning.
+
+4
+00:00:10,515 --> 00:00:12,915
+Whereas in the first two courses,
+
+5
+00:00:12,915 --> 00:00:15,675
+we spent a lot of time
+on supervised learning,
+
+6
+00:00:15,675 --> 00:00:17,625
+in this third and final course,
+
+7
+00:00:17,625 --> 00:00:19,740
+we'll talk about a new
+set of techniques that
+
+8
+00:00:19,740 --> 00:00:22,920
+goes beyond supervised
+learning and we'll
+
+9
+00:00:22,920 --> 00:00:24,450
+give you an extra set of
+
+10
+00:00:24,450 --> 00:00:27,360
+powerful tools that I
+hope you enjoy adding to
+
+11
+00:00:27,360 --> 00:00:29,670
+your two sets and
+by the time you
+
+12
+00:00:29,670 --> 00:00:32,455
+finish this course and
+finish this specialization,
+
+13
+00:00:32,455 --> 00:00:34,340
+I think you'll be
+well on your way to
+
+14
+00:00:34,340 --> 00:00:36,410
+being an expert in
+machine learning.
+
+15
+00:00:36,410 --> 00:00:38,780
+Let's take a look.
+This week we'll
+
+16
+00:00:38,780 --> 00:00:41,195
+start with supervised learning.
+
+17
+00:00:41,195 --> 00:00:44,600
+In particular, you'll learn
+about clustering algorithms,
+
+18
+00:00:44,600 --> 00:00:48,904
+which is a way of grouping
+data into clusters,
+
+19
+00:00:48,904 --> 00:00:51,035
+as well as anomaly detection.
+
+20
+00:00:51,035 --> 00:00:52,490
+Both of these are
+techniques used
+
+21
+00:00:52,490 --> 00:00:53,840
+by many companies today,
+
+22
+00:00:53,840 --> 00:00:57,235
+in important commercial
+applications.
+
+23
+00:00:57,235 --> 00:00:58,835
+By the end of this week,
+
+24
+00:00:58,835 --> 00:01:01,295
+you know how these
+algorithms work
+
+25
+00:01:01,295 --> 00:01:04,190
+and be able to get them to
+work with yourself as well.
+
+26
+00:01:04,190 --> 00:01:06,440
+In the second week,
+
+27
+00:01:06,440 --> 00:01:09,320
+you will learn about
+recommender systems.
+
+28
+00:01:09,320 --> 00:01:10,775
+When you go to
+
+29
+00:01:10,775 --> 00:01:14,745
+a online shopping websites or
+a video streaming website,
+
+30
+00:01:14,745 --> 00:01:18,490
+how does it recommend
+products or movies to you?
+
+31
+00:01:18,490 --> 00:01:20,680
+Recommender systems is one of
+
+32
+00:01:20,680 --> 00:01:22,885
+the most commercially important
+
+33
+00:01:22,885 --> 00:01:24,580
+machine learning technologies,
+
+34
+00:01:24,580 --> 00:01:27,115
+is moving many
+billions of dollars
+
+35
+00:01:27,115 --> 00:01:30,685
+worth of value or products
+or other things around,
+
+36
+00:01:30,685 --> 00:01:32,980
+is one of the technologies
+that receives
+
+37
+00:01:32,980 --> 00:01:36,025
+surprisingly little
+attention from academia,
+
+38
+00:01:36,025 --> 00:01:37,740
+despite how important it is.
+
+39
+00:01:37,740 --> 00:01:38,950
+But in the second week,
+
+40
+00:01:38,950 --> 00:01:41,470
+I hope you learn
+how these systems
+
+41
+00:01:41,470 --> 00:01:44,855
+work and be able to
+implement one for yourself.
+
+42
+00:01:44,855 --> 00:01:49,465
+If you are curious about how
+online ads systems work,
+
+43
+00:01:49,465 --> 00:01:51,685
+the description of
+recommender systems
+
+44
+00:01:51,685 --> 00:01:53,650
+will also give you
+a sense for how
+
+45
+00:01:53,650 --> 00:01:56,545
+those large online
+ad tech companies
+
+46
+00:01:56,545 --> 00:01:59,300
+decide what ads to show you.
+
+47
+00:01:59,300 --> 00:02:03,470
+In the third and final
+week of this course,
+
+48
+00:02:03,470 --> 00:02:06,170
+you'll learn about
+reinforcement learning.
+
+49
+00:02:06,170 --> 00:02:07,850
+You may have read in the news
+
+50
+00:02:07,850 --> 00:02:09,980
+about reinforcement
+learning being
+
+51
+00:02:09,980 --> 00:02:11,870
+great at playing a variety of
+
+52
+00:02:11,870 --> 00:02:14,305
+video games, even
+outperforming humans.
+
+53
+00:02:14,305 --> 00:02:17,590
+I've also used reinforcement
+learning many times myself
+
+54
+00:02:17,590 --> 00:02:21,110
+to control a variety
+of different robots.
+
+55
+00:02:21,110 --> 00:02:23,420
+Even though reinforcement
+learning is
+
+56
+00:02:23,420 --> 00:02:27,185
+a new and emerging
+technology, that is,
+
+57
+00:02:27,185 --> 00:02:29,300
+the number of commercial
+applications of
+
+58
+00:02:29,300 --> 00:02:31,310
+reinforcement learning
+is not nearly as
+
+59
+00:02:31,310 --> 00:02:33,200
+large as the other techniques
+
+60
+00:02:33,200 --> 00:02:36,750
+covered in this week or in the
+previous two courses of this
+
+61
+00:02:36,750 --> 00:02:40,835
+specialization, is a technology
+that is exciting and is
+
+62
+00:02:40,835 --> 00:02:42,770
+opening up a new frontier to
+
+63
+00:02:42,770 --> 00:02:45,610
+what you can get learning
+algorithms to do.
+
+64
+00:02:45,610 --> 00:02:47,960
+In the final week,
+
+65
+00:02:47,960 --> 00:02:51,650
+you implement reinforcement
+learning yourself and
+
+66
+00:02:51,650 --> 00:02:56,230
+use it to land a
+simulated moon lander.
+
+67
+00:02:56,230 --> 00:02:58,520
+When you see that working
+
+68
+00:02:58,520 --> 00:03:00,260
+for yourself with your own code,
+
+69
+00:03:00,260 --> 00:03:01,925
+later in this course,
+
+70
+00:03:01,925 --> 00:03:04,100
+I think you'll be
+impressed by what
+
+71
+00:03:04,100 --> 00:03:07,285
+you can get reinforcement
+learning to do.
+
+72
+00:03:07,285 --> 00:03:09,860
+I'm really excited
+to be here with you
+
+73
+00:03:09,860 --> 00:03:11,885
+to talk about
+unsupervised learning,
+
+74
+00:03:11,885 --> 00:03:14,905
+recommender systems, and
+reinforcement learning.
+
+75
+00:03:14,905 --> 00:03:18,290
+Let's go on to the next
+video where you learn about
+
+76
+00:03:18,290 --> 00:03:21,035
+an important unsupervised
+learning algorithm
+
+77
+00:03:21,035 --> 00:03:23,700

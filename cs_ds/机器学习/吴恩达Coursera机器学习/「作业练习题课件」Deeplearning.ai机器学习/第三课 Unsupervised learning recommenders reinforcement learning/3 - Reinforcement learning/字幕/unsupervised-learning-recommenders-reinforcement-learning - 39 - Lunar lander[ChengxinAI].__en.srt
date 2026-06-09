@@ -1,0 +1,407 @@
+1
+00:00:02,029 --> 00:00:06,890
+The lunar lander lets you land
+a simulated vehicle on the moon.
+
+2
+00:00:06,890 --> 00:00:11,160
+It's like a fun little video game that's
+been used by a lot of reinforcement
+
+3
+00:00:11,160 --> 00:00:12,580
+learning researchers.
+
+4
+00:00:12,580 --> 00:00:14,490
+Let's take a look at what it is.
+
+5
+00:00:14,490 --> 00:00:16,999
+In this application you're in command
+
+6
+00:00:16,999 --> 00:00:21,500
+of a lunar lander that is rapidly
+approaching the surface of the moon.
+
+7
+00:00:21,500 --> 00:00:26,212
+And your job is the fire thrusters
+at the appropriate times to land it
+
+8
+00:00:26,212 --> 00:00:28,130
+safely on the landing pad.
+
+9
+00:00:28,130 --> 00:00:30,060
+To give you a sense of what it looks like.
+
+10
+00:00:30,060 --> 00:00:33,397
+This is the lunar lander
+landing successfully and
+
+11
+00:00:33,397 --> 00:00:36,813
+it's firing thrusters downward and
+to the left and
+
+12
+00:00:36,813 --> 00:00:41,200
+right to position itself to land
+between these two yellow flags.
+
+13
+00:00:41,200 --> 00:00:46,188
+Or if the reinforcement landing algorithm
+policy does not do well then this is what
+
+14
+00:00:46,188 --> 00:00:49,950
+it might look like where the lander
+unfortunately has trashed
+
+15
+00:00:49,950 --> 00:00:51,640
+on the surface of the moon.
+
+16
+00:00:51,640 --> 00:00:58,080
+In this application you have four
+possible actions on every time step.
+
+17
+00:00:58,080 --> 00:01:02,305
+You could either do nothing,
+in which case the forces of inertia and
+
+18
+00:01:02,305 --> 00:01:05,440
+gravity pull you towards
+the surface of the moon.
+
+19
+00:01:05,440 --> 00:01:10,947
+Or you can fire a left thruster when you
+see a little red dot come out on the left,
+
+20
+00:01:10,947 --> 00:01:12,955
+that's firing the left.
+
+21
+00:01:12,955 --> 00:01:16,904
+They'll tend to push the lunar
+lander to the right or
+
+22
+00:01:16,904 --> 00:01:22,135
+you can fire the main engine that's
+thrusting down the bottom here.
+
+23
+00:01:22,135 --> 00:01:25,155
+Or you can fire the right thruster and
+
+24
+00:01:25,155 --> 00:01:30,709
+that's firing the right thruster
+which will push you to the left and
+
+25
+00:01:30,709 --> 00:01:34,730
+your job is to keep on
+picking actions over time.
+
+26
+00:01:34,730 --> 00:01:40,191
+So it's the lunar lander safely between
+these two flags here on the landing pad.
+
+27
+00:01:40,191 --> 00:01:44,942
+In order to give the actions a shorter
+name I'm sometimes going to call
+
+28
+00:01:44,942 --> 00:01:50,339
+the actions nothing meaning do nothing or
+left meaning farther left thruster or
+
+29
+00:01:50,339 --> 00:01:53,990
+main meaning fire the main
+engine downward or right.
+
+30
+00:01:53,990 --> 00:01:56,120
+So I'm going to call
+the actions nothing left.
+
+31
+00:01:56,120 --> 00:01:59,190
+Maine and write for
+short later in this video.
+
+32
+00:01:59,190 --> 00:02:01,360
+How about the states face of this?
+
+33
+00:02:01,360 --> 00:02:06,500
+Mtp the states are its position X and Y.
+
+34
+00:02:06,500 --> 00:02:10,974
+So how far to the left or right and
+how high up is it as well as
+
+35
+00:02:10,974 --> 00:02:15,359
+velocity x.y how fast is it
+moving in the horizontal and
+
+36
+00:02:15,359 --> 00:02:18,940
+vertical directions and
+then also is angle.
+
+37
+00:02:18,940 --> 00:02:23,420
+So how far is the lunar lander tilted
+to the left or tilted to the right?
+
+38
+00:02:23,420 --> 00:02:25,823
+Is angular velocity fated not.
+
+39
+00:02:25,823 --> 00:02:30,101
+And then finally, because a small
+difference in positioning makes a big
+
+40
+00:02:30,101 --> 00:02:32,713
+difference in whether or not it's landed.
+
+41
+00:02:32,713 --> 00:02:39,313
+We're going to have two other variables in
+the state vector which we call l and r.
+
+42
+00:02:39,313 --> 00:02:43,963
+Which corresponds to whether the left
+leg is grounded, meaning whether or not
+
+43
+00:02:43,963 --> 00:02:48,613
+the left leg is sitting on the ground as
+well as r which corresponds to whether or
+
+44
+00:02:48,613 --> 00:02:51,176
+not the right leg is
+sitting on the ground.
+
+45
+00:02:51,176 --> 00:02:55,062
+So whereas xy x.theta
+theta.our numbers l and
+
+46
+00:02:55,062 --> 00:02:59,628
+r will be binary valued and
+can take on only values zero or
+
+47
+00:02:59,628 --> 00:03:06,100
+one depending on whether the left and
+right legs are touching the ground.
+
+48
+00:03:06,100 --> 00:03:08,980
+Finally his reward function for
+the lunar lander.
+
+49
+00:03:08,980 --> 00:03:14,279
+If it manages to get to the landing pad,
+didn't receive the reward between 100 and
+
+50
+00:03:14,279 --> 00:03:19,590
+140 depending on how well it's flown when
+gotten to the center of the landing pad.
+
+51
+00:03:19,590 --> 00:03:24,572
+We also give it an additional reward for
+moving toward or away from the pad so
+
+52
+00:03:24,572 --> 00:03:29,555
+it moves closer to the pad it receives
+a positive reward and it moves away and
+
+53
+00:03:29,555 --> 00:03:30,521
+drifts away.
+
+54
+00:03:30,521 --> 00:03:32,720
+It receives a negative reward.
+
+55
+00:03:32,720 --> 00:03:36,766
+If it crashes it gets a large -100 reward,
+
+56
+00:03:36,766 --> 00:03:40,931
+it achieves a soft landing,
+that is a landing.
+
+57
+00:03:40,931 --> 00:03:44,730
+There's another crash,
+it gets a +100 reward for each leg,
+
+58
+00:03:44,730 --> 00:03:47,790
+the left leg or
+the right link that it gets grounded.
+
+59
+00:03:47,790 --> 00:03:52,628
+It receives a +10 reward and
+finally to encourage it not to waste too
+
+60
+00:03:52,628 --> 00:03:56,242
+much fuel and
+fire thrusters aren't necessarily.
+
+61
+00:03:56,242 --> 00:04:01,366
+Every time it fires the main engine
+we give it a -0.3 rewards and
+
+62
+00:04:01,366 --> 00:04:08,070
+every time it fires the left or the right
+side thrusters we give it a -0.03 reward.
+
+63
+00:04:08,070 --> 00:04:12,760
+Notice that this is a moderately
+complex reward function.
+
+64
+00:04:12,760 --> 00:04:17,713
+The designers of the lunar lander
+application actually put some thought into
+
+65
+00:04:17,713 --> 00:04:22,310
+exactly what behavior you want and
+codified it in the reward function.
+
+66
+00:04:22,310 --> 00:04:25,457
+To incentivize more of
+the behaviors you want and
+
+67
+00:04:25,457 --> 00:04:29,790
+fear of the behaviors like
+crashing that you don't want.
+
+68
+00:04:29,790 --> 00:04:34,344
+You find when you're building your own
+reinforcement learning application
+
+69
+00:04:34,344 --> 00:04:38,894
+usually takes some thought to specify
+exactly what you want or don't want and
+
+70
+00:04:38,894 --> 00:04:41,230
+to codify that in the reward function.
+
+71
+00:04:41,230 --> 00:04:46,151
+But specify the reward function should
+still turn out to be much easier to
+
+72
+00:04:46,151 --> 00:04:50,530
+specify the exact right action
+to take from every single state.
+
+73
+00:04:50,530 --> 00:04:54,220
+Which is much harder for this and many
+other reinforcement learning applications.
+
+74
+00:04:54,220 --> 00:04:58,890
+So the lunar lander problem is as follows.
+
+75
+00:04:58,890 --> 00:05:02,030
+Our goal is to learn a policy pi.
+
+76
+00:05:02,030 --> 00:05:06,734
+That when given a state S as written
+
+77
+00:05:06,734 --> 00:05:12,590
+here picks an action a equals pi of S.
+
+78
+00:05:12,590 --> 00:05:17,720
+So as to maximize the return
+the sum of discounted rewards.
+
+79
+00:05:17,720 --> 00:05:22,510
+And usually for the lunar lander would
+use a fairly large value for gamma ra.
+
+80
+00:05:22,510 --> 00:05:27,470
+In fact for the would use the value
+of camera that's equal to 0.985 so
+
+81
+00:05:27,470 --> 00:05:29,780
+pretty close to one.
+
+82
+00:05:29,780 --> 00:05:34,710
+And if you can learn a policy pi that
+does this then you successfully land
+
+83
+00:05:34,710 --> 00:05:39,640
+this lunar lander exciting application and
+we're now finally ready to
+
+84
+00:05:39,640 --> 00:05:44,571
+develop a learning algorithm which
+will turn out to use deep learning or
+
+85
+00:05:44,571 --> 00:05:49,120
+neural networks to come up with
+a policy to land the lunar lander.
+
+86
+00:05:49,120 --> 00:05:53,750
+Let's go into the next video where we

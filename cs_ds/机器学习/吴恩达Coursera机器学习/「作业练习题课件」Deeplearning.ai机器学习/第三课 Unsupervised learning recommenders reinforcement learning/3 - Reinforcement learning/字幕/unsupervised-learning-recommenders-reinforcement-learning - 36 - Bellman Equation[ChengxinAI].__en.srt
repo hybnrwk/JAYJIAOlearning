@@ -1,0 +1,1161 @@
+1
+00:00:01,010 --> 00:00:03,825
+Let me summarize where we are.
+
+2
+00:00:03,825 --> 00:00:05,610
+If you can compute
+
+3
+00:00:05,610 --> 00:00:08,310
+the state action value
+function Q of S,
+
+4
+00:00:08,310 --> 00:00:10,290
+A, then it gives you a way to
+
+5
+00:00:10,290 --> 00:00:12,540
+pick a good action
+from every scene.
+
+6
+00:00:12,540 --> 00:00:14,280
+Just pick the action A,
+
+7
+00:00:14,280 --> 00:00:17,575
+that gives you the largest
+value of Q of S,A.
+
+8
+00:00:17,575 --> 00:00:19,650
+The question is,
+how do you compute
+
+9
+00:00:19,650 --> 00:00:21,720
+these values Q of S,A?
+
+10
+00:00:21,720 --> 00:00:25,020
+In reinforcement learning,
+there's a key equation called
+
+11
+00:00:25,020 --> 00:00:27,420
+the Bellman equation
+that will help us to
+
+12
+00:00:27,420 --> 00:00:30,090
+compute the state
+action value function.
+
+13
+00:00:30,090 --> 00:00:33,145
+Let's take a look at
+what is this equation.
+
+14
+00:00:33,145 --> 00:00:38,120
+As a reminder, this is the
+definition of Q of S, A.
+
+15
+00:00:38,120 --> 00:00:40,025
+It's return if we
+start in state S,
+
+16
+00:00:40,025 --> 00:00:41,270
+take the action a once and they
+
+17
+00:00:41,270 --> 00:00:43,070
+behave optimally after that.
+
+18
+00:00:43,070 --> 00:00:45,844
+In order to describe
+the Bellman equation,
+
+19
+00:00:45,844 --> 00:00:48,214
+I'm going to use the
+following notation.
+
+20
+00:00:48,214 --> 00:00:51,920
+I'm going to use S to
+denote the current state.
+
+21
+00:00:51,920 --> 00:00:54,890
+Next, I'm going to use R of S
+
+22
+00:00:54,890 --> 00:00:58,640
+to denote the rewards
+of the current state.
+
+23
+00:00:58,640 --> 00:01:02,150
+For our little MDP example,
+
+24
+00:01:02,150 --> 00:01:06,040
+we will have that r
+of one State1 is 100.
+
+25
+00:01:06,040 --> 00:01:09,105
+The reward of State
+2 is 0, and so on.
+
+26
+00:01:09,105 --> 00:01:12,895
+The reward of State 6 is 40.
+
+27
+00:01:12,895 --> 00:01:14,810
+I'm going to use
+
+28
+00:01:14,810 --> 00:01:18,245
+the alphabet A to denote
+the current action,
+
+29
+00:01:18,245 --> 00:01:19,730
+the action that you take in
+
+30
+00:01:19,730 --> 00:01:23,465
+the state S. After you
+take the action a,
+
+31
+00:01:23,465 --> 00:01:25,505
+you get to some new state.
+
+32
+00:01:25,505 --> 00:01:27,170
+For example, if you're in State
+
+33
+00:01:27,170 --> 00:01:29,315
+4 and you take the action left,
+
+34
+00:01:29,315 --> 00:01:32,440
+then you get to State 3.
+
+35
+00:01:32,440 --> 00:01:35,420
+I'm going to use
+S prime to denote
+
+36
+00:01:35,420 --> 00:01:38,585
+the state you get to after
+taking that action a
+
+37
+00:01:38,585 --> 00:01:40,525
+from the current state S.
+
+38
+00:01:40,525 --> 00:01:42,710
+I'm also going to use A prime to
+
+39
+00:01:42,710 --> 00:01:48,035
+denote the action that you
+might take in state S prime,
+
+40
+00:01:48,035 --> 00:01:49,765
+the new steady you got to.
+
+41
+00:01:49,765 --> 00:01:51,785
+The notation
+convention, by the way,
+
+42
+00:01:51,785 --> 00:01:55,625
+is that S,A correspond to the
+current state and action.
+
+43
+00:01:55,625 --> 00:01:57,485
+When we add the prime,
+
+44
+00:01:57,485 --> 00:01:58,985
+that's the next state,
+
+45
+00:01:58,985 --> 00:02:00,110
+then the next action.
+
+46
+00:02:00,110 --> 00:02:02,975
+The Bellman equation
+is the following.
+
+47
+00:02:02,975 --> 00:02:06,575
+It says that Q of S,A,
+
+48
+00:02:06,575 --> 00:02:10,310
+that is the return
+under this set of
+
+49
+00:02:10,310 --> 00:02:15,290
+assumptions that's
+equal to r of S,
+
+50
+00:02:15,290 --> 00:02:19,310
+says reward you get for
+being in that state plus
+
+51
+00:02:19,310 --> 00:02:23,135
+the discount factor Gamma times
+
+52
+00:02:23,135 --> 00:02:25,715
+max over all possible actions,
+
+53
+00:02:25,715 --> 00:02:29,575
+a prime of q of S prime,
+
+54
+00:02:29,575 --> 00:02:31,360
+the new state you just got to,
+
+55
+00:02:31,360 --> 00:02:34,190
+and then a prime.
+
+56
+00:02:34,190 --> 00:02:36,735
+There's a lot going
+on in this equation.
+
+57
+00:02:36,735 --> 00:02:39,375
+Let's first take a
+look at some examples.
+
+58
+00:02:39,375 --> 00:02:40,780
+We'll come back to see why
+
+59
+00:02:40,780 --> 00:02:42,665
+this equation might make sense.
+
+60
+00:02:42,665 --> 00:02:44,355
+Let's look at an example.
+
+61
+00:02:44,355 --> 00:02:49,560
+Let's look at Q of
+State 2 and action.
+
+62
+00:02:49,560 --> 00:02:51,400
+Apply Bellman Equation to
+
+63
+00:02:51,400 --> 00:02:54,830
+this to see what
+value it gives us.
+
+64
+00:02:54,830 --> 00:02:58,150
+If the current state is state
+
+65
+00:02:58,150 --> 00:03:01,960
+two and that the
+action is to go right,
+
+66
+00:03:01,960 --> 00:03:03,985
+then the next day you get to,
+
+67
+00:03:03,985 --> 00:03:07,750
+after going write S prime
+would be the State 3.
+
+68
+00:03:07,750 --> 00:03:10,900
+The Bellman equation
+says Q of 2,
+
+69
+00:03:10,900 --> 00:03:16,920
+right is R of S. This R State 2,
+
+70
+00:03:16,920 --> 00:03:18,660
+which is just the rewards
+
+71
+00:03:18,660 --> 00:03:22,880
+zero plus the discount
+factor Gamma,
+
+72
+00:03:22,880 --> 00:03:25,880
+which we set to 0.5
+in this example,
+
+73
+00:03:25,880 --> 00:03:34,415
+times max of the Q values in
+state S prime in State 3.
+
+74
+00:03:34,415 --> 00:03:40,435
+This is going to be the
+max of 25 and 6.25,
+
+75
+00:03:40,435 --> 00:03:42,935
+since this is max
+over a prime of
+
+76
+00:03:42,935 --> 00:03:45,920
+q of S prime comma a prime.
+
+77
+00:03:45,920 --> 00:03:50,120
+This is taking the
+larger of 25 or
+
+78
+00:03:50,120 --> 00:03:55,025
+6.25 because those are the
+two choices for State 3.
+
+79
+00:03:55,025 --> 00:04:01,445
+This turns out to be equal
+to zero plus 0.5 times 25,
+
+80
+00:04:01,445 --> 00:04:04,955
+which is equal to 12.5,
+
+81
+00:04:04,955 --> 00:04:09,820
+which fortunately is Q of two
+and then the action right.
+
+82
+00:04:09,820 --> 00:04:11,645
+Let's look at just
+one more example.
+
+83
+00:04:11,645 --> 00:04:15,080
+Let me take the
+State 4 and see what
+
+84
+00:04:15,080 --> 00:04:19,420
+is Q of State 4 if you
+decide to go left.
+
+85
+00:04:19,420 --> 00:04:21,300
+In this case, the
+current state is
+
+86
+00:04:21,300 --> 00:04:24,480
+four current action
+is to go left.
+
+87
+00:04:24,480 --> 00:04:27,630
+The next state, if you can
+start from four going left.
+
+88
+00:04:27,630 --> 00:04:30,045
+You end up also at State 3.
+
+89
+00:04:30,045 --> 00:04:33,180
+Let us prime this three
+again, the Bellman Equation,
+
+90
+00:04:33,180 --> 00:04:38,250
+we'll say this is equal to
+R of S. Our State four,
+
+91
+00:04:38,250 --> 00:04:42,920
+which is zero plus 0.5
+the discount factor
+
+92
+00:04:42,920 --> 00:04:47,855
+Gamma of max over a
+prime of q of S prime.
+
+93
+00:04:47,855 --> 00:04:51,665
+That is the State 3
+again, comma a prime.
+
+94
+00:04:51,665 --> 00:04:55,400
+Once again, the Q values
+for State 3 are 25 and
+
+95
+00:04:55,400 --> 00:04:59,805
+6.25 and the larger
+of these is 25.
+
+96
+00:04:59,805 --> 00:05:07,295
+This works out to be our
+40 plus 0.5 times 25,
+
+97
+00:05:07,295 --> 00:05:10,465
+which is again equal to 12.5.
+
+98
+00:05:10,465 --> 00:05:13,500
+That's why q of four
+with the action
+
+99
+00:05:13,500 --> 00:05:17,075
+left is also equal to 12.5,
+
+100
+00:05:17,075 --> 00:05:20,300
+just one note, if you're
+in a terminal state,
+
+101
+00:05:20,300 --> 00:05:25,490
+then Bellman Equation
+simplifies to q of SA equals to
+
+102
+00:05:25,490 --> 00:05:26,930
+r of S because there's
+
+103
+00:05:26,930 --> 00:05:31,075
+no state S prime and so that
+second term would go away.
+
+104
+00:05:31,075 --> 00:05:32,710
+Which is why Q
+
+105
+00:05:32,710 --> 00:05:35,290
+of S,A in the terminal
+states is just 100,
+
+106
+00:05:35,290 --> 00:05:37,085
+100 or 40 40.
+
+107
+00:05:37,085 --> 00:05:38,780
+If you wish feel free to pause
+
+108
+00:05:38,780 --> 00:05:41,315
+the video and apply the
+Bellman Equation to
+
+109
+00:05:41,315 --> 00:05:43,820
+any other state action in
+
+110
+00:05:43,820 --> 00:05:47,635
+this MDP and check for yourself
+if this math works out.
+
+111
+00:05:47,635 --> 00:05:54,000
+Just to recap, this is how
+we had define Q of S,A.
+
+112
+00:05:54,000 --> 00:05:57,470
+We saw earlier that the
+best possible return from
+
+113
+00:05:57,470 --> 00:06:01,705
+any state S is max
+over a Q of S,A.
+
+114
+00:06:01,705 --> 00:06:05,480
+In fact, just to rename SNA,
+
+115
+00:06:05,480 --> 00:06:07,580
+it turns out that the
+best possible return
+
+116
+00:06:07,580 --> 00:06:09,455
+from a state S prime,
+
+117
+00:06:09,455 --> 00:06:13,580
+is max over S prime of a prime.
+
+118
+00:06:13,580 --> 00:06:17,180
+I didn't really do anything
+other than rename S,
+
+119
+00:06:17,180 --> 00:06:18,660
+S prime and a to a prime.
+
+120
+00:06:18,660 --> 00:06:19,760
+But this will make some of
+
+121
+00:06:19,760 --> 00:06:22,055
+the intuitions a little
+bit easier later.
+
+122
+00:06:22,055 --> 00:06:23,795
+But for any state S prime,
+
+123
+00:06:23,795 --> 00:06:27,020
+like State 3, the best
+possible return from, say,
+
+124
+00:06:27,020 --> 00:06:28,655
+State 3 is the max over
+
+125
+00:06:28,655 --> 00:06:32,385
+all possible actions of
+Q of S prime E prime.
+
+126
+00:06:32,385 --> 00:06:36,020
+Here again is the
+Bellman equation.
+
+127
+00:06:36,020 --> 00:06:41,260
+The intuition that this
+captures is if you're starting
+
+128
+00:06:41,260 --> 00:06:43,990
+from state s and
+you're going to take
+
+129
+00:06:43,990 --> 00:06:46,865
+action a and then act
+optimally after that,
+
+130
+00:06:46,865 --> 00:06:48,880
+then you're going to see
+
+131
+00:06:48,880 --> 00:06:51,085
+some sequence of
+rewards over time.
+
+132
+00:06:51,085 --> 00:06:53,590
+In particular, the return will
+
+133
+00:06:53,590 --> 00:06:57,365
+be computed from the
+reward at the first step,
+
+134
+00:06:57,365 --> 00:07:01,235
+plus Gamma times reward
+at the second step
+
+135
+00:07:01,235 --> 00:07:03,430
+plus Gamma squared
+times reward at
+
+136
+00:07:03,430 --> 00:07:06,025
+the third step, and so on.
+
+137
+00:07:06,025 --> 00:07:08,695
+Plus dot, dot, dot until you
+get to the terminal state.
+
+138
+00:07:08,695 --> 00:07:14,210
+What Bellman equation says
+is this sequence of rewards,
+
+139
+00:07:14,210 --> 00:07:15,910
+what the discount factor is,
+
+140
+00:07:15,910 --> 00:07:18,880
+can be broken down
+into two components.
+
+141
+00:07:18,880 --> 00:07:21,220
+First, this R of s,
+
+142
+00:07:21,220 --> 00:07:25,195
+that's the reward
+you get right away.
+
+143
+00:07:25,195 --> 00:07:27,414
+In the reinforcement
+learning literature,
+
+144
+00:07:27,414 --> 00:07:30,860
+this is sometimes also
+called the immediate reward,
+
+145
+00:07:30,860 --> 00:07:32,995
+but that's what R_1 is.
+
+146
+00:07:32,995 --> 00:07:36,070
+It's the reward you get for
+starting out in some state
+
+147
+00:07:36,070 --> 00:07:39,640
+s. The second term
+then is the following;
+
+148
+00:07:39,640 --> 00:07:43,855
+after you start in state
+s and take action a,
+
+149
+00:07:43,855 --> 00:07:47,200
+you get to some
+new state s prime.
+
+150
+00:07:47,200 --> 00:07:48,995
+The definition of Q of s,
+
+151
+00:07:48,995 --> 00:07:52,840
+a assumes we're going to
+behave optimally after that.
+
+152
+00:07:52,840 --> 00:07:54,490
+After we get to s prime,
+
+153
+00:07:54,490 --> 00:07:56,560
+we are going to behave
+optimally and get
+
+154
+00:07:56,560 --> 00:08:00,190
+the best possible return
+from the state s prime.
+
+155
+00:08:00,190 --> 00:08:05,660
+What this is, max of a prime
+of Q of s prime a prime,
+
+156
+00:08:05,660 --> 00:08:09,895
+this is the return from
+behaving optimally,
+
+157
+00:08:09,895 --> 00:08:13,465
+starting from the state s prime.
+
+158
+00:08:13,465 --> 00:08:17,080
+That's exactly what we
+had written up here,
+
+159
+00:08:17,080 --> 00:08:19,115
+is the best possible return
+
+160
+00:08:19,115 --> 00:08:21,580
+for when you start
+from state s prime.
+
+161
+00:08:21,580 --> 00:08:24,880
+Another way of phrasing this is
+
+162
+00:08:24,880 --> 00:08:30,880
+this total return down here
+is also equal to R_1 plus,
+
+163
+00:08:30,880 --> 00:08:33,230
+and then we're going to
+factor out Gamma in the map,
+
+164
+00:08:33,230 --> 00:08:36,505
+is Gamma times R_2 plus,
+
+165
+00:08:36,505 --> 00:08:40,135
+and instead of Gamma
+squared is just Gamma times
+
+166
+00:08:40,135 --> 00:08:45,130
+R_3 plus Gamma squared
+times R_4 plus dot dot dot.
+
+167
+00:08:45,130 --> 00:08:49,040
+Notice that if you were
+starting from state s prime,
+
+168
+00:08:49,040 --> 00:08:53,065
+the sequence of rewards
+you get will be R_2,
+
+169
+00:08:53,065 --> 00:08:56,695
+R_3, then R_4, and so on.
+
+170
+00:08:56,695 --> 00:09:00,880
+That's why this expression here,
+
+171
+00:09:00,880 --> 00:09:03,710
+that's the total return
+
+172
+00:09:03,710 --> 00:09:06,785
+if you were to start
+from state s prime.
+
+173
+00:09:06,785 --> 00:09:09,305
+If you were to behave optimally,
+
+174
+00:09:09,305 --> 00:09:11,440
+then this expression should be
+
+175
+00:09:11,440 --> 00:09:15,820
+the best possible return for
+starting from state s prime,
+
+176
+00:09:15,820 --> 00:09:18,310
+which is why this sequence of
+
+177
+00:09:18,310 --> 00:09:22,180
+discount rewards
+equals that max of
+
+178
+00:09:22,180 --> 00:09:25,390
+a prime of Q of s prime a
+prime and there were also
+
+179
+00:09:25,390 --> 00:09:29,455
+leftover with this extra
+discount factor Gamma there,
+
+180
+00:09:29,455 --> 00:09:31,360
+which is why Q of s,
+
+181
+00:09:31,360 --> 00:09:35,590
+a is also equal to this
+expression over here.
+
+182
+00:09:35,590 --> 00:09:38,590
+In case you think this
+is quite complicated and
+
+183
+00:09:38,590 --> 00:09:40,270
+you aren't following
+all the details,
+
+184
+00:09:40,270 --> 00:09:41,500
+don't worry about it.
+
+185
+00:09:41,500 --> 00:09:44,170
+So long as you apply
+this equation,
+
+186
+00:09:44,170 --> 00:09:46,475
+you will manage to get
+the right results.
+
+187
+00:09:46,475 --> 00:09:50,240
+But the high level intuition
+I hope you take away is that
+
+188
+00:09:50,240 --> 00:09:52,870
+the total return you get
+
+189
+00:09:52,870 --> 00:09:56,440
+in the reinforcement learning
+problem has two parts.
+
+190
+00:09:56,440 --> 00:10:01,075
+The first part is this reward
+that you get right away,
+
+191
+00:10:01,075 --> 00:10:03,190
+and then the second part is
+
+192
+00:10:03,190 --> 00:10:06,430
+Gamma times the return
+
+193
+00:10:06,430 --> 00:10:09,335
+you get starting from
+the next state s prime.
+
+194
+00:10:09,335 --> 00:10:12,050
+As these two
+components together,
+
+195
+00:10:12,050 --> 00:10:16,270
+R of s plus Gamma times the
+return from the next state,
+
+196
+00:10:16,270 --> 00:10:19,990
+that is equal to the
+total return from the
+
+197
+00:10:19,990 --> 00:10:21,775
+current state s. That
+
+198
+00:10:21,775 --> 00:10:24,365
+is the essence of the
+Bellman equation.
+
+199
+00:10:24,365 --> 00:10:27,500
+Just to relate this back
+to our earlier example,
+
+200
+00:10:27,500 --> 00:10:30,450
+Q of 4, left.
+
+201
+00:10:30,450 --> 00:10:32,260
+That's the total
+return for starting
+
+202
+00:10:32,260 --> 00:10:34,900
+State 4 and going left.
+
+203
+00:10:34,900 --> 00:10:38,195
+If you were to go left in State
+
+204
+00:10:38,195 --> 00:10:41,285
+4 the rewards you get
+are 0 in State 4,
+
+205
+00:10:41,285 --> 00:10:42,645
+0 in State 3,
+
+206
+00:10:42,645 --> 00:10:45,245
+0 in State 2, and then 100,
+
+207
+00:10:45,245 --> 00:10:47,870
+which is why the
+total return is this;
+
+208
+00:10:47,870 --> 00:10:52,360
+0.5 squared plus 0.5
+cubed, which was 12.5.
+
+209
+00:10:52,360 --> 00:10:54,180
+What Bellman equation
+is saying is
+
+210
+00:10:54,180 --> 00:10:56,435
+that we can break this
+up into two pieces.
+
+211
+00:10:56,435 --> 00:10:58,045
+There is this zero,
+
+212
+00:10:58,045 --> 00:11:00,940
+which is R of the state four,
+
+213
+00:11:00,940 --> 00:11:07,205
+and then plus 0.5 times
+this other sequence,
+
+214
+00:11:07,205 --> 00:11:14,240
+0 plus 0.50 plus 0.5
+squared times 100.
+
+215
+00:11:14,240 --> 00:11:17,405
+But if you look at
+what this sequence is,
+
+216
+00:11:17,405 --> 00:11:19,780
+this is really the
+optimal return from
+
+217
+00:11:19,780 --> 00:11:22,240
+the next state s
+prime that you got to
+
+218
+00:11:22,240 --> 00:11:25,430
+after taking the action
+left from state four.
+
+219
+00:11:25,430 --> 00:11:29,800
+That's why this is equal
+to the reward 4 plus
+
+220
+00:11:29,800 --> 00:11:34,745
+0.5 times the optimal
+return from State 3.
+
+221
+00:11:34,745 --> 00:11:36,890
+Because if you were to
+start from State 3,
+
+222
+00:11:36,890 --> 00:11:38,975
+the rewards you
+get would be zero
+
+223
+00:11:38,975 --> 00:11:41,645
+followed by zero
+followed by 100,
+
+224
+00:11:41,645 --> 00:11:44,795
+so this is optimal return from
+
+225
+00:11:44,795 --> 00:11:47,740
+State 3 and that's why this is
+
+226
+00:11:47,740 --> 00:11:51,205
+just R of 4 plus 0.5 max over
+
+227
+00:11:51,205 --> 00:11:55,450
+a prime Q of State 3, a prime.
+
+228
+00:11:55,450 --> 00:11:57,310
+I know the Bellman equation,
+
+229
+00:11:57,310 --> 00:11:59,890
+this is somewhat complicated
+equation breaking down
+
+230
+00:11:59,890 --> 00:12:01,460
+your total returns into
+
+231
+00:12:01,460 --> 00:12:03,020
+the reward you're
+getting right away.
+
+232
+00:12:03,020 --> 00:12:04,600
+The immediate reward plus
+
+233
+00:12:04,600 --> 00:12:08,710
+Gamma times the returns from
+the next state s prime.
+
+234
+00:12:08,710 --> 00:12:10,620
+If it makes sense to you,
+
+235
+00:12:10,620 --> 00:12:13,070
+but not fully, it's okay.
+Don't worry about it.
+
+236
+00:12:13,070 --> 00:12:15,544
+You can still apply
+Bellman's equations
+
+237
+00:12:15,544 --> 00:12:17,560
+to get a reinforcement
+learning algorithm
+
+238
+00:12:17,560 --> 00:12:19,085
+to work correctly,
+
+239
+00:12:19,085 --> 00:12:21,875
+but I hope that at least
+the high level intuition
+
+240
+00:12:21,875 --> 00:12:23,200
+of why breaking
+
+241
+00:12:23,200 --> 00:12:24,970
+down the rewards into
+what you get right
+
+242
+00:12:24,970 --> 00:12:27,340
+away plus what you
+get in the future.
+
+243
+00:12:27,340 --> 00:12:29,215
+I hope that makes sense.
+
+244
+00:12:29,215 --> 00:12:30,970
+Before moving on to
+
+245
+00:12:30,970 --> 00:12:33,410
+develop a reinforcement
+learning algorithm,
+
+246
+00:12:33,410 --> 00:12:36,650
+we have coming up next
+an optional video on
+
+247
+00:12:36,650 --> 00:12:39,730
+Stochastic Markov
+decision processes or
+
+248
+00:12:39,730 --> 00:12:42,930
+on reinforcement learning
+applications where the actions,
+
+249
+00:12:42,930 --> 00:12:46,480
+if you take, can have a
+slightly random effect.
+
+250
+00:12:46,480 --> 00:12:48,910
+Take look at the optional
+video if you wish.
+
+251
+00:12:48,910 --> 00:12:50,350
+Then after that, we'll start to
+
+252
+00:12:50,350 --> 00:12:53,360
+develop a reinforcement

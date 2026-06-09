@@ -1,0 +1,833 @@
+1
+00:00:02,057 --> 00:00:06,684
+In this video, we'll take a look at how
+you can use TensorFlow to implement
+
+2
+00:00:06,684 --> 00:00:09,337
+the collaborative filtering algorithm.
+
+3
+00:00:09,337 --> 00:00:12,129
+You might be used to thinking
+of TensorFlow as a tool for
+
+4
+00:00:12,129 --> 00:00:13,598
+building neural networks.
+
+5
+00:00:13,598 --> 00:00:14,174
+And it is.
+
+6
+00:00:14,174 --> 00:00:17,413
+It's a great tool for
+building neural networks.
+
+7
+00:00:17,413 --> 00:00:20,620
+And it turns out that TensorFlow
+can also be very hopeful for
+
+8
+00:00:20,620 --> 00:00:23,584
+building other types of
+learning algorithms as well.
+
+9
+00:00:23,584 --> 00:00:26,543
+Like the collaborative
+filtering algorithm.
+
+10
+00:00:26,543 --> 00:00:31,728
+One of the reasons I like using TensorFlow
+for talks like these is that for
+
+11
+00:00:31,728 --> 00:00:36,063
+many applications in order to
+implement gradient descent,
+
+12
+00:00:36,063 --> 00:00:41,078
+you need to find the derivatives of
+the cost function, but TensorFlow
+
+13
+00:00:41,078 --> 00:00:47,122
+can automatically figure out for you what
+are the derivatives of the cost function.
+
+14
+00:00:47,122 --> 00:00:51,474
+All you have to do is implement the cost
+function and without needing to know
+
+15
+00:00:51,474 --> 00:00:55,206
+any calculus, without needing
+to take derivatives yourself,
+
+16
+00:00:55,206 --> 00:00:58,107
+you can get TensorFlow with
+just a few lines of code
+
+17
+00:00:58,107 --> 00:01:02,905
+to compute that derivative term, that can
+be used to optimize the cost function.
+
+18
+00:01:02,905 --> 00:01:05,820
+Let's take a look at how all this works.
+
+19
+00:01:05,820 --> 00:01:10,507
+You might remember this diagram
+here on the right from course one.
+
+20
+00:01:10,507 --> 00:01:14,758
+This is exactly the diagram that
+we had looked at when we talked
+
+21
+00:01:14,758 --> 00:01:16,240
+about optimizing w.
+
+22
+00:01:16,240 --> 00:01:21,494
+When we were working through our
+first linear regression example.
+
+23
+00:01:21,494 --> 00:01:24,682
+And at that time we had set b=0.
+
+24
+00:01:24,682 --> 00:01:29,507
+And so
+the model was just predicting f(x)=w.x.
+
+25
+00:01:29,507 --> 00:01:34,571
+And we wanted to find the value of w
+that minimizes the cost function J.
+
+26
+00:01:34,571 --> 00:01:38,940
+So the way we were doing that was
+via a gradient descent update,
+
+27
+00:01:38,940 --> 00:01:43,557
+which looked like this,
+where w gets repeatedly updated as w minus
+
+28
+00:01:43,557 --> 00:01:47,201
+the learning rate alpha
+times the derivative term.
+
+29
+00:01:47,201 --> 00:01:52,259
+If you are updating b as well,
+this is the expression you will use.
+
+30
+00:01:52,259 --> 00:01:56,479
+But if you said b=0,
+you just forgo the second update and
+
+31
+00:01:56,479 --> 00:02:01,840
+you keep on performing this gradient
+descent update until convergence.
+
+32
+00:02:01,840 --> 00:02:08,533
+Sometimes computing this derivative or
+partial derivative term can be difficult.
+
+33
+00:02:08,533 --> 00:02:12,205
+And it turns out that
+TensorFlow can help with that.
+
+34
+00:02:12,205 --> 00:02:13,262
+Let's see how.
+
+35
+00:02:13,262 --> 00:02:17,962
+I'm going to use a very simple cost
+
+36
+00:02:17,962 --> 00:02:22,833
+function J=(wx-1) squared.
+
+37
+00:02:22,833 --> 00:02:27,936
+So wx is our simplified f w of x and
+
+38
+00:02:27,936 --> 00:02:30,584
+y is equal to 1.
+
+39
+00:02:30,584 --> 00:02:35,357
+And so this would be the cost
+function if we had f(x) equals
+
+40
+00:02:35,357 --> 00:02:40,320
+wx,y equals 1 for
+the one training example that we have, and
+
+41
+00:02:40,320 --> 00:02:43,864
+if we were not optimizing
+this respect to b.
+
+42
+00:02:43,864 --> 00:02:48,560
+So the gradient descent algorithm
+will repeat until convergence
+
+43
+00:02:48,560 --> 00:02:50,276
+this update over here.
+
+44
+00:02:50,276 --> 00:02:54,882
+It turns out that if you implement
+the cost function J over here,
+
+45
+00:02:54,882 --> 00:02:57,956
+TensorFlow can automatically compute for
+
+46
+00:02:57,956 --> 00:03:02,837
+you this derivative term and
+thereby get gradient descent to work.
+
+47
+00:03:02,837 --> 00:03:09,644
+I'll give you a high level overview of
+what this code does, w=tf.variable(3.0).
+
+48
+00:03:09,644 --> 00:03:14,740
+Takes the parameter w and
+initializes it to the value of 3.0.
+
+49
+00:03:14,740 --> 00:03:19,628
+Telling TensorFlow that w is
+a variable is how we tell
+
+50
+00:03:19,628 --> 00:03:24,196
+it that w is a parameter
+that we want to optimize.
+
+51
+00:03:24,196 --> 00:03:31,248
+I'm going to set x=1.0, y=1.0, and the
+learning rate alpha to be equal to 0.01.
+
+52
+00:03:31,248 --> 00:03:34,904
+And let's run gradient dissent for
+30 iterations.
+
+53
+00:03:34,904 --> 00:03:40,606
+So in this code will still do for iter in
+range iterations, so for 30 iterations.
+
+54
+00:03:40,606 --> 00:03:45,515
+And this is the syntax to get TensorFlow
+to automatically compute the rotors
+
+55
+00:03:45,515 --> 00:03:46,137
+for you.
+
+56
+00:03:46,137 --> 00:03:49,463
+TensorFlow has a feature
+called a gradient tape.
+
+57
+00:03:49,463 --> 00:03:54,831
+And if you write this with tf
+our gradient tape as tape f.
+
+58
+00:03:54,831 --> 00:03:59,892
+This is compute f(x) as w*x and
+
+59
+00:03:59,892 --> 00:04:04,963
+compute J as f(x)-y squared.
+
+60
+00:04:04,963 --> 00:04:08,801
+Then by telling TensorFlow
+how to compute to costJ, and
+
+61
+00:04:08,801 --> 00:04:12,557
+by doing it with the gradient
+taped syntax as follows,
+
+62
+00:04:12,557 --> 00:04:16,902
+TensorFlow will automatically
+record the sequence of steps.
+
+63
+00:04:16,902 --> 00:04:21,409
+The sequence of operations
+needed to compute the costJ.
+
+64
+00:04:21,409 --> 00:04:25,553
+And this is needed to enable
+automatic differentiation.
+
+65
+00:04:25,553 --> 00:04:30,924
+Next TensorFlow will have saved
+the sequence of operations in tape,
+
+66
+00:04:30,924 --> 00:04:32,694
+in the gradient tape.
+
+67
+00:04:32,694 --> 00:04:37,524
+And with this syntax,
+TensorFlow will automatically
+
+68
+00:04:37,524 --> 00:04:42,883
+compute this derivative term,
+which I'm going to call dJdw.
+
+69
+00:04:42,883 --> 00:04:47,328
+And TensorFlow knows you want to
+take the derivative respected w.
+
+70
+00:04:47,328 --> 00:04:52,044
+That w is the parameter you want to
+optimize because you had told it so
+
+71
+00:04:52,044 --> 00:04:52,721
+up here.
+
+72
+00:04:52,721 --> 00:04:55,278
+And because we're also
+specifying it down here.
+
+73
+00:04:55,278 --> 00:05:00,447
+So now the computer derivatives,
+finally you can carry out this
+
+74
+00:05:00,447 --> 00:05:05,234
+update by taking w and
+subtracting from it the learning rate
+
+75
+00:05:05,234 --> 00:05:10,420
+alpha times that derivative term
+that we just got from up above.
+
+76
+00:05:10,420 --> 00:05:14,694
+TensorFlow variables,
+tier variables requires special handling.
+
+77
+00:05:14,694 --> 00:05:18,629
+Which is why instead of setting
+w to be w minus alpha times
+
+78
+00:05:18,629 --> 00:05:23,505
+the derivative in the usual way,
+we use this assigned add function.
+
+79
+00:05:23,505 --> 00:05:25,989
+But when you get to the practice lab,
+don't worry about it.
+
+80
+00:05:25,989 --> 00:05:29,611
+We'll give you all the syntax you need
+in order to implement the collateral
+
+81
+00:05:29,611 --> 00:05:31,291
+filtering algorithm correctly.
+
+82
+00:05:31,291 --> 00:05:35,980
+So notice that with the gradient
+tape feature of TensorFlow,
+
+83
+00:05:35,980 --> 00:05:41,581
+the main work you need to do is to tell
+it how to compute the cost function J.
+
+84
+00:05:41,581 --> 00:05:45,638
+And the rest of the syntax
+causes TensorFlow to
+
+85
+00:05:45,638 --> 00:05:50,850
+automatically figure out for
+you what is that derivative?
+
+86
+00:05:50,850 --> 00:05:56,323
+And with this TensorFlow we'll start
+with finding the slope of this,
+
+87
+00:05:56,323 --> 00:05:58,652
+at 3 shown by this dash line.
+
+88
+00:05:58,652 --> 00:06:04,510
+Take a gradient step and update w and
+compute the derivative again and
+
+89
+00:06:04,510 --> 00:06:08,651
+update w over and
+over until eventually it gets to
+
+90
+00:06:08,651 --> 00:06:12,694
+the optimal value of w,
+which is at w equals 1.
+
+91
+00:06:12,694 --> 00:06:17,714
+So this procedure allows you to
+implement gradient descent without ever
+
+92
+00:06:17,714 --> 00:06:22,417
+having to figure out yourself how
+to compute this derivative term.
+
+93
+00:06:22,417 --> 00:06:27,266
+This is a very powerful feature
+of TensorFlow called Auto Diff.
+
+94
+00:06:27,266 --> 00:06:33,650
+And some other machine learning packages
+like pytorch also support Auto Diff.
+
+95
+00:06:33,650 --> 00:06:36,947
+Sometimes you hear people
+call this Auto Grad.
+
+96
+00:06:36,947 --> 00:06:39,518
+The technically correct term is Auto Diff,
+and
+
+97
+00:06:39,518 --> 00:06:43,119
+Auto Grad is actually the name of
+the specific software package for
+
+98
+00:06:43,119 --> 00:06:47,379
+doing automatic differentiation, for
+taking derivatives automatically.
+
+99
+00:06:47,379 --> 00:06:51,755
+But sometimes if you hear someone refer to
+Auto Grad, they're just referring to this
+
+100
+00:06:51,755 --> 00:06:54,514
+same concept of automatically
+taking derivatives.
+
+101
+00:06:54,514 --> 00:06:59,097
+So let's take this and look at how
+you can implement to collaborative
+
+102
+00:06:59,097 --> 00:07:01,712
+filtering algorithm using Auto Diff.
+
+103
+00:07:01,712 --> 00:07:04,968
+And in fact, once you can compute
+derivatives automatically,
+
+104
+00:07:04,968 --> 00:07:07,391
+you're not limited to
+just gradient descent.
+
+105
+00:07:07,391 --> 00:07:10,982
+You can also use a more powerful
+optimization algorithm,
+
+106
+00:07:10,982 --> 00:07:13,480
+like the adam optimization algorithm.
+
+107
+00:07:13,480 --> 00:07:19,386
+In order to implement the collaborative
+filtering algorithm TensorFlow,
+
+108
+00:07:19,386 --> 00:07:21,791
+this is the syntax you can use.
+
+109
+00:07:21,791 --> 00:07:26,185
+Let's starts with specifying
+that the optimizer is keras
+
+110
+00:07:26,185 --> 00:07:30,228
+optimizers adam with learning
+rate specified here.
+
+111
+00:07:30,228 --> 00:07:33,288
+And then for say, 200 iterations,
+
+112
+00:07:33,288 --> 00:07:38,018
+here's the syntax as before
+with tf gradient tape, s tape,
+
+113
+00:07:38,018 --> 00:07:43,324
+you need to provide code to compute
+the value of the cost function J.
+
+114
+00:07:43,324 --> 00:07:47,173
+So recall that in collaborative filtering,
+
+115
+00:07:47,173 --> 00:07:51,934
+the cost function J takes is
+input parameters x, w, and
+
+116
+00:07:51,934 --> 00:07:55,497
+b as well as the ratings mean normalized.
+
+117
+00:07:55,497 --> 00:08:01,388
+So that's why I'm writing y norm, r(i,j)
+specifying which values have a rating,
+
+118
+00:08:01,388 --> 00:08:06,630
+number of users or nu in our notation,
+number of movies or nm in our notation or
+
+119
+00:08:06,630 --> 00:08:10,611
+just num as well as
+the regularization parameter lambda.
+
+120
+00:08:10,611 --> 00:08:13,485
+And if you can implement
+this cost function J,
+
+121
+00:08:13,485 --> 00:08:18,365
+then this syntax will cause TensorFlow
+to figure out the derivatives for you.
+
+122
+00:08:18,365 --> 00:08:23,089
+Then this syntax will cause TensorFlow to
+record the sequence of operations used to
+
+123
+00:08:23,089 --> 00:08:24,175
+compute the cost.
+
+124
+00:08:24,175 --> 00:08:29,438
+And then by asking it to give
+you grads equals tape.gradient,
+
+125
+00:08:29,438 --> 00:08:36,405
+this will give you the derivative of the
+cost function with respect to x, w, and b.
+
+126
+00:08:36,405 --> 00:08:40,859
+And finally with the optimizer
+that we had specified up on top,
+
+127
+00:08:40,859 --> 00:08:42,546
+as the adam optimizer.
+
+128
+00:08:42,546 --> 00:08:47,911
+You can use the optimizer with
+the gradients that we just computed.
+
+129
+00:08:47,911 --> 00:08:52,043
+And does it function in python is just a
+function that rearranges the numbers into
+
+130
+00:08:52,043 --> 00:08:55,277
+an appropriate ordering for
+the applied gradients function.
+
+131
+00:08:55,277 --> 00:09:00,065
+If you are using gradient descent for
+collateral filtering,
+
+132
+00:09:00,065 --> 00:09:05,505
+recall that the cost function J would
+be a function of w, b as well as x.
+
+133
+00:09:05,505 --> 00:09:07,814
+And if you are applying gradient descent,
+
+134
+00:09:07,814 --> 00:09:10,388
+you take the partial
+derivative respect the w.
+
+135
+00:09:10,388 --> 00:09:12,227
+And then update w as follows.
+
+136
+00:09:12,227 --> 00:09:16,294
+And you would also take the partial
+derivative of this respect to b.
+
+137
+00:09:16,294 --> 00:09:18,419
+And update b as follows.
+
+138
+00:09:18,419 --> 00:09:22,009
+And similarly update
+the features x as follows.
+
+139
+00:09:22,009 --> 00:09:24,744
+And you repeat until convergence.
+
+140
+00:09:24,744 --> 00:09:28,196
+But as I mentioned earlier
+with TensorFlow and
+
+141
+00:09:28,196 --> 00:09:32,454
+Auto Diff you're not limited
+to just gradient descent.
+
+142
+00:09:32,454 --> 00:09:36,641
+You can also use a more powerful
+optimization algorithm like the adam
+
+143
+00:09:36,641 --> 00:09:37,440
+optimizer.
+
+144
+00:09:37,440 --> 00:09:42,256
+The data set you use in the practice
+lab is a real data set comprising
+
+145
+00:09:42,256 --> 00:09:45,095
+actual movies rated by actual people.
+
+146
+00:09:45,095 --> 00:09:49,765
+This is the movie lens dataset and
+it's due to Harper and Konstan.
+
+147
+00:09:49,765 --> 00:09:54,205
+And I hope you enjoy running this
+algorithm on a real data set of movies,
+
+148
+00:09:54,205 --> 00:09:58,798
+and ratings and see for yourself
+the results that this algorithm can get.
+
+149
+00:09:58,798 --> 00:09:59,559
+So that's it.
+
+150
+00:09:59,559 --> 00:10:03,077
+That's how you can implement
+the collaborative filtering algorithm in
+
+151
+00:10:03,077 --> 00:10:03,774
+TensorFlow.
+
+152
+00:10:03,774 --> 00:10:06,471
+If you're wondering why do
+we have to do it this way?
+
+153
+00:10:06,471 --> 00:10:11,902
+Why couldn't we use a dense layer and
+then model compiler and model fit?
+
+154
+00:10:11,902 --> 00:10:17,093
+The reason we couldn't use that old recipe
+is, the collateral filtering algorithm and
+
+155
+00:10:17,093 --> 00:10:20,742
+cost function, it doesn't neatly
+fit into the dense layer or
+
+156
+00:10:20,742 --> 00:10:24,482
+the other standard neural network
+layer types of TensorFlow.
+
+157
+00:10:24,482 --> 00:10:27,636
+That's why we had to implement
+it this other way where we would
+
+158
+00:10:27,636 --> 00:10:29,771
+implement the cost function ourselves.
+
+159
+00:10:29,771 --> 00:10:33,507
+But then use TensorFlow's tools for
+automatic differentiation,
+
+160
+00:10:33,507 --> 00:10:34,826
+also called Auto Diff.
+
+161
+00:10:34,826 --> 00:10:39,707
+And use TensorFlow's implementation
+of the adam optimization algorithm
+
+162
+00:10:39,707 --> 00:10:44,055
+to let it do a lot of the work for
+us of optimizing the cost function.
+
+163
+00:10:44,055 --> 00:10:48,765
+If the model you have is a sequence
+of dense neural network layers or
+
+164
+00:10:48,765 --> 00:10:52,467
+other types of layers
+supported by TensorFlow, and
+
+165
+00:10:52,467 --> 00:10:57,191
+the old implementation recipe of
+model compound model fit works.
+
+166
+00:10:57,191 --> 00:11:02,184
+But even when it isn't, these tools
+TensoFlow give you a very effective way to
+
+167
+00:11:02,184 --> 00:11:05,222
+implement other learning
+algorithms as well.
+
+168
+00:11:05,222 --> 00:11:10,141
+And so I hope you enjoy playing more with
+the collateral filtering exercise in
+
+169
+00:11:10,141 --> 00:11:11,965
+this week's practice lab.
+
+170
+00:11:11,965 --> 00:11:15,205
+And looks like there's a lot of code and
+lots of syntax, don't worry about it.
+
+171
+00:11:15,205 --> 00:11:20,469
+Make sure you have what you need to
+complete that exercise successfully.
+
+172
+00:11:20,469 --> 00:11:25,848
+And in the next video, I'd like to also
+move on to discuss more of the nuances of
+
+173
+00:11:25,848 --> 00:11:31,800
+collateral filtering and specifically the
+question of how do you find related items,
+
+174
+00:11:31,800 --> 00:11:35,984
+given one movie,
+whether other movies similar to this one.
+
+175
+00:11:35,984 --> 00:11:37,830

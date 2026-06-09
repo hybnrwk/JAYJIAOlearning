@@ -1,0 +1,1107 @@
+1
+00:00:01,250 --> 00:00:05,235
+In this video, we'll take a
+look at how you can use the
+
+2
+00:00:05,235 --> 00:00:08,565
+scikit-learn library
+to implement PCA.
+
+3
+00:00:08,565 --> 00:00:10,500
+These are the main steps.
+
+4
+00:00:10,500 --> 00:00:13,020
+First, if your features take
+
+5
+00:00:13,020 --> 00:00:15,795
+on very different
+ranges of values,
+
+6
+00:00:15,795 --> 00:00:19,260
+you can perform
+pre-processing to
+
+7
+00:00:19,260 --> 00:00:20,910
+scale the features to take on
+
+8
+00:00:20,910 --> 00:00:23,400
+comparable ranges of values.
+
+9
+00:00:23,400 --> 00:00:25,680
+If you were looking
+
+10
+00:00:25,680 --> 00:00:27,750
+at the features of
+different countries,
+
+11
+00:00:27,750 --> 00:00:31,470
+those features take on very
+different ranges of values.
+
+12
+00:00:31,470 --> 00:00:33,975
+GDP could be in
+trillions of dollars,
+
+13
+00:00:33,975 --> 00:00:37,560
+whereas other features
+are less than 100.
+
+14
+00:00:37,560 --> 00:00:40,550
+Feature scaling in applications
+like that would be
+
+15
+00:00:40,550 --> 00:00:45,335
+important to help PCA find a
+good choice of axes for you.
+
+16
+00:00:45,335 --> 00:00:49,730
+The next step then is to
+run the PCA algorithm to
+
+17
+00:00:49,730 --> 00:00:55,595
+"fit" the data to obtain
+two or three new axes,
+
+18
+00:00:55,595 --> 00:00:58,300
+Z_1, Z_2, and maybe Z_3.
+
+19
+00:00:58,300 --> 00:01:00,390
+Here I'm assuming you want
+
+20
+00:01:00,390 --> 00:01:02,810
+two or three axes if you
+
+21
+00:01:02,810 --> 00:01:06,005
+want to visualize the
+data in 2D or 3D.
+
+22
+00:01:06,005 --> 00:01:07,970
+If you have an
+application where you
+
+23
+00:01:07,970 --> 00:01:10,730
+want more than two
+or three axes,
+
+24
+00:01:10,730 --> 00:01:12,470
+the PCA implementation can
+
+25
+00:01:12,470 --> 00:01:14,780
+also give you more than
+two or three axes,
+
+26
+00:01:14,780 --> 00:01:17,980
+it's just that it'd then
+be harder to visualize.
+
+27
+00:01:17,980 --> 00:01:21,620
+In scikit-learn, you will
+use the fit function,
+
+28
+00:01:21,620 --> 00:01:23,760
+or the fit method in
+order to do this.
+
+29
+00:01:23,760 --> 00:01:25,864
+The fit function in PCA
+
+30
+00:01:25,864 --> 00:01:29,015
+automatically carries
+out mean normalization,
+
+31
+00:01:29,015 --> 00:01:32,075
+it subtracts out the
+mean of each feature.
+
+32
+00:01:32,075 --> 00:01:33,260
+So you don't need to
+
+33
+00:01:33,260 --> 00:01:37,060
+separately perform
+mean normalization.
+
+34
+00:01:37,060 --> 00:01:40,325
+After running the fit function,
+
+35
+00:01:40,325 --> 00:01:42,740
+you would get the new axes, Z_1,
+
+36
+00:01:42,740 --> 00:01:46,190
+Z_2, maybe Z_3, and in PCA,
+
+37
+00:01:46,190 --> 00:01:48,515
+we also call these the
+principal components,
+
+38
+00:01:48,515 --> 00:01:50,720
+where Z_1 is the first
+principal component,
+
+39
+00:01:50,720 --> 00:01:52,805
+Z_2 the second
+principal component,
+
+40
+00:01:52,805 --> 00:01:56,040
+and Z_3 the third
+principal component.
+
+41
+00:01:56,040 --> 00:01:59,180
+After that, I would
+recommend taking
+
+42
+00:01:59,180 --> 00:02:02,570
+a look at how much each
+of these new axes,
+
+43
+00:02:02,570 --> 00:02:04,790
+or each of these new
+principal components
+
+44
+00:02:04,790 --> 00:02:07,355
+explains the variance
+in your data.
+
+45
+00:02:07,355 --> 00:02:08,930
+I'll show a concrete example of
+
+46
+00:02:08,930 --> 00:02:10,270
+what this means on
+the next slide,
+
+47
+00:02:10,270 --> 00:02:12,350
+but this lets you get
+
+48
+00:02:12,350 --> 00:02:15,455
+a sense of whether
+or not projecting
+
+49
+00:02:15,455 --> 00:02:17,900
+the data onto these axes help
+
+50
+00:02:17,900 --> 00:02:21,080
+you to retain most
+of the variability,
+
+51
+00:02:21,080 --> 00:02:24,295
+or most of the information
+in the original dataset.
+
+52
+00:02:24,295 --> 00:02:28,460
+This is done using the explained
+variance ratio function.
+
+53
+00:02:28,460 --> 00:02:31,175
+Finally, you can transform,
+
+54
+00:02:31,175 --> 00:02:34,205
+meaning just project the
+data onto the new axes,
+
+55
+00:02:34,205 --> 00:02:35,945
+onto the new
+principal components,
+
+56
+00:02:35,945 --> 00:02:38,360
+which you will do with
+the transform method.
+
+57
+00:02:38,360 --> 00:02:40,550
+Then for each training example,
+
+58
+00:02:40,550 --> 00:02:42,655
+you would just have
+two or three numbers,
+
+59
+00:02:42,655 --> 00:02:45,590
+you can then plot those
+two or three numbers
+
+60
+00:02:45,590 --> 00:02:47,275
+to visualize your data.
+
+61
+00:02:47,275 --> 00:02:51,930
+In detail, this is what
+PCA in code looks like.
+
+62
+00:02:51,930 --> 00:02:56,565
+Here's the dataset X
+with six examples.
+
+63
+00:02:56,565 --> 00:02:58,800
+X equals NumPy array,
+
+64
+00:02:58,800 --> 00:03:01,155
+the six examples over here.
+
+65
+00:03:01,155 --> 00:03:07,050
+To run PCA to reduce this
+data from two numbers, X_1,
+
+66
+00:03:07,050 --> 00:03:09,975
+X_2 to just one number Z,
+
+67
+00:03:09,975 --> 00:03:13,040
+you would run PCA and ask it
+
+68
+00:03:13,040 --> 00:03:16,040
+to fit one principal component.
+
+69
+00:03:16,040 --> 00:03:19,135
+N components here
+is equal to one,
+
+70
+00:03:19,135 --> 00:03:23,940
+and fit PCA to X. Pca_1
+
+71
+00:03:23,940 --> 00:03:26,465
+here is my notation
+
+72
+00:03:26,465 --> 00:03:29,690
+for PCA with a single
+principle component,
+
+73
+00:03:29,690 --> 00:03:31,915
+with a single axis.
+
+74
+00:03:31,915 --> 00:03:34,355
+It turns out, if you
+were to print out
+
+75
+00:03:34,355 --> 00:03:40,090
+pca_1.explained_variance_ratio,
+this is 0.992.
+
+76
+00:03:40,090 --> 00:03:42,920
+This tells you that
+in this example
+
+77
+00:03:42,920 --> 00:03:45,410
+when you choose one axis,
+
+78
+00:03:45,410 --> 00:03:48,650
+this captures 99.2 percent
+
+79
+00:03:48,650 --> 00:03:50,280
+of the variability or of
+
+80
+00:03:50,280 --> 00:03:52,640
+the information in
+the original dataset.
+
+81
+00:03:52,640 --> 00:03:55,490
+Finally, if you want
+to take each of
+
+82
+00:03:55,490 --> 00:04:00,665
+these training samples and
+project it to a single number,
+
+83
+00:04:00,665 --> 00:04:02,840
+you would then call this,
+
+84
+00:04:02,840 --> 00:04:05,420
+and this will output
+this array with
+
+85
+00:04:05,420 --> 00:04:10,400
+six numbers corresponding to
+your six training examples.
+
+86
+00:04:10,400 --> 00:04:14,570
+For example, the first
+training example 1,1,
+
+87
+00:04:14,570 --> 00:04:17,420
+projected to the
+Z-axis gives you
+
+88
+00:04:17,420 --> 00:04:20,630
+this number, 1.383, so on.
+
+89
+00:04:20,630 --> 00:04:23,000
+So if you were to visualize
+
+90
+00:04:23,000 --> 00:04:26,285
+this dataset using
+just one dimension,
+
+91
+00:04:26,285 --> 00:04:27,350
+this will be the number I
+
+92
+00:04:27,350 --> 00:04:29,775
+use to represent
+the first example.
+
+93
+00:04:29,775 --> 00:04:32,360
+The second example is projected
+
+94
+00:04:32,360 --> 00:04:35,645
+to be this number and so on.
+
+95
+00:04:35,645 --> 00:04:37,430
+I hope you take a
+look at the optional
+
+96
+00:04:37,430 --> 00:04:38,840
+lab where you see that
+
+97
+00:04:38,840 --> 00:04:40,910
+these six examples
+have been projected
+
+98
+00:04:40,910 --> 00:04:43,250
+down onto this axis,
+
+99
+00:04:43,250 --> 00:04:45,080
+onto this line which is now Y.
+
+100
+00:04:45,080 --> 00:04:47,195
+All six examples now lie
+
+101
+00:04:47,195 --> 00:04:50,685
+on this line that
+looks like this.
+
+102
+00:04:50,685 --> 00:04:53,475
+The first training example,
+
+103
+00:04:53,475 --> 00:04:55,450
+which was 1,1,
+
+104
+00:04:55,450 --> 00:04:57,829
+has been mapped to this example,
+
+105
+00:04:57,829 --> 00:05:01,890
+which has a distance of
+1.38 from the origin,
+
+106
+00:05:01,890 --> 00:05:04,845
+so that's why this is 1.38.
+
+107
+00:05:04,845 --> 00:05:07,120
+Just one more quick example.
+
+108
+00:05:07,120 --> 00:05:10,150
+This data is
+two-dimensional data,
+
+109
+00:05:10,150 --> 00:05:13,720
+and we reduced it
+to one dimensions.
+
+110
+00:05:13,720 --> 00:05:17,710
+What if you were to compute
+two principal components?
+
+111
+00:05:17,710 --> 00:05:19,525
+Starts with two-dimensions,
+
+112
+00:05:19,525 --> 00:05:22,020
+and then also end up
+with two-dimensions.
+
+113
+00:05:22,020 --> 00:05:23,280
+This isn't that useful for
+
+114
+00:05:23,280 --> 00:05:25,890
+visualization but it
+might help us understand
+
+115
+00:05:25,890 --> 00:05:30,505
+better how PCA and how
+they code for PCA works.
+
+116
+00:05:30,505 --> 00:05:32,500
+Here's the same code
+except that I've
+
+117
+00:05:32,500 --> 00:05:34,690
+changed n components to two.
+
+118
+00:05:34,690 --> 00:05:36,550
+I'm going to ask
+the algorithm to
+
+119
+00:05:36,550 --> 00:05:39,665
+find two principal components.
+
+120
+00:05:39,665 --> 00:05:42,365
+If you do that the pca_2 explain
+
+121
+00:05:42,365 --> 00:05:47,155
+ratio becomes 0.992, 0.008.
+
+122
+00:05:47,155 --> 00:05:49,135
+What that means is that z_1,
+
+123
+00:05:49,135 --> 00:05:50,680
+the first principle components,
+
+124
+00:05:50,680 --> 00:05:54,685
+still continuous explain 99.2
+percent of the variance,
+
+125
+00:05:54,685 --> 00:05:57,505
+Z_2 the second
+principle components,
+
+126
+00:05:57,505 --> 00:05:58,735
+or the second axis,
+
+127
+00:05:58,735 --> 00:06:02,245
+explains 0.8 percent
+of the variance.
+
+128
+00:06:02,245 --> 00:06:05,200
+These two numbers
+together add up to one.
+
+129
+00:06:05,200 --> 00:06:08,105
+Because while this data
+is two-dimensional,
+
+130
+00:06:08,105 --> 00:06:09,265
+so the two axes,
+
+131
+00:06:09,265 --> 00:06:10,555
+Z_1 and Z_2,
+
+132
+00:06:10,555 --> 00:06:12,550
+together they
+explain 100 percent
+
+133
+00:06:12,550 --> 00:06:14,080
+of the variance in the data.
+
+134
+00:06:14,080 --> 00:06:16,990
+If you were to
+transform our project
+
+135
+00:06:16,990 --> 00:06:19,825
+the data onto the
+Z_1 and Z_2 axes,
+
+136
+00:06:19,825 --> 00:06:21,670
+this is what you get,
+
+137
+00:06:21,670 --> 00:06:24,160
+with now the first
+training example is
+
+138
+00:06:24,160 --> 00:06:27,105
+napped too these two numbers,
+
+139
+00:06:27,105 --> 00:06:30,715
+corresponding to its
+projection onto z_1,
+
+140
+00:06:30,715 --> 00:06:34,100
+and z_2, and the second example,
+
+141
+00:06:34,100 --> 00:06:37,625
+which is this projected
+onto z_1 and z_2,
+
+142
+00:06:37,625 --> 00:06:40,594
+becomes these two numbers.
+
+143
+00:06:40,594 --> 00:06:43,030
+If you were to reconstruct
+
+144
+00:06:43,030 --> 00:06:46,295
+the original data
+roughly this is z_1,
+
+145
+00:06:46,295 --> 00:06:48,265
+and this z_2,
+
+146
+00:06:48,265 --> 00:06:51,760
+then the first training
+example which was a [1,
+
+147
+00:06:51,760 --> 00:06:57,130
+1] has a distance of
+1.38 on the z_1 axis,
+
+148
+00:06:57,130 --> 00:07:01,085
+has this number and
+the distance here of
+
+149
+00:07:01,085 --> 00:07:05,710
+0.29 hence this distance
+on the z_2 axis,
+
+150
+00:07:05,710 --> 00:07:07,240
+and the reconstruction
+actually looks
+
+151
+00:07:07,240 --> 00:07:09,940
+exactly the same as
+the original data.
+
+152
+00:07:09,940 --> 00:07:12,820
+Because, if you
+reduce or not really
+
+153
+00:07:12,820 --> 00:07:15,805
+reduce two-dimensional data
+to two-dimensional data,
+
+154
+00:07:15,805 --> 00:07:18,070
+there is no approximation
+
+155
+00:07:18,070 --> 00:07:20,290
+and you can get back to
+your original dataset,
+
+156
+00:07:20,290 --> 00:07:24,250
+with the projections
+onto z_1 and z_2.
+
+157
+00:07:24,250 --> 00:07:27,940
+This is what the code
+to run PCA looks like.
+
+158
+00:07:27,940 --> 00:07:29,050
+I hope you take a look at
+
+159
+00:07:29,050 --> 00:07:30,335
+the optional lab where you can
+
+160
+00:07:30,335 --> 00:07:31,910
+play with this more yourself.
+
+161
+00:07:31,910 --> 00:07:35,540
+Also try varying the
+parameters look at
+
+162
+00:07:35,540 --> 00:07:37,830
+a specific example to deepen
+
+163
+00:07:37,830 --> 00:07:40,625
+your intuition about
+how PCA works.
+
+164
+00:07:40,625 --> 00:07:43,075
+Before wrapping up,
+I'd like to share
+
+165
+00:07:43,075 --> 00:07:45,530
+a little bit of advice
+for applying PCA.
+
+166
+00:07:45,530 --> 00:07:48,910
+PCA is frequently used for
+visualization where you reduce
+
+167
+00:07:48,910 --> 00:07:53,065
+data to two or three
+numbers so you can plot it.
+
+168
+00:07:53,065 --> 00:07:55,690
+Like you saw in an earlier
+video with the data
+
+169
+00:07:55,690 --> 00:07:56,860
+on different countries so you
+
+170
+00:07:56,860 --> 00:07:58,885
+can visualize
+different countries.
+
+171
+00:07:58,885 --> 00:08:01,150
+There are some other
+applications of
+
+172
+00:08:01,150 --> 00:08:03,850
+PCA that you may
+occasionally hear about.
+
+173
+00:08:03,850 --> 00:08:06,365
+That used to be more popular,
+
+174
+00:08:06,365 --> 00:08:10,295
+maybe 10,15, 20 years ago
+but much less so now.
+
+175
+00:08:10,295 --> 00:08:13,630
+Another possible use of
+PCA is data compression.
+
+176
+00:08:13,630 --> 00:08:15,580
+For example, if you have
+
+177
+00:08:15,580 --> 00:08:18,385
+a database of lots
+of different cars,
+
+178
+00:08:18,385 --> 00:08:21,505
+and you have 50
+features per car,
+
+179
+00:08:21,505 --> 00:08:24,040
+but it's just taking
+up too much space on
+
+180
+00:08:24,040 --> 00:08:25,240
+your database or maybe
+
+181
+00:08:25,240 --> 00:08:28,040
+transmitting 50 numbers
+over the Internet,
+
+182
+00:08:28,040 --> 00:08:30,040
+just takes too long.
+
+183
+00:08:30,040 --> 00:08:32,980
+Then one thing you
+could do is reduce
+
+184
+00:08:32,980 --> 00:08:36,730
+these 50 features to a
+smaller number of features.
+
+185
+00:08:36,730 --> 00:08:39,340
+It could be 10 features with
+
+186
+00:08:39,340 --> 00:08:42,485
+10 axes or 10
+principal components.
+
+187
+00:08:42,485 --> 00:08:45,730
+You can visualize 10-dimensional
+data that easily,
+
+188
+00:08:45,730 --> 00:08:48,730
+but this is 1/5 of
+the storage space,
+
+189
+00:08:48,730 --> 00:08:52,820
+or maybe 1/5 over the network
+transmission costs needed.
+
+190
+00:08:52,820 --> 00:08:54,935
+Many years ago I saw
+
+191
+00:08:54,935 --> 00:08:57,950
+PCA use for this
+application and more often,
+
+192
+00:08:57,950 --> 00:09:01,000
+but today with modern storage
+
+193
+00:09:01,000 --> 00:09:03,100
+being able to store
+pretty large datasets
+
+194
+00:09:03,100 --> 00:09:04,490
+and modern networking,
+
+195
+00:09:04,490 --> 00:09:08,755
+able to transmit faster and
+more data than ever before.
+
+196
+00:09:08,755 --> 00:09:12,845
+I see this use much less often
+as an application of PCA.
+
+197
+00:09:12,845 --> 00:09:15,040
+One of the applications
+of PCA that again
+
+198
+00:09:15,040 --> 00:09:17,500
+used to be more common
+maybe 10 years ago,
+
+199
+00:09:17,500 --> 00:09:20,000
+20 years ago, but
+much less so now is
+
+200
+00:09:20,000 --> 00:09:21,275
+using it to speed up
+
+201
+00:09:21,275 --> 00:09:23,485
+training of a supervised
+learning model.
+
+202
+00:09:23,485 --> 00:09:25,040
+Where the idea is,
+
+203
+00:09:25,040 --> 00:09:27,370
+if you had 1,000 features,
+
+204
+00:09:27,370 --> 00:09:29,740
+and having a 1,000 features may
+
+205
+00:09:29,740 --> 00:09:32,065
+the supervised learning
+algorithm runs you slowly.
+
+206
+00:09:32,065 --> 00:09:37,285
+Maybe you can reduce it
+to 100 features using PCA
+
+207
+00:09:37,285 --> 00:09:39,785
+and then your dataset is
+basically smaller and
+
+208
+00:09:39,785 --> 00:09:42,715
+your supervised learning
+algorithm may run faster.
+
+209
+00:09:42,715 --> 00:09:45,910
+This used to make a difference
+in the running time
+
+210
+00:09:45,910 --> 00:09:49,119
+of some of the older generations
+of learning algorithms,
+
+211
+00:09:49,119 --> 00:09:52,355
+such as if you have had a
+support vector machines.
+
+212
+00:09:52,355 --> 00:09:54,280
+This will speed up a
+support vector machine.
+
+213
+00:09:54,280 --> 00:09:57,085
+But it turns out with modern
+machine learning algorithms,
+
+214
+00:09:57,085 --> 00:09:59,275
+algorithms like deep learning,
+
+215
+00:09:59,275 --> 00:10:02,255
+this doesn't actually
+hold that much,
+
+216
+00:10:02,255 --> 00:10:04,450
+and is much more common to
+
+217
+00:10:04,450 --> 00:10:06,880
+just take the
+high-dimensional dataset,
+
+218
+00:10:06,880 --> 00:10:09,625
+and feed it into say
+your neural network.
+
+219
+00:10:09,625 --> 00:10:11,620
+Rather than run PCA because
+
+220
+00:10:11,620 --> 00:10:14,350
+PCA has some computational
+cost as well.
+
+221
+00:10:14,350 --> 00:10:17,170
+You may hear about this in some
+
+222
+00:10:17,170 --> 00:10:19,600
+of the other research papers,
+
+223
+00:10:19,600 --> 00:10:22,275
+but I don't really see
+this done much anymore.
+
+224
+00:10:22,275 --> 00:10:24,010
+But the most common
+thing that I use
+
+225
+00:10:24,010 --> 00:10:26,250
+PCA for today is
+visualization and then I
+
+226
+00:10:26,250 --> 00:10:28,250
+find it very useful to reduce
+
+227
+00:10:28,250 --> 00:10:30,945
+the dimensional data
+to visualize it.
+
+228
+00:10:30,945 --> 00:10:33,400
+Thanks for sticking
+with me through
+
+229
+00:10:33,400 --> 00:10:36,100
+the end of the optional
+videos for this week,
+
+230
+00:10:36,100 --> 00:10:38,090
+I hope you enjoy learning about
+
+231
+00:10:38,090 --> 00:10:41,120
+PCA and that you
+find a useful when
+
+232
+00:10:41,120 --> 00:10:43,364
+you get a new
+dataset for reducing
+
+233
+00:10:43,364 --> 00:10:46,020
+the dimension of the dataset
+to two or three dimensions
+
+234
+00:10:46,020 --> 00:10:48,680
+so you can visualize
+it and hopefully
+
+235
+00:10:48,680 --> 00:10:51,615
+gain new insights
+into your data sets.
+
+236
+00:10:51,615 --> 00:10:52,840
+There's helped me many times
+
+237
+00:10:52,840 --> 00:10:54,875
+understand my own datasets and I
+
+238
+00:10:54,875 --> 00:10:58,645
+hope that you find it
+equally useful as well.
+
+239
+00:10:58,645 --> 00:11:01,040
+Thanks for watching
+these videos and I
+
+240
+00:11:01,040 --> 00:11:04,230
+look forward to

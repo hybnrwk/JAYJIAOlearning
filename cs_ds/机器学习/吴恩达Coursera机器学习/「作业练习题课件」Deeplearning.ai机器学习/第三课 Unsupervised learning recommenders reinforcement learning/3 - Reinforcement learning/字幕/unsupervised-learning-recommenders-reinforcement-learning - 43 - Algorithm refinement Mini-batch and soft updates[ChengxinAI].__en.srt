@@ -1,0 +1,1151 @@
+1
+00:00:01,130 --> 00:00:03,360
+In this video, we'll look at
+
+2
+00:00:03,360 --> 00:00:05,220
+two further refinements to
+
+3
+00:00:05,220 --> 00:00:07,560
+the reinforcement learning
+algorithm you've seen.
+
+4
+00:00:07,560 --> 00:00:11,100
+The first idea is called
+using mini-batches,
+
+5
+00:00:11,100 --> 00:00:14,550
+and this turns out to be an
+idea they can both speedup
+
+6
+00:00:14,550 --> 00:00:16,920
+your reinforcement learning
+algorithm and it's
+
+7
+00:00:16,920 --> 00:00:19,590
+also applicable to
+supervised learning.
+
+8
+00:00:19,590 --> 00:00:20,700
+They can help you speed up
+
+9
+00:00:20,700 --> 00:00:22,575
+your supervised learning
+algorithm as well,
+
+10
+00:00:22,575 --> 00:00:23,910
+like training a neural network,
+
+11
+00:00:23,910 --> 00:00:25,695
+or training a linear regression,
+
+12
+00:00:25,695 --> 00:00:27,630
+or logistic regression model.
+
+13
+00:00:27,630 --> 00:00:31,335
+The second idea we'll
+look at is soft updates,
+
+14
+00:00:31,335 --> 00:00:32,580
+which it turns out will help
+
+15
+00:00:32,580 --> 00:00:33,975
+your reinforcement
+learning algorithm
+
+16
+00:00:33,975 --> 00:00:36,945
+do a better job to converge
+to a good solution.
+
+17
+00:00:36,945 --> 00:00:40,750
+Let's take a look at
+mini-batches and soft updates.
+
+18
+00:00:40,750 --> 00:00:43,850
+To understand
+mini-batches, let's
+
+19
+00:00:43,850 --> 00:00:47,275
+just look at supervised
+learning to start.
+
+20
+00:00:47,275 --> 00:00:49,145
+Here's the dataset of
+
+21
+00:00:49,145 --> 00:00:53,090
+housing sizes and prices
+that you had seen
+
+22
+00:00:53,090 --> 00:00:56,345
+way back in the first course
+of this specialization
+
+23
+00:00:56,345 --> 00:00:59,800
+on using linear regression
+to predict housing prices.
+
+24
+00:00:59,800 --> 00:01:02,345
+There we had come up with
+
+25
+00:01:02,345 --> 00:01:06,380
+this cost function for
+the parameters w and b,
+
+26
+00:01:06,380 --> 00:01:07,790
+it was 1 over 2m,
+
+27
+00:01:07,790 --> 00:01:12,620
+sum of the prediction minus
+the actual value y^​2.
+
+28
+00:01:12,620 --> 00:01:15,710
+The gradient in
+this algorithm was
+
+29
+00:01:15,710 --> 00:01:18,485
+to repeatedly
+update w as w minus
+
+30
+00:01:18,485 --> 00:01:22,370
+[inaudible] alpha times the
+partial derivative respect
+
+31
+00:01:22,370 --> 00:01:26,765
+to w of the cost J of wb,
+
+32
+00:01:26,765 --> 00:01:30,810
+and similarly to
+update b as follows.
+
+33
+00:01:30,810 --> 00:01:33,650
+Let me just take this
+definition of J of
+
+34
+00:01:33,650 --> 00:01:38,060
+wb and substitute it in here.
+
+35
+00:01:38,060 --> 00:01:41,585
+Now, when we looked
+at this example,
+
+36
+00:01:41,585 --> 00:01:43,820
+way back when were
+starting to talk
+
+37
+00:01:43,820 --> 00:01:46,085
+about linear regression
+and supervised learning,
+
+38
+00:01:46,085 --> 00:01:49,040
+the training set size
+m was pretty small.
+
+39
+00:01:49,040 --> 00:01:51,460
+I think we had 47
+training examples.
+
+40
+00:01:51,460 --> 00:01:54,510
+But what if you have a
+very large training set?
+
+41
+00:01:54,510 --> 00:01:58,320
+Say m equals 100 million.
+
+42
+00:01:58,320 --> 00:02:00,890
+There are many
+countries including
+
+43
+00:02:00,890 --> 00:02:04,580
+the United States with over
+a 100 million housing units,
+
+44
+00:02:04,580 --> 00:02:07,655
+and so a national
+census will give you
+
+45
+00:02:07,655 --> 00:02:11,215
+a dataset that is this
+order of magnitude or size.
+
+46
+00:02:11,215 --> 00:02:13,445
+The problem with this algorithm
+
+47
+00:02:13,445 --> 00:02:15,200
+when your dataset is this big,
+
+48
+00:02:15,200 --> 00:02:19,835
+is that every single step of
+gradient descent requires
+
+49
+00:02:19,835 --> 00:02:25,585
+computing this average
+over 100 million examples,
+
+50
+00:02:25,585 --> 00:02:28,155
+and this turns out
+to be very slow.
+
+51
+00:02:28,155 --> 00:02:31,730
+Every step of gradient descent
+means you would compute
+
+52
+00:02:31,730 --> 00:02:35,420
+this sum or this average
+over 100 million examples.
+
+53
+00:02:35,420 --> 00:02:38,405
+Then you take one tiny
+gradient descent step
+
+54
+00:02:38,405 --> 00:02:41,090
+and you go back and
+have to scan over
+
+55
+00:02:41,090 --> 00:02:43,550
+your entire 100 million example
+
+56
+00:02:43,550 --> 00:02:46,895
+dataset again to compute the
+derivative on the next step,
+
+57
+00:02:46,895 --> 00:02:49,430
+they take another tiny
+gradient descent step
+
+58
+00:02:49,430 --> 00:02:51,145
+and so on and so on.
+
+59
+00:02:51,145 --> 00:02:54,515
+When the training set
+size is very large,
+
+60
+00:02:54,515 --> 00:02:57,260
+this gradient descent algorithm
+
+61
+00:02:57,260 --> 00:02:58,955
+turns out to be quite slow.
+
+62
+00:02:58,955 --> 00:03:03,320
+The idea of mini-batch
+gradient descent is to not
+
+63
+00:03:03,320 --> 00:03:06,020
+use all 100 million
+training examples
+
+64
+00:03:06,020 --> 00:03:08,330
+on every single iteration
+through this loop.
+
+65
+00:03:08,330 --> 00:03:10,580
+Instead, we may pick
+a smaller number,
+
+66
+00:03:10,580 --> 00:03:15,095
+let me call it m prime
+equals say, 1,000.
+
+67
+00:03:15,095 --> 00:03:21,905
+On every step, instead of using
+all 100 million examples,
+
+68
+00:03:21,905 --> 00:03:27,605
+we would pick some subset of
+1,000 or m prime examples.
+
+69
+00:03:27,605 --> 00:03:30,830
+This inner term becomes
+1 over 2m prime is
+
+70
+00:03:30,830 --> 00:03:34,270
+sum over sum m prime examples.
+
+71
+00:03:34,270 --> 00:03:38,000
+Now each iteration
+through gradient descent
+
+72
+00:03:38,000 --> 00:03:40,130
+requires looking only at the
+
+73
+00:03:40,130 --> 00:03:43,010
+1,000 rather than 100
+million examples,
+
+74
+00:03:43,010 --> 00:03:45,005
+and every step takes
+
+75
+00:03:45,005 --> 00:03:46,250
+much less time and just
+
+76
+00:03:46,250 --> 00:03:48,275
+leads to a more
+efficient algorithm.
+
+77
+00:03:48,275 --> 00:03:50,555
+What mini-batch
+gradient descent does
+
+78
+00:03:50,555 --> 00:03:53,795
+is on the first iteration
+through the algorithm,
+
+79
+00:03:53,795 --> 00:03:57,080
+may be it looks at that
+subset of the data.
+
+80
+00:03:57,080 --> 00:03:58,670
+On the next iteration,
+
+81
+00:03:58,670 --> 00:04:02,780
+maybe it looks at that subset
+of the data, and so on.
+
+82
+00:04:02,780 --> 00:04:05,455
+For the third
+iteration and so on,
+
+83
+00:04:05,455 --> 00:04:07,610
+so that every iteration
+is looking at
+
+84
+00:04:07,610 --> 00:04:09,395
+just a subset of
+
+85
+00:04:09,395 --> 00:04:12,980
+the data so each iteration
+runs much more quickly.
+
+86
+00:04:12,980 --> 00:04:16,655
+To see why this might be
+a reasonable algorithm,
+
+87
+00:04:16,655 --> 00:04:19,330
+here's the housing dataset.
+
+88
+00:04:19,330 --> 00:04:22,520
+If on the first
+iteration we were
+
+89
+00:04:22,520 --> 00:04:25,715
+to look at just
+say five examples,
+
+90
+00:04:25,715 --> 00:04:28,190
+this is not the whole
+dataset but it's slightly
+
+91
+00:04:28,190 --> 00:04:30,080
+representative of
+the string line
+
+92
+00:04:30,080 --> 00:04:31,370
+you might want to
+fit in the end,
+
+93
+00:04:31,370 --> 00:04:34,100
+and so taking one
+gradient descent step to
+
+94
+00:04:34,100 --> 00:04:35,360
+make the algorithm better fit
+
+95
+00:04:35,360 --> 00:04:37,190
+these five examples is okay.
+
+96
+00:04:37,190 --> 00:04:38,795
+But then on the next iteration,
+
+97
+00:04:38,795 --> 00:04:42,940
+you take a different five
+examples like that shown here.
+
+98
+00:04:42,940 --> 00:04:44,675
+You take one gradient
+descent step
+
+99
+00:04:44,675 --> 00:04:46,325
+using these five examples,
+
+100
+00:04:46,325 --> 00:04:48,020
+and on the next
+iteration you use
+
+101
+00:04:48,020 --> 00:04:50,890
+a different five examples
+and so on and so forth.
+
+102
+00:04:50,890 --> 00:04:53,150
+You can scan through
+this list of
+
+103
+00:04:53,150 --> 00:04:55,945
+examples from top to bottom.
+
+104
+00:04:55,945 --> 00:04:57,720
+That would be one way.
+
+105
+00:04:57,720 --> 00:04:59,285
+Another way would be if
+
+106
+00:04:59,285 --> 00:05:01,100
+on every single
+iteration you just
+
+107
+00:05:01,100 --> 00:05:05,015
+pick a totally different
+five examples to use.
+
+108
+00:05:05,015 --> 00:05:08,930
+You might remember with
+batch gradient descent,
+
+109
+00:05:08,930 --> 00:05:12,260
+if these are the contours
+of the cost function J.
+
+110
+00:05:12,260 --> 00:05:14,390
+Then batch gradient
+descent would say,
+
+111
+00:05:14,390 --> 00:05:17,045
+start here and take a step,
+
+112
+00:05:17,045 --> 00:05:18,965
+take a step, take a step,
+
+113
+00:05:18,965 --> 00:05:20,900
+take a step, take a step.
+
+114
+00:05:20,900 --> 00:05:22,685
+Every step of gradient descent
+
+115
+00:05:22,685 --> 00:05:25,160
+causes the parameters
+to reliably
+
+116
+00:05:25,160 --> 00:05:27,620
+get closer to the global minimum
+
+117
+00:05:27,620 --> 00:05:29,740
+of the cost function
+here in the middle.
+
+118
+00:05:29,740 --> 00:05:32,690
+In contrast, mini-batch
+gradient descent or
+
+119
+00:05:32,690 --> 00:05:34,460
+a mini-batch learning algorithm
+
+120
+00:05:34,460 --> 00:05:36,175
+will do something like this.
+
+121
+00:05:36,175 --> 00:05:37,655
+If you start here,
+
+122
+00:05:37,655 --> 00:05:40,955
+then the first iteration
+uses just five examples.
+
+123
+00:05:40,955 --> 00:05:42,890
+It'll hit in the
+right direction but
+
+124
+00:05:42,890 --> 00:05:45,930
+maybe not the best gradient
+descent direction.
+
+125
+00:05:45,930 --> 00:05:48,220
+Then the next iteration
+they may do that,
+
+126
+00:05:48,220 --> 00:05:49,870
+the next iteration that,
+
+127
+00:05:49,870 --> 00:05:53,605
+and that and sometimes
+just by chance,
+
+128
+00:05:53,605 --> 00:05:56,620
+the five examples you chose
+may be an unlucky choice and
+
+129
+00:05:56,620 --> 00:05:58,585
+even head in the wrong direction
+
+130
+00:05:58,585 --> 00:06:00,430
+away from the global minimum,
+
+131
+00:06:00,430 --> 00:06:02,060
+and so on and so forth.
+
+132
+00:06:02,060 --> 00:06:03,545
+But on average,
+
+133
+00:06:03,545 --> 00:06:05,650
+mini-batch gradient descent will
+
+134
+00:06:05,650 --> 00:06:08,160
+tend toward the global minimum,
+
+135
+00:06:08,160 --> 00:06:10,874
+not reliably and
+somewhat noisily,
+
+136
+00:06:10,874 --> 00:06:12,630
+but every iteration is
+
+137
+00:06:12,630 --> 00:06:15,775
+much more computationally
+inexpensive and
+
+138
+00:06:15,775 --> 00:06:19,230
+so mini-batch learning or
+mini-batch gradient descent
+
+139
+00:06:19,230 --> 00:06:21,645
+turns out to be a
+much faster algorithm
+
+140
+00:06:21,645 --> 00:06:24,045
+when you have a very
+large training set.
+
+141
+00:06:24,045 --> 00:06:26,330
+In fact, for
+supervised learning,
+
+142
+00:06:26,330 --> 00:06:28,915
+where you have a very
+large training set,
+
+143
+00:06:28,915 --> 00:06:32,395
+mini-batch learning or
+mini-batch gradient descent,
+
+144
+00:06:32,395 --> 00:06:34,435
+or a mini-batch version
+
+145
+00:06:34,435 --> 00:06:37,015
+with other optimization
+algorithms like Atom,
+
+146
+00:06:37,015 --> 00:06:40,385
+is used more common than
+batch gradient descent.
+
+147
+00:06:40,385 --> 00:06:44,155
+Going back to our reinforcement
+learning algorithm,
+
+148
+00:06:44,155 --> 00:06:48,590
+this is the algorithm that
+we had seen previously.
+
+149
+00:06:49,010 --> 00:06:52,660
+The mini-batch version
+of this would be,
+
+150
+00:06:52,660 --> 00:06:55,900
+even if you have
+stored the 10,000 most
+
+151
+00:06:55,900 --> 00:07:00,035
+recent tuples in
+the replay buffer,
+
+152
+00:07:00,035 --> 00:07:02,920
+what you might choose
+to do is not use all
+
+153
+00:07:02,920 --> 00:07:06,145
+10,000 every time
+you train a model.
+
+154
+00:07:06,145 --> 00:07:09,895
+Instead, what you might do
+is just take the subset.
+
+155
+00:07:09,895 --> 00:07:14,230
+You might choose just
+1,000 examples of these s,
+
+156
+00:07:14,230 --> 00:07:15,530
+a, R of s,
+
+157
+00:07:15,530 --> 00:07:19,480
+s prime tuples and
+use it to create
+
+158
+00:07:19,480 --> 00:07:24,400
+just 1,000 training examples
+to train the neural network.
+
+159
+00:07:24,400 --> 00:07:26,750
+It turns out that this will make
+
+160
+00:07:26,750 --> 00:07:29,740
+each iteration of training
+a model a little bit more
+
+161
+00:07:29,740 --> 00:07:32,275
+noisy but much
+faster and this will
+
+162
+00:07:32,275 --> 00:07:34,075
+overall tend to speed
+
+163
+00:07:34,075 --> 00:07:36,580
+up this reinforcement
+learning algorithm.
+
+164
+00:07:36,580 --> 00:07:39,730
+That's how mini-batching
+can speed up
+
+165
+00:07:39,730 --> 00:07:41,575
+both a supervised
+learning algorithm
+
+166
+00:07:41,575 --> 00:07:43,015
+like linear regression
+
+167
+00:07:43,015 --> 00:07:46,330
+as well as this reinforcement
+learning algorithm
+
+168
+00:07:46,330 --> 00:07:50,000
+where you may use a
+mini-batch size of say,
+
+169
+00:07:50,000 --> 00:07:53,180
+1,000 examples, even
+if you store it away,
+
+170
+00:07:53,180 --> 00:07:56,440
+10,000 of these tuples
+in your replay buffer.
+
+171
+00:07:56,440 --> 00:07:58,780
+Finally, there's one
+other refinement to
+
+172
+00:07:58,780 --> 00:08:02,200
+the algorithm that can make
+it converge more reliably,
+
+173
+00:08:02,200 --> 00:08:04,660
+which is, I've
+written out this step
+
+174
+00:08:04,660 --> 00:08:07,645
+here of Set Q equals Q_new.
+
+175
+00:08:07,645 --> 00:08:10,300
+But it turns out that this can
+
+176
+00:08:10,300 --> 00:08:13,385
+make a very abrupt change to Q.
+
+177
+00:08:13,385 --> 00:08:16,225
+If you train a new
+neural network to new,
+
+178
+00:08:16,225 --> 00:08:19,980
+maybe just by chance is not
+a very good neural network.
+
+179
+00:08:19,980 --> 00:08:22,405
+Maybe is even a little bit
+worse than the old one,
+
+180
+00:08:22,405 --> 00:08:25,775
+then you just overwrote
+your Q function
+
+181
+00:08:25,775 --> 00:08:30,840
+with a potentially worse
+noisy neural network.
+
+182
+00:08:30,840 --> 00:08:34,545
+The soft update method
+helps to prevent
+
+183
+00:08:34,545 --> 00:08:39,675
+Q_new through just one
+unlucky step getting worse.
+
+184
+00:08:39,675 --> 00:08:42,025
+In particular, the
+neural network
+
+185
+00:08:42,025 --> 00:08:44,120
+Q will have some parameters,
+
+186
+00:08:44,120 --> 00:08:45,245
+W and B,
+
+187
+00:08:45,245 --> 00:08:46,475
+all the parameters for all
+
+188
+00:08:46,475 --> 00:08:48,220
+the layers in the
+neural network.
+
+189
+00:08:48,220 --> 00:08:51,965
+When you train the
+new neural network,
+
+190
+00:08:51,965 --> 00:08:57,010
+you get some parameters
+W_new and B_new.
+
+191
+00:08:57,010 --> 00:09:00,350
+In the original algorithm S
+[inaudible] on that slide,
+
+192
+00:09:00,350 --> 00:09:08,135
+you would set W to be equal
+to W_new and B equals B_new.
+
+193
+00:09:08,135 --> 00:09:10,680
+That's what set Q
+equals Q_new means.
+
+194
+00:09:10,680 --> 00:09:12,445
+With the soft update,
+
+195
+00:09:12,445 --> 00:09:17,860
+what we do is instead
+Set W equals 0.01
+
+196
+00:09:17,860 --> 00:09:24,280
+times W_new plus 0.99
+times W. In other words,
+
+197
+00:09:24,280 --> 00:09:28,360
+we're going to make W to be
+99 percent the old version of
+
+198
+00:09:28,360 --> 00:09:33,080
+W plus one percent of
+the new version W_new.
+
+199
+00:09:33,080 --> 00:09:35,780
+This is called a
+soft update because
+
+200
+00:09:35,780 --> 00:09:39,220
+whenever we train a new
+neural network W_new,
+
+201
+00:09:39,220 --> 00:09:42,460
+we're only going to accept a
+little bit of the new value.
+
+202
+00:09:42,460 --> 00:09:45,460
+As similarly, B
+equals 0.01 times
+
+203
+00:09:45,460 --> 00:09:49,125
+B_new plus 0.99 times B.
+
+204
+00:09:49,125 --> 00:09:52,060
+These numbers, 0.01 and 0.99,
+
+205
+00:09:52,060 --> 00:09:55,075
+these are hyperparameters
+that you could set,
+
+206
+00:09:55,075 --> 00:09:59,290
+but it controls how
+aggressively you move W
+
+207
+00:09:59,290 --> 00:10:02,220
+to W_new and these two numbers
+
+208
+00:10:02,220 --> 00:10:04,355
+are expected to add up to one.
+
+209
+00:10:04,355 --> 00:10:07,510
+One extreme would be if
+you were to set W equals
+
+210
+00:10:07,510 --> 00:10:11,760
+one times W_new plus 0
+times W, in which case,
+
+211
+00:10:11,760 --> 00:10:13,910
+you're back to the
+original algorithm
+
+212
+00:10:13,910 --> 00:10:16,350
+up here where you're
+just copying W_new onto
+
+213
+00:10:16,350 --> 00:10:19,440
+W. But a soft update
+allows you to make
+
+214
+00:10:19,440 --> 00:10:23,045
+a more gradual change to Q or to
+
+215
+00:10:23,045 --> 00:10:26,425
+the neural network parameters
+W and B that affect
+
+216
+00:10:26,425 --> 00:10:31,085
+your current guess for
+the Q function Q of s, a.
+
+217
+00:10:31,085 --> 00:10:34,960
+It turns out that using
+the soft update method
+
+218
+00:10:34,960 --> 00:10:37,290
+causes the reinforcement
+learning algorithm
+
+219
+00:10:37,290 --> 00:10:39,055
+to converge more reliably.
+
+220
+00:10:39,055 --> 00:10:40,380
+It makes it less likely
+
+221
+00:10:40,380 --> 00:10:42,310
+that the reinforcement
+learning algorithm will
+
+222
+00:10:42,310 --> 00:10:46,250
+oscillate or divert or have
+other undesirable properties.
+
+223
+00:10:46,250 --> 00:10:49,465
+With these two final
+refinements to the algorithm,
+
+224
+00:10:49,465 --> 00:10:51,275
+mini-batching, which actually
+
+225
+00:10:51,275 --> 00:10:53,680
+applies very well to
+supervise learning as well,
+
+226
+00:10:53,680 --> 00:10:55,135
+not just reinforcement learning,
+
+227
+00:10:55,135 --> 00:10:57,515
+as well as the idea
+of soft updates,
+
+228
+00:10:57,515 --> 00:10:59,555
+you should be able to get
+your lunar algorithm to
+
+229
+00:10:59,555 --> 00:11:02,035
+work really well on
+the Lunar Lander.
+
+230
+00:11:02,035 --> 00:11:05,830
+The Lunar Lander is actually
+a decently complex,
+
+231
+00:11:05,830 --> 00:11:08,570
+decently challenging
+application and so that
+
+232
+00:11:08,570 --> 00:11:11,690
+you can get it to work and
+land safely on the moon.
+
+233
+00:11:11,690 --> 00:11:14,080
+I think that's actually
+really cool and I hope you
+
+234
+00:11:14,080 --> 00:11:17,120
+enjoy playing with
+the practice lab.
+
+235
+00:11:17,120 --> 00:11:20,870
+Now, we've talked a lot about
+reinforcement learning.
+
+236
+00:11:20,870 --> 00:11:23,070
+Before we wrap up, I'd
+like to share with you
+
+237
+00:11:23,070 --> 00:11:25,865
+my thoughts on the state
+of reinforcement learning
+
+238
+00:11:25,865 --> 00:11:28,240
+so that as you go out
+and build applications
+
+239
+00:11:28,240 --> 00:11:29,920
+using different machine learning
+
+240
+00:11:29,920 --> 00:11:31,355
+techniques via supervised,
+
+241
+00:11:31,355 --> 00:11:32,880
+unsupervised,
+reinforcement learning
+
+242
+00:11:32,880 --> 00:11:35,065
+techniques that you
+have a framework for
+
+243
+00:11:35,065 --> 00:11:37,190
+understanding where
+reinforcement learning
+
+244
+00:11:37,190 --> 00:11:40,135
+fits in to the world of
+machine learning today.
+
+245
+00:11:40,135 --> 00:11:43,760
+Let's go take a look at

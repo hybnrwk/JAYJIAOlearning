@@ -1,0 +1,387 @@
+1
+00:00:00,500 --> 00:00:03,375
+What is clustering?
+
+2
+00:00:03,375 --> 00:00:05,430
+A clustering algorithm looks at
+
+3
+00:00:05,430 --> 00:00:07,545
+a number of data points and
+
+4
+00:00:07,545 --> 00:00:09,945
+automatically finds
+data points that are
+
+5
+00:00:09,945 --> 00:00:12,780
+related or similar
+to each other.
+
+6
+00:00:12,780 --> 00:00:14,940
+Let's take a look
+at what that means.
+
+7
+00:00:14,940 --> 00:00:17,070
+Let me contrast clustering,
+
+8
+00:00:17,070 --> 00:00:19,910
+which is an unsupervised
+learning algorithm,
+
+9
+00:00:19,910 --> 00:00:22,475
+with what you had
+previously seen with
+
+10
+00:00:22,475 --> 00:00:25,585
+supervised learning for
+binary classification.
+
+11
+00:00:25,585 --> 00:00:32,670
+Given a dataset like this
+with features x_1 and x_2.
+
+12
+00:00:32,670 --> 00:00:36,665
+With supervised learning, we
+had a training set with both
+
+13
+00:00:36,665 --> 00:00:41,080
+the input features x as
+well as the labels y.
+
+14
+00:00:41,080 --> 00:00:44,750
+We could plot a dataset
+like this and fit, say,
+
+15
+00:00:44,750 --> 00:00:46,790
+a logistic regression
+algorithm or
+
+16
+00:00:46,790 --> 00:00:50,635
+a neural network to learn a
+decision boundary like that.
+
+17
+00:00:50,635 --> 00:00:53,960
+In supervised learning,
+the dataset included
+
+18
+00:00:53,960 --> 00:00:57,955
+both the inputs x as well
+as the target outputs y.
+
+19
+00:00:57,955 --> 00:01:01,280
+In contrast, in
+unsupervised learning,
+
+20
+00:01:01,280 --> 00:01:05,060
+you are given a dataset
+like this with just x,
+
+21
+00:01:05,060 --> 00:01:08,770
+but not the labels or
+the target labels y.
+
+22
+00:01:08,770 --> 00:01:11,180
+That's why when I
+plot a dataset,
+
+23
+00:01:11,180 --> 00:01:12,890
+it looks like this,
+
+24
+00:01:12,890 --> 00:01:15,410
+with just dots rather
+than two classes
+
+25
+00:01:15,410 --> 00:01:19,015
+denoted by the x's and the o's.
+
+26
+00:01:19,015 --> 00:01:21,960
+Because we don't have
+target labels y,
+
+27
+00:01:21,960 --> 00:01:23,690
+we're not able to tell
+
+28
+00:01:23,690 --> 00:01:27,425
+the algorithm what is
+the "right answer,
+
+29
+00:01:27,425 --> 00:01:29,815
+y" that we wanted to predict.
+
+30
+00:01:29,815 --> 00:01:32,600
+Instead, we're going to
+ask the algorithm to
+
+31
+00:01:32,600 --> 00:01:35,080
+find something interesting
+about the data,
+
+32
+00:01:35,080 --> 00:01:36,860
+that is to find some interesting
+
+33
+00:01:36,860 --> 00:01:38,950
+structure about this data.
+
+34
+00:01:38,950 --> 00:01:42,320
+But the first unsupervised
+learning algorithm
+
+35
+00:01:42,320 --> 00:01:46,310
+that you learn about is called
+a clustering algorithm,
+
+36
+00:01:46,310 --> 00:01:48,440
+which looks for one
+particular type
+
+37
+00:01:48,440 --> 00:01:50,405
+of structure in the data.
+
+38
+00:01:50,405 --> 00:01:53,510
+Namely, look at the dataset
+like this and try to
+
+39
+00:01:53,510 --> 00:01:57,920
+see if it can be
+grouped into clusters,
+
+40
+00:01:57,920 --> 00:02:01,540
+meaning groups of points that
+are similar to each other.
+
+41
+00:02:01,540 --> 00:02:04,025
+A clustering algorithm,
+in this case,
+
+42
+00:02:04,025 --> 00:02:06,065
+might find that this dataset
+
+43
+00:02:06,065 --> 00:02:09,935
+comprises of data from
+two clusters shown here.
+
+44
+00:02:09,935 --> 00:02:12,460
+Here are some applications
+of clustering.
+
+45
+00:02:12,460 --> 00:02:15,635
+In the first week of
+the first course,
+
+46
+00:02:15,635 --> 00:02:17,465
+you heard me talk about
+
+47
+00:02:17,465 --> 00:02:20,005
+grouping similar news
+articles together,
+
+48
+00:02:20,005 --> 00:02:24,420
+like the story about Pandas
+or market segmentation,
+
+49
+00:02:24,420 --> 00:02:26,675
+where at deeplearning.ai,
+
+50
+00:02:26,675 --> 00:02:30,170
+we discovered that there
+are many learners that come
+
+51
+00:02:30,170 --> 00:02:33,740
+here because you may want
+to grow your skills,
+
+52
+00:02:33,740 --> 00:02:36,305
+or develop your careers,
+
+53
+00:02:36,305 --> 00:02:38,675
+or stay updated with
+
+54
+00:02:38,675 --> 00:02:41,930
+AI and understand how it
+affects your field of work.
+
+55
+00:02:41,930 --> 00:02:44,570
+We want to help
+everyone with any of
+
+56
+00:02:44,570 --> 00:02:49,150
+these skills to learn
+about machine learning,
+
+57
+00:02:49,150 --> 00:02:51,859
+or if you don't fall into
+one of these clusters,
+
+58
+00:02:51,859 --> 00:02:53,525
+that's totally fine too.
+
+59
+00:02:53,525 --> 00:02:56,330
+I hope deeplearning.ai and
+
+60
+00:02:56,330 --> 00:02:57,860
+Stanford Online's materials will
+
+61
+00:02:57,860 --> 00:02:59,450
+be useful to you as well.
+
+62
+00:02:59,450 --> 00:03:03,680
+Clustering has also been
+used to analyze DNA data,
+
+63
+00:03:03,680 --> 00:03:08,300
+where you will look at the
+genetic expression data from
+
+64
+00:03:08,300 --> 00:03:10,760
+different individuals
+and try to group them
+
+65
+00:03:10,760 --> 00:03:15,325
+into people that
+exhibit similar traits.
+
+66
+00:03:15,325 --> 00:03:21,740
+I find astronomy and space
+exploration fascinating.
+
+67
+00:03:21,740 --> 00:03:24,500
+One application that
+I thought was very
+
+68
+00:03:24,500 --> 00:03:27,290
+exciting was astronomers using
+
+69
+00:03:27,290 --> 00:03:30,950
+clustering for astronomical
+data analysis to
+
+70
+00:03:30,950 --> 00:03:33,650
+group bodies in
+space together for
+
+71
+00:03:33,650 --> 00:03:37,440
+their own analysis of
+what's going on in space.
+
+72
+00:03:37,490 --> 00:03:40,265
+One of the applications I found
+
+73
+00:03:40,265 --> 00:03:43,430
+fascinating was
+astronomers using
+
+74
+00:03:43,430 --> 00:03:48,860
+clustering to group bodies
+together to figure out which
+
+75
+00:03:48,860 --> 00:03:51,350
+ones form one galaxy or
+
+76
+00:03:51,350 --> 00:03:55,685
+which one form coherent
+structures in space.
+
+77
+00:03:55,685 --> 00:03:58,910
+Clustering today
+is used for all of
+
+78
+00:03:58,910 --> 00:04:02,155
+these applications
+and many more.
+
+79
+00:04:02,155 --> 00:04:03,785
+In the next video,
+
+80
+00:04:03,785 --> 00:04:04,955
+let's take a look at
+
+81
+00:04:04,955 --> 00:04:07,520
+the most commonly used
+clustering algorithm
+
+82
+00:04:07,520 --> 00:04:09,545
+called the k-means algorithm,
+
+83
+00:04:09,545 --> 00:04:12,570
+and let's take a look

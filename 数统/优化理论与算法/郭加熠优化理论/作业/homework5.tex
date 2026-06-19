@@ -1,0 +1,130 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage[longend,ruled,linesnumbered]{algorithm2e}
+\usepackage{fancyhdr}
+\usepackage{ctex}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+
+\begin{document}
+
+
+\title{
+{《优化理论与算法》第 5 次作业
+}
+}
+\date{}
+
+% \author{
+% 姓名：\underline{你的名字}~~~~~~
+% 学号：\underline{你的学号}~~~~~~}
+
+\maketitle
+
+\begin{itemize}
+	\item 作业截止于{\bf 周五（4/10/2026）}，在Canvas系统中提交PDF或照片文件
+	\item 作业题目的tex文件可以在Canvas中下载
+	\item 鼓励相互讨论，但不要抄袭.
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{阅读与积累}
+\paragraph{1.1}
+\begin{itemize}
+	\item 阅读Bertsimas and Tsitsikils，也就是Introduction to Linear Optimization教材，第4.1-4.4节、5.1-5.2节相关内容。
+\end{itemize}
+
+\section{习题}
+
+\paragraph{2.1}
+考虑以下线性规划问题：
+\begin{align*}
+\min \;&\quad x_1 - x_2 \\
+\text{s.t.} \;&\quad2x_1 + 3x_2 - x_3 + x_4 \leq 0 \\
+ \;&\quad3x_1 + x_2 + 4x_3 - 2x_4 \geq 3 \\
+ \;&\quad-x_1 - x_2 + 2x_3 + x_4 = 6 \\
+ \;&\quad x_1 \leq 0, x_2 \text{ 无约束 }, x_3 \geq 0, x_4 \text{ 无约束 }
+\end{align*}
+
+写出相应的对偶问题。
+
+\paragraph{2.2}
+考虑以下线性规划问题：
+
+\begin{align*}
+   \max \quad &\; 3x_1 + 2x_2\\
+   s.t.\quad &\;x_1 + x_2 \leq 4 \\
+&\;2x_1 + x_2 \leq 5 \\
+&\;x_1, x_2 \geq 0
+\end{align*}
+利用互补松弛条件判断下列解是否是最优解
+\begin{itemize}
+    \item 判断解\( x_1 = 1 \)，\( x_2 = 3 \)是否是最优解
+    \item 判断解\( x_1 = 2 \)，\( x_2 = 1 \)是否是最优解
+\end{itemize}
+
+\paragraph{2.3}
+试证明：线性系统$Ax=b, x \geq 0$无解，只需找的某可行解$y$使之满足$A^Ty\geq0, b^Ty<0$.
+
+
+\paragraph{2.4}
+(1)利用单纯形法求解如下线性规划
+\begin{equation*}
+\begin{array}{lllll@{}ll}
+\text{maximize}  & 2x_1+4x_2+x_3+x_4 &\\
+\text{subject to}& x_1+3x_2 +x_4    &\leq 4 \\
+&2x_1 +x_2   &\leq 3  \\
+&x_2 +4x_3+x_4   &\leq 3  \\
+&x_1,x_2,x_3,x_4 \geq 0 &  
+\end{array}
+\end{equation*}
+
+(2)在（1）求解的最优基的基础上，$b=[4, 3, 3]^T$ 中每个元素在什么范围内变动，可以保持最优基不变呢？（假设某一个元素变动时，其他元素不变）
+
+(3)在（1）求解的最优解的基础上，$c=[2,4,1,1]^T$中每个元素在什么范围内变动，可以保持最优解不变呢？（假设某一个元素变动时，其他元素不变）
+
+
+
+ \paragraph{2.5}
+考虑课件dual3对偶理论的应用，P26展示了排产问题(P27求解到最优解的单纯形表)
+ \begin{enumerate}
+ 	\item 若新增某生产产品，使得A矩阵新增一列，并带来新的利润。此时，原问题改变为
+ 	\begin{equation*}
+ 	\begin{array}{lllll@{}ll}
+ 	\text{maximize}  & x_1&+2x_2 &+3x_3&\\
+\text{subject to}& x_1 &&+x_3    &\leq 100 \\
+	&  &2x_2  &+x_3  &\leq 200 \\
+ 	&x_1 &+x_2  &+x_3  &\leq 150  \\
+ 	&x_1 \geq 0, &x_2 \geq 0, &x_3 \geq 0& 
+ 	\end{array}
+ 	\end{equation*}
+ 	请利用灵敏度分析，找到如上问题最优解。
+	
+	
+ 	\item 若新增产能约束，使得A矩阵新增一行。此时，原问题改变为
+ 	\begin{equation*}
+ 	\begin{array}{lllll@{}ll}
+ 	\text{maximize}  & x_1&+2x_2 &\\
+ 	\text{subject to}& x_1 &  &\leq 100 \\
+ 	&  &2x_2    &\leq 200 \\
+	&x_1 &+x_2   &\leq 150  \\
+ 	&4x_1 &+x_2   &\leq 250  \\
+	&x_1 \geq 0, &x_2 \geq 0 &
+ 	\end{array}
+ 	\end{equation*}
+	请利用灵敏度分析，找到如上问题最优解。
+		
+	
+ \end{enumerate}
+
+
+
+
+\end{document}

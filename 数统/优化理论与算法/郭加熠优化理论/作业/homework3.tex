@@ -1,0 +1,142 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage[longend,ruled,linesnumbered]{algorithm2e}
+\usepackage{fancyhdr}
+\usepackage{ctex}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+
+\begin{document}
+
+
+\title{
+{《优化理论与算法》第 3 次作业
+}
+
+}
+\date{}
+
+% \author{
+% 姓名：\underline{你的名字}~~~~~~
+% 学号：\underline{你的学号}~~~~~~}
+
+\maketitle
+
+\begin{itemize}
+	\item 作业截止于{\bf 周五（3/27/2026）}，在Canvas系统中提交PDF或照片文件
+	\item 作业题目的tex文件可以在Canvas中下载
+	\item 鼓励相互讨论，但不要抄袭.
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{阅读与积累}
+\paragraph{1.1}
+\begin{itemize}
+	\item 阅读Bertsimas and Tsitsikils，也就是Introduction to Linear Optimization教材，第二章与第3.1,3.2节相关内容。
+\end{itemize}
+
+\section{习题}
+
+
+\paragraph{2.1}
+考虑如下线性规划标准型
+\begin{equation*}
+\begin{array}{lllll@{}ll}
+\text{minimize}  & c^Tx\\
+\text{subject to}&Ax=b \\
+&x \geq 0
+\end{array}
+\end{equation*}
+
+给定如下$A$和$b$的形式:
+\[ A= \left[\begin{array}{c c c c c}
+1 & 1& -1 & 2 & 1 \\4 & 2 & -2 &1 & 3 \\ 0 & 2 & 3 &-3 &1
+\end{array}\right], b= \left[\begin{array}{c }
+4  \\12 \\ 4
+\end{array}\right] \]
+\begin{enumerate}
+    \item 下列哪组解是基本可行解? 
+\[ x^{(1)}= \left[\begin{array}{c } 2  \\2 \\ 0 \\0 \\0 \end{array}\right],
+x^{(2)}=\left[\begin{array}{c } 6  \\0 \\ 4 \\2 \\-2 \end{array}\right] ,
+x^{(3)}=\left[\begin{array}{c } 0  \\0 \\ 0 \\0 \\4 \end{array}\right] ,
+x^{(4)}=   \left[\begin{array}{c } 1  \\1 \\ 0 \\0 \\2 \end{array}\right],
+x^{(5)}=   \left[\begin{array}{c } 0  \\4 \\ -\frac{8}{3} \\-\frac{4}{3} \\0 \end{array}\right]  \]
+\item 找出所有的基本解和基本可行解
+\end{enumerate}
+
+\paragraph{2.2}
+Bertsimas and Tsitsikils书中第一章课后题2.10.\textbf{问题描述} 考虑标准形式的多面体：
+\[
+P = \{ x \mid Ax = b, x \geq 0 \}。
+\]
+假设矩阵 \( A \) 的维度为 \( m \times n \)，且其行向量是线性无关的。对于以下每个陈述，判断其真伪。如果陈述为真，请给出证明；如果陈述为假，请提供一个反例。
+
+\begin{enumerate}
+    \item[(a)] 若 \( n = m + 1 \)，则 \( P \) 至多有两个基本可行解。
+    \item[(b)] 在每个最优解处，至多有 \( m \) 个变量可以取正值。
+    \item[(c)] 如果存在多个最优解，则至少存在两个基本可行解是最优的。
+\end{enumerate}
+
+\paragraph{2.3}
+考虑以下问题
+
+\begin{align*}
+ \min \quad & -2x_1 - x_2 \\
+\text{s.t} \quad & x_1 - x_2 \leq 2 \\
+& x_1 + x_2 \leq 6 \\
+& x_1, x_2 \geq 0.
+\end{align*}
+
+
+\begin{enumerate}
+    \item[a)] 将问题转换为标准形式，并构造一个基本可行解，其中 \((x_1, x_2) = (0, 0)\)。
+    \item[b)] 从(a)部分的基本可行解开始，执行单纯形法的完整表格实现。
+    \item[c)] 绘制问题的图形表示，以原始变量 \(x_1, x_2\) 为基准，并指示单纯形算法所采取的路径。
+\end{enumerate}
+
+
+\paragraph{2.4}
+课件《单纯形法初窥》P31页所展示的线性规划，如果第一次迭代选$x_2$为入基变量，请展示后续迭代直至取到最优解。（后续迭代过程中若有多可行的入基或出基变量则序号较小的）
+
+
+
+\paragraph{2.5 (附加加分题)} 
+\textbf{问题描述}
+
+考虑全球货币市场。对于两种货币（例如日元和美元），它们之间存在一个汇率（例如，从表中可见，美元兑换日元的汇率约为 133.38）。一个无套利市场意味着不存在这样一种方法，使得通过一系列兑换（例如，美元兑换成日元，再兑换成欧元，然后兑换成英镑，最后回到美元）可以最终得到超过 1 美元的金额。
+
+\textbf{外汇市场的实际交易数据（2002年2月14日）}
+
+\begin{table}[ht]
+	\caption{外汇市场中的汇率} 
+	\centering 
+	\begin{tabular}{c c c c c c} 
+    \hline\hline
+		从 & & 美元 & 欧元 & 英镑 & 日元\\ 
+        \hline
+		兑换为 & 美元 &        & 0.8706 & 1.4279 & 0.00750 \\ 
+		兑换为 & 欧元 & 1.1486 &        & 1.6401 & 0.00861 \\
+		兑换为 & 英镑 & 0.7003 & 0.6097 &        & 0.00525 \\
+		兑换为 & 日元 & 133.38 & 116.12 & 190.45 &         \\ \hline\hline
+	\end{tabular}
+	\label{table:exchange} 
+\end{table}
+
+例如，1 美元兑换成欧元可得到 1.1486 欧元。从上表中看，套利机会并不明显，但如果没有任何转换成本，通过美元—英镑—日元—美元的路径，每兑换 1 美元可获得额外的 0.0003 美元，而如果按照美元—日元—欧元—美元的路径，每兑换 1 美元则损失约 0.0002 美元。
+
+\textbf{如何识别套利机会？}
+
+给定一个汇率表，如何构建一个线性规划模型来识别此类套利机会？
+
+\textbf{提示}：可以将货币兑换看作图上的流或路径。例如，可以定义决策变量 \( x_{ij} \) 表示将货币 \( i \) 兑换为货币 \( j \) 的金额。
+ 
+
+
+\end{document}

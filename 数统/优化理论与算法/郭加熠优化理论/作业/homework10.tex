@@ -1,0 +1,89 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage[longend,ruled,linesnumbered]{algorithm2e}
+\usepackage{fancyhdr}
+\usepackage{ctex}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+
+\begin{document}
+
+
+\title{
+{《优化理论与算法》第10次作业
+}
+}
+\date{}
+
+% \author{
+% 姓名：\underline{你的名字}~~~~~~
+% 学号：\underline{你的学号}~~~~~~}
+
+\maketitle
+\begin{itemize}
+	\item 作业截止于{\bf 周日（5/17/2026）}，在Canvas系统中提交PDF或照片文件
+	\item 作业题目的tex文件可以在Canvas中下载
+	\item 鼓励相互讨论，但不要抄袭.
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{阅读与积累}
+\paragraph{1.1}
+\begin{itemize}
+	\item 复习 Boyd and Vandenberghe，也就是 Convex Optimization 教材，章节9.1，9.3相关
+\end{itemize}
+
+\section{迭代算法}
+
+\paragraph{2.1} 假设$e(x^k)$ 是算法第$k$次迭代点 $x^k$的误差。下列误差的迭代复杂度（写成大O形式）与收敛速率分别是什么？
+\begin{enumerate}
+	\item[(a)] $e(x_k)=1/4^{\lfloor k/2 \rfloor}$
+	\item[(b)] $e(x_k)=\sqrt{5}/2^{2^{k}}$
+	\item[(c)] $e(x_k)=100/k$
+	\item[(d)] $e(x_k)=\begin{cases}
+	\frac{1}{k^2} & \quad \text{if } k \leq 50  \\  0.895^k & \quad \text{if } k>50 
+	\end{cases}$
+\end{enumerate}
+利用Python或Matlab画图，类似课件P15页，将4种误差画在同一个图里面，要求一张图的坐标轴采用正常比例尺，另一张图的$y$轴采用semilogy的方式作图。
+
+
+\section{梯度下降法}
+\paragraph{3.1} 如课件（P16），考虑2维2次函数优化问题:
+$$\min_x f(x)=\frac{1}{2}\left(x_1^2+\gamma x_2^2\right)$$
+其中，$\gamma \geq 1$。当选取初始点$x^{0}=(\gamma,1)$时，试证明采用精准线搜索时，有下式成立
+$$\frac{\|{x_k-x^*}\|_2}{\|{x_0-x^*}\|_2}=
+\left(\frac{\gamma-1}{\gamma+1}\right)^k$$
+
+
+\paragraph{3.2} 考虑教材9.3.2中的函数
+$$f(x_1, x_2) = e^{x_1+3x_2−0.1} + e^{x_1−3x_2−0.1} + e^{−x_1−0.1}$$
+\begin{enumerate}
+	\item 最优值$f^*$与最优解$x^*$分别是什么?
+	\item 利用回溯线搜索（$\alpha=0.1$, $\beta=0.7$）求解，可设置初始点为$x^0=(0,0)$。请画出$f(x^k)-f^*$随着迭代次数$k$变化的图像（semilogy形式，展示30次迭代就可以）。 
+    注意：你可以利用Matlab或Python自行画图，并将相关代码附在作业后面。
+\end{enumerate}
+
+\paragraph{3.3 (附加加分题)}  假设函数是$f$是凸的且$L$-光滑，试证明
+$$\left(\nabla f(x)-\nabla f(y)\right)^T(x-y) \geq \frac{1}{L} ||\nabla f(x)-\nabla f(y)||_2^2$$
+
+\paragraph{3.4} 证明课件梯度下降法课件P34中的定理。提示：
+\begin{itemize}
+	\item[a] 构建$h(x)=f(x)-\frac{\mu}{2}x^Tx$。利用\textbf{3.3}证明如下性质：
+    $$(\nabla f(x) -\nabla f(y))^T(x-y) \geq \frac{\mu L}{\mu+L} \|x-y\|_2^2+\frac{1}{\mu+L}\|\nabla f(x) - \nabla f(y)\|^2_2$$
+	\item[b] 开始证明定理，可以从下式开始
+    $$\|x^{k+1}-x^*\|_2^2=\|(x^k-x^*)-t\nabla f(x)\|_2^2$$
+\end{itemize}
+
+
+\section{次梯度下降法}
+\paragraph{4.1} 证明$\partial f(x)$是凸集合。 
+
+
+\end{document}

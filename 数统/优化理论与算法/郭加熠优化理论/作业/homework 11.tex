@@ -1,0 +1,81 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage[longend,ruled,linesnumbered]{algorithm2e}
+\usepackage{fancyhdr}
+\usepackage{ctex}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+
+\begin{document}
+
+
+\title{
+{《优化理论与算法》第11次作业
+}
+}
+\date{}
+
+% \author{
+% 姓名：\underline{你的名字}~~~~~~
+% 学号：\underline{你的学号}~~~~~~}
+
+\maketitle
+\begin{itemize}
+	\item 作业截止于{\bf 周五（5/22/2026）}，在Canvas系统中提交PDF或照片文件
+	\item 作业题目的tex文件可以在Canvas中下载
+	\item 鼓励相互讨论，但不要抄袭.
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\paragraph{2.1} 计算$P_C\left(\begin{bmatrix}
+1 \\
+2
+\end{bmatrix}\right)$， 其中$C=\{x \in \mathbb{R}^2|x_1^2+4x_2^2 \leq 4 \}$是个椭圆。
+
+\paragraph{2.2}给定二阶锥 $C=\{(x,t)\in \mathbb R^n\times \mathbb{R}\mid\|x\|_2\le t\}$，试证
+$$P_C(v,s)=\left\{\begin{array}{ll}0&\|v\|_2\le-s\\
+(v,s)&\|v\|_2\le s\\
+\frac{1}{2}(1+\frac{s}{\|v\|_2})(v,\|v\|_2)&\|v\|_2\ge|s|
+\end{array}\right. $$
+提升: 你可以从如下式子开始，并使用KKT定理。
+\begin{align*}
+\min_{x,t}\quad & \frac{1}{2} \|x-v\|^2_2+\frac{1}{2} \|t-s\|^2_2 \\
+\text{s.t.} \quad & \|x\|_2\leq t
+\end{align*}
+
+\paragraph{2.3} 给定$f(x)=\|x\|_2^2$，计算${\rm prox}_{tf}(x)$ 。
+
+
+
+\paragraph{2.4}
+考虑如下函数 $$f(x)=\frac{1}{2}(x_1+2x_2-3)^2-\sum_{i=1}^2 \log(x_i).$$
+假设起始点$x_0=(10,10)$，步长为$t_0=1$。 
+\begin{itemize}
+	\item 展示一次梯度下降法迭代
+	\item 展示一次近端梯度下降法迭代 ($h(x)=-\sum_{i=1}^2 \log(x_i)$)
+\end{itemize}
+
+\paragraph{2.5} 考虑如下函数
+$$f(x)=\frac{1}{2}x^TAx+b^Tx+\lambda \|x\|_1$$
+其中，$b$为从$[-1,1]^n$中随机生成的向量，$A$为随机凸对称矩阵。$A$的构造方法考虑令$A=B^TB+D$，其中$B$为随机稀疏矩阵，$D$为非负对角矩阵用来控制$A$矩阵条件数。你可以自己选择合适的$n$及其他生成参数。
+
+编程实现下列方法：
+\begin{itemize}
+	\item 次梯度下降法
+	\item 近端梯度法
+	\item 加速近端梯度法（FISTA）
+	\item 下降版本的FISTA方法
+	\item 重启版本的FISTA方法
+\end{itemize}
+选取三个不同的$\lambda$绘制三张图，每幅图中绘制目标函数值与迭代次数的关系
+
+
+
+\end{document}

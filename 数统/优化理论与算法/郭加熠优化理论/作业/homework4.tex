@@ -1,0 +1,93 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage[longend,ruled,linesnumbered]{algorithm2e}
+\usepackage{fancyhdr}
+\usepackage{ctex}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+
+\begin{document}
+
+
+\title{
+{《优化理论与算法》第 {$4$} 次作业
+}
+}
+\date{}
+
+% \author{
+% 姓名：\underline{你的名字}~~~~~~
+% 学号：\underline{你的学号}~~~~~~}
+
+\maketitle
+
+\begin{itemize}
+	\item 作业截止于{\bf 周五（4/3/2026）}，在Canvas系统中提交PDF或照片文件
+	\item 作业题目的tex文件可以在Canvas中下载
+	\item 鼓励相互讨论，但不要抄袭.
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{阅读与积累}
+\paragraph{1.1}
+\begin{itemize}
+	\item 阅读Bertsimas and Tsitsikils，也就是Introduction to Linear Optimization教材，第3章与第4.1-4.4节相关内容。
+\end{itemize}
+
+\section{习题}
+
+
+\paragraph{2.1}
+在利用表格法求解线性规划过程中，假设当前基为 $B=\{3,4,5\}$有如下表格：
+\begin{center}
+	\begin{tabular}{|c| c c c c c |c|} 
+		\hline
+		B & $\delta$ &-2 &0 &0 &0 & -10 \\
+		\hline
+		3 & -1 & $\eta$ &1 &0 &0 & 4 \\
+		4 & $\alpha$ & -4 &0 &1 &0 & 1 \\
+		5 & $\gamma$ & 3 &0 &0 &1 & $\beta$ \\
+		\hline
+	\end{tabular}
+\end{center}
+其中，$\alpha$, $\beta$, $\gamma$, $\delta$, $\eta$为表中未知参数。请给出下面命题成立时$(\alpha, \beta, \gamma, \delta, \eta)$的取值范围
+\begin{enumerate}
+	\item 当前解是可行解，但不是最优解
+	\item 问题是无界问题
+	\item 当前解是最优解
+\end{enumerate}
+
+\paragraph{2.2}
+利用两阶段法求解如下线性规划
+
+\begin{equation*}
+\begin{array}{lllll@{}ll}
+\text{minimize}  & -3x_1&+x_2&-2x_3 &\\
+\text{subject to}& x_1 &+3x_2  &+x_3  &\leq 5 \\
+&2x_1 &-x_2 & +x_3  & \geq 2  \\
+&4x_1 &+3x_2 &-2x_3   & =5  \\
+&x_1 \geq 0, &x_2 \geq 0, & x_3 \geq 0 &  
+\end{array}
+\end{equation*}
+
+\paragraph{2.3}
+利用两阶段法求解如下线性规划
+
+\begin{equation*}
+\begin{array}{lllll@{}ll}
+\text{maximize}  & x_1&-x_2&+x_3 &\\
+\text{subject to}& 2x_1 &-x_2  &-2x_3  &\leq 4 \\
+&2x_1 &-3x_2 & -x_3  & \leq -5  \\
+&-x_1 &+x_2 &+x_3   & \leq -1  \\
+&x_1 \geq 0, &x_2 \geq 0, & x_3 \geq 0 &  
+\end{array}
+\end{equation*}
+
+\end{document}

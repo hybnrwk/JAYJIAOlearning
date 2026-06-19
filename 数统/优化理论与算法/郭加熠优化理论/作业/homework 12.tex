@@ -1,0 +1,144 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage[longend,ruled,linesnumbered]{algorithm2e}
+\usepackage{fancyhdr}
+\usepackage{ctex}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+
+\begin{document}
+
+
+\title{
+{《优化理论与算法》第12次作业
+}
+}
+\date{}
+
+% \author{
+% 姓名：\underline{你的名字}~~~~~~
+% 学号：\underline{你的学号}~~~~~~}
+
+\maketitle
+\begin{itemize}
+	\item 作业截止于{\bf 周五（6/5/2026）}，在Canvas系统中提交PDF或照片文件
+	\item 作业题目的tex文件可以在Canvas中下载
+	\item 鼓励相互讨论，但不要抄袭.
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\section{一阶算法}
+
+\paragraph{1.1}  给定$\lambda>0, x\in \mathbb{R}^n$，考虑如下函数形式（岭回归问题）
+$$\min f(x)=\frac{1}{2} \|Ax-b\|^2_2+\lambda \|x\|_2^2$$
+\begin{itemize}
+	\item 最优解$x^*$的显示表达式是什么?
+	\item 如果利用梯度下降法，其迭代算法框架是什么？
+	\item 如果利用随机梯度下降法，其迭代算法框架是什么？
+	\item 对比上述三种方法的优劣。
+\end{itemize}
+
+
+\paragraph{1.2} 总结这段时间学习的所有一阶方法。总结内容，包括方法适用场景，步长的选取方法，不同条件下的收敛性等，以及各个方法的优缺点。可以用文字结合表格展示。
+
+
+\section{牛顿法}
+
+\paragraph{2.1}
+其中初始点设为$x_0=0$，利用牛顿法找到函数 $f(x)=\cos(3x)-\sin(x)$ 的根。
+
+
+\section{阻尼牛顿法}
+\paragraph{3.1}《Convex Optimization》(Boyd and Vandenberghe)教材课后题9.9
+
+\paragraph{3.2}
+考虑最小化如下目标函数
+$$f(x_1,x_2)=e^{x_1+2x_2-0.1}+e^{x_1-3x_2-0.1}+e^{-x_1-0.1}.$$
+
+\begin{enumerate}
+	\item[(a)] 利用一阶最优性条件，找到最优解$x^*$与最优值$f^*$.
+	
+	\item[(b)] 考虑初始点$x_0=(5,2)$. 使用阻尼牛顿法法结合回溯线搜索（$\alpha=0.1$ and $\beta=0.5$.）进行迭代求解直到 $f(x_k)-f^*<10^{-10}$。
+
+    绘图 $f(x_k)- f^*$与迭代次数$k$的关系
+	
+	\item[(c)] 牛顿法计算每次迭代计算海森矩阵的逆矩阵耗时较多，在求解大规模问题中常用以下两种估计方法：
+	
+	\begin{itemize}
+		\item 重复利用海森矩阵：每次$N$次迭代记录一次当前点的海森矩阵，然后重复利用该矩阵当做“真实”的海森矩阵进行迭代$N$次，之后更新海森矩阵，以此类推。		
+		\item 对角估计：将海森矩阵用其对角元进行估计。也就是，每次迭代仅求解$n$个二阶导数
+        $\frac{\partial^2 f(x)}{\partial x_i^2}$，利用该对角矩阵修正$-\nabla f(x)$方向。用这个方法，可以减少运行时间和储存成本。	
+	\end{itemize}
+对上述两种改进阻尼牛顿法，对(b)中问题进行求解，将其求解结果与常规的阻尼牛顿法进行比较。
+\end{enumerate}
+
+
+
+
+\section{拟牛顿法}
+
+\paragraph{4.1}
+线搜索是优化方法中的一个重要步骤。我们已经了解了基本的回溯线搜索(\textbf{Armijo-Wolfe 线搜索})是一种重要的非精确线搜索。假设我们希望找到 $t$，使得
+$f(x_k+t_kd_k) \approx \min_{t} f(x_k+td_k)$，
+其中 $d_k$ 是第 $k$ 步的搜索方向；在梯度法中，$d_k=-\nabla f(x)$，而在牛顿法中，$d_k=-\nabla^2 f(x)^{-1} \nabla f(x)$。
+
+更进一步，为了描述这些线搜索条件，取参数 $0<c_1<c_2<1$，得到两个条件
+
+
+$$\textbf{充分下降条件：} f(x_k+t_k d_k) \leq f(x_k) +c_1t_k\nabla f(x_k)^T d_k$$
+
+$$\textbf{曲率条件：} \nabla f(x_k+t_kd_k)^Td_k \geq c_2 \nabla f(x_k)^Td_k$$
+
+(如果定义 $g(t)=f(x_k+td_k)$，那么曲率条件就是 $g'(t_k)\geq c_2 g'(0)$）
+
+这两个条件合在一起称为（弱）Wolfe 条件。可以证明，只要 $d$ 是一个下降方向，集合 $\{t\;|\; t \text{ 满足 Wolfe 条件}\}$ 就有非空的内部。[《数值优化》（Nocedal 和 Wright），第 3 章]
+
+该线搜索可以利用如下二分法求解：
+
+
+\begin{algorithm}[H]
+	\SetAlgoLined
+	
+	Initialization: Choose $0<c_1<c_2<1$, and set $t=1$, $\alpha=0$, $\beta=+\infty$\;
+	\While{True}{
+		
+		\uIf{$f(x+td)>f(x)+c_1t\nabla f(x)^T d$}{
+			set $\beta=t$ and reset $t=\frac{1}{2}(\alpha+\beta)$ \;
+		}
+		\uElseIf{$\nabla f(x+td)^Td < c_2 \nabla f(x)^Td$}{
+			set $\alpha=t$, and reset $t = \begin{cases}2 \alpha, & \mbox{if } \beta=+\infty \\ \frac{1}{2}(\alpha+\beta), & \mbox{Otherwise }\end{cases}$\
+		}
+		\Else{
+			break \;
+		}
+		
+	}
+\end{algorithm}
+
+\begin{enumerate}
+	\item[(a)] 编程实现采用Wolfe线搜索的BFGS方法，利用其求解3.2 (b)的问题，并与牛顿法进行比较。
+	
+	\item[(b)] 考虑非平滑凸问题$f(u,v)=|u|+3v^2$，利用梯度下降法与BFGS方法，采用Wolfe线搜索进行求解。如果随机生成$u_0 \neq 0$ 和 $v_0 \neq 0$的初始点, 两个方法收敛吗？ (注意：迭代过程将永远无法触及$u_i=0$区域，所以各个点都局部可微的 )
+	
+	画出$f(x_k)- f^*$ 与迭代次数 $k$直接的关系，并解释结果。
+	
+	\item[(c)] 考虑如下问题$f(u,v)=|u|^3+v+\frac{1}{2}v^2$，编程实现梯度下降法、近端梯度法、牛顿法、拟牛顿法求解，要求与上题一致。
+	
+\end{enumerate}
+
+\paragraph{4.2}
+比较一阶算法、二阶算法、与拟牛顿法的优劣。
+
+
+
+
+\end{document}

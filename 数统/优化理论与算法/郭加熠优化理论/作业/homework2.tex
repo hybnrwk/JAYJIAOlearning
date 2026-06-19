@@ -1,0 +1,132 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage[longend,ruled,linesnumbered]{algorithm2e}
+\usepackage{fancyhdr}
+\usepackage{ctex}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+
+\begin{document}
+
+
+\title{
+《优化理论与算法》第 2 次作业
+}
+
+\date{}
+
+% \author{
+% 姓名：\underline{你的名字}~~~~~~
+% 学号：\underline{你的学号}~~~~~~}
+
+\maketitle
+\maketitle
+	\begin{itemize}
+\item 作业截止于{\bf 周五（3/20/2026）}，在Canvas系统中提交PDF或照片文件
+\item 作业题目的tex文件可以在Canvas中下载
+\item 鼓励相互讨论，但不要抄袭.
+\end{itemize}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+
+
+\section{复习与积累}
+\paragraph{1.1}
+\begin{itemize}
+\item 阅读Bertsimas and Tsitsikils，也就是Introduction to Linear Optimization教材，第一章相关内容。
+\item  收看同名超星线上慕课，课程章节4.2内容，快速预习单纯形法相关内容。
+\end{itemize}
+
+\section{习题}
+
+
+\paragraph{2.1}
+设矩阵 $ A $ 为：
+\[
+A = \begin{bmatrix} 
+3 & 2  \\
+2 & 4 
+\end{bmatrix}
+\]
+
+\begin{enumerate}
+    \item $A$矩阵的特征值是什么？
+    \item 如何将$A$矩阵对角化？($A=U\Lambda U^T$，其中$U$为正交矩阵)
+    \item $A$是否为正定矩阵？
+\end{enumerate}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+
+
+\paragraph{2.2}
+
+下列约束是否是线性约束？如果不是线性约束，能否将其等价转换成线性约束？如果能转化，请展示；如果不能，说明原因。
+\begin{enumerate}
+	
+	\item $ -3x_1-5x_2+22 \geq 18$
+	
+	\item $2x_1^2 -8 \leq 0$
+	
+	\item $x_1x_2-3x_1-x_2+3=0$
+	
+	\item $\frac{3x_1-2x_2}{2x_1+1} = 4$
+	
+	\item $e^{3x_1+5x_2} \geq 12$
+	
+	\item $|x| \leq 3$
+	
+	\item $\max\{x_1, -x_1+7x_2, x_2^3\} \leq 8$
+	
+	\item $\min\{2x_1,3x_2\} \geq \max\{10-x_1,6-x_2\}$
+	
+	
+\end{enumerate}
+
+\paragraph{2.3}
+将下列线性规划转换成标准型
+\begin{equation*}
+	\begin{aligned}
+	\text{minimize}  & -x_1&+7x_2 &+3x_3 &\\
+	\text{subject to}& x_1 &+3x_2  &-2x_3    &\leq 0 \\
+	&x_1 &+4x_2  &-2x_3  &\geq 0  \\
+	&-x_1 &+2x_2  &+3x_3    &=  5  \\
+	&x_1 \leq 0, &x_2 \geq 0, &x_3  \text{无约束}&  
+	\end{aligned}
+\end{equation*}
+
+
+
+
+\paragraph{2.4}
+课件“lp2工业生产案例”的P29中总结了允许延迟交付的模型。此模型没有考虑物料清单树的影响，也就是生产量$x_{ij}$只消耗产能，相互之间不作为生产的物料消耗。
+
+请问在考虑物料清单树的情况下，如何修改此模型的一般形式？（注：可以假设已知参数$u_{i'i}$表述生产1单位物料$i'$消耗物料$i$的数量。）
+
+\paragraph{2.5}
+Bertsimas and Tsitsikils 书中第一章课后题 1.15 
+(hint: (b) if one or both elements are not easy to incorporate into the linear programming formulation, you might consider integer decision variables or nonlinear constraints.)
+
+
+\paragraph{2.6}
+课件“运筹学简介”的P20中介绍了不能完全可分情况下的支持向量机的建模方法。请随机生成10个2维点作为A集合，再随机生成10个2维点作为B集合。建立课件所示线性规划模型，利用COPT求解此问题最优解。提交资料：
+
+\begin{itemize}
+	\item 绘制图像：画出A、B集合中的所有点和优化求解所得分隔线（如课件图所示），
+	
+	\item 代码打印附在作业后面
+\end{itemize}
+
+
+（注：在随机生成的2维点$(x_1,x_2)$过程中，可以自己定义A集合和B集合点的区间，点在区间内可以是均匀分布。只要生成结果是课件中不可分情况就可以）
+
+
+
+\end{document}

@@ -1,0 +1,96 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage[longend,ruled,linesnumbered]{algorithm2e}
+\usepackage{fancyhdr}
+\usepackage{ctex}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+
+\begin{document}
+
+
+\title{
+{《优化理论与算法》第7次作业
+}
+}
+\date{}
+
+% \author{
+% 姓名：\underline{你的名字}~~~~~~
+% 学号：\underline{你的学号}~~~~~~}
+
+\maketitle
+\begin{itemize}
+	\item 作业截止于{\bf 周五（4/24/2025）}，在Canvas系统中提交PDF或照片文件
+	\item 作业题目的tex文件可以在Canvas中下载
+	\item 鼓励相互讨论，但不要抄袭.
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{阅读与积累}
+\paragraph{1.1}
+\begin{itemize}
+	\item 复习 Boyd and Vandenberghe，也就是 Convex Optimization 教材，章节 2.1-2.5 与 3.1相关内容。预习章节3.2-3.4。
+\item 收看同名超星线上慕课章节2.1内容。
+\end{itemize}
+
+\section{习题}
+\paragraph{2.1}
+设$C\subseteq\mathbb{R}^n$为一个凸集且$x_1,...,x_k \in C$。令$\theta_1,...,\theta_k \in \mathbb{R}$满足$\theta_i \geq 0, \;\sum_{i=1}^k \theta_i=1$。证明$\sum_{i=1}^k\theta_i x_i\in C$。（凸性定义是指此式在$k=2$时成立；你需证明对任意$k$的情况。）提示对$k$归纳。
+
+
+\paragraph{2.2}
+下面集合是否为凸集合？如果是，则证明之；如果不是，请找出反例。
+\begin{itemize}
+\item[(a)] $C=\{x \in \mathbb{R}^n: x^Tx \leq 1\}$
+    \item[(b)] $C =\{(x_1,x_2) \in \mathbb{R}^2 : x_1 x_2 \leq 1, x_1 < 0\}$ 
+    \item[(c)] $C=\{A \in \mathbb{R}^{4 \times 4} : \text{rank}(A) \leq  2\}$
+\end{itemize}
+
+\paragraph{2.3}
+下面集合是否为凸集合？如果是，则证明之；如果不是，请找出反例。
+
+\begin{itemize}
+  \item[(a)] 平板，即形如 $\{x \in \mathbb{R}^n \mid \alpha \leq a^T x \leq \beta\}$ 的集合。
+  
+  \item[(b)] 矩形，即形如 $\{x \in \mathbb{R}^n \mid \alpha_i \leq x_i \leq \beta_i,\ i = 1, \dots, n\}$ 的集合。当 $n > 2$ 时，矩形有时也称为超矩形。
+  
+  \item[(c)] 楔形，即 $\{x \in \mathbb{R}^n \mid a_1^T x \leq b_1,\ a_2^T x \geq b_2\}$。
+  
+  \item[(d)] 距离给定点比距离给定集合近的点构成的集合，即
+  \[
+  \{x \mid \|x - x_0\|_2 \leq \|x - y\|_2,\ \forall y \in S\},
+  \]
+  其中 $S \subset \mathbb{R}^n$。
+  
+  \item[(e)] 距离一个集合比另一个集合更近的点的集合，即
+  \[
+  \{x \mid \mathrm{dist}(x, S) \leq \mathrm{dist}(x, T)\},
+  \]
+  其中 $S, T \subset \mathbb{R}^n$，\\
+  $\mathrm{dist}(x, S) = \inf\{\|x - z\|_2 \mid z \in S\}$。
+\end{itemize}
+
+
+
+\paragraph{2.4}
+下面函数是否为凸函数？如果是，则证明之；如果不是，请找出反例。
+\begin{enumerate}
+	\item $f(x_1,x_2)=x_1 x_2$ on $\mathbb{R}_{++}^2$
+	
+	\item $f(x_1,x_2)=1/(x_1x_2)$  on $\mathbb{R}_{++}^2$
+	
+	\item $f(x_1,x_2)=-x_1^\alpha x_2^{1-\alpha}$  on $\mathbb{R}_{++}^2$, where $0 \leq \alpha \leq 1$
+\end{enumerate}
+
+\paragraph{2.5}
+正式证明《凸函数》课件P19页，函数$f(x)$为凸函数与函数$g(t)$为凸函数的等价性。
+
+\end{document}

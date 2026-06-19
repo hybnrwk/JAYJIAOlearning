@@ -1,0 +1,88 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage[longend,ruled,linesnumbered]{algorithm2e}
+\usepackage{fancyhdr}
+\usepackage{ctex}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+
+\begin{document}
+
+
+\title{
+{《优化理论与算法》第8次作业
+}
+}
+\date{}
+
+% \author{
+% 姓名：\underline{你的名字}~~~~~~
+% 学号：\underline{你的学号}~~~~~~}
+
+\maketitle
+\begin{itemize}
+	\item 作业截止于{\bf 周日（5/3/2026）}，在Canvas系统中提交PDF或照片文件
+	\item 作业题目的tex文件可以在Canvas中下载
+	\item 鼓励相互讨论，但不要抄袭.
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{阅读与积累}
+\paragraph{1.1}
+\begin{itemize}
+	\item 复习 Boyd and Vandenberghe，也就是 Convex Optimization 教材，章节 3.2-3.4 与 4.1-4.2相关
+\end{itemize}
+
+\section{习题}
+
+\paragraph{2.1}
+ 判断下列函数是否是凸函数、凹函数、拟凸函数？
+\begin{itemize}
+  \item[(a)] $f(x) = e^x - 1$, 定义域为 $\mathbb{R}$
+  \item[(b)] $f(x_1, x_2) = x_1 / x_2$, 定义域为 $\mathbb{R}_{++}^2$
+  \item[(c)] $f(x_1, x_2) = x_1^2 / x_2$, 定义域为 $\mathbb{R} \times \mathbb{R}_{++}$
+\end{itemize}
+
+
+
+\paragraph{2.2} 复合规则。证明下列函数是凸函数：
+\begin{itemize}
+  \item[(a)] $f(x) = -\log\left(-\log\left(\sum_{i=1}^m e^{a_i^T x + b_i}\right)\right)$, \quad $\operatorname{dom} f = \left\{ x \mid \sum_{i=1}^m e^{a_i^T x + b_i} < 1 \right\}$
+  \item[(b)] $f(x,u,v) = -\sqrt{uv - x^T x}, \quad \operatorname{dom} f = \{(x,u,v) \mid uv > x^T x, u > 0, v > 0\}$
+\end{itemize}
+
+\paragraph{2.3} 正式证明共轭函数为凸函数，即使原函数是非凸函数。
+
+\paragraph{2.4} 求给定负熵函数的共轭：
+\[
+  f(x) = \sum_{i=1}^n x_i \log(x_i / 1^T x), \quad \operatorname{dom} f = \mathbb{R}_{++}^n
+\]
+证明其共轭函数为
+\[
+  f^*(y) =
+  \begin{cases}
+    0 & \text{若 } \sum_{i=1}^n e^{y_i} \leq 1 \\
+    +\infty & \text{其他情况}
+  \end{cases}
+\]
+
+
+
+
+\paragraph{2.5} 《Convex Optimization》(Boyd and Vandenberghe)教材课后题4.1
+
+\paragraph{2.6} 《Convex Optimization》(Boyd and Vandenberghe)教材课后题4.3
+
+\paragraph{2.7} 《Convex Optimization》(Boyd and Vandenberghe)教材课后题4.26 (a) （提示：利用上图形式，考虑目标函数形式为：$\min \; \sum_{i=1}^m t_i$）
+
+
+\paragraph{2.8} 《Convex Optimization》(Boyd and Vandenberghe)教材课后题4.28 (a) （提示：利用上图形式，考虑目标函数形式为：$\min \; t$）
+
+\end{document}

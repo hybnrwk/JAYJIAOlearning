@@ -1,0 +1,83 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage[longend,ruled,linesnumbered]{algorithm2e}
+\usepackage{fancyhdr}
+\usepackage{ctex}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+
+\begin{document}
+
+
+\title{\bf《优化理论与算法》第1次作业}
+
+
+% 删除注释，填入姓名与学号
+% \author{
+% 姓名：\underline{你的名字}~~~~~~
+% 学号：\underline{你的学号}~~~~~~}
+
+\maketitle
+	\begin{itemize}
+		\item 作业截止于{\bf 周五（3/13/2026）}，在Canvas系统中提交PDF或照片文件
+		\item 建议用Latex编译数学公式形成PDF文档提交作业，可以用overleaf.com网站线上编译。当然，也可以下载相关软件到本地。
+		\item 与之相对，也可以手写答案，并拍照上传
+		\item 鼓励相互讨论，但不要抄袭
+	\end{itemize}
+	
+\section{复习与积累}
+	\paragraph{1.1}
+	\begin{itemize}
+		\item 自我复习求解线性方程组及线性变化部分线性代数知识
+		\item 复习ReviewLinearAlgebra，其中章节4.3可以作为自我练习
+		\item 收看同名超星线上慕课，课程章节1.1《课程介绍》的内容(利用学号登录，教师可追踪观看时长)
+	\end{itemize}
+	
+	
+\section{习题}
+	
+	\paragraph{2.1}
+	优化问题三要素是什么？
+	
+	针对如下例子给出优化问题一般形式，并解释在每个例子中三要素是什么。
+	\begin{enumerate}
+		\item 任意举一个实际问题且该问题可转换为线性规划的例子
+		\item 任意举一个实际问题且该问题可转换为整数规划的例子
+		\item 任意举一个实际问题且该问题可转换为无约束优化的例子
+	\end{enumerate}
+	
+	\paragraph{2.2}
+    	\begin{enumerate}
+		\item 任意举一个不可行优化问题的例子
+		\item 任意举一个可行且最优值无界的例子
+		\item 任意举一个可行、最优值有界且最优解能取到的例子
+        \item 任意举一个可行、最优值有界且最优解能取不到的例子
+	\end{enumerate}
+	
+	
+	\paragraph{2.2}
+	向量$\mathbf{x}= \left[\begin{array}{c} 2  \\3 \\ -4 \end{array}\right]$的$L_1, L_2,  L_{\infty}$范数是多少？
+	
+	
+	\paragraph{2.3}
+	考虑如下矩阵
+	求解如下矩阵的行列式和逆矩阵
+	$$A= \left[\begin{array}{c c c c}
+	0 & 1& 2 & 0 \\0 & 4 & 0 &-1 \\ 2 & 0 & 2 &4\\0 & -1 & 1 &0
+	\end{array}\right]$$
+	\begin{enumerate}
+		\item 该矩阵的秩是多少？
+		\item 该矩阵的迹是多少？
+		\item 该矩阵的行列式是多少？
+		\item 如何表示该矩阵的列空间和零空间？
+		\item 该矩阵可逆吗？如果可逆，其逆矩阵是什么？
+	\end{enumerate}
+	
+	
+\end{document}

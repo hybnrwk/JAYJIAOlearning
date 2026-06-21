@@ -1,0 +1,284 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage[longend,ruled,linesnumbered]{algorithm2e}
+\usepackage{fancyhdr}
+\usepackage{ctex}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+
+\begin{document}
+
+
+\title{\bf《优化理论与算法》第1次作业}
+
+
+% 删除注释，填入姓名与学号
+ \author{
+姓名：\underline{焦传斌}~~~~~~
+学号：\underline{2024111223}~~~~~~}
+
+\maketitle
+	\begin{itemize}
+		\item 作业截止于{\bf 周五（3/13/2026）}，在Canvas系统中提交PDF或照片文件
+		\item 建议用Latex编译数学公式形成PDF文档提交作业，可以用overleaf.com网站线上编译。当然，也可以下载相关软件到本地。
+		\item 与之相对，也可以手写答案，并拍照上传
+		\item 鼓励相互讨论，但不要抄袭
+	\end{itemize}
+	
+\section{复习与积累}
+	\paragraph{1.1}
+	\begin{itemize}
+		\item 自我复习求解线性方程组及线性变化部分线性代数知识
+		\item 复习ReviewLinearAlgebra，其中章节4.3可以作为自我练习
+		\item 收看同名超星线上慕课，课程章节1.1《课程介绍》的内容(利用学号登录，教师可追踪观看时长)
+	\end{itemize}
+	
+	
+\section{习题}
+	
+	\paragraph{2.1}
+	优化问题三要素是什么？
+	
+	针对如下例子给出优化问题一般形式，并解释在每个例子中三要素是什么。
+	\begin{enumerate}
+		\item 任意举一个实际问题且该问题可转换为线性规划的例子
+		\item 任意举一个实际问题且该问题可转换为整数规划的例子
+		\item 任意举一个实际问题且该问题可转换为无约束优化的例子
+	\end{enumerate}
+	
+	\textbf{解答：}
+	
+	\textbf{优化问题三要素：}
+	\begin{enumerate}
+		\item \textbf{决策变量}：x
+		\item \textbf{目标函数}：f(x)
+		\item \textbf{约束条件}：决策变量必须满足的限制条件，可以为空
+	\end{enumerate}
+	
+	优化问题的一般形式：
+	$$\begin{aligned}
+	\min_{x} \quad & f(x) \\
+	\text{subject to} \quad & g_i(x) \leq 0, \quad i=1,\ldots,m \\
+	& h_j(x) = 0, \quad j=1,\ldots,p
+	\end{aligned}$$
+	
+	\textbf{(1) 线性规划例子：生产计划问题}
+	
+	某工厂生产两种产品A和B，每件A产品利润3元，每件B产品利润5元。生产A需要2小时机器时间和1单位原料，生产B需要1小时机器时间和2单位原料。工厂每天有100小时机器时间和80单位原料可用。问如何安排生产使利润最大？
+	
+	$$\begin{aligned}
+	\max \quad & 3x_1 + 5x_2 \\
+	\text{subject to} \quad & 2x_1 + x_2 \leq 100 \\
+	& x_1 + 2x_2 \leq 80 \\
+	& x_1, x_2 \geq 0
+	\end{aligned}$$
+	
+	三要素：
+	\begin{itemize}
+		\item 决策变量：$x_1$（A产品数量），$x_2$（B产品数量）
+		\item 目标函数：$\max\ 3x_1 + 5x_2$
+		\item 约束条件：机器时间约束、原料约束、非负约束
+	\end{itemize}
+	
+	\textbf{(2) 整数规划例子：背包问题}
+	
+	有$n$件物品，第$i$件物品重量为$w_i$，价值为$v_i$。背包容量为$W$，每件物品只能选择放或不放，求装入背包的物品总价值最大。
+	
+	$$\begin{aligned}
+	\max \quad & \sum_{i=1}^{n} v_i x_i \\
+	\text{subject to} \quad & \sum_{i=1}^{n} w_i x_i \leq W \\
+	& x_i \in \{0, 1\}, \quad i=1,\ldots,n
+	\end{aligned}$$
+	
+	三要素：
+	\begin{itemize}
+		\item 决策变量：$x_i \in \{0,1\}$（第$i$件物品是否放入背包）
+		\item 目标函数：$\max \sum v_i x_i$
+		\item 约束条件：背包容量约束、0-1整数约束
+	\end{itemize}
+	
+	\textbf{(3) 无约束优化例子：最小二乘拟合}
+	
+	给定$m$个数据点$(t_i, y_i)$，用直线$y = ax + b$拟合，使误差平方和最小。
+	
+	$$\min_{a,b} \quad \sum_{i=1}^{m} (at_i + b - y_i)^2$$
+	
+	三要素：
+	\begin{itemize}
+		\item 决策变量：$a$（斜率），$b$（截距）
+		\item 目标函数：$\min \sum (at_i + b - y_i)^2$
+		\item 约束条件：无约束
+	\end{itemize}
+	
+	\paragraph{2.2}
+    	\begin{enumerate}
+		\item 任意举一个不可行优化问题的例子
+		\item 任意举一个可行且最优值无界的例子
+		\item 任意举一个可行、最优值有界且最优解能取到的例子
+        \item 任意举一个可行、最优值有界且最优解能取不到的例子
+	\end{enumerate}
+	
+	\textbf{解答：}
+	
+	\textbf{(1) 不可行优化问题}
+	$$\begin{aligned}
+	\min \quad & x \\
+	\text{subject to} \quad & x \geq 1 \\
+	& x \leq 0
+	\end{aligned}$$
+	
+	约束$x \geq 1$和$x \leq 0$互相矛盾，不存在满足所有约束的可行解，因此该问题不可行。
+	
+	\textbf{(2) 可行且最优值无界}
+	$$\begin{aligned}
+	\min \quad & -x \\
+	\text{subject to} \quad & x \geq 0
+	\end{aligned}$$
+	
+	可行域为$[0, +\infty)$，目标函数$-x$在$x \to +\infty$时趋向$-\infty$，因此最优值无界（无下界）。
+	
+	\textbf{(3) 可行、最优值有界且最优解能取到}
+	$$\begin{aligned}
+	\min \quad & x^2 \\
+	\text{subject to} \quad & x \in \mathbb{R}
+	\end{aligned}$$
+	
+	可行域为全体实数，目标函数$x^2 \geq 0$，在$x^* = 0$处取得最小值$0$。最优解存在且可取到。
+	
+	\textbf{(4) 可行、最优值有界且最优解取不到}
+	$$\begin{aligned}
+	\min \quad & x \\
+	\text{subject to} \quad & x > 0
+	\end{aligned}$$
+	
+	可行域为$(0, +\infty)$，目标函数$x$的下确界为$0$，但$x=0$不在可行域内。因此最优值为$0$但取不到。
+	
+	
+	\paragraph{2.2}
+	向量$\mathbf{x}= \left[\begin{array}{c} 2  \\3 \\ -4 \end{array}\right]$的$L_1, L_2,  L_{\infty}$范数是多少？
+	
+	\textbf{解答：}
+	
+	\begin{itemize}
+		\item $L_1$范数：
+		$$\|\mathbf{x}\|_1 = |2| + |3| + |-4| = 9$$
+		
+		\item $L_2$范数：
+		$$\|\mathbf{x}\|_2 = \sqrt{2^2 + 3^2 + (-4)^2} = \sqrt{29} $$
+		
+		\item $L_{\infty}$范数：
+		$$\|\mathbf{x}\|_{\infty} = \max\{|2|, |3|, |-4|\} = 4$$
+	\end{itemize}
+	
+	
+	\paragraph{2.3}
+	考虑如下矩阵
+	求解如下矩阵的行列式和逆矩阵
+	$$A= \left[\begin{array}{c c c c}
+	0 & 1& 2 & 0 \\0 & 4 & 0 &-1 \\ 2 & 0 & 2 &4\\0 & -1 & 1 &0
+	\end{array}\right]$$
+	\begin{enumerate}
+		\item 该矩阵的秩是多少？
+		\item 该矩阵的迹是多少？
+		\item 该矩阵的行列式是多少？
+		\item 如何表示该矩阵的列空间和零空间？
+		\item 该矩阵可逆吗？如果可逆，其逆矩阵是什么？
+	\end{enumerate}
+	
+	\textbf{解答：}
+	
+	\textbf{(1) 矩阵的秩}
+	
+	对矩阵$A$进行行化简：
+	$$A = \begin{bmatrix} 0&1&2&0\\ 0&4&0&-1\\ 2&0&2&4\\ 0&-1&1&0 \end{bmatrix} \xrightarrow{R_1 \leftrightarrow R_3} \begin{bmatrix} 2&0&2&4\\ 0&4&0&-1\\ 0&1&2&0\\ 0&-1&1&0 \end{bmatrix} \xrightarrow{R_3 - \frac{1}{4}R_2} \begin{bmatrix} 2&0&2&4\\ 0&4&0&-1\\ 0&0&2&\frac{1}{4}\\ 0&-1&1&0 \end{bmatrix}$$
+	$$\xrightarrow{R_4 + \frac{1}{4}R_2} \begin{bmatrix} 2&0&2&4\\ 0&4&0&-1\\ 0&0&2&\frac{1}{4}\\ 0&0&1&-\frac{1}{4} \end{bmatrix} \xrightarrow{R_4 - \frac{1}{2}R_3} \begin{bmatrix} 2&0&2&4\\ 0&4&0&-1\\ 0&0&2&\frac{1}{4}\\ 0&0&0&-\frac{3}{8} \end{bmatrix}$$
+	
+	行阶梯形矩阵有4个非零行，因此 $\text{rank}(A) = 4$
+	
+	\textbf{(2) 矩阵的迹}
+	
+	$$\text{tr}(A) = 0 + 4 + 2 + 0 = 6$$
+	
+	\textbf{(3) 矩阵的行列式}
+	
+	按第一列展开：$\det(A) = 2 \cdot (-1)^{3+1} \cdot M_{31}$
+	
+	其中$M_{31} = \det\begin{bmatrix} 1&2&0\\ 4&0&-1\\ -1&1&0 \end{bmatrix}$，按第三列展开得$M_{31} = -(-1)(-1)^{2+3}(1+2) = 3$
+	
+	因此$\det(A) = 2 \times 1 \times 3 = 6$
+	
+	\textbf{(4) 列空间和零空间}
+	
+	\textbf{列空间}：由于$\text{rank}(A) = 4$，矩阵$A$的4个列向量线性无关，列空间为整个$\mathbb{R}^4$
+
+	
+	\textbf{零空间}：由于$A$满秩（$\det(A) \neq 0$），方程$A\mathbf{x} = \mathbf{0}$只有零解：$$\text{Null}(A) = \{\mathbf{0}\}$$
+	
+	\textbf{(5) 逆矩阵}
+	
+	由于$\det(A) = 6 \neq 0$，矩阵$A$\textbf{可逆}。对增广矩阵$[A|I]$施行高斯-约旦消元：
+	
+	$$[A|I] = \left[\begin{array}{cccc|cccc}
+	0&1&2&0 & 1&0&0&0\\
+	0&4&0&-1 & 0&1&0&0\\
+	2&0&2&4 & 0&0&1&0\\
+	0&-1&1&0 & 0&0&0&1
+	\end{array}\right]
+	\xrightarrow{R_1\leftrightarrow R_3}
+	\left[\begin{array}{cccc|cccc}
+	2&0&2&4 & 0&0&1&0\\
+	0&4&0&-1 & 0&1&0&0\\
+	0&1&2&0 & 1&0&0&0\\
+	0&-1&1&0 & 0&0&0&1
+	\end{array}\right]$$
+	
+	$$\xrightarrow{R_3-\frac{1}{4}R_2,\;R_4+\frac{1}{4}R_2}
+	\left[\begin{array}{cccc|cccc}
+	2&0&2&4 & 0&0&1&0\\
+	0&4&0&-1 & 0&1&0&0\\
+	0&0&2&\frac{1}{4} & 1&-\frac{1}{4}&0&0\\
+	0&0&1&-\frac{1}{4} & 0&\frac{1}{4}&0&1
+	\end{array}\right]
+	\xrightarrow{R_4-\frac{1}{2}R_3}
+	\left[\begin{array}{cccc|cccc}
+	2&0&2&4 & 0&0&1&0\\
+	0&4&0&-1 & 0&1&0&0\\
+	0&0&2&\frac{1}{4} & 1&-\frac{1}{4}&0&0\\
+	0&0&0&-\frac{3}{8} & -\frac{1}{2}&\frac{3}{8}&0&1
+	\end{array}\right]$$
+	
+	$$\xrightarrow{\frac{1}{2}R_1,\;\frac{1}{4}R_2,\;\frac{1}{2}R_3,\;-\frac{8}{3}R_4}
+	\left[\begin{array}{cccc|cccc}
+	1&0&1&2 & 0&0&\frac{1}{2}&0\\
+	0&1&0&-\frac{1}{4} & 0&\frac{1}{4}&0&0\\
+	0&0&1&\frac{1}{8} & \frac{1}{2}&-\frac{1}{8}&0&0\\
+	0&0&0&1 & \frac{4}{3}&-1&0&-\frac{8}{3}
+	\end{array}\right]$$
+	
+	$$\xrightarrow{R_3-\frac{1}{8}R_4,\;R_2+\frac{1}{4}R_4,\;R_1-2R_4}
+	\left[\begin{array}{cccc|cccc}
+	1&0&1&0 & -\frac{8}{3}&2&\frac{1}{2}&\frac{16}{3}\\
+	0&1&0&0 & \frac{1}{3}&0&0&-\frac{2}{3}\\
+	0&0&1&0 & \frac{1}{3}&0&0&\frac{1}{3}\\
+	0&0&0&1 & \frac{4}{3}&-1&0&-\frac{8}{3}
+	\end{array}\right]$$
+	
+	$$\xrightarrow{R_1-R_3}
+	\left[\begin{array}{cccc|cccc}
+	1&0&0&0 & -3&2&\frac{1}{2}&5\\
+	0&1&0&0 & \frac{1}{3}&0&0&-\frac{2}{3}\\
+	0&0&1&0 & \frac{1}{3}&0&0&\frac{1}{3}\\
+	0&0&0&1 & \frac{4}{3}&-1&0&-\frac{8}{3}
+	\end{array}\right]$$
+	
+	因此：
+	$$A^{-1} = \begin{bmatrix} -3 & 2 & \frac{1}{2} & 5 \\ \frac{1}{3} & 0 & 0 & -\frac{2}{3} \\ \frac{1}{3} & 0 & 0 & \frac{1}{3} \\ \frac{4}{3} & -1 & 0 & -\frac{8}{3} \end{bmatrix} = \frac{1}{6}\begin{bmatrix} -18 & 12 & 3 & 30 \\ 2 & 0 & 0 & -4 \\ 2 & 0 & 0 & 2 \\ 8 & -6 & 0 & -16 \end{bmatrix}$$
+	
+	
+\end{document}

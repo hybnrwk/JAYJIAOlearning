@@ -1,0 +1,824 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage[longend,ruled,linesnumbered]{algorithm2e}
+\usepackage{fancyhdr}
+\usepackage{ctex}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+
+
+\title{
+{《优化理论与算法》第9次作业
+}
+}
+\date{}
+
+ \author{
+ 姓名：\underline{焦传斌}~~~~~~
+ 学号：\underline{2024111223}~~~~~~}
+
+\maketitle
+\begin{itemize}
+	\item 作业截止于{\bf 周五（5/8/2025）}，在Canvas系统中提交PDF或照片文件
+	\item 作业题目的tex文件可以在Canvas中下载
+	\item 鼓励相互讨论，但不要抄袭.
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{阅读与积累}
+\paragraph{1.1}
+\begin{itemize}
+	\item 复习 Boyd and Vandenberghe，也就是 Convex Optimization 教材，章节5.1-5.3相关
+\end{itemize}
+
+\section{习题}
+
+
+\paragraph{2.1} 《Convex Optimization》(Boyd and Vandenberghe)教材课后题5.1
+
+\textbf{解：}
+原问题为
+\[
+  \begin{array}{ll}
+    \text{minimize} & x^2+1\\
+    \text{subject to} & (x-2)(x-4)\leq 0,
+  \end{array}
+\]
+变量为 $x\in\mathbb R$。记
+\[
+  f_0(x)=x^2+1,\qquad
+  f_1(x)=(x-2)(x-4)=x^2-6x+8.
+\]
+
+\begin{itemize}
+  \item[(a)] 约束 $(x-2)(x-4)\leq 0$ 等价于
+  \[
+    x\in[2,4].
+  \]
+  因此原问题的可行集为
+  \[
+    \mathcal F=[2,4].
+  \]
+  在区间 $[2,4]$ 上，目标函数 $x^2+1$ 单调递增，因此最优解在左端点取得：
+  \[
+    x^\star=2.
+  \]
+  最优值为
+  \[
+    p^\star=f_0(2)=2^2+1=5.
+  \]
+  因此
+  \[
+    \boxed{\mathcal F=[2,4],\qquad x^\star=2,\qquad p^\star=5.}
+  \]
+
+  \item[(b)] 引入乘子 $\lambda\geq0$，拉格朗日函数为
+  \[
+  \begin{aligned}
+    L(x,\lambda)
+    &=x^2+1+\lambda(x-2)(x-4)\\
+    &=(1+\lambda)x^2-6\lambda x+1+8\lambda.
+  \end{aligned}
+  \]
+  对偶函数定义为
+  \[
+    g(\lambda)=\inf_x L(x,\lambda).
+  \]
+  因为 $\lambda\geq 0$，所以 $1+\lambda>0$，$L(x,\lambda)$ 是关于 $x$ 的严格凸二次函数。令一阶导数为零：
+  \[
+    \frac{\partial L}{\partial x}
+    =2(1+\lambda)x-6\lambda=0,
+  \]
+  得
+  \[
+    x(\lambda)=\frac{3\lambda}{1+\lambda}.
+  \]
+  代回拉格朗日函数，可得
+  \[
+  \begin{aligned}
+    g(\lambda)
+    &=1+8\lambda-\frac{9\lambda^2}{1+\lambda}\\
+    &=1-\lambda+\frac{9\lambda}{1+\lambda},
+  \end{aligned}
+  \]
+  其中 $\lambda\geq 0$。因此
+  \[
+    \boxed{
+    g(\lambda)=1+8\lambda-\frac{9\lambda^2}{1+\lambda},
+    \qquad \lambda\geq 0.}
+  \]
+
+  见下图，$f_0(x)$ 是开口向上的抛物线，可行集是区间 $[2,4]$，最优点为 $x^\star=2$，最优值为 $p^\star=5$。取乘子 $\lambda=1,2,4$，对应的 Lagrange 函数为
+  \[
+  \begin{aligned}
+    L(x,1)&=2x^2-6x+9,\\
+    L(x,2)&=3x^2-12x+17,\\
+    L(x,4)&=5x^2-24x+33.
+  \end{aligned}
+  \]
+ 
+
+  \begin{center}
+  \begin{tikzpicture}
+  \begin{axis}[
+    width=0.82\textwidth,
+    height=6cm,
+    xmin=0, xmax=5,
+    ymin=0, ymax=20,
+    axis lines=left,
+    xlabel={$x$},
+    ylabel={函数值},
+    legend style={font=\small, at={(0.03,0.97)}, anchor=north west},
+    samples=120
+  ]
+    \addplot[black, thick, domain=0:4.5] {x^2+1};
+    \addlegendentry{$f_0(x)$}
+    \addplot[blue, thick, domain=0:4.5] {2*x^2-6*x+9};
+    \addlegendentry{$L(x,1)$}
+    \addplot[red, thick, domain=0:4.5] {3*x^2-12*x+17};
+    \addlegendentry{$L(x,2)$}
+    \addplot[green!50!black, thick, domain=0:4.5] {5*x^2-24*x+33};
+    \addlegendentry{$L(x,4)$}
+    \addplot[orange, very thick] coordinates {(2,0) (4,0)};
+    \node[orange] at (axis cs:3,0.8) {$[2,4]$};
+    \addplot[only marks, mark=*, mark size=2pt] coordinates {(2,5)};
+    \node[anchor=south west] at (axis cs:2,5) {$x^\star$};
+    \addplot[dashed] coordinates {(2,0) (2,5)};
+  \end{axis}
+  \end{tikzpicture}
+  \end{center}
+
+  下界性质可以直接由图像和不等式看出。当 $\lambda\geq0$ 时，对任意可行 $x$，由于 $f_1(x)\leq0$，有
+  \[
+    L(x,\lambda)=f_0(x)+\lambda f_1(x)\leq f_0(x).
+  \]
+  又因为 $g(\lambda)$ 是 $L(x,\lambda)$ 对所有 $x$ 的下确界，所以对任意可行 $x$，
+  \[
+    g(\lambda)=\inf_z L(z,\lambda)\leq L(x,\lambda)\leq f_0(x).
+  \]
+  对所有可行 $x$ 取下确界，得到
+  \[
+    g(\lambda)\leq p^\star.
+  \]
+  因此 $g(\lambda)$ 给出原问题最优值的下界。
+  对偶函数 $g(\lambda)=1-\lambda+9\lambda/(1+\lambda)$ 的大致图像如下。它始终不超过 $p^\star=5$，并在 $\lambda=2$ 处达到 $5$。
+
+
+
+  \begin{center}
+  \begin{tikzpicture}
+  \begin{axis}[
+    width=0.75\textwidth,
+    height=6cm,
+    xmin=0, xmax=8,
+    ymin=0, ymax=6,
+    axis lines=left,
+    xlabel={$\lambda$},
+    ylabel={$g(\lambda)$},
+    samples=120
+  ]
+    \addplot[blue, thick, domain=0:8] {1-x+9*x/(1+x)};
+    \addplot[red, dashed, domain=0:8] {5};
+    \addplot[only marks, mark=*, mark size=2pt] coordinates {(2,5)};
+    \node[anchor=south west] at (axis cs:2,5) {$(2,5)$};
+    \node[red, anchor=south] at (axis cs:6.5,5) {$p^\star=5$};
+  \end{axis}
+  \end{tikzpicture}
+  \end{center}
+
+  \item[(c)] 拉格朗日对偶问题为
+  \[
+    \begin{array}{ll}
+      \text{maximize} & g(\lambda)
+      =1-\lambda+\dfrac{9\lambda}{1+\lambda}\\[0.6em]
+      \text{subject to} & \lambda\geq 0.
+    \end{array}
+  \]
+ $g(\lambda)=\inf_x L(x,\lambda)$，而对任意固定的 $x$，$L(x,\lambda)$ 关于 $\lambda$ 是仿射函数，仿射函数族的逐点下确界是凹函数，所以这是一个凹函数在凸集 $\lambda\geq0$ 上的最大化问题。
+  对 $g$ 求导：
+  \[
+    g'(\lambda)=-1+\frac{9}{(1+\lambda)^2}.
+  \]
+  令 $g'(\lambda)=0$，得
+  \[
+    (1+\lambda)^2=9.
+  \]
+  因为 $\lambda\geq0$，所以
+  \[
+    \lambda^\star=2.
+  \]
+  又有
+  \[
+    g''(\lambda)=-\frac{18}{(1+\lambda)^3}<0,
+  \]
+  所以 $g$ 在 $\lambda\geq0$ 上严格凹，$\lambda^\star=2$ 是唯一对偶最优解。对偶最优值为
+  \[
+    d^\star=g(2)=1+16-\frac{9\cdot4}{3}=5.
+  \]
+  因此
+  \[
+    \boxed{\lambda^\star=2,\qquad d^\star=5=p^\star.}
+  \]
+  强对偶成立。也可以用 Slater 条件解释：$f_0$ 和 $f_1$ 都是凸函数，并且存在严格可行点 $x=3$，满足 $f_1(3)=-1<0$。
+
+  \item[(d)] 考虑扰动问题
+  \[
+    \begin{array}{ll}
+      \text{minimize} & x^2+1\\
+      \text{subject to} & (x-2)(x-4)\leq u.
+    \end{array}
+  \]
+  将约束配方：
+  \[
+    x^2-6x+8\leq u
+    \quad\Longleftrightarrow\quad
+    (x-3)^2\leq u+1.
+  \]
+  因此可行集非空当且仅当 $u\geq -1$，此时
+  \[
+    x\in\left[3-\sqrt{u+1},\ 3+\sqrt{u+1}\right].
+  \]
+  由于 $x^2+1$ 的无约束最小点为 $x=0$，分情况得到扰动最优值函数
+  \[
+    p^\star(u)=
+    \begin{cases}
+      +\infty, & u<-1,\\[0.3em]
+      \left(3-\sqrt{u+1}\right)^2+1, & -1\leq u<8,\\[0.3em]
+      1, & u\geq 8.
+    \end{cases}
+  \]
+  因此 $p^\star(u)$ 的有限值部分可以画成下图；当 $u<-1$ 时问题不可行，故 $p^\star(u)=+\infty$。
+
+  \begin{center}
+  \begin{tikzpicture}
+  \begin{axis}[
+    width=0.75\textwidth,
+    height=5.5cm,
+    xmin=-2, xmax=14,
+    ymin=0, ymax=12,
+    axis lines=left,
+    xlabel={$u$},
+    ylabel={$p^\star(u)$},
+    samples=120
+  ]
+    \addplot[blue, thick, domain=-1:8] {(3-sqrt(x+1))^2+1};
+    \addplot[blue, thick, domain=8:14] {1};
+    \addplot[dashed] coordinates {(-1,0) (-1,10)};
+    \addplot[dashed] coordinates {(8,0) (8,1)};
+    \addplot[only marks, mark=*, mark size=2pt] coordinates {(0,5)};
+    \node[anchor=south west] at (axis cs:0,5) {$(0,5)$};
+    \node[anchor=south] at (axis cs:-1,10) {$u=-1$};
+    \node[anchor=south west] at (axis cs:8,1) {$u=8$};
+  \end{axis}
+  \end{tikzpicture}
+  \end{center}
+
+
+  在 $-1<u<8$ 上，
+  \[
+    p^\star(u)=\left(3-\sqrt{u+1}\right)^2+1.
+  \]
+  求导得
+  \[
+  \begin{aligned}
+    \frac{dp^\star(u)}{du}
+    &=2\left(3-\sqrt{u+1}\right)
+      \left(-\frac{1}{2\sqrt{u+1}}\right)\\
+    &=1-\frac{3}{\sqrt{u+1}}.
+  \end{aligned}
+  \]
+  代入 $u=0$：
+  \[
+    \frac{dp^\star(0)}{du}=1-3=-2.
+  \]
+  而对偶最优乘子为 $\lambda^\star=2$，所以
+  \[
+    \boxed{\frac{dp^\star(0)}{du}=-2=-\lambda^\star.}
+  \]
+
+\end{itemize}
+
+\paragraph{2.2} 求出课件《对偶理论1》P15页中三个问题的对偶问题。
+
+\textbf{解：}
+\begin{itemize}
+  \item[(1)] 原问题为
+  \[
+    \begin{array}{ll}
+      \text{minimize} & \dfrac12(x_1^2+x_2^2)\\[0.3em]
+      \text{subject to} & x_1\leq 1.
+    \end{array}
+  \]
+  写成标准形式 $x_1-1\leq0$，引入乘子 $\lambda\geq0$。拉格朗日函数为
+  \[
+    L(x,\lambda)
+    =\frac12(x_1^2+x_2^2)+\lambda(x_1-1)
+    =\frac12x_1^2+\lambda x_1+\frac12x_2^2-\lambda.
+  \]
+  对 $x_1,x_2$ 取下确界。一阶条件为
+  \[
+    \frac{\partial L}{\partial x_1}=x_1+\lambda=0,\qquad
+    \frac{\partial L}{\partial x_2}=x_2=0.
+  \]
+  所以
+  \[
+    x_1=-\lambda,\qquad x_2=0.
+  \]
+  代回得
+  \[
+    g(\lambda)=-\frac12\lambda^2-\lambda,\qquad \lambda\geq0.
+  \]
+  因此对偶问题为
+  \[
+    \boxed{
+    \begin{array}{ll}
+      \text{maximize} & -\dfrac12\lambda^2-\lambda\\[0.3em]
+      \text{subject to} & \lambda\geq0.
+    \end{array}}
+  \]
+
+  \item[(2)] 原问题为
+  \[
+    \begin{array}{ll}
+      \text{minimize} & |x_1|-x_2\\
+      \text{subject to} & x_1\leq0,\quad x_2=0.
+    \end{array}
+  \]
+  对不等式约束 $x_1\leq0$ 引入乘子 $\lambda\geq0$，对等式约束 $x_2=0$ 引入乘子 $\nu\in\mathbb R$。拉格朗日函数为
+  \[
+  \begin{aligned}
+    L(x,\lambda,\nu)
+    &=|x_1|-x_2+\lambda x_1+\nu x_2\\
+    &=|x_1|+\lambda x_1+(\nu-1)x_2.
+  \end{aligned}
+  \]
+  先对 $x_2$ 取下确界。若 $\nu\neq1$，则 $(\nu-1)x_2$ 关于 $x_2$ 无下界，所以
+  \[
+    g(\lambda,\nu)=-\infty.
+  \]
+  因此必须有 $\nu=1$。
+
+  当 $\nu=1$ 时，需要计算
+  \[
+    \inf_{x_1}\{|x_1|+\lambda x_1\}.
+  \]
+  若 $x_1\geq0$，则
+  \[
+    |x_1|+\lambda x_1=(1+\lambda)x_1.
+  \]
+  若 $x_1<0$，则
+  \[
+    |x_1|+\lambda x_1=(\lambda-1)x_1.
+  \]
+  为了使下确界有限，需要 $1+\lambda\geq0$ 且 $\lambda-1\leq0$，即 $-1\leq\lambda\leq1$。再结合 $\lambda\geq0$，得到
+  \[
+    0\leq\lambda\leq1.
+  \]
+  在此范围内，下确界在 $x_1=0$ 处取得，值为 $0$。所以
+  \[
+    g(\lambda,\nu)=
+    \begin{cases}
+      0, & 0\leq\lambda\leq1,\ \nu=1,\\
+      -\infty, & \text{其他情况}.
+    \end{cases}
+  \]
+  对偶问题可写为
+  \[
+    \boxed{
+    \begin{array}{ll}
+      \text{maximize} & 0\\
+      \text{subject to} & 0\leq\lambda\leq1,\quad \nu=1.
+    \end{array}}
+  \]
+
+  \item[(3)] 原问题为
+  \[
+    \begin{array}{ll}
+      \text{minimize} & x\\
+      \text{subject to} & x^2\leq0.
+    \end{array}
+  \]
+ 
+ 
+ 
+ 
+
+  引入乘子 $\lambda\geq0$，拉格朗日函数为
+  \[
+    L(x,\lambda)=x+\lambda x^2.
+  \]
+  对偶函数为
+  \[
+    g(\lambda)=\inf_x(x+\lambda x^2).
+  \]
+  当 $\lambda=0$ 时，$L(x,0)=x$，因此
+  \[
+    g(0)=-\infty.
+  \]
+  当 $\lambda>0$ 时，$x+\lambda x^2$ 是开口向上的二次函数。一阶条件为
+  \[
+    1+2\lambda x=0,
+  \]
+  所以
+  \[
+    x=-\frac{1}{2\lambda}.
+  \]
+  代回得到
+  \[
+    g(\lambda)
+    =-\frac{1}{2\lambda}
+    +\lambda\frac{1}{4\lambda^2}
+    =-\frac{1}{4\lambda},
+    \qquad \lambda>0.
+  \]
+  因此
+  \[
+    g(\lambda)=
+    \begin{cases}
+      -\infty, & \lambda=0,\\[0.3em]
+      -\dfrac{1}{4\lambda}, & \lambda>0.
+    \end{cases}
+  \]
+  对偶问题为
+  \[
+    \boxed{
+    \begin{array}{ll}
+      \text{maximize} & -\dfrac{1}{4\lambda}\\[0.5em]
+      \text{subject to} & \lambda>0.
+    \end{array}}
+  \]
+\end{itemize}
+
+
+
+\paragraph{2.3} 《Convex Optimization》(Boyd and Vandenberghe)教材课后题5.26
+
+\textbf{解：}
+原问题为
+\[
+\begin{array}{ll}
+  \text{minimize} & x_1^2+x_2^2\\
+  \text{subject to} &
+  (x_1-1)^2+(x_2-1)^2\leq1,\\
+  & (x_1-1)^2+(x_2+1)^2\leq1.
+\end{array}
+\]
+
+\begin{itemize}
+  \item[(a)] 两个约束分别是以 $(1,1)$ 和 $(1,-1)$ 为圆心、半径为 $1$ 的圆盘。两个圆心距离为 $2$，等于半径之和，所以两个圆盘只相切于一点 $(1,0)$。因此可行集为
+  \[
+    \mathcal F=\{(1,0)\}.
+  \]
+  目标函数 $x_1^2+x_2^2$ 的水平集是以原点为圆心的同心圆。由于可行集只有一个点，最优解和最优值为
+  \[
+    \boxed{x^\star=(1,0),\qquad p^\star=1.}
+  \]
+
+  \item[(b)] 定义约束函数
+  \[
+  \begin{aligned}
+    f_1(x)&=(x_1-1)^2+(x_2-1)^2-1,\\
+    f_2(x)&=(x_1-1)^2+(x_2+1)^2-1.
+  \end{aligned}
+  \]
+  拉格朗日函数为
+  \[
+    L(x,\lambda_1,\lambda_2)
+    =x_1^2+x_2^2+\lambda_1f_1(x)+\lambda_2f_2(x),
+  \]
+  其中 $\lambda_1,\lambda_2\geq0$。KKT 驻点条件为
+  \[
+    \nabla f_0(x)+\lambda_1\nabla f_1(x)+\lambda_2\nabla f_2(x)=0.
+  \]
+  在 $x^\star=(1,0)$ 处，两个约束均为紧约束：
+  \[
+    f_1(x^\star)=0,\qquad f_2(x^\star)=0.
+  \]
+  梯度为
+  \[
+    \nabla f_0(x^\star)=(2,0),\qquad
+    \nabla f_1(x^\star)=(0,-2),\qquad
+    \nabla f_2(x^\star)=(0,2).
+  \]
+  因而驻点条件要求
+  \[
+    (2,0)+\lambda_1(0,-2)+\lambda_2(0,2)=(0,0).
+  \]
+  但第一分量给出 $2=0$，矛盾。因此不存在 $\lambda_1,\lambda_2$ 使 KKT 条件成立。
+
+
+
+  \item[(c)] 先求 Lagrange 对偶函数。由
+  \[
+  \begin{aligned}
+    f_1(x)&=x_1^2+x_2^2-2x_1-2x_2+1,\\
+    f_2(x)&=x_1^2+x_2^2-2x_1+2x_2+1
+  \end{aligned}
+  \]
+  可得
+  \[
+  \begin{aligned}
+    L(x,\lambda_1,\lambda_2)
+    &=x_1^2+x_2^2+\lambda_1 f_1(x)+\lambda_2 f_2(x)\\
+    &=(1+\lambda_1+\lambda_2)(x_1^2+x_2^2)
+      -2(\lambda_1+\lambda_2)x_1\\
+    &\qquad +2(\lambda_2-\lambda_1)x_2+\lambda_1+\lambda_2.
+  \end{aligned}
+  \]
+  令
+  \[
+    s=\lambda_1+\lambda_2,\qquad t=\lambda_2-\lambda_1.
+  \]
+  则 $\lambda_1,\lambda_2\geq0$ 等价于
+  \[
+    s\geq0,\qquad |t|\leq s.
+  \]
+  则
+  \[
+    L(x,\lambda_1,\lambda_2)
+    =(1+s)(x_1^2+x_2^2)-2s x_1+2t x_2+s.
+  \]
+  因为 $1+s>0$，所以关于 $x$ 是严格凸二次函数。分别对 $x_1,x_2$ 求一阶条件：
+  \[
+    2(1+s)x_1-2s=0,\qquad
+    2(1+s)x_2+2t=0,
+  \]
+  得到
+  \[
+    x_1=\frac{s}{1+s},\qquad
+    x_2=-\frac{t}{1+s}.
+  \]
+  代回 $L$，得到对偶函数
+  \[
+  \begin{aligned}
+    g(\lambda_1,\lambda_2)
+    &=s-\frac{(-2s)^2+(2t)^2}{4(1+s)}\\
+    &=s-\frac{s^2+t^2}{1+s}
+    =\frac{s-t^2}{1+s}.
+  \end{aligned}
+  \]
+  即
+  \[
+    g(\lambda_1,\lambda_2)
+    =
+    \lambda_1+\lambda_2
+    -\frac{(\lambda_1+\lambda_2)^2+(\lambda_2-\lambda_1)^2}
+    {1+\lambda_1+\lambda_2}.
+  \]
+  对偶问题为
+  \[
+    \boxed{
+    \begin{array}{ll}
+      \text{maximize} &
+      \lambda_1+\lambda_2
+      -\dfrac{(\lambda_1+\lambda_2)^2+(\lambda_2-\lambda_1)^2}
+      {1+\lambda_1+\lambda_2}\\[0.8em]
+      \text{subject to} & \lambda_1\geq0,\quad \lambda_2\geq0.
+    \end{array}}
+  \]
+  用 $s,t$ 表示，等价于
+  \[
+    \begin{array}{ll}
+      \text{maximize} & \dfrac{s-t^2}{1+s}\\[0.6em]
+      \text{subject to} & s\geq0,\quad |t|\leq s.
+    \end{array}
+  \]
+  对固定的 $s$，分母 $1+s>0$，目标函数随 $t^2$ 增大而减小，所以最优取 $t=0$。此时
+  \[
+    g=\frac{s}{1+s},\qquad s\geq0.
+  \]
+  又
+  \[
+    \frac{d}{ds}\frac{s}{1+s}=\frac{1}{(1+s)^2}>0,
+  \]
+  所以 $\frac{s}{1+s}$ 单调递增。当 $s\to+\infty$ 时，
+  \[
+    \frac{s}{1+s}\to1,
+  \]
+  而任意有限 $s$ 都有 $s/(1+s)<1$。因此对偶最优值为
+  \[
+    \boxed{d^\star=1.}
+  \]
+  但不存在有限的 $s$ 能使 $s/(1+s)=1$，所以对偶最优解不存在。
+
+  由 (a) 已知原问题最优值为 $p^\star=1$，因此
+  \[
+    \boxed{d^\star=p^\star=1.}
+  \]
+  所以强对偶在最优值相等的意义下成立，但是对偶最优解不被取到。
+\end{itemize}
+
+\paragraph{2.4} 《Convex Optimization》(Boyd and Vandenberghe)教材课后题5.29
+
+\textbf{解：}
+原问题为
+\[
+\begin{array}{ll}
+  \text{minimize} &
+  -3x_1^2+x_2^2+2x_3^2+2(x_1+x_2+x_3)\\
+  \text{subject to} &
+  x_1^2+x_2^2+x_3^2=1.
+\end{array}
+\]
+记目标函数为 $f(x)$，等式约束为
+\[
+  h(x)=x_1^2+x_2^2+x_3^2-1=0.
+\]
+拉格朗日函数为
+\[
+  L(x,\nu)=f(x)+\nu h(x),
+  \qquad \nu\in\mathbb R.
+\]
+
+KKT 条件只有原始可行性和驻点条件：
+\[
+  x_1^2+x_2^2+x_3^2=1,
+\]
+\[
+  \nabla_xL(x,\nu)=0.
+\]
+分别对 $x_1,x_2,x_3$ 求偏导，驻点条件给出
+\[
+\begin{aligned}
+  -6x_1+2+2\nu x_1&=0,\\
+  2x_2+2+2\nu x_2&=0,\\
+  4x_3+2+2\nu x_3&=0.
+\end{aligned}
+\]
+化简为
+\[
+  (\nu-3)x_1+1=0,\qquad
+  (\nu+1)x_2+1=0,\qquad
+  (\nu+2)x_3+1=0.
+\]
+因此
+\[
+  x_1=\frac{1}{3-\nu},\qquad
+  x_2=-\frac{1}{\nu+1},\qquad
+  x_3=-\frac{1}{\nu+2},
+\]
+其中 $\nu\neq3,-1,-2$。再代入球面约束，得到
+\[
+  \frac{1}{(3-\nu)^2}
+  +\frac{1}{(\nu+1)^2}
+  +\frac{1}{(\nu+2)^2}
+  =1.
+\]
+清除分母后得到多项式方程
+\[
+  \nu^6-17\nu^4-12\nu^3+49\nu^2+48\nu-13=0.
+\]
+该方程有四个实根，近似为
+\[
+  -3.1493,\qquad 0.2235,\qquad 1.8919,\qquad 4.0352.
+\]
+
+将这些 $\nu$ 代回 $x(\nu)$，得到全部 KKT 点和对应目标值：
+\[
+\begin{array}{c|c|c}
+  \nu & x & f(x)\\ \hline
+  -3.1493 & (0.1626,\ 0.4653,\ 0.8701) & 4.6473\\
+  0.2235 & (0.3602,\ -0.8173,\ -0.4497) & -1.1304\\
+  1.8919 & (0.9024,\ -0.3458,\ -0.2569) & -1.5922\\
+  4.0352 & (-0.9660,\ -0.1986,\ -0.1657) & -5.3655
+\end{array}
+\]
+
+可行集是单位球面；目标函数连续，所以全局最优解存在。又因为
+\[
+  \nabla h(x)=2x
+\]
+在球面上不为零，所以任意局部最优点，都必须满足 KKT 条件。因此比较全部 KKT 点的目标函数值即可。
+
+\[
+  \nu^\star\approx4.0352.
+\]
+
+\[
+  \boxed{
+  x^\star=
+  \left(
+    \frac{1}{3-\nu^\star},
+    -\frac{1}{\nu^\star+1},
+    -\frac{1}{\nu^\star+2}
+  \right).}
+\]
+
+\[
+  \boxed{x^\star\approx(-0.9660,\ -0.1986,\ -0.1657),}
+\]
+\[
+  \boxed{\nu^\star\approx4.0352,\qquad p^\star\approx-5.3655.}
+\]
+
+
+\paragraph{2.5} 利用KKT定理求解《Convex Optimization》(Boyd and Vandenberghe)教材课后题4.22
+
+\textbf{解：}
+考虑问题
+\[
+\begin{array}{ll}
+  \text{minimize} & \dfrac12x^TPx+q^Tx+r\\[0.3em]
+  \text{subject to} & x^Tx\leq1,
+\end{array}
+\]
+其中 $P\in S_{++}^n$。目标函数严格凸，约束函数 $x^Tx-1$ 是凸函数，并且 $x=0$ 严格可行，所以 Slater 条件成立。KKT 条件是最优性的充要条件。
+
+取拉格朗日函数
+\[
+  L(x,\lambda)
+  =\frac12x^TPx+q^Tx+r+\frac{\lambda}{2}(x^Tx-1),
+  \qquad \lambda\geq0.
+\]
+KKT 条件为
+\[
+  x^Tx\leq1,\qquad \lambda\geq0,\qquad
+  \lambda(x^Tx-1)=0,
+\]
+以及驻点条件
+\[
+  \nabla_xL(x,\lambda)=Px+q+\lambda x=0.
+\]
+即
+\[
+  (P+\lambda I)x+q=0.
+\]
+由于 $P\succ0$ 且 $\lambda\geq0$，有 $P+\lambda I\succ0$，因此可逆，从而
+\[
+  \boxed{x=-(P+\lambda I)^{-1}q.}
+\]
+
+由这个表达式可得
+\[
+  x^Tx=q^T(P+\lambda I)^{-2}q.
+\]
+再由互补松弛条件
+\[
+  \lambda(x^Tx-1)=0
+\]
+分两种情况。
+
+若无约束最小点
+\[
+  x_{\mathrm{unc}}=-P^{-1}q
+\]
+已经可行，即
+\[
+  q^TP^{-2}q\leq1,
+\]
+则取 $\lambda=0$，得到最优解
+\[
+  x^\star=-P^{-1}q.
+\]
+
+若
+\[
+  q^TP^{-2}q>1,
+\]
+则无约束最小点不可行，最优点必须在边界上，故 $\lambda>0$ 且
+\[
+  x^Tx=1.
+\]
+于是 $\lambda$ 必须满足
+\[
+  \boxed{q^T(P+\lambda I)^{-2}q=1.}
+\]
+令
+\[
+  \phi(\lambda)=q^T(P+\lambda I)^{-2}q.
+\]
+在 $\lambda\geq0$ 上，$\phi$ 连续且严格递减；并且此时 $\phi(0)>1$，而
+\[
+  \lim_{\lambda\to+\infty}\phi(\lambda)=0.
+\]
+所以存在唯一正根 $\lambda$ 使 $\phi(\lambda)=1$。
+
+综合两种情况，若 $\bar\lambda$ 是方程
+\[
+  q^T(P+\bar\lambda I)^{-2}q=1
+\]
+的最大解，则满足 KKT 条件的乘子可写为
+\[
+  \boxed{\lambda=\max\{0,\bar\lambda\}.}
+\]
+因此最优解为
+\[
+  \boxed{x^\star=-(P+\lambda I)^{-1}q.}
+\]
+若 $q=0$，则无约束最小点 $x=0$ 严格可行，取 $\lambda=0$，同样得到 $x^\star=0$。
+
+
+
+\end{document}

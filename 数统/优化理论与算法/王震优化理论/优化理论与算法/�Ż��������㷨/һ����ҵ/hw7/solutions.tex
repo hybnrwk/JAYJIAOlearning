@@ -1,0 +1,139 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage{ctex}
+
+\begin{document}
+
+\title{《优化理论与算法》第7次作业解答}
+\date{}
+\maketitle
+
+\section*{习题}
+
+\paragraph{2.1}
+
+\textbf{证明：}（对 $k$ 归纳）
+
+\textbf{基础步骤（$k=2$）：} 这正是凸集的定义，命题成立。
+
+\textbf{归纳假设：} 对某个 $k-1 \ge 2$，命题成立，即对任意 $x_1,\dots,x_{k-1}\in C$，$\lambda_i\ge0$，$\sum_{i=1}^{k-1}\lambda_i=1$，有 $\sum_{i=1}^{k-1}\lambda_i x_i \in C$。
+
+\textbf{归纳步骤：} 设 $x_1,\dots,x_k\in C$，$\theta_i\ge0$，$\sum_{i=1}^k\theta_i=1$。
+
+若 $\theta_k=1$，则其余 $\theta_i=0$，故 $\sum_{i=1}^k\theta_i x_i = x_k \in C$，成立。
+
+若 $\theta_k < 1$，令
+\[
+  \lambda_i = \frac{\theta_i}{1-\theta_k}, \quad i=1,\dots,k-1.
+\]
+则 $\lambda_i\ge0$，且 $\sum_{i=1}^{k-1}\lambda_i = \frac{\sum_{i=1}^{k-1}\theta_i}{1-\theta_k} = \frac{1-\theta_k}{1-\theta_k}=1$。
+
+由归纳假设，
+\[
+  z := \sum_{i=1}^{k-1}\lambda_i x_i \in C.
+\]
+于是
+\[
+  \sum_{i=1}^k \theta_i x_i
+  = \sum_{i=1}^{k-1}\theta_i x_i + \theta_k x_k
+  = (1-\theta_k)\sum_{i=1}^{k-1}\lambda_i x_i + \theta_k x_k
+  = (1-\theta_k)z + \theta_k x_k.
+\]
+因为 $z, x_k \in C$，$1-\theta_k\ge0$，$\theta_k\ge0$，$(1-\theta_k)+\theta_k=1$，由凸集定义知
+\[
+  (1-\theta_k)z + \theta_k x_k \in C.
+\]
+故命题对任意 $k$ 成立。\qed
+
+\paragraph{2.2}
+
+\textbf{(a)} $C=\{x\in\mathbb{R}^n : x^Tx \le 1\}$ \textbf{是凸集。}
+
+\textbf{证明：} 即单位欧氏球 $C=\{x:\|x\|_2\le1\}$。任取 $x,y\in C$，$\theta\in[0,1]$，由三角不等式与非负性，
+\[
+  \|\theta x+(1-\theta)y\|_2 \le \theta\|x\|_2 + (1-\theta)\|y\|_2 \le \theta\cdot1+(1-\theta)\cdot1=1.
+\]
+故 $\theta x+(1-\theta)y\in C$，$C$ 凸。\qed
+
+\textbf{(b)} $C=\{(x_1,x_2)\in\mathbb{R}^2 : x_1x_2\le1,\ x_1<0\}$ \textbf{不是凸集。}
+
+\textbf{反例：} 取 $u=(-1,-1)$，$v=(-4,0)$。
+
+验证：$(-1)(-1)=1\le1$，$-1<0$，故 $u\in C$；$(-4)(0)=0\le1$，$-4<0$，故 $v\in C$。
+
+其中点为 $\frac{u+v}{2}=(-2.5,-0.5)$，而 $(-2.5)(-0.5)=1.25>1$，故中点不在 $C$ 中，$C$ 不是凸集。\qed
+
+\textbf{(c)} $C=\{A\in\mathbb{R}^{4\times4}:\operatorname{rank}(A)\le2\}$ \textbf{不是凸集。}
+
+\textbf{反例：} 取
+\[
+  A=\begin{pmatrix}1&0&0&0\\0&1&0&0\\0&0&0&0\\0&0&0&0\end{pmatrix},\quad
+  B=\begin{pmatrix}0&0&0&0\\0&0&0&0\\0&0&1&0\\0&0&0&1\end{pmatrix}.
+\]
+则 $\operatorname{rank}(A)=\operatorname{rank}(B)=2$，故 $A,B\in C$。
+
+但 $\frac{A+B}{2}=\frac{1}{2}I_4$，其秩为 $4>2$，不属于 $C$。
+
+故 $C$ 不是凸集。\qed
+
+\paragraph{2.3}
+
+\textbf{(a)} 平板 $\{x\in\mathbb{R}^n\mid \alpha\le a^Tx\le\beta\}$ \textbf{是凸集。}
+
+\textbf{证明：} 该集合可写成两个半空间的交：
+\[
+  \{x:a^Tx\ge\alpha\}\cap\{x:a^Tx\le\beta\}.
+\]
+半空间是凸集，凸集的有限交仍是凸集，故该集合凸。\qed
+
+\textbf{(b)} 矩形 $\{x\in\mathbb{R}^n\mid \alpha_i\le x_i\le\beta_i,\ i=1,\dots,n\}$ \textbf{是凸集。}
+
+\textbf{证明：} 该集合可写成 $2n$ 个半空间的交：
+\[
+  \bigcap_{i=1}^n\bigl(\{x:x_i\ge\alpha_i\}\cap\{x:x_i\le\beta_i\}\bigr).
+\]
+每个均为半空间，其交是凸集，故矩形凸。\qed
+
+\textbf{(c)} 楔形 $\{x\in\mathbb{R}^n\mid a_1^Tx\le b_1,\ a_2^Tx\ge b_2\}$ \textbf{是凸集。}
+
+\textbf{证明：} 该集合是两个半空间
+\[
+  \{x:a_1^Tx\le b_1\}\cap\{x:a_2^Tx\ge b_2\}
+\]
+的交，因此凸。\qed
+
+\textbf{(d)} $\{x\mid \|x-x_0\|_2\le\|x-y\|_2,\ \forall y\in S\}$ \textbf{是凸集。}
+
+\textbf{证明：} 对任意固定的 $y\in S$，将不等式 $\|x-x_0\|_2\le\|x-y\|_2$ 两边平方并展开：
+\[
+  \|x-x_0\|^2 \le \|x-y\|^2
+  \iff x^Tx - 2x_0^Tx + \|x_0\|^2 \le x^Tx - 2y^Tx + \|y\|^2,
+\]
+化简得
+\[
+  2(y-x_0)^Tx \le \|y\|^2 - \|x_0\|^2.
+\]
+这是关于 $x$ 的线性不等式，定义了一个半空间 $H_y$。原集合为
+\[
+  \bigcap_{y\in S} H_y,
+\]
+即半空间族的交，故为凸集。\qed
+
+\textbf{(e)} $\{x\mid \mathrm{dist}(x,S)\le\mathrm{dist}(x,T)\}$ \textbf{一般不是凸集。}
+
+\textbf{反例：} 在 $\mathbb{R}$ 中取 $S=\{-1,1\}$，$T=\{0\}$。则
+\[
+  \mathrm{dist}(x,S)=\min(|x+1|,|x-1|),\quad \mathrm{dist}(x,T)=|x|.
+\]
+集合为 $C=\{x:\min(|x+1|,|x-1|)\le|x|\}$。
+
+对 $x\ge0$：$\min(|x+1|,|x-1|)\le|x|$ 等价于 $|x-1|\le x$，即 $x\ge\tfrac{1}{2}$。
+
+对 $x<0$：类似可得 $x\le-\tfrac{1}{2}$。
+
+故 $C=(-\infty,-\tfrac{1}{2}]\cup[\tfrac{1}{2},+\infty)$，这是两个不相交区间的并，不是凸集（例如 $-\tfrac{1}{2},\tfrac{1}{2}\in C$，但中点 $0\notin C$）。\qed
+
+\end{document}

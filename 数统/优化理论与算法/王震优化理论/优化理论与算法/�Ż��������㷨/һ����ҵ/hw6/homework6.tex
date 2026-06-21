@@ -1,0 +1,326 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage[longend,ruled,linesnumbered]{algorithm2e}
+\usepackage{fancyhdr}
+\usepackage{ctex}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+
+\begin{document}
+
+
+\title{
+{《优化理论与算法》第$6$次作业
+}
+}
+\date{}
+
+ \author{
+ 姓名：\underline{焦传斌}~~~~~~
+ 学号：\underline{2024111223}~~~~~~}
+
+\maketitle
+\begin{itemize}
+	\item 作业截止于{\bf 周五（4/17/2026）}，在Canvas系统中提交PDF或照片文件
+	\item 作业题目的tex文件可以在Canvas中下载
+	\item 鼓励相互讨论，但不要抄袭.
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{习题}
+
+
+\paragraph{2.1}
+给定一个有向网络 $G=(V,E)$，其中顶点集合 $V$ 包含 $6$ 个节点，分别记为
+\[
+\{s,\,1,\,2,\,3,\,4,\,t\},
+\]
+其中 $s$ 为源点，$t$ 为汇点。下表给出了网络中各条有向边及其容量：
+
+\[
+\begin{array}{c|cc}
+\textbf{边} & \textbf{容量} \\ \hline
+(s,1) & 15 \\
+(s,2) & 5 \\
+(1,2) & 5 \\
+(1,3) & 10 \\
+(2,4) & 8 \\
+(3,4) & 7 \\
+(3,t) & 6 \\
+(4,t) & 12
+\end{array}
+\]
+
+请根据以上数据完成下列要求：
+
+\begin{enumerate}
+  \item \textbf{模型建立}：  
+  建立最大流问题模型，建立最小割问题模型
+
+  \item \textbf{求解}：  
+  使用任何合适的求解器，求解上述最大流模型，请给出最优解中各条边的流量分配结果；求解上述最小割模型，请给出最优分割。最后，验证最大流最小割定理成立。
+  
+
+  \item \textbf{结果分析与讨论}：
+  \begin{enumerate}
+    \item 若将边 $(1,3)$ 的容量由 10 调整为 5，最大流量是否会发生变化？若会，新的最优流量值是多少？  
+    \item 若在节点 $2$ 与节点 $3$ 之间增设一条新边 $(2,3)$，容量为 6，则新的最优流量是多少？  
+  \end{enumerate}
+\end{enumerate}
+
+
+\paragraph{2.2} 
+试证明：引入容量下界的最小成本流问题，也符合整数定理，即：
+如果如下线性规划中，
+\begin{equation*}
+\begin{aligned}
+& {\text{minimize}}
+& & \sum_{(i,j) \in E} c_{ij}x_{ij} \\
+& \text{subject to}
+& & \sum_{(k,i) \in E} x_{ki} - \sum_{(i,j)\in E} x_{ij} =d_i,&\forall i \in V\\
+& & & l_{ij} \leq x_{ij} \leq u_{ij} ,&\forall (i,j) \in E\\
+\end{aligned}
+\end{equation*}
+参数$d_i, l_{ij}, u_{ij}$均为整数，那么其所有基本可行解均为整数解。
+
+
+%% ============================================================
+%%  Solutions
+%% ============================================================
+
+\section*{解答}
+
+\paragraph{2.1 解答}
+
+\subparagraph{（1）模型建立}
+
+设网络 $G=(V,E)$，节点集 $V=\{s,1,2,3,4,t\}$，边容量为 $u_{ij}$。
+设 $x_{ij}$ 为边 $(i,j)$ 上的流量，最大流值为 $v$。
+
+\textbf{最大流模型}
+
+\[
+\max\ v
+\]
+s.t.
+\begin{align*}
+\sum_{j:(s,j)\in E} x_{sj} &= v &\text{（源点流出）}\\
+\sum_{k:(k,i)\in E} x_{ki} &= \sum_{j:(i,j)\in E} x_{ij}, \quad \forall i\in V\setminus\{s,t\} &\text{（中间节点守恒）}\\
+\sum_{k:(k,t)\in E} x_{kt} &= v &\text{（汇点流入）}\\
+0 &\le x_{ij} \le u_{ij}, \quad \forall (i,j)\in E &\text{（容量约束）}
+\end{align*}
+
+\textbf{最小割模型}
+
+设 $z_i\ge 0$ 为节点 $i$ 的势，$y_{ij}$ 为边 $(i,j)$ 的割指示量，满足
+$y_{ij}=\max\{z_i-z_j,\,0\}$，固定 $z_s=1,\,z_t=0$。
+
+\[
+\min_{y_{ij},\,z_i} \quad \sum_{(i,j)\in E} u_{ij}\,y_{ij}
+\]
+s.t.
+\begin{align*}
+y_{ij} &\ge z_i-z_j, \quad \forall(i,j)\in E \\
+y_{ij} &\ge 0, \quad \forall(i,j)\in E \\
+z_s &= 1,\quad z_t = 0
+\end{align*}
+
+\subparagraph{（2）求解}
+
+使用 COPT 求解器（代码见附录），求解结果如下。
+
+\textbf{最大流最优解：}
+
+\[
+\begin{array}{c|c}
+\textbf{边} & \textbf{流量} \\ \hline
+(s,1) & 13 \\
+(s,2) & 5  \\
+(1,2) & 3  \\
+(1,3) & 10 \\
+(2,4) & 8  \\
+(3,4) & 4  \\
+(3,t) & 6  \\
+(4,t) & 12 \\
+\end{array}
+\qquad v = 18.
+\]
+
+\textbf{最小割最优解：}
+
+求解器给出最优分割为
+\[
+S = \{s,1,2,3,4\},\quad T = \{t\},
+\]
+跨割边为 $(3,t)$ 和 $(4,t)$，割容量为
+\[
+6 + 12 = 18.
+\]
+（$S=\{s,1,2\},\,T=\{3,4,t\}$，跨割边 $(1,3),(2,4)$，容量 $10+8=18$，同为最优割。）
+
+\textbf{最大流最小割定理验证：}
+\[
+\text{最大流值} = \text{最小割值} = 18,
+\]
+定理成立。
+
+\subparagraph{（3）结果分析与讨论}
+
+\textbf{(a) 将边 $(1,3)$ 的容量由 $10$ 改为 $5$}
+
+COPT 重新求解得最大流值为 $\mathbf{13}$，流量分配为：
+
+\[
+x_{s1}=8,\ x_{s2}=5,\ x_{12}=3,\ x_{13}=5,\ x_{24}=8,\ x_{34}=0,\ x_{3t}=5,\ x_{4t}=8.
+\]
+
+割 $S=\{s,1,2\},\,T=\{3,4,t\}$ 的容量变为 $5+8=13$，成为瓶颈，故最大流由 $18$ 降至 $\mathbf{13}$。
+
+\textbf{(b) 新增边 $(2,3)$，容量 $6$}
+
+COPT 求解得最大流值仍为 $\mathbf{18}$，流量分配为：
+
+\[
+x_{s1}=13,\ x_{s2}=5,\ x_{12}=5,\ x_{13}=8,\ x_{23}=2,\ x_{24}=8,\ x_{34}=4,\ x_{3t}=6,\ x_{4t}=12.
+\]
+
+汇点处总入容量 $(3,t)+(4,t)=6+12=18$，最大流仍为 $\mathbf{18}$。
+
+\paragraph{2.2 解答}
+
+\begin{proof}
+设原问题的参数 $d_i,l_{ij},u_{ij}$ 均为整数。令
+\[
+y_{ij} = x_{ij} - l_{ij},
+\]
+则 $0\le y_{ij}\le u_{ij}-l_{ij}$，上界 $u_{ij}-l_{ij}$ 仍为整数。
+
+将 $x_{ij}=y_{ij}+l_{ij}$ 代入流量平衡约束：
+\[
+\sum_{(k,i)\in E}(y_{ki}+l_{ki}) - \sum_{(i,j)\in E}(y_{ij}+l_{ij}) = d_i,
+\]
+整理得
+\[
+\sum_{(k,i)\in E}y_{ki} - \sum_{(i,j)\in E}y_{ij} = d_i',
+\]
+其中
+\[
+d_i' = d_i - \sum_{(k,i)\in E}l_{ki} + \sum_{(i,j)\in E}l_{ij}
+\]
+仍为整数。目标函数中 $\sum c_{ij}l_{ij}$ 为常数，因此问题等价于：
+\[
+\min \sum_{(i,j)\in E} c_{ij}y_{ij},\quad
+\sum_{(k,i)\in E}y_{ki} - \sum_{(i,j)\in E}y_{ij} = d_i',\quad
+0\le y_{ij}\le u_{ij}-l_{ij}.
+\]
+这是一个右端项和容量上界均为整数的标准最小成本流问题。
+由最小成本流整数定理，其所有基本可行解 $y$ 均为整数解。
+又因为 $x_{ij}=y_{ij}+l_{ij}$ 而 $l_{ij}$ 为整数，故 $x_{ij}$ 也为整数。
+
+因此，引入容量下界的最小成本流问题的所有基本可行解均为整数解。
+\end{proof}
+
+%% ============================================================
+%%  附录：COPT 求解代码（第 2.1 题）
+%% ============================================================
+\newpage
+\section*{附录：第 2.1 题 COPT 求解代码}
+
+\begin{lstlisting}[language=Python, basicstyle=\small\ttfamily,
+    keywordstyle=\color{blue}, commentstyle=\color{gray},
+    stringstyle=\color{red!60!black},
+    breaklines=true, frame=single, numbers=left]
+import coptpy as cp
+from coptpy import COPT
+
+env = cp.Envr()
+
+# ---- Part 1: Maximum Flow  ----
+model = env.createModel("MaxFlow")
+model.setParam(COPT.Param.Logging, 0)
+
+xs1 = model.addVar(lb=0, ub=15, name="x_s1")
+xs2 = model.addVar(lb=0, ub=5,  name="x_s2")
+x12 = model.addVar(lb=0, ub=5,  name="x_12")
+x13 = model.addVar(lb=0, ub=10, name="x_13")
+x24 = model.addVar(lb=0, ub=8,  name="x_24")
+x34 = model.addVar(lb=0, ub=7,  name="x_34")
+x3t = model.addVar(lb=0, ub=6,  name="x_3t")
+x4t = model.addVar(lb=0, ub=12, name="x_4t")
+v   = model.addVar(lb=0, name="v")
+
+model.setObjective(v, COPT.MAXIMIZE)
+model.addConstr(xs1 + xs2 == v,        name="source")
+model.addConstr(xs1 == x12 + x13,      name="node1")
+model.addConstr(xs2 + x12 == x24,      name="node2")
+model.addConstr(x13 == x34 + x3t,      name="node3")
+model.addConstr(x24 + x34 == x4t,      name="node4")
+model.addConstr(x3t + x4t == v,        name="sink")
+model.solve()
+
+# ---- Part 2: Minimum Cut  ----
+
+mc = env.createModel("MinCut")
+mc.setParam(COPT.Param.Logging, 0)
+zs = mc.addVar(lb=0, ub=1, name="z_s")
+z1 = mc.addVar(lb=0, ub=1, name="z_1")
+z2 = mc.addVar(lb=0, ub=1, name="z_2")
+z3 = mc.addVar(lb=0, ub=1, name="z_3")
+z4 = mc.addVar(lb=0, ub=1, name="z_4")
+zt = mc.addVar(lb=0, ub=1, name="z_t")
+ys1=mc.addVar(lb=0,name="y_s1"); ys2=mc.addVar(lb=0,name="y_s2")
+y12=mc.addVar(lb=0,name="y_12"); y13=mc.addVar(lb=0,name="y_13")
+y24=mc.addVar(lb=0,name="y_24"); y34=mc.addVar(lb=0,name="y_34")
+y3t=mc.addVar(lb=0,name="y_3t"); y4t=mc.addVar(lb=0,name="y_4t")
+mc.setObjective(15*ys1+5*ys2+5*y12+10*y13+8*y24+7*y34+6*y3t+12*y4t,
+                COPT.MINIMIZE)
+mc.addConstr(zs == 1); mc.addConstr(zt == 0)
+mc.addConstr(ys1 >= zs-z1); mc.addConstr(ys2 >= zs-z2)
+mc.addConstr(y12 >= z1-z2);  mc.addConstr(y13 >= z1-z3)
+mc.addConstr(y24 >= z2-z4);  mc.addConstr(y34 >= z3-z4)
+mc.addConstr(y3t >= z3-zt);  mc.addConstr(y4t >= z4-zt)
+mc.solve()
+
+\end{lstlisting}
+
+\subsubsection*{COPT 求解输出}
+
+\begin{verbatim}
+=== Maximum Flow Model ===
+Max Flow value v = 18.0000
+  x_s1 = 13.0000,  x_s2 = 5.0000
+  x_12 =  3.0000,  x_13 = 10.0000
+  x_24 =  8.0000,  x_34 =  4.0000
+  x_3t =  6.0000,  x_4t = 12.0000
+
+=== Minimum Cut Model (LP, continuous potentials) ===
+Min Cut value = 18.0000
+Node potentials: z_s=1, z_1=1, z_2=1, z_3=1, z_4=1, z_t=0
+Edge indicators y_ij = max{z_i - z_j, 0}:
+  (3,t) cap= 6  y=1.0000  [IN CUT]
+  (4,t) cap=12  y=1.0000  [IN CUT]
+
+=== Max-Flow Min-Cut Verification ===
+Max flow = Min cut = 18   [theorem holds]
+
+=== Part 3(a): cap(1,3) = 5 ===
+New Max Flow value v = 13.0000
+  x_s1 = 8,  x_s2 = 5,  x_12 = 3,  x_13 = 5
+  x_24 = 8,  x_34 = 0,  x_3t = 5,  x_4t = 8
+
+=== Part 3(b): add edge (2,3) cap 6 ===
+New Max Flow value v = 18.0000
+  x_s1=13, x_s2=5, x_12=5, x_13=8, x_23=2
+  x_24=8,  x_34=4, x_3t=6, x_4t=12
+\end{verbatim}
+
+\end{document}

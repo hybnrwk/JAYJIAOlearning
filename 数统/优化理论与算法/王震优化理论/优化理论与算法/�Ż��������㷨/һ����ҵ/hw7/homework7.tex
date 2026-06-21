@@ -1,0 +1,213 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ctex}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+
+\begin{document}
+
+
+\title{
+{《优化理论与算法》第7次作业
+}
+}
+\date{}
+
+ \author{
+ 姓名：\underline{焦传斌}~~~~~~
+ 学号：\underline{2024111223}~~~~~~}
+
+\maketitle
+\begin{itemize}
+	\item 作业截止于{\bf 周五（4/24/2025）}，在Canvas系统中提交PDF或照片文件
+	\item 作业题目的tex文件可以在Canvas中下载
+	\item 鼓励相互讨论，但不要抄袭.
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{阅读与积累}
+\paragraph{1.1}
+\begin{itemize}
+	\item 复习 Boyd and Vandenberghe，也就是 Convex Optimization 教材，章节 2.1-2.5 与 3.1相关内容。预习章节3.2-3.4。
+\item 收看同名超星线上慕课章节2.1内容。
+\end{itemize}
+
+\section{习题}
+\paragraph{2.1}
+设$C\subseteq\mathbb{R}^n$为一个凸集且$x_1,...,x_k \in C$。令$\theta_1,...,\theta_k \in \mathbb{R}$满足$\theta_i \geq 0, \;\sum_{i=1}^k \theta_i=1$。证明$\sum_{i=1}^k\theta_i x_i\in C$。（凸性定义是指此式在$k=2$时成立；你需证明对任意$k$的情况。）提示对$k$归纳。
+
+\textbf{证明：} 设 $k\ge2$，我们通过数学归纳法证明命题对任意 $k$ 成立。
+
+\textbf{$k=2$：} 这正是凸集的定义，命题成立。
+
+\textbf{归纳假设：} 对某个 $k-1 \ge 2$，命题成立，即对任意 $x_1,\dots,x_{k-1}\in C$，$\lambda_i\ge0$，$\sum_{i=1}^{k-1}\lambda_i=1$，有 $\sum_{i=1}^{k-1}\lambda_i x_i \in C$。
+
+设 $x_1,\dots,x_k\in C$，$\theta_i\ge0$，$\sum_{i=1}^k\theta_i=1$。
+
+若 $\theta_k=1$，则其余 $\theta_i=0$，故 $\sum_{i=1}^k\theta_i x_i = x_k \in C$，成立。
+
+若 $\theta_k < 1$，令
+\[
+  \lambda_i = \frac{\theta_i}{1-\theta_k}, \quad i=1,\dots,k-1.
+\]
+则 $\lambda_i\ge0$，且 $\sum_{i=1}^{k-1}\lambda_i = \frac{\sum_{i=1}^{k-1}\theta_i}{1-\theta_k} = \frac{1-\theta_k}{1-\theta_k}=1$。
+
+由归纳假设，$z := \sum_{i=1}^{k-1}\lambda_i x_i \in C$。于是
+\[
+  \sum_{i=1}^k \theta_i x_i
+  = (1-\theta_k)\sum_{i=1}^{k-1}\lambda_i x_i + \theta_k x_k
+  = (1-\theta_k)z + \theta_k x_k.
+\]
+因为 $z, x_k \in C$，$1-\theta_k\ge0$，$\theta_k\ge0$，$(1-\theta_k)+\theta_k=1$，由凸集定义知 $(1-\theta_k)z + \theta_k x_k \in C$。
+
+故命题对任意 $k$ 成立。$\blacksquare$
+
+
+\paragraph{2.2}
+下面集合是否为凸集合？如果是，则证明之；如果不是，请找出反例。
+\begin{itemize}
+\item[(a)] $C=\{x \in \mathbb{R}^n: x^Tx \leq 1\}$
+
+\textbf{是凸集。} 即单位欧氏球 $C=\{x:\|x\|_2\le1\}$。任取 $x,y\in C$，$\theta\in[0,1]$，由三角不等式，
+\[
+  \|\theta x+(1-\theta)y\|_2 \le \theta\|x\|_2 + (1-\theta)\|y\|_2 \le \theta+(1-\theta)=1.
+\]
+故 $\theta x+(1-\theta)y\in C$，$C$ 凸。$\blacksquare$
+
+    \item[(b)] $C =\{(x_1,x_2) \in \mathbb{R}^2 : x_1 x_2 \leq 1, x_1 < 0\}$
+
+\textbf{不是凸集。} 取 $u=(-1,-1)$，$v=(-4,0)$。验证：$(-1)(-1)=1\le1$，$-1<0$，故 $u\in C$；$(-4)(0)=0\le1$，$-4<0$，故 $v\in C$。其中点为 $\frac{u+v}{2}=(-2.5,-0.5)$，而 $(-2.5)(-0.5)=1.25>1$，故中点不在 $C$ 中。$\blacksquare$
+
+    \item[(c)] $C=\{A \in \mathbb{R}^{4 \times 4} : \text{rank}(A) \leq  2\}$
+
+\textbf{不是凸集。} 取
+\[
+  A=\begin{pmatrix}1&0&0&0\\0&1&0&0\\0&0&0&0\\0&0&0&0\end{pmatrix},\quad
+  B=\begin{pmatrix}0&0&0&0\\0&0&0&0\\0&0&1&0\\0&0&0&1\end{pmatrix}.
+\]
+则 $\operatorname{rank}(A)=\operatorname{rank}(B)=2$，故 $A,B\in C$。但 $\frac{A+B}{2}=\frac{1}{2}I_4$，其秩为 $4>2$，不属于 $C$。$\blacksquare$
+\end{itemize}
+
+\paragraph{2.3}
+下面集合是否为凸集合？如果是，则证明之；如果不是，请找出反例。
+
+\begin{itemize}
+  \item[(a)] 平板，即形如 $\{x \in \mathbb{R}^n \mid \alpha \leq a^T x \leq \beta\}$ 的集合。
+
+  \textbf{是凸集。} 该集合可写成两个半空间的交：$\{x:a^Tx\ge\alpha\}\cap\{x:a^Tx\le\beta\}$。半空间是凸集，凸集的有限交仍是凸集，故凸。$\blacksquare$
+
+  \item[(b)] 矩形，即形如 $\{x \in \mathbb{R}^n \mid \alpha_i \leq x_i \leq \beta_i,\ i = 1, \dots, n\}$ 的集合。当 $n > 2$ 时，矩形有时也称为超矩形。
+
+  \textbf{是凸集。} 该集合可写成 $2n$ 个半空间的交：$\bigcap_{i=1}^n\bigl(\{x:x_i\ge\alpha_i\}\cap\{x:x_i\le\beta_i\}\bigr)$，故凸。$\blacksquare$
+
+  \item[(c)] 楔形，即 $\{x \in \mathbb{R}^n \mid a_1^T x \leq b_1,\ a_2^T x \geq b_2\}$。
+
+  \textbf{是凸集。} 该集合是两个半空间 $\{x:a_1^Tx\le b_1\}\cap\{x:a_2^Tx\ge b_2\}$ 的交，故凸。$\blacksquare$
+
+  \item[(d)] 距离给定点比距离给定集合近的点构成的集合，即
+  \[
+  \{x \mid \|x - x_0\|_2 \leq \|x - y\|_2,\ \forall y \in S\},
+  \]
+  其中 $S \subset \mathbb{R}^n$。
+
+  \textbf{是凸集。} 对任意固定的 $y\in S$，将 $\|x-x_0\|_2\le\|x-y\|_2$ 两边平方展开：
+  \[
+    x^Tx - 2x_0^Tx + \|x_0\|^2 \le x^Tx - 2y^Tx + \|y\|^2,
+  \]
+  化简得 $2(y-x_0)^Tx \le \|y\|^2 - \|x_0\|^2$，这是关于 $x$ 的线性不等式，定义半空间 $H_y$。原集合为 $\bigcap_{y\in S} H_y$，即半空间族的交，故凸。$\blacksquare$
+
+  \item[(e)] 距离一个集合比另一个集合更近的点的集合，即
+  \[
+  \{x \mid \mathrm{dist}(x, S) \leq \mathrm{dist}(x, T)\},
+  \]
+  其中 $S, T \subset \mathbb{R}^n$，$\mathrm{dist}(x, S) = \inf\{\|x - z\|_2 \mid z \in S\}$。
+
+  \textbf{不是凸集。} 在 $\mathbb{R}$ 中取 $S=\{-1,1\}$，$T=\{0\}$，则集合为 $C=\{x:\min(|x+1|,|x-1|)\le|x|\}$。解得 $C=(-\infty,-\tfrac{1}{2}]\cup[\tfrac{1}{2},+\infty)$，这是两个不相交区间的并，不是凸集（$-\tfrac{1}{2},\tfrac{1}{2}\in C$ 但中点 $0\notin C$）。$\blacksquare$
+\end{itemize}
+
+
+
+\paragraph{2.4}
+下面函数是否为凸函数？如果是，则证明之；如果不是，请找出反例。
+\begin{enumerate}
+	\item $f(x_1,x_2)=x_1 x_2$ on $\mathbb{R}_{++}^2$
+
+	\textbf{不是凸函数。} 取 $x=(1,3)$，$y=(3,1)$，则 $f(x)=f(y)=3$。中点为 $\frac{x+y}{2}=(2,2)$，$f(2,2)=4$。但若 $f$ 凸，应有
+	\[
+	  f\!\left(\tfrac{x+y}{2}\right) \le \tfrac{f(x)+f(y)}{2} = 3.
+	\]
+	现在 $4>3$，矛盾，故 $f$ 不是凸函数。$\blacksquare$
+
+	\item $f(x_1,x_2)=1/(x_1x_2)$  on $\mathbb{R}_{++}^2$
+
+	\textbf{是凸函数。} 计算 Hessian 矩阵：
+	\[
+	  f_{x_1x_1} = \frac{2}{x_1^3 x_2},\quad
+	  f_{x_2x_2} = \frac{2}{x_1 x_2^3},\quad
+	  f_{x_1x_2} = \frac{1}{x_1^2 x_2^2}.
+	\]
+	故
+	\[
+	  \nabla^2 f(x) = \begin{pmatrix} \dfrac{2}{x_1^3 x_2} & \dfrac{1}{x_1^2 x_2^2} \\[6pt] \dfrac{1}{x_1^2 x_2^2} & \dfrac{2}{x_1 x_2^3} \end{pmatrix}.
+	\]
+	其顺序主子式均正：$\frac{2}{x_1^3 x_2}>0$，行列式 $\frac{4}{x_1^4 x_2^4}-\frac{1}{x_1^4 x_2^4}=\frac{3}{x_1^4 x_2^4}>0$。故 $\nabla^2 f(x)\succ 0$，$f$ 严格凸。$\blacksquare$
+
+	\item $f(x_1,x_2)=-x_1^\alpha x_2^{1-\alpha}$  on $\mathbb{R}_{++}^2$, where $0 \leq \alpha \leq 1$
+
+	\textbf{是凸函数。} 令 $\beta=1-\alpha$，计算二阶偏导：
+	\[
+	  f_{x_1x_1} = \alpha(1-\alpha)x_1^{\alpha-2}x_2^{\beta},
+	\]
+	\[
+	  f_{x_2x_2} = \alpha(1-\alpha)x_1^{\alpha}x_2^{\beta-2},\quad
+	  f_{x_1x_2} = -\alpha(1-\alpha)x_1^{\alpha-1}x_2^{\beta-1}.
+	\]
+	故
+	\[
+	  \nabla^2 f(x) = \alpha(1-\alpha)x_1^{\alpha-2}x_2^{\beta-2}
+	  \begin{pmatrix} x_2^2 & -x_1 x_2 \\ -x_1 x_2 & x_1^2 \end{pmatrix}.
+	\]
+	注意到内层矩阵可分解为
+	\[
+	  \begin{pmatrix} x_2^2 & -x_1 x_2 \\ -x_1 x_2 & x_1^2 \end{pmatrix}
+	  = \begin{pmatrix} x_2 \\ -x_1 \end{pmatrix}\begin{pmatrix} x_2 & -x_1 \end{pmatrix} \succeq 0,
+	\]
+	且标量因子 $\alpha(1-\alpha)x_1^{\alpha-2}x_2^{\beta-2}\ge 0$（因 $0\le\alpha\le 1$，$x_1,x_2>0$），故 $\nabla^2 f(x)\succeq 0$，$f$ 为凸函数（当 $\alpha=0$ 或 $1$ 时 $f$ 退化为仿射函数，亦凸）。$\blacksquare$
+\end{enumerate}
+
+\paragraph{2.5}
+正式证明《凸函数》课件P19页，函数$f(x)$为凸函数与函数$g(t)$为凸函数的等价性。
+
+\textbf{证明：} 设 $g(t)=f(x+tv)$，$\operatorname{dom}g=\{t\mid x+tv\in\operatorname{dom}f\}$，对任意 $x\in\operatorname{dom}f$，$v\in\mathbb{R}^n$。
+
+\textbf{（$f$ 凸 $\Rightarrow$ $g$ 凸）} 设 $f$ 凸。取任意 $t_1,t_2\in\operatorname{dom}g$，$\theta\in[0,1]$。由于 $x+t_i v\in\operatorname{dom}f$ 且 $\operatorname{dom}f$ 为凸集，
+\[
+  x+\bigl(\theta t_1+(1-\theta)t_2\bigr)v = \theta(x+t_1 v)+(1-\theta)(x+t_2 v)\in\operatorname{dom}f,
+\]
+故 $\theta t_1+(1-\theta)t_2\in\operatorname{dom}g$，$\operatorname{dom}g$ 为凸集。再由 $f$ 的凸性，
+\[
+  g\bigl(\theta t_1+(1-\theta)t_2\bigr)
+  = f\bigl(\theta(x+t_1 v)+(1-\theta)(x+t_2 v)\bigr)
+  \le \theta f(x+t_1 v)+(1-\theta)f(x+t_2 v)
+  = \theta g(t_1)+(1-\theta)g(t_2).
+\]
+故 $g$ 凸。
+
+\textbf{（$g$ 凸 $\Rightarrow$ $f$ 凸）} 设对任意 $x,v$，$g(t)=f(x+tv)$ 均为凸函数。任取 $x_1,x_2\in\operatorname{dom}f$，$\theta\in[0,1]$。令 $x=x_2$，$v=x_1-x_2$，定义 $g(t)=f(x_2+t(x_1-x_2))$。由于 $0,1\in\operatorname{dom}g$ 且 $g$ 凸，
+\[
+  g(\theta) \le \theta g(1)+(1-\theta)g(0),
+\]
+即
+\[
+  f\bigl(\theta x_1+(1-\theta)x_2\bigr) \le \theta f(x_1)+(1-\theta)f(x_2).
+\]
+故 $f$ 凸。$\blacksquare$
+
+\end{document}

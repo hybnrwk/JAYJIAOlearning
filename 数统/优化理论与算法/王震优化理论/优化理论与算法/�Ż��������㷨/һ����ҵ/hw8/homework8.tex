@@ -1,0 +1,674 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2.0cm,bottom=2.5cm}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsthm}
+\usepackage{amsfonts}
+\usepackage[longend,ruled,linesnumbered]{algorithm2e}
+\usepackage{fancyhdr}
+\usepackage{ctex}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{graphicx}
+
+\begin{document}
+
+
+\title{
+{《优化理论与算法》第8次作业
+}
+}
+\date{}
+
+\author{
+姓名：\underline{焦传斌}~~~~~~
+学号：\underline{2024111223}~~~~~~}
+
+\maketitle
+\begin{itemize}
+	\item 作业截止于{\bf 周日（5/3/2026）}，在Canvas系统中提交PDF或照片文件
+	\item 作业题目的tex文件可以在Canvas中下载
+	\item 鼓励相互讨论，但不要抄袭.
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{阅读与积累}
+\paragraph{1.1}
+\begin{itemize}
+	\item 复习 Boyd and Vandenberghe，也就是 Convex Optimization 教材，章节 3.2-3.4 与 4.1-4.2相关
+\end{itemize}
+
+\section{习题}
+
+\paragraph{2.1}
+ 判断下列函数是否是凸函数、凹函数、拟凸函数？
+\begin{itemize}
+  \item[(a)] $f(x) = e^x - 1$, 定义域为 $\mathbb{R}$
+  \item[(b)] $f(x_1, x_2) = x_1 / x_2$, 定义域为 $\mathbb{R}_{++}^2$
+  \item[(c)] $f(x_1, x_2) = x_1^2 / x_2$, 定义域为 $\mathbb{R} \times \mathbb{R}_{++}$
+\end{itemize}
+
+\textbf{解：}
+\begin{itemize}
+  \item[(a)] 有
+  \[
+    f''(x)=e^x>0.
+  \]
+  因此 $f$ 是严格凸函数。由于二阶导数恒正，它不是凹函数。又因为凸函数一定是拟凸函数，所以 $f$ 是拟凸函数。
+
+  结论：凸；非凹；拟凸。
+
+  \item[(b)] 计算 Hessian：
+  \[
+    \nabla^2 f(x)=
+    \begin{pmatrix}
+      0 & -1/x_2^2\\
+      -1/x_2^2 & 2x_1/x_2^3
+    \end{pmatrix}.
+  \]
+  其行列式为
+  \[
+    \det(\nabla^2 f(x))=-\frac{1}{x_2^4}<0,
+  \]
+  所以 Hessian 不定，$f$ 既不是凸函数，也不是凹函数。
+
+  考察下水平集
+  \[
+    S_\alpha=\{x\in\mathbb{R}_{++}^2\mid x_1/x_2\leq \alpha\}.
+  \]
+  若 $\alpha<0$，则 $S_\alpha=\emptyset$，是凸集；若 $\alpha\geq 0$，则
+  \[
+    S_\alpha=\{x\in\mathbb{R}_{++}^2\mid x_1-\alpha x_2\leq 0\},
+  \]
+  是半空间与凸定义域的交，所以是凸集。因此 $f$ 是拟凸函数。
+
+  结论：非凸；非凹；拟凸。
+
+  \item[(c)] 计算 Hessian：
+  \[
+    \nabla^2 f(x)=
+    \begin{pmatrix}
+      2/x_2 & -2x_1/x_2^2\\
+      -2x_1/x_2^2 & 2x_1^2/x_2^3
+    \end{pmatrix}.
+  \]
+  对任意方向 $z=(z_1,z_2)$，有
+  \[
+    z^T\nabla^2 f(x)z
+    =\frac{2}{x_2}\left(z_1-\frac{x_1}{x_2}z_2\right)^2\geq 0.
+  \]
+  因此 Hessian 半正定，$f$ 是凸函数。
+
+  若 $f$ 是凹函数，则限制在直线 $x_2=1$ 上仍应是凹函数。但
+  \[
+    f(x_1,1)=x_1^2
+  \]
+  不是凹函数，所以 $f$ 不是凹函数。凸函数一定是拟凸函数，所以 $f$ 是拟凸函数。
+
+  结论：凸；非凹；拟凸。
+\end{itemize}
+
+
+
+\paragraph{2.2} 复合规则。证明下列函数是凸函数：
+\begin{itemize}
+  \item[(a)] $f(x) = -\log\left(-\log\left(\sum_{i=1}^m e^{a_i^T x + b_i}\right)\right)$, \quad $\operatorname{dom} f = \left\{ x \mid \sum_{i=1}^m e^{a_i^T x + b_i} < 1 \right\}$
+  \item[(b)] $f(x,u,v) = -\sqrt{uv - x^T x}, \quad \operatorname{dom} f = \{(x,u,v) \mid uv > x^T x, u > 0, v > 0\}$
+\end{itemize}
+
+\textbf{证明：}
+\begin{itemize}
+  \item[(a)] 使用归约为标量函数、二阶条件和保凸运算。令
+  \[
+    g(x)=\log\sum_{i=1}^m e^{a_i^Tx+b_i}.
+  \]
+  先证明 $g$ 是凸函数。取任意 $x$ 和方向 $v$，考虑一元函数
+  \[
+    h(\alpha)=g(x+\alpha v)
+    =\log\sum_{i=1}^m e^{c_i+\alpha d_i},
+  \]
+  其中 $c_i=a_i^Tx+b_i,\ d_i=a_i^Tv$。令
+  \[
+    w_i(\alpha)=\frac{e^{c_i+\alpha d_i}}
+    {\sum_{j=1}^m e^{c_j+\alpha d_j}},
+    \qquad \sum_{i=1}^m w_i(\alpha)=1.
+  \]
+  直接求导得
+  \[
+    h'(\alpha)=\sum_{i=1}^m w_i(\alpha)d_i,
+  \]
+  \[
+    h''(\alpha)=
+    \sum_{i=1}^m w_i(\alpha)d_i^2
+    -\left(\sum_{i=1}^m w_i(\alpha)d_i\right)^2
+    =\sum_{i=1}^m w_i(\alpha)(d_i-\bar d)^2\geq 0,
+  \]
+  其中 $\bar d=\sum_i w_i(\alpha)d_i$。所以 $h$ 对任意直线都是凸的，由此 $g$ 是凸函数。
+
+  题中函数可写为
+  \[
+    f(x)=\phi(g(x)),\qquad \phi(t)=-\log(-t),\quad t<0.
+  \]
+  定义域条件 $\sum_{i=1}^m e^{a_i^Tx+b_i}<1$ 等价于 $g(x)<0$。并且
+  \[
+    \phi'(t)=-\frac{1}{t}>0,\qquad
+    \phi''(t)=\frac{1}{t^2}>0.
+  \]
+  因此 $\phi$ 是凸且单调递增函数。由保凸运算中的复合规则，凸且单调递增函数与凸函数复合仍为凸函数，所以 $f$ 是凸函数。
+
+  \item[(b)] 使用仿射变换、归约为标量函数和二阶条件。令
+  \[
+    t=\frac{u+v}{2},\qquad
+    z=\left(\frac{u-v}{2},x\right).
+  \]
+  则
+  \[
+    uv-x^Tx=t^2-\|z\|_2^2.
+  \]
+  在定义域上有 $t>\|z\|_2$。记
+  \[
+    h(t,z)=-\sqrt{t^2-\|z\|_2^2}.
+  \]
+  只需证明 $h$ 在集合 $\{(t,z)\mid t>\|z\|_2\}$ 上凸，因为 $(x,u,v)\mapsto(t,z)$ 是仿射变换。
+
+  取任意点 $(t,z)$ 和任意方向 $(\tau,\eta)$，考虑一元函数
+  \[
+    \varphi(\alpha)
+    =h(t+\alpha\tau,z+\alpha\eta)
+    =-\sqrt{(t+\alpha\tau)^2-\|z+\alpha\eta\|_2^2}.
+  \]
+  令
+  \[
+    q(\alpha)=(t+\alpha\tau)^2-\|z+\alpha\eta\|_2^2.
+  \]
+  在直线位于定义域的部分有 $q(\alpha)>0$。二阶求导得
+  \[
+    \varphi''(\alpha)
+    =
+    \frac{\left((t+\alpha\tau)\tau-(z+\alpha\eta)^T\eta\right)^2
+    -q(\alpha)(\tau^2-\|\eta\|_2^2)}
+    {q(\alpha)^{3/2}}.
+  \]
+  下面证明分子非负。记 $\tilde t=t+\alpha\tau,\ \tilde z=z+\alpha\eta,\ r=\|\tilde z\|_2$，并把 $\eta$ 分解为平行于 $\tilde z$ 和垂直于 $\tilde z$ 的两部分：
+  \[
+    \tilde z^T\eta=r\beta,\qquad
+    \|\eta\|_2^2=\beta^2+\|\eta_\perp\|_2^2.
+  \]
+  因为 $q(\alpha)=\tilde t^2-r^2$，所以分子等于
+  \[
+    (r\tau-\tilde t\beta)^2+(\tilde t^2-r^2)\|\eta_\perp\|_2^2\geq 0.
+  \]
+  因此 $\varphi''(\alpha)\geq 0$，即 $h$ 沿任意直线都是凸的，所以 $h$ 是凸函数。再由仿射复合保持凸性可知
+  \[
+    f(x,u,v)=-\sqrt{uv-x^Tx}
+  \]
+  是凸函数。
+\end{itemize}
+
+\paragraph{2.3} 正式证明共轭函数为凸函数，即使原函数是非凸函数。
+
+\textbf{证明：}
+共轭函数定义为
+\[
+  f^*(y)=\sup_x\{y^Tx-f(x)\}.
+\]
+对任意固定的 $x$，函数 $y^Tx-f(x)$ 关于 $y$ 是仿射函数，因此也是凸函数。$f^*(y)$ 是一族关于 $y$ 的仿射函数的逐点上确界，而逐点上确界保持凸性。
+
+任取 $y_1,y_2$ 和 $\theta\in[0,1]$，有
+\[
+\begin{aligned}
+  f^*(\theta y_1+(1-\theta)y_2)
+  &=\sup_x\{(\theta y_1+(1-\theta)y_2)^Tx-f(x)\}\\
+  &=\sup_x\{\theta(y_1^Tx-f(x))+(1-\theta)(y_2^Tx-f(x))\}\\
+\end{aligned}
+\]
+对任意固定的 $x$，由共轭函数定义可知
+\[
+  y_1^Tx-f(x)\leq f^*(y_1),\qquad
+  y_2^Tx-f(x)\leq f^*(y_2).
+\]
+又因为 $\theta\geq 0,\ 1-\theta\geq 0$，所以
+\[
+\begin{aligned}
+  &\theta(y_1^Tx-f(x))+(1-\theta)(y_2^Tx-f(x))\\
+  &\qquad\leq \theta f^*(y_1)+(1-\theta)f^*(y_2).
+\end{aligned}
+\]
+右端与 $x$ 无关，因此对左端关于 $x$ 取上确界，得到
+\[
+\begin{aligned}
+  f^*(\theta y_1+(1-\theta)y_2)
+  &\leq \sup_x\{\theta f^*(y_1)+(1-\theta)f^*(y_2)\}\\
+  &=\theta f^*(y_1)+(1-\theta)f^*(y_2).
+\end{aligned}
+\]
+所以 $f^*$ 是凸函数。这个证明没有用到 $f$ 本身的凸性，因此即使原函数非凸，共轭函数仍是凸函数。
+
+\paragraph{2.4} 求给定负熵函数的共轭：
+\[
+  f(x) = \sum_{i=1}^n x_i \log(x_i / 1^T x), \quad \operatorname{dom} f = \mathbb{R}_{++}^n
+\]
+证明其共轭函数为
+\[
+  f^*(y) =
+  \begin{cases}
+    0 & \text{若 } \sum_{i=1}^n e^{y_i} \leq 1 \\
+    +\infty & \text{其他情况}
+  \end{cases}
+\]
+
+\textbf{证明：}
+记 $s=\mathbf{1}^Tx$，$p_i=x_i/s$。因为 $x\in\mathbb{R}_{++}^n$，所以
+\[
+  s>0,\qquad p_i>0,\qquad \sum_{i=1}^n p_i=1,\qquad x=sp.
+\]
+于是
+\[
+  f(x)=\sum_{i=1}^n sp_i\log p_i
+  =s\sum_{i=1}^n p_i\log p_i.
+\]
+因此
+\[
+\begin{aligned}
+  f^*(y)
+  &=\sup_{x>0}\{y^Tx-f(x)\}\\
+  &=\sup_{s>0,\ p\in\Delta}
+    s\left(\sum_{i=1}^n p_i y_i-\sum_{i=1}^n p_i\log p_i\right),
+\end{aligned}
+\]
+其中 $\Delta=\{p\mid p_i>0,\ \sum_{i=1}^n p_i=1\}$。
+
+先计算括号中关于 $p$ 的上确界。令
+\[
+  \psi(p)=\sum_{i=1}^n p_i y_i-\sum_{i=1}^n p_i\log p_i.
+\]
+这是在约束
+\[
+  \sum_{i=1}^n p_i=1,\qquad p_i>0
+\]
+下最大化 $\psi(p)$。由于
+\[
+  \frac{\partial^2 \psi}{\partial p_i^2}=-\frac{1}{p_i}<0,
+\]
+$\psi$ 在 $\Delta$ 上是严格凹函数，所以满足一阶条件的点就是全局最大点。
+
+构造拉格朗日函数
+\[
+  L(p,\lambda)
+  =\sum_{i=1}^n p_i y_i-\sum_{i=1}^n p_i\log p_i
+  +\lambda\left(\sum_{i=1}^n p_i-1\right).
+\]
+对每个 $p_i$ 求偏导：
+\[
+  \frac{\partial L}{\partial p_i}
+  =y_i-(\log p_i+1)+\lambda.
+\]
+令偏导为 $0$，得到
+\[
+  y_i-\log p_i-1+\lambda=0,
+\]
+也就是
+\[
+  \log p_i=y_i+\lambda-1.
+\]
+因此
+\[
+  p_i=e^{\lambda-1}e^{y_i}=ce^{y_i},
+\]
+其中 $c=e^{\lambda-1}$。再利用约束 $\sum_i p_i=1$，有
+\[
+  c\sum_{i=1}^n e^{y_i}=1,
+\]
+所以
+\[
+  c=\frac{1}{\sum_{j=1}^n e^{y_j}}.
+\]
+于是
+\[
+  p_i=\frac{e^{y_i}}{\sum_{j=1}^n e^{y_j}}.
+\]
+代回 $\psi(p)$。记 $Z=\sum_{j=1}^n e^{y_j}$，则
+\[
+\begin{aligned}
+  \psi(p)
+  &=\sum_{i=1}^n p_i y_i
+    -\sum_{i=1}^n p_i\log\left(\frac{e^{y_i}}{Z}\right)\\
+  &=\sum_{i=1}^n p_i y_i
+    -\sum_{i=1}^n p_i(y_i-\log Z)\\
+  &=\log Z\sum_{i=1}^n p_i\\
+  &=\log Z.
+\end{aligned}
+\]
+因此
+\[
+  \sup_{p\in\Delta}\psi(p)=\log\sum_{i=1}^n e^{y_i}.
+\]
+于是
+\[
+  f^*(y)=\sup_{s>0}s\log\sum_{i=1}^n e^{y_i}.
+\]
+
+若 $\log\sum_{i=1}^n e^{y_i}\leq 0$，即 $\sum_{i=1}^n e^{y_i}\leq 1$，则上确界为 $0$；其中严格小于 $0$ 时令 $s\to 0^+$ 可趋近 $0$。若
+\[
+  \log\sum_{i=1}^n e^{y_i}>0,
+\]
+则令 $s\to+\infty$，上确界为 $+\infty$。因此
+\[
+  f^*(y)=
+  \begin{cases}
+    0, & \sum_{i=1}^n e^{y_i}\leq 1,\\
+    +\infty, & \text{其他情况}.
+  \end{cases}
+\]
+证毕。
+
+
+
+
+\paragraph{2.5} 《Convex Optimization》(Boyd and Vandenberghe)教材课后题4.1
+
+\textbf{解：}
+原问题可行集为
+\[
+  2x_1+x_2\geq 1,\qquad
+  x_1+3x_2\geq 1,\qquad
+  x_1\geq 0,\qquad x_2\geq 0.
+\]
+两条边界直线
+\[
+  2x_1+x_2=1,\qquad x_1+3x_2=1
+\]
+的交点为
+\[
+  x_1=\frac25,\qquad x_2=\frac15.
+\]
+因此可行集的主要边界点为
+\[
+  (0,1),\qquad \left(\frac25,\frac15\right),\qquad (1,0).
+\]
+可行域是在第一象限中满足两条不等式上方的无界凸多边形区域。
+
+\begin{itemize}
+  \item[(a)] $f_0(x_1,x_2)=x_1+x_2$。
+
+  比较顶点处函数值：
+  \[
+    f_0(0,1)=1,\qquad
+    f_0\left(\frac25,\frac15\right)=\frac35,\qquad
+    f_0(1,0)=1.
+  \]
+  所以最优集为
+  \[
+    X^\star=\left\{\left(\frac25,\frac15\right)\right\},
+  \]
+  最优值为
+  \[
+    p^\star=\frac35.
+  \]
+
+  \item[(b)] $f_0(x_1,x_2)=-x_1-x_2$。
+
+  因为可行域无界，例如令 $x_1=x_2=t$，当 $t\to+\infty$ 时满足约束，且
+  \[
+    f_0(t,t)=-2t\to-\infty.
+  \]
+  所以问题无下界，最优集为空：
+  \[
+    X^\star=\emptyset.
+  \]
+  最优值为
+  \[
+    p^\star=-\infty,
+  \]
+
+  \item[(c)] $f_0(x_1,x_2)=x_1$。
+
+  由约束 $x_1\geq 0$ 可知目标函数值不小于 $0$。当 $x_1=0,\ x_2\geq 1$ 时可行，所以最优值可以达到 $0$。因此最优集为
+  \[
+    X^\star=\{(0,x_2)\mid x_2\geq 1\},
+  \]
+  最优值为
+  \[
+    p^\star=0.
+  \]
+
+  \item[(d)] $f_0(x_1,x_2)=\max\{x_1,x_2\}$。
+
+  令 $t=\max\{x_1,x_2\}$，则 $x_1\leq t,\ x_2\leq t$。若 $t<1/3$，则
+  \[
+    2x_1+x_2\leq 3t<1,
+  \]
+  不可能满足约束 $2x_1+x_2\geq 1$。当 $t=1/3$ 时，取
+  \[
+    x_1=x_2=\frac13,
+  \]
+  则
+  \[
+    2x_1+x_2=1,\qquad x_1+3x_2=\frac43\geq 1.
+  \]
+  所以可行。因此最优集为
+  \[
+    X^\star=\left\{\left(\frac13,\frac13\right)\right\},
+  \]
+  最优值为
+  \[
+    p^\star=\frac13.
+  \]
+
+  \item[(e)] $f_0(x_1,x_2)=x_1^2+9x_2^2$。
+
+  目标函数在第一象限随 $x_1,x_2$ 增大而增大，因此最优解应在可行域的左下边界上。
+
+  第一段边界为 $2x_1+x_2=1$，即 $x_2=1-2x_1$，其中 $0\leq x_1\leq 2/5$。代入目标函数：
+  \[
+    \phi(x_1)=x_1^2+9(1-2x_1)^2=37x_1^2-36x_1+9.
+  \]
+  其极小点为 $x_1=18/37>2/5$，不在该边界段内，所以该段最小值在 $x_1=2/5$ 处取得。
+
+  第二段边界为 $x_1+3x_2=1$，即 $x_2=(1-x_1)/3$，其中 $2/5\leq x_1\leq 1$。代入目标函数：
+  \[
+    \psi(x_1)=x_1^2+9\left(\frac{1-x_1}{3}\right)^2
+    =x_1^2+(1-x_1)^2.
+  \]
+  求导得
+  \[
+    \psi'(x_1)=4x_1-2.
+  \]
+  令 $\psi'(x_1)=0$，得 $x_1=1/2$，于是
+  \[
+    x_2=\frac{1-1/2}{3}=\frac16.
+  \]
+  所以最优集为
+  \[
+    X^\star=\left\{\left(\frac12,\frac16\right)\right\},
+  \]
+  最优值为
+  \[
+    p^\star=\left(\frac12\right)^2+9\left(\frac16\right)^2
+    =\frac14+\frac14=\frac12.
+  \]
+\end{itemize}
+
+\paragraph{2.6} 《Convex Optimization》(Boyd and Vandenberghe)教材课后题4.3
+
+\textbf{证明：}
+问题为
+\[
+  \min\ \frac12 x^TPx+q^Tx+r,
+  \qquad -1\leq x_i\leq 1,\quad i=1,2,3,
+\]
+其中
+\[
+  P=
+  \begin{pmatrix}
+    13 & 12 & -2\\
+    12 & 17 & 6\\
+    -2 & 6 & 12
+  \end{pmatrix},
+  \qquad
+  q=
+  \begin{pmatrix}
+    -22\\ -14.5\\ 13
+  \end{pmatrix}.
+\]
+给定点为
+\[
+  x^\star=\left(1,\frac12,-1\right).
+\]
+
+先证明目标函数是严格凸函数。矩阵 $P$ 对称，且其顺序主子式为
+\[
+  13>0,\qquad
+  \det\begin{pmatrix}13&12\\12&17\end{pmatrix}=77>0,\qquad
+  \det(P)=100>0.
+\]
+由 Sylvester 判别法可知 $P$ 正定，所以目标函数严格凸。
+
+下面验证一阶最优性条件。目标函数梯度为
+\[
+  \nabla f(x)=Px+q.
+\]
+计算得
+\[
+  Px^\star=
+  \begin{pmatrix}
+    21\\ 14.5\\ -11
+  \end{pmatrix},
+  \qquad
+  \nabla f(x^\star)=Px^\star+q=
+  \begin{pmatrix}
+    -1\\ 0\\ 2
+  \end{pmatrix}.
+\]
+对任意可行点 $z$，有
+\[
+  z_1\leq 1,\qquad z_3\geq -1,
+\]
+所以
+\[
+  z_1-1\leq 0,\qquad z_3+1\geq 0.
+\]
+于是
+\[
+\begin{aligned}
+  \nabla f(x^\star)^T(z-x^\star)
+  &=-(z_1-1)+2(z_3+1)\\
+  &\geq 0.
+\end{aligned}
+\]
+因此满足凸优化问题的一阶最优性条件
+\[
+  \nabla f(x^\star)^T(z-x^\star)\geq 0,\qquad \forall z\in C,
+\]
+所以 $x^\star$ 是全局最优解。由于 $P$ 正定，目标函数严格凸，故该最优解唯一。
+
+\paragraph{2.7} 《Convex Optimization》(Boyd and Vandenberghe)教材课后题4.26 (a) （提示：利用上图形式，考虑目标函数形式为：$\min \; \sum_{i=1}^m t_i$）
+
+\textbf{解：}
+先证明旋转二阶锥约束与二次约束的等价关系。对
+\[
+  x^Tx\leq yz,\qquad y\geq 0,\quad z\geq 0,
+\]
+考虑二阶锥约束
+\[
+  \left\|
+  \begin{pmatrix}
+    2x\\ y-z
+  \end{pmatrix}
+  \right\|_2\leq y+z,\qquad y\geq 0,\quad z\geq 0.
+\]
+两边平方得
+\[
+  4x^Tx+(y-z)^2\leq (y+z)^2.
+\]
+展开并化简得
+\[
+  4x^Tx\leq 4yz,
+\]
+即
+\[
+  x^Tx\leq yz.
+\]
+所以二者等价。
+
+令
+\[
+  s_i=a_i^Tx-b_i,\qquad i=1,\ldots,m.
+\]
+原定义域要求 $s_i>0$。最大化
+\[
+  \left(\sum_{i=1}^m\frac{1}{s_i}\right)^{-1}
+\]
+等价于最小化 $\sum_{i=1}^m 1/s_i$。引入变量 $t_i$，令
+\[
+  t_i\geq \frac{1}{s_i}.
+\]
+因为 $s_i>0$，上述约束等价于
+\[
+  1\leq t_i s_i,\qquad t_i\geq 0,\quad s_i\geq 0.
+\]
+由旋转二阶锥表示，这可以写成
+\[
+  \left\|
+  \begin{pmatrix}
+    2\\ t_i-s_i
+  \end{pmatrix}
+  \right\|_2\leq t_i+s_i,\qquad i=1,\ldots,m.
+\]
+因此该问题的 SOCP 表示为
+\[
+\begin{array}{ll}
+  \text{minimize} & \displaystyle \sum_{i=1}^m t_i\\[0.5em]
+  \text{subject to} & s_i=a_i^Tx-b_i,\qquad i=1,\ldots,m,\\
+  & s_i\geq 0,\quad t_i\geq 0,\qquad i=1,\ldots,m,\\
+  & \left\|
+    \begin{pmatrix}
+      2\\ t_i-s_i
+    \end{pmatrix}
+    \right\|_2\leq t_i+s_i,\qquad i=1,\ldots,m.
+\end{array}
+\]
+其中变量为 $x,s,t$。这就是题目要求的 SOCP 形式。
+
+
+\paragraph{2.8} 《Convex Optimization》(Boyd and Vandenberghe)教材课后题4.28 (a) （提示：利用上图形式，考虑目标函数形式为：$\min \; t$）
+
+\textbf{解：}
+鲁棒问题为
+\[
+\begin{array}{ll}
+  \text{minimize} & \displaystyle \sup_{P\in\mathcal E}
+  \left(\frac12x^TPx+q^Tx+r\right)\\[0.3em]
+  \text{subject to} & Ax\leq b.
+\end{array}
+\]
+在 (a) 中，设
+\[
+  \mathcal E=\{P_1,\ldots,P_K\},
+\]
+其中每个 $P_i$ 都是半正定矩阵。于是
+\[
+  \sup_{P\in\mathcal E}
+  \left(\frac12x^TPx+q^Tx+r\right)
+  =
+  \max_{i=1,\ldots,K}
+  \left(\frac12x^TP_ix+q^Tx+r\right).
+\]
+引入辅助变量 $t$ 表示所有二次目标值的共同上界，即要求
+\[
+  \frac12x^TP_ix+q^Tx+r\leq t,\qquad i=1,\ldots,K.
+\]
+因此鲁棒问题可以写为
+\[
+\begin{array}{ll}
+  \text{minimize} & t\\[0.3em]
+  \text{subject to} &
+  \displaystyle \frac12x^TP_ix+q^Tx+r\leq t,\qquad i=1,\ldots,K,\\
+  & Ax\leq b.
+\end{array}
+\]
+由于 $P_i$ 半正定，每个约束都是凸二次约束，而 $Ax\leq b$ 是仿射约束，所以这是一个凸 QCQP，其中变量为 $(x,t)$。
+
+\end{document}

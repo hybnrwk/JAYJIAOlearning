@@ -8,6 +8,7 @@
 - 算法：[[数统/优化理论与算法/LINEAR OPTIMIZATION/Chapter 3  The simplex method|The simplex method]]。
 - 对偶与变化：[[数统/优化理论与算法/LINEAR OPTIMIZATION/Chapter 4：Duality theory|Duality theory]] -> [[数统/优化理论与算法/LINEAR OPTIMIZATION/Chapter 5  Sensitivity analysis|Sensitivity analysis]]。
 - 网络结构：[[数统/优化理论与算法/LINEAR OPTIMIZATION/Chapter 7 Network flow problem|Network flow problem]]。
+- 离散决策：[[数统/优化理论与算法/LINEAR OPTIMIZATION/整数规划梳理|整数规划梳理]]。
 
 ## 核心笔记
 
@@ -21,6 +22,8 @@
 - [[数统/优化理论与算法/LINEAR OPTIMIZATION/第三章总结|第三章总结]]
 - [[数统/优化理论与算法/LINEAR OPTIMIZATION/第四章总结|第四章总结]]
 - [[数统/优化理论与算法/LINEAR OPTIMIZATION/第七章总结|第七章总结]]
+- [[数统/优化理论与算法/LINEAR OPTIMIZATION/整数规划|整数规划]]
+- [[数统/优化理论与算法/LINEAR OPTIMIZATION/整数规划梳理|整数规划系统梳理]]
 
 ## 资料清单
 
@@ -34,6 +37,8 @@
 - [[00-Wiki/Concepts/对偶理论|对偶理论]]
 - [[00-Wiki/Concepts/灵敏度分析|灵敏度分析]]
 - [[00-Wiki/Concepts/网络流|网络流]]
+- [[00-Wiki/Concepts/整数规划|整数规划]]
+- [[00-Wiki/Concepts/NP完全性|NP 完全性]]
 
 ## 复习抓手
 

@@ -23,11 +23,11 @@
 
 ## 复习路线
 
-- 算法路线：[[00-Wiki/Concepts/复杂度分析|复杂度分析]] -> [[00-Wiki/Concepts/数据结构|数据结构]] -> [[00-Wiki/Concepts/图算法|图算法]] -> [[00-Wiki/Concepts/贪心算法|贪心算法]] / [[00-Wiki/Concepts/分治算法|分治算法]]。
+- 算法路线：[[00-Wiki/Concepts/复杂度分析|复杂度分析]] -> [[00-Wiki/Concepts/数据结构|数据结构]] -> [[00-Wiki/Concepts/图算法|图算法]] -> [[00-Wiki/Concepts/贪心算法|贪心算法]] / [[00-Wiki/Concepts/分治算法|分治算法]] -> [[00-Wiki/Concepts/动态规划|动态规划]] -> [[00-Wiki/Concepts/网络流|网络流]] -> [[00-Wiki/Concepts/NP完全性|NP 完全性]]。
 - 数据库路线：[[00-Wiki/Concepts/E-R模型|E-R 模型]] -> [[00-Wiki/Concepts/关系模型|关系模型]] -> [[00-Wiki/Concepts/关系代数|关系代数]] -> [[00-Wiki/Concepts/数据完整性|数据完整性]]。
 - AI 路线：[[00-Wiki/Concepts/知识表示|知识表示]] -> [[00-Wiki/Concepts/状态空间搜索|状态空间搜索]] -> [[00-Wiki/Concepts/确定性推理|确定性推理]] -> [[00-Wiki/Concepts/不确定性推理|不确定性推理]]。
 - 机器学习路线：[[00-Wiki/Concepts/机器学习基础|机器学习基础]] -> [[00-Wiki/Concepts/回归模型|回归模型]] -> [[00-Wiki/Concepts/逻辑回归|逻辑回归]] -> [[00-Wiki/Concepts/神经网络|神经网络]] -> [[00-Wiki/Concepts/偏差方差|偏差方差]] -> [[00-Wiki/Concepts/决策树|决策树]]。
-- 概率统计路线：[[00-Wiki/Concepts/概率分布|概率分布]] -> [[00-Wiki/Concepts/三大抽样分布|三大抽样分布]] -> [[00-Wiki/Concepts/充分统计量|充分统计量]] -> [[00-Wiki/Concepts/参数估计|参数估计]] -> [[00-Wiki/Concepts/假设检验|假设检验]]。
+- 概率统计路线：[[00-Wiki/Concepts/概率分布|概率分布]] -> [[00-Wiki/Concepts/三大抽样分布|三大抽样分布]] -> [[00-Wiki/Concepts/参数估计|参数估计]] -> [[00-Wiki/Concepts/最大似然估计|最大似然估计]] -> [[00-Wiki/Concepts/Fisher信息量|Fisher 信息量]] -> [[00-Wiki/Concepts/充分统计量|充分统计量]] -> [[00-Wiki/Concepts/MVUE|MVUE]] -> [[00-Wiki/Concepts/假设检验|假设检验]]。
 - 优化路线：[[00-Wiki/Concepts/线性规划几何|线性规划几何]] -> [[00-Wiki/Concepts/单纯形法|单纯形法]] -> [[00-Wiki/Concepts/对偶理论|对偶理论]] -> [[00-Wiki/Concepts/梯度下降|梯度下降]] -> [[00-Wiki/Concepts/二阶优化|二阶优化]] -> [[00-Wiki/Concepts/内点法|内点法]]。
 - 数值计算路线：[[00-Wiki/Concepts/数值稳定性|数值稳定性]] -> [[00-Wiki/Concepts/最小二乘法|最小二乘法]] / [[00-Wiki/Concepts/牛顿法|牛顿法]] -> [[00-Wiki/Concepts/共轭梯度法|共轭梯度法]]。
 - 投资科学路线：[[00-Wiki/Concepts/债券定价|债券定价]] -> [[00-Wiki/Concepts/久期|久期]] -> [[00-Wiki/Concepts/投资组合与CAPM|投资组合与 CAPM]] -> [[00-Wiki/Concepts/期权定价|期权定价]]。
@@ -43,6 +43,8 @@
 - [[00-Wiki/Concepts/三大抽样分布|三大抽样分布]]
 - [[00-Wiki/Concepts/充分统计量|充分统计量]]
 - [[00-Wiki/Concepts/最大似然估计|最大似然估计]]
+- [[00-Wiki/Concepts/Fisher信息量|Fisher 信息量]]
+- [[00-Wiki/Concepts/MVUE|MVUE]]
 - [[00-Wiki/Concepts/置信区间|置信区间]]
 - [[00-Wiki/Concepts/SQL查询分析|SQL 查询分析]]
 - [[00-Wiki/Concepts/机器学习基础|机器学习基础]]
@@ -72,3 +74,10 @@
 
 - 考前可把最常用题型入口补到对应课程索引。
 - 新增课程资料时先补课程索引，再判断是否需要新增概念卡片。
+
+## 2026-07 近期增补入口
+
+- 算法设计：[[cs_ds/数据结构与算法/算法设计课程书籍笔记/算法续命丹1|算法续命丹 1]]、[[cs_ds/数据结构与算法/算法设计课程书籍笔记/算法续命丹2|算法续命丹 2]]、[[cs_ds/数据结构与算法/算法设计课程书籍笔记/算法续命丹3|算法续命丹 3]]、[[cs_ds/数据结构与算法/算法设计课程书籍笔记/算法续命丹4|算法续命丹 4]]、[[cs_ds/数据结构与算法/算法设计课程书籍笔记/算法终极复习|算法终极复习]]。
+- 离散数学：[[cs_ds/离散数学/离散数学期末复习总笔记|离散数学期末复习总笔记]]、[[cs_ds/离散数学/模拟1|综合模拟卷 B]]。
+- 数理统计：[[00-Wiki/Stats-Recent|数理统计近期增补]]、[[数统/数理统计/袁洪松数理统计/数理统计期末知识点与题型速查|期末知识点与题型速查]]、[[数统/数理统计/袁洪松数理统计/模拟卷plus|模拟卷 plus]]。
+- 优化理论：[[数统/优化理论与算法/郭加熠优化理论/开卷资料|开卷资料]]、[[数统/优化理论与算法/郭加熠优化理论/开卷资料_紧凑版|开卷资料紧凑版]]、[[数统/优化理论与算法/例题|综合例题]]。

@@ -59,6 +59,8 @@
 - [[00-Wiki/Concepts/最短路|最短路]]
 - [[00-Wiki/Concepts/最小生成树|最小生成树]]
 - [[00-Wiki/Concepts/拓扑排序|拓扑排序]]
+- [[00-Wiki/Concepts/动态规划|动态规划]]
+- [[00-Wiki/Concepts/网络流|网络流]]
 - [[00-Wiki/Concepts/贪心算法|贪心算法]]
 - [[00-Wiki/Concepts/分治算法|分治算法]]
 - [[00-Wiki/Concepts/NP完全性|NP 完全性]]
@@ -113,6 +115,8 @@
 - [[00-Wiki/Concepts/三大抽样分布|三大抽样分布]]
 - [[00-Wiki/Concepts/充分统计量|充分统计量]]
 - [[00-Wiki/Concepts/最大似然估计|最大似然估计]]
+- [[00-Wiki/Concepts/Fisher信息量|Fisher 信息量]]
+- [[00-Wiki/Concepts/MVUE|MVUE]]
 - [[00-Wiki/Concepts/置信区间|置信区间]]
 - [[00-Wiki/Concepts/方差检验|方差检验]]
 - [[00-Wiki/Concepts/线性规划几何|线性规划几何]]
@@ -140,3 +144,4 @@
 - 课程索引负责清点资料和梳理主线。
 - 概念卡片只写高频、跨课程、易忘内容。
 - 旧版资料保留入口，但优先从当前主笔记和课程索引进入。
+- 2026-06-23 后新增的算法、离散数学、数理统计和优化复习资料已分别收进对应课程索引与概念卡。

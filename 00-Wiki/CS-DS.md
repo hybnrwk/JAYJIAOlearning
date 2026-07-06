@@ -24,14 +24,14 @@
 - 编程底座：[[cs_ds/python/00-python索引|Python]]、[[cs_ds/程序设计C++/00-程序设计C++索引|C++ 程序设计]]。
 - 理论底座：[[cs_ds/离散数学/00-离散数学索引|离散数学期末复习]]、[[00-Wiki/Concepts/复杂度分析|复杂度分析]]、[[00-Wiki/Concepts/NP完全性|NP 完全性]]。
 - 系统底座：[[cs_ds/计算机原理/00-计算机原理索引|计算机原理]] -> [[00-Wiki/Concepts/存储器层次|存储器层次]]。
-- 结构与算法：[[cs_ds/数据结构与算法/00-数据结构与算法索引|数据结构与算法]] -> [[00-Wiki/Concepts/图算法|图算法]] -> [[00-Wiki/Concepts/贪心算法|贪心算法]] / [[00-Wiki/Concepts/分治算法|分治算法]]。
+- 结构与算法：[[cs_ds/数据结构与算法/00-数据结构与算法索引|数据结构与算法]] -> [[00-Wiki/Concepts/图算法|图算法]] -> [[00-Wiki/Concepts/贪心算法|贪心算法]] / [[00-Wiki/Concepts/分治算法|分治算法]] -> [[00-Wiki/Concepts/动态规划|动态规划]] -> [[00-Wiki/Concepts/网络流|网络流]] -> [[00-Wiki/Concepts/NP完全性|NP 完全性]]。
 - 数据系统：[[cs_ds/数据库/00-数据库索引|数据库]] -> [[00-Wiki/Concepts/关系模型|关系模型]] -> [[00-Wiki/Concepts/关系代数|关系代数]] -> [[00-Wiki/Concepts/SQL查询分析|SQL 查询分析]]。
 - 智能与数据：[[cs_ds/人工智能/00-人工智能导论索引|人工智能导论]] -> [[cs_ds/机器学习/00-机器学习索引|机器学习]] -> [[cs_ds/数据挖掘/00-数据挖掘索引|数据挖掘]]。
 
 ## 概念簇
 
 - 数据结构：[[00-Wiki/Concepts/数组与串|数组与串]]、[[00-Wiki/Concepts/链表|链表]]、[[00-Wiki/Concepts/栈与队列|栈与队列]]、[[00-Wiki/Concepts/哈希表|哈希表]]、[[00-Wiki/Concepts/二叉树|二叉树]]。
-- 算法图谱：[[00-Wiki/Concepts/BFS与DFS|BFS 与 DFS]]、[[00-Wiki/Concepts/最短路|最短路]]、[[00-Wiki/Concepts/最小生成树|最小生成树]]、[[00-Wiki/Concepts/拓扑排序|拓扑排序]]。
+- 算法图谱：[[00-Wiki/Concepts/BFS与DFS|BFS 与 DFS]]、[[00-Wiki/Concepts/最短路|最短路]]、[[00-Wiki/Concepts/最小生成树|最小生成树]]、[[00-Wiki/Concepts/拓扑排序|拓扑排序]]、[[00-Wiki/Concepts/动态规划|动态规划]]、[[00-Wiki/Concepts/网络流|网络流]]、[[00-Wiki/Concepts/NP完全性|NP 完全性]]。
 - 复杂度与系统：[[00-Wiki/Concepts/NP完全性|NP 完全性]]、[[00-Wiki/Concepts/计算机组成原理|计算机组成原理]]、[[00-Wiki/Concepts/存储器层次|存储器层次]]。
 - 数据库：[[00-Wiki/Concepts/数据库系统架构|数据库系统架构]]、[[00-Wiki/Concepts/E-R模型|E-R 模型]]、[[00-Wiki/Concepts/关系模型|关系模型]]、[[00-Wiki/Concepts/数据完整性|数据完整性]]、[[00-Wiki/Concepts/SQL查询分析|SQL 查询分析]]。
 - AI 知识表示：[[00-Wiki/Concepts/知识表示|知识表示]]、[[00-Wiki/Concepts/谓词逻辑|谓词逻辑]]、[[00-Wiki/Concepts/产生式系统|产生式系统]]、[[00-Wiki/Concepts/语义网络|语义网络]]、[[00-Wiki/Concepts/状态空间搜索|状态空间搜索]]。
@@ -44,3 +44,4 @@
 - 新增 CS/DS 笔记时，优先放回对应课程目录。
 - 课程索引负责清点资源，概念卡负责跨课程连接。
 - 对 `cs_ds/cs_self_learning` 这类大型资料库，只维护路线和分类入口，不逐篇生成概念卡。
+- 算法设计近期复习资料统一从 [[cs_ds/数据结构与算法/00-数据结构与算法索引|数据结构与算法索引]] 进入。

@@ -16,6 +16,7 @@ param(
     [switch]$Fallback,
     [switch]$ForceDue,
     [switch]$ValidateOnly,
+    [switch]$PreflightOnly,
     [switch]$DryRun
 )
 
@@ -150,6 +151,19 @@ function Get-GitLines {
     return @($result.Output | Where-Object { -not $_.StartsWith("warning:") })
 }
 
+function Get-SingleGitLine {
+    param(
+        [string]$WorkingDirectory = $script:RepoRoot,
+        [Parameter(Mandatory = $true)][string[]]$GitArgs
+    )
+
+    $lines = @(Get-GitLines -WorkingDirectory $WorkingDirectory -GitArgs $GitArgs)
+    if ($lines.Count -ne 1) {
+        throw ("Expected one line from git {0}, found {1}." -f ($GitArgs -join " "), $lines.Count)
+    }
+    return $lines[0].Trim()
+}
+
 function Normalize-RelativePath {
     param([string]$Path)
 
@@ -280,7 +294,7 @@ function Test-CommitExists {
 
 function Get-HeadCommit {
     param([string]$WorkingDirectory = $script:RepoRoot)
-    return (Get-GitLines -WorkingDirectory $WorkingDirectory -GitArgs @("rev-parse", "HEAD"))[0].Trim()
+    return Get-SingleGitLine -WorkingDirectory $WorkingDirectory -GitArgs @("rev-parse", "HEAD")
 }
 
 function Get-RemoteCommit {
@@ -293,13 +307,16 @@ function Get-RemoteCommit {
 }
 
 function Assert-BranchSynchronized {
-    $currentBranch = (Get-GitLines -GitArgs @("rev-parse", "--abbrev-ref", "HEAD"))[0].Trim()
+    $currentBranch = Get-SingleGitLine -GitArgs @("rev-parse", "--abbrev-ref", "HEAD")
     if ($currentBranch -ne $Branch) {
         throw "Expected branch '$Branch', found '$currentBranch'."
     }
 
     $reference = "refs/remotes/{0}/{1}" -f $Remote, $Branch
-    $counts = (Get-GitLines -GitArgs @("rev-list", "--left-right", "--count", "HEAD...$reference"))[0].Trim() -split "\s+"
+    $counts = (Get-SingleGitLine -GitArgs @("rev-list", "--left-right", "--count", "HEAD...$reference")) -split "\s+"
+    if ($counts.Count -ne 2) {
+        throw "Unexpected ahead/behind result for HEAD...$reference."
+    }
     $ahead = [int]$counts[0]
     $behind = [int]$counts[1]
     if ($ahead -gt 0 -and $behind -gt 0) {
@@ -440,7 +457,10 @@ function New-Resolver {
 
     $inventory = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
     $basenames = @{}
-    foreach ($path in Get-GitLines -WorkingDirectory $WorkingDirectory -GitArgs @("-c", "core.quotePath=false", "ls-files", "--cached", "--others", "--exclude-standard")) {
+    $tracked = @(Get-GitLines -WorkingDirectory $WorkingDirectory -GitArgs @("-c", "core.quotePath=false", "ls-files", "--cached"))
+    $newMaintenance = @(Get-GitLines -WorkingDirectory $WorkingDirectory -GitArgs @("-c", "core.quotePath=false", "ls-files", "--others", "--exclude-standard") |
+        Where-Object { Test-AllowedMaintenancePath $_ })
+    foreach ($path in @($tracked + $newMaintenance)) {
         $normalized = Normalize-RelativePath $path
         if ([string]::IsNullOrWhiteSpace($normalized)) { continue }
         [void]$inventory.Add($normalized)
@@ -652,6 +672,8 @@ function New-CodexPrompt {
 
 硬性规则：
 - 不修改课程笔记正文、PDF 或其他资料，不移动或删除任何文件。
+- 对课程源文件保持字节级只读：不要格式化、统一换行，也不要补文件末尾的换行；脚本会核对 SHA256。
+- source_files 中可能含有尚未被 Git 跟踪的本地资料；可只读参考，但不要为其新增 Wiki 链接。新增链接目标必须已被 Git 跟踪，或是本轮新增的允许维护文件；可用 `git ls-files --error-unmatch -- <路径>` 只读核对。
 - 只允许修改或新增：
   - `00-Wiki/**`
   - `cs_ds/**/00-*索引.md`
@@ -795,7 +817,7 @@ function Invoke-CodexAttempt {
             }
         }
 
-        $diffCheck = Invoke-GitRaw -WorkingDirectory $worktree -GitArgs @("diff", "--check")
+        $diffCheck = Invoke-GitRaw -WorkingDirectory $worktree -GitArgs (@("diff", "--check", "--") + $changed)
         if ($diffCheck.ExitCode -ne 0) {
             throw ("git diff --check failed: {0}" -f ($diffCheck.Output -join "; "))
         }
@@ -830,7 +852,7 @@ function New-ApplyBackup {
         }
         $entries.Add([PSCustomObject]@{ Path = $path; Existed = $existed })
     }
-    return [PSCustomObject]@{ Directory = $backupDir; Entries = @($entries) }
+    return [PSCustomObject]@{ Directory = $backupDir; Entries = $entries.ToArray() }
 }
 
 function Restore-AppliedChanges {
@@ -857,11 +879,16 @@ function Apply-WorktreeChanges {
     )
 
     $context = New-ApplyBackup -Paths $Paths
-    foreach ($path in $Paths) {
-        $source = Get-SafeRepoPath -Root $Worktree -RelativePath $path
-        $destination = Get-SafeRepoPath -Root $script:RepoRoot -RelativePath $path
-        New-Item -ItemType Directory -Force -Path (Split-Path -Parent $destination) | Out-Null
-        [System.IO.File]::Copy($source, $destination, $true)
+    try {
+        foreach ($path in $Paths) {
+            $source = Get-SafeRepoPath -Root $Worktree -RelativePath $path
+            $destination = Get-SafeRepoPath -Root $script:RepoRoot -RelativePath $path
+            New-Item -ItemType Directory -Force -Path (Split-Path -Parent $destination) | Out-Null
+            [System.IO.File]::Copy($source, $destination, $true)
+        }
+    } catch {
+        Restore-AppliedChanges -Context $context
+        throw
     }
     return $context
 }
@@ -969,6 +996,10 @@ try {
     Assert-BranchSynchronized
     Assert-MaintenanceSurfaceClean
     $baseCommit = Get-HeadCommit
+    if ($PreflightOnly) {
+        Write-Log ("Preflight passed on {0} at {1}; no Wiki files or state were changed." -f $Branch, $baseCommit)
+        exit 0
+    }
 
     if ($selection.Usable.Count -eq 0) {
         Complete-Slot -State $state -Slot $slot -ProcessedCommit $baseCommit -DeferredSources $selection.Deferred
@@ -1013,6 +1044,10 @@ try {
         throw ("Applied changes failed git diff --check: {0}" -f ($diffCheck.Output -join "; "))
     }
     Invoke-Git -GitArgs (@("add", "--") + $result.ChangedPaths) | Out-Null
+    $stagedCheck = Invoke-GitRaw -GitArgs (@("diff", "--cached", "--check", "--") + $result.ChangedPaths)
+    if ($stagedCheck.ExitCode -ne 0) {
+        throw ("Staged Wiki changes failed git diff --check: {0}" -f ($stagedCheck.Output -join "; "))
+    }
     $message = "wiki: automatic links {0}" -f (Get-Date -Format "yyyy-MM-dd")
     Invoke-Git -GitArgs (@("commit", "--only", "-m", $message, "--") + $result.ChangedPaths) | Out-Null
     $newCommit = Get-HeadCommit
@@ -1042,7 +1077,7 @@ try {
     if ($null -ne $script:ApplyContext -and -not $script:CommitCreated) {
         try { Restore-AppliedChanges -Context $script:ApplyContext } catch { Write-Log ("Rollback warning: {0}" -f $_.Exception.Message) }
     }
-    Write-Log ("ERROR: {0}" -f $_.Exception.Message)
+    Write-Log ("ERROR: {0} at {1}" -f $_.Exception.Message, $_.InvocationInfo.PositionMessage)
     exit 1
 } finally {
     if ($script:ActiveWorktree) {

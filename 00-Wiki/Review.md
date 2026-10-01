@@ -5,6 +5,7 @@
 ## 当前重点课程
 
 - [[cs_ds/00-cs_ds索引|CS/DS 总索引]]
+- [[cs_ds/python/00-python索引|Python]]
 - [[cs_ds/数据结构与算法/00-数据结构与算法索引|数据结构与算法]]
 - [[cs_ds/离散数学/00-离散数学索引|离散数学期末复习]]
 - [[cs_ds/计算机原理/00-计算机原理索引|计算机原理]]
@@ -30,7 +31,8 @@
 - 数据库路线：[[00-Wiki/Concepts/E-R模型|E-R 模型]] -> [[00-Wiki/Concepts/关系模型|关系模型]] -> [[00-Wiki/Concepts/关系代数|关系代数]] -> [[00-Wiki/Concepts/数据完整性|数据完整性]]。
 - AI 路线：[[00-Wiki/Concepts/知识表示|知识表示]] -> [[00-Wiki/Concepts/状态空间搜索|状态空间搜索]] -> [[00-Wiki/Concepts/确定性推理|确定性推理]] -> [[00-Wiki/Concepts/不确定性推理|不确定性推理]]。
 - 机器学习路线：[[cs_ds/机器学习/机器学习路线_ISLP-CS229-李航|14 周综合路线]] -> [[00-Wiki/Concepts/机器学习基础|机器学习基础]] -> [[00-Wiki/Concepts/回归模型|回归模型]] -> [[00-Wiki/Concepts/逻辑回归|逻辑回归]] -> [[00-Wiki/Concepts/神经网络|神经网络]] -> [[00-Wiki/Concepts/PyTorch训练循环|PyTorch 训练循环]] -> [[00-Wiki/Concepts/偏差方差|偏差方差]] -> [[00-Wiki/Concepts/决策树|决策树]]。
-- 概率统计路线：[[00-Wiki/Concepts/概率分布|概率分布]] -> [[00-Wiki/Concepts/条件分布|条件分布]] -> [[00-Wiki/Concepts/随机过程|随机过程]] -> [[00-Wiki/Concepts/马尔可夫链|马尔可夫链]] / [[00-Wiki/Concepts/泊松过程|泊松过程]]；统计推断从 [[00-Wiki/Concepts/三大抽样分布|三大抽样分布]] -> [[00-Wiki/Concepts/参数估计|参数估计]] -> [[00-Wiki/Concepts/最大似然估计|最大似然估计]] -> [[00-Wiki/Concepts/Fisher信息量|Fisher 信息量]] -> [[00-Wiki/Concepts/充分统计量|充分统计量]] -> [[00-Wiki/Concepts/MVUE|MVUE]] -> [[00-Wiki/Concepts/假设检验|假设检验]]。
+- 回归路线：[[00-Wiki/Concepts/数据可视化|散点图与残差图]] -> [[00-Wiki/Concepts/回归模型|回归模型]] -> [[00-Wiki/Concepts/最小二乘法|最小二乘法]] -> [[数统/高维数据分析/00-高维数据分析索引|简单与多元线性回归]]。
+- 概率统计路线：[[00-Wiki/Concepts/概率分布|概率分布]] -> [[00-Wiki/Concepts/条件分布|条件分布]] -> [[00-Wiki/Concepts/条件期望|条件期望]] -> [[00-Wiki/Concepts/随机过程|随机过程]] -> [[00-Wiki/Concepts/马尔可夫链|马尔可夫链]] -> [[00-Wiki/Concepts/平稳分布|平稳分布]] / [[00-Wiki/Concepts/泊松过程|泊松过程]]；统计推断从 [[00-Wiki/Concepts/三大抽样分布|三大抽样分布]] -> [[00-Wiki/Concepts/参数估计|参数估计]] -> [[00-Wiki/Concepts/最大似然估计|最大似然估计]] -> [[00-Wiki/Concepts/Fisher信息量|Fisher 信息量]] -> [[00-Wiki/Concepts/充分统计量|充分统计量]] -> [[00-Wiki/Concepts/MVUE|MVUE]] -> [[00-Wiki/Concepts/假设检验|假设检验]]。
 - 优化路线：[[00-Wiki/Concepts/线性规划几何|线性规划几何]] -> [[00-Wiki/Concepts/单纯形法|单纯形法]] -> [[00-Wiki/Concepts/对偶理论|对偶理论]] -> [[00-Wiki/Concepts/梯度下降|梯度下降]] -> [[00-Wiki/Concepts/二阶优化|二阶优化]] -> [[00-Wiki/Concepts/内点法|内点法]]。
 - 数值计算路线：[[00-Wiki/Concepts/数值稳定性|数值稳定性]] -> [[00-Wiki/Concepts/最小二乘法|最小二乘法]] / [[00-Wiki/Concepts/牛顿法|牛顿法]] -> [[00-Wiki/Concepts/共轭梯度法|共轭梯度法]] -> [[00-Wiki/Concepts/Krylov子空间方法|Krylov 子空间方法]]。
 - 投资科学路线：[[00-Wiki/Concepts/债券定价|债券定价]] -> [[00-Wiki/Concepts/久期|久期]] -> [[00-Wiki/Concepts/投资组合与CAPM|投资组合与 CAPM]] -> [[00-Wiki/Concepts/期权定价|期权定价]]。
@@ -42,6 +44,7 @@
 - [[00-Wiki/Concepts/特征值与特征向量|特征值与特征向量]]
 - [[00-Wiki/Concepts/奇异值分解|奇异值分解]]
 - [[00-Wiki/Concepts/条件分布|条件分布]]
+- [[00-Wiki/Concepts/条件期望|条件期望]]
 - [[00-Wiki/Concepts/卷积公式|卷积公式]]
 - [[00-Wiki/Concepts/三大抽样分布|三大抽样分布]]
 - [[00-Wiki/Concepts/充分统计量|充分统计量]]
@@ -67,6 +70,7 @@
 - [[00-Wiki/Concepts/强化学习|强化学习]]
 - [[00-Wiki/Concepts/随机过程|随机过程]]
 - [[00-Wiki/Concepts/马尔可夫链|马尔可夫链]]
+- [[00-Wiki/Concepts/平稳分布|平稳分布]]
 - [[00-Wiki/Concepts/泊松过程|泊松过程]]
 - [[00-Wiki/Concepts/数值稳定性|数值稳定性]]
 - [[00-Wiki/Concepts/Krylov子空间方法|Krylov 子空间方法]]
@@ -96,3 +100,9 @@
 - 数值代数：[[数统/数值分析/张振宇数值代数/00-张振宇数值代数索引|张振宇数值代数索引]]，按直接法、误差分析、最小二乘、定常迭代和 Krylov 方法组织新增课件。
 - 随机过程：[[数统/随机过程/00-随机过程索引|随机过程索引]]、[[数统/随机过程/学习路线|16 周学习路线]]、[[数统/随机过程/Stochastic_Processes_Lecture1_Bilingual_Notes|第一讲双语笔记]]。
 - 高维数据分析：[[数统/高维数据分析/00-高维数据分析索引|高维数据分析索引]]、[[数统/高维数据分析/Ch1_散点图与回归_中英对照讲义|散点图与回归]]，结合 [[数统/高维数据分析/lecture01 (1).pdf|第一讲课件]] 复习建模入口。
+
+## 2026-09-03 至 2026-10-01 近期入口
+
+- Python：[[cs_ds/python/1_python基础|Python 基础]]，优先排查除法、字符串格式化、输入类型转换、布尔逻辑以及 `is` 与 `==`。
+- 高维数据分析：[[数统/高维数据分析/Ch2_简单线性回归_中英对照讲义|简单线性回归]] -> [[数统/高维数据分析/Ch3_多元线性回归_中英对照讲义|多元线性回归]]，并与 [[数统/高维数据分析/lecture02.pdf|lecture02]]、[[数统/高维数据分析/lecture03.pdf|lecture03]] 对照公式和课程口径。
+- 随机过程：[[数统/随机过程/Ch03_条件概率与条件期望_中英讲解|Ch3 条件化]] -> [[数统/随机过程/Ch04_4.1-4.3_马尔可夫链_中英讲解|Ch4.1—4.3 状态与分类]] -> [[数统/随机过程/Ch04_4.4-4.5_长期比例极限概率与应用_中英讲解 (1)|Ch4.4—4.5 长期行为]] -> [[数统/随机过程/Ch04_4.6-4.8_暂态停留分枝过程与时间可逆性_中英讲解|Ch4.6—4.8 暂态、分枝与可逆性]] -> [[数统/随机过程/Ch04_全章复习_逻辑地图与通用解题方法 (1)|全章复习]]。

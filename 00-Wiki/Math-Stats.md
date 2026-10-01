@@ -23,7 +23,9 @@
 
 - 线性代数：[[00-Wiki/Concepts/线性方程组|线性方程组]] -> [[00-Wiki/Concepts/向量空间|向量空间]] -> [[00-Wiki/Concepts/正交投影|正交投影]] -> [[00-Wiki/Concepts/奇异值分解|奇异值分解]]。
 - 概率与随机过程：[[00-Wiki/Concepts/概率分布|概率分布]] -> [[00-Wiki/Concepts/联合分布与边际分布|联合分布与边际分布]] -> [[00-Wiki/Concepts/条件分布|条件分布]] -> [[00-Wiki/Concepts/随机过程|随机过程]] -> [[00-Wiki/Concepts/马尔可夫链|马尔可夫链]] / [[00-Wiki/Concepts/泊松过程|泊松过程]]。
+- 条件化与长期行为：[[00-Wiki/Concepts/条件分布|条件分布]] -> [[00-Wiki/Concepts/条件期望|条件期望]] -> [[00-Wiki/Concepts/马尔可夫链|马尔可夫链]] -> [[00-Wiki/Concepts/平稳分布|平稳分布]]。
 - 数理统计：[[00-Wiki/Concepts/三大抽样分布|三大抽样分布]] -> [[00-Wiki/Concepts/最大似然估计|最大似然估计]] -> [[00-Wiki/Concepts/Fisher信息量|Fisher 信息量]] -> [[00-Wiki/Concepts/充分统计量|充分统计量]] -> [[00-Wiki/Concepts/MVUE|MVUE]] -> [[00-Wiki/Concepts/假设检验|假设检验]]。
+- 回归建模：[[00-Wiki/Concepts/数据可视化|散点图与残差图]] -> [[00-Wiki/Concepts/回归模型|回归模型]] -> [[00-Wiki/Concepts/最小二乘法|最小二乘法]] -> [[数统/高维数据分析/00-高维数据分析索引|简单与多元线性回归]]。
 - 优化：[[00-Wiki/Concepts/线性规划几何|线性规划几何]] -> [[00-Wiki/Concepts/单纯形法|单纯形法]] -> [[00-Wiki/Concepts/对偶理论|对偶理论]] -> [[00-Wiki/Concepts/KKT条件|KKT 条件]] -> [[00-Wiki/Concepts/一阶优化|一阶优化]] -> [[00-Wiki/Concepts/二阶优化|二阶优化]] -> [[00-Wiki/Concepts/内点法|内点法]]。
 - 数值计算：[[00-Wiki/Concepts/数值稳定性|数值稳定性]] -> [[00-Wiki/Concepts/牛顿法|牛顿法]] / [[00-Wiki/Concepts/最小二乘法|最小二乘法]] -> [[00-Wiki/Concepts/共轭梯度法|共轭梯度法]] -> [[00-Wiki/Concepts/Krylov子空间方法|Krylov 子空间方法]]。
 
@@ -31,7 +33,7 @@
 
 - 离散结构：[[00-Wiki/Concepts/集合|集合]]、[[00-Wiki/Concepts/关系|关系]]、[[00-Wiki/Concepts/函数|函数]]、[[00-Wiki/Concepts/命题逻辑|命题逻辑]]。
 - 线性代数：[[00-Wiki/Concepts/行列式|行列式]]、[[00-Wiki/Concepts/四个基本子空间|四个基本子空间]]、[[00-Wiki/Concepts/特征值与特征向量|特征值与特征向量]]、[[00-Wiki/Concepts/线性变换|线性变换]]。
-- 概率统计：[[00-Wiki/Concepts/卷积公式|卷积公式]]、[[00-Wiki/Concepts/分布特征数|分布特征数]]、[[00-Wiki/Concepts/随机过程|随机过程]]、[[00-Wiki/Concepts/马尔可夫链|马尔可夫链]]、[[00-Wiki/Concepts/泊松过程|泊松过程]]、[[00-Wiki/Concepts/充分统计量|充分统计量]]、[[00-Wiki/Concepts/参数估计|参数估计]]、[[00-Wiki/Concepts/Fisher信息量|Fisher 信息量]]、[[00-Wiki/Concepts/MVUE|MVUE]]、[[00-Wiki/Concepts/方差检验|方差检验]]、[[00-Wiki/Concepts/方差分析与回归|方差分析与回归]]。
+- 概率统计：[[00-Wiki/Concepts/卷积公式|卷积公式]]、[[00-Wiki/Concepts/分布特征数|分布特征数]]、[[00-Wiki/Concepts/条件期望|条件期望]]、[[00-Wiki/Concepts/随机过程|随机过程]]、[[00-Wiki/Concepts/马尔可夫链|马尔可夫链]]、[[00-Wiki/Concepts/平稳分布|平稳分布]]、[[00-Wiki/Concepts/泊松过程|泊松过程]]、[[00-Wiki/Concepts/充分统计量|充分统计量]]、[[00-Wiki/Concepts/参数估计|参数估计]]、[[00-Wiki/Concepts/Fisher信息量|Fisher 信息量]]、[[00-Wiki/Concepts/MVUE|MVUE]]、[[00-Wiki/Concepts/方差检验|方差检验]]、[[00-Wiki/Concepts/方差分析与回归|方差分析与回归]]。
 - 优化算法：[[00-Wiki/Concepts/凸集合与凸函数|凸集合与凸函数]]、[[00-Wiki/Concepts/梯度下降|梯度下降]]、[[00-Wiki/Concepts/一阶优化|一阶优化]]、[[00-Wiki/Concepts/二阶优化|二阶优化]]、[[00-Wiki/Concepts/内点法|内点法]]、[[00-Wiki/Concepts/灵敏度分析|灵敏度分析]]、[[00-Wiki/Concepts/网络流|网络流]]。
 - 数值方法：[[00-Wiki/Concepts/数值稳定性|数值稳定性]]、[[00-Wiki/Concepts/牛顿法|牛顿法]]、[[00-Wiki/Concepts/拟牛顿法|拟牛顿法]]、[[00-Wiki/Concepts/最小二乘法|最小二乘法]]、[[00-Wiki/Concepts/共轭梯度法|共轭梯度法]]、[[00-Wiki/Concepts/Krylov子空间方法|Krylov 子空间方法]]。
 - 离散优化：[[00-Wiki/Concepts/整数规划|整数规划]]、[[00-Wiki/Concepts/NP完全性|NP 完全性]]。
@@ -43,3 +45,4 @@
 - 课程资料和教材 PDF 统一在对应课程索引中清点。
 - 袁洪松数理统计新增讲解从 [[00-Wiki/Stats-Recent|数理统计近期增补]] 进入。
 - 新增数值代数课件从 [[数统/数值分析/张振宇数值代数/00-张振宇数值代数索引|张振宇数值代数索引]] 进入；随机过程笔记从 [[数统/随机过程/00-随机过程索引|随机过程索引]] 进入。
+- 近期回归讲义与 lecture02—03 从 [[数统/高维数据分析/00-高维数据分析索引|高维数据分析索引]] 进入；随机过程 Ch3—Ch4 的条件化、长期行为和吸收问题从 [[数统/随机过程/00-随机过程索引|随机过程索引]] 进入。

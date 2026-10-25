@@ -1,0 +1,13 @@
+"term","coefficient","independently_estimated"
+"(Intercept)",16901.1428571429,TRUE
+"sexFemale",104.571428571426,TRUE
+"rankAssoc",6345.05714285714,TRUE
+"rankProf",12691.6071428571,TRUE
+"degreePhD",3394.85714285714,TRUE
+"sexFemale:rankAssoc",-3318.57142857142,TRUE
+"sexFemale:rankProf",409.345238095241,TRUE
+"sexFemale:degreePhD",1199.42857142857,TRUE
+"rankAssoc:degreePhD",-3056.48571428572,TRUE
+"rankProf:degreePhD",-2276.10714285715,TRUE
+"sexFemale:rankAssoc:degreePhD",NA,FALSE
+"sexFemale:rankProf:degreePhD",-7524.84523809523,TRUE

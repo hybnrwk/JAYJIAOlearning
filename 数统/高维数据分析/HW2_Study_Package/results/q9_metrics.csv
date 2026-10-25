@@ -1,0 +1,2 @@
+"model","lambda_min","min_CV_MSE","test_MSE","retained_groups","package_version","L2_verified_as_MSE"
+"Group lasso",0.0956607599298917,1.39460991391023,1.0651646977119,"4,5","1.6",TRUE

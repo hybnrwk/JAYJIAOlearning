@@ -1,0 +1,13 @@
+"sex","rank","degree","Freq"
+"Male","Asst","Masters",7
+"Female","Asst","Masters",7
+"Male","Assoc","Masters",5
+"Female","Assoc","Masters",0
+"Male","Prof","Masters",12
+"Female","Prof","Masters",3
+"Male","Asst","PhD",3
+"Female","Asst","PhD",1
+"Male","Assoc","PhD",7
+"Female","Assoc","PhD",2
+"Male","Prof","PhD",4
+"Female","Prof","PhD",1

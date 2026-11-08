@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 185" width="850" height="490">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <path d="M20 100 H325 M170 10 V190" stroke="#555" stroke-width="1.5"/>
+<g transform="translate(170 100) rotate(-45)"><ellipse cx="0" cy="0" rx="116" ry="37" fill="#0d9488" fill-opacity=".13" stroke="#0d9488" stroke-width="1.6"/></g>
+<path d="M88 181 L252 19" stroke="#0d9488" stroke-width="2.5"/><path d="M107 36 L235 164" stroke="#64748b" stroke-width="2.4" stroke-dasharray="5 4"/>
+<text x="254" y="20" font-size="15" fill="#0d9488">PC1</text><text x="240" y="172" font-size="15" fill="#64748b">PC2</text>
+</svg>

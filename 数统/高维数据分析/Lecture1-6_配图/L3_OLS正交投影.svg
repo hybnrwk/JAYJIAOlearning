@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 185" width="850" height="490">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <polygon points="20,166 110,111 330,145 240,195" fill="#0D9488" fill-opacity=".12" stroke="#0d9488"/>
+<path d="M83 163 L165 126" stroke="#0d9488" stroke-width="2.4"/>
+<path d="M165 126 L249 25" stroke="#64748b" stroke-width="2.5" stroke-dasharray="6 5"/>
+<path d="M83 163 L249 25" stroke="#444" stroke-opacity=".5"/>
+<path d="M155 131 L164 141 L177 134" stroke="#64748b" stroke-width="1.5" fill="none"/>
+<circle cx="83" cy="163" r="4" fill="#555"/><circle cx="165" cy="126" r="4" fill="#0d9488"/><circle cx="249" cy="25" r="4" fill="#64748b"/>
+<text x="73" y="180" font-size="15">O</text><text x="150" y="118" font-size="15" fill="#0d9488">Ŷ</text><text x="258" y="25" font-size="15">Y</text>
+<text x="242" y="90" font-size="14">Residual ê</text><text x="240" y="171" font-size="15" fill="#0d9488">Col(X)</text>
+</svg>

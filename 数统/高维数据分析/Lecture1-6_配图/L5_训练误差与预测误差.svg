@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 185" width="850" height="490">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <path d="M36 18 V168 H325" stroke="#333" stroke-width="1.4" fill="none"/>
+<path d="M45 29 Q 133 82 310 143" stroke="#64748b" stroke-width="3" fill="none"/>
+<path d="M45 18 Q 167 173 203 97 Q 240 39 312 20" stroke="#0d9488" stroke-width="3" fill="none"/>
+<text x="201" y="20" fill="#0d9488" font-size="13">Prediction error</text>
+<text x="204" y="150" fill="#64748b" font-size="13">Training error</text>
+<text x="107" y="185" font-size="13">Model flexibility →</text>
+</svg>

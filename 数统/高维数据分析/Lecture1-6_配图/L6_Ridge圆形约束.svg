@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 185" width="850" height="490">
+  <rect width="100%" height="100%" fill="#fff"/>
+  <path d="M25 93 H315 M170 11 V175" stroke="#333" stroke-width="1.5" fill="none"/>
+<circle cx="170" cy="93" r="69" fill="#64748b" fill-opacity=".17" stroke="#64748b" stroke-width="2"/>
+<text x="235" y="22" font-size="17">L2 / Ridge</text>
+</svg>

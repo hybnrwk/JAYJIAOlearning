@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="260" viewBox="0 0 760 260">
+<rect width="760" height="260" fill="white"/>
+<g font-family="Arial,sans-serif" text-anchor="middle">
+<circle cx="110" cy="105" r="43" fill="#E2EFF9" stroke="#648AA9" stroke-width="3"/><text x="110" y="115" font-size="31" fill="#253C50">0</text><text x="110" y="175" font-size="18" fill="#263746">空店</text>
+<circle cx="380" cy="105" r="43" fill="#E2EFF9" stroke="#648AA9" stroke-width="3"/><text x="380" y="115" font-size="31" fill="#253C50">1</text><text x="380" y="175" font-size="18" fill="#263746">座椅 1</text>
+<circle cx="650" cy="105" r="43" fill="#E2EFF9" stroke="#648AA9" stroke-width="3"/><text x="650" y="115" font-size="31" fill="#253C50">2</text><text x="650" y="175" font-size="18" fill="#263746">座椅 2</text>
+</g>
+<path d="M153 105 H333" stroke="#648AA9" stroke-width="3" fill="none"/><path d="M323 96 L335 105 L323 114" stroke="#648AA9" stroke-width="3" fill="none"/>
+<path d="M423 105 H603" stroke="#648AA9" stroke-width="3" fill="none"/><path d="M593 96 L605 105 L593 114" stroke="#648AA9" stroke-width="3" fill="none"/>
+<path d="M650 60 Q650 10 380 10 Q110 10 110 60" stroke="#C1884A" stroke-width="3" fill="none"/><path d="M99 49 L110 62 L121 49" stroke="#C1884A" stroke-width="3" fill="none"/>
+<g font-family="Arial,sans-serif" font-size="19" text-anchor="middle"><text x="245" y="88" fill="#648AA9">λ</text><text x="515" y="88" fill="#648AA9">μ₁</text><text x="380" y="31" fill="#C1884A">μ₂</text></g>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="270" viewBox="0 0 760 270">
+<rect width="760" height="270" fill="white"/>
+<text x="380" y="35" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" fill="#3884C4">向右：顾客到达（Birth）</text>
+<text x="380" y="245" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" fill="#C17A36">向左：服务完成（Death）</text>
+<rect x="30" y="95" width="100" height="75" rx="16" fill="#F1F3F5" stroke="#9BA4AF" stroke-width="1.5"/>
+<text x="80" y="142" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" font-weight="500" fill="#263746">0</text>
+<rect x="175" y="95" width="100" height="75" rx="16" fill="#F1F3F5" stroke="#9BA4AF" stroke-width="1.5"/>
+<text x="225" y="142" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" font-weight="500" fill="#263746">1</text>
+<rect x="320" y="95" width="100" height="75" rx="16" fill="#D8EAFE" stroke="#3986CE" stroke-width="3"/>
+<text x="370" y="142" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#263746">2</text>
+<rect x="465" y="95" width="100" height="75" rx="16" fill="#F1F3F5" stroke="#9BA4AF" stroke-width="1.5"/>
+<text x="515" y="142" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" font-weight="500" fill="#263746">3</text>
+<rect x="610" y="95" width="100" height="75" rx="16" fill="#F1F3F5" stroke="#9BA4AF" stroke-width="1.5"/>
+<text x="660" y="142" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" font-weight="500" fill="#263746">4</text>
+<path d="M 130 112 H 175" stroke="#3884C4" stroke-width="3" fill="none"/>
+<path d="M 166 104 L 176 112 L 166 120" stroke="#3884C4" stroke-width="2.5" fill="none"/>
+<path d="M 175 153 H 130" stroke="#D18035" stroke-width="3" fill="none"/>
+<path d="M 139 145 L 129 153 L 139 161" stroke="#D18035" stroke-width="2.5" fill="none"/>
+<path d="M 275 112 H 320" stroke="#3884C4" stroke-width="3" fill="none"/>
+<path d="M 311 104 L 321 112 L 311 120" stroke="#3884C4" stroke-width="2.5" fill="none"/>
+<path d="M 320 153 H 275" stroke="#D18035" stroke-width="3" fill="none"/>
+<path d="M 284 145 L 274 153 L 284 161" stroke="#D18035" stroke-width="2.5" fill="none"/>
+<path d="M 420 112 H 465" stroke="#3884C4" stroke-width="3" fill="none"/>
+<path d="M 456 104 L 466 112 L 456 120" stroke="#3884C4" stroke-width="2.5" fill="none"/>
+<path d="M 465 153 H 420" stroke="#D18035" stroke-width="3" fill="none"/>
+<path d="M 429 145 L 419 153 L 429 161" stroke="#D18035" stroke-width="2.5" fill="none"/>
+<path d="M 565 112 H 610" stroke="#3884C4" stroke-width="3" fill="none"/>
+<path d="M 601 104 L 611 112 L 601 120" stroke="#3884C4" stroke-width="2.5" fill="none"/>
+<path d="M 610 153 H 565" stroke="#D18035" stroke-width="3" fill="none"/>
+<path d="M 574 145 L 564 153 L 574 161" stroke="#D18035" stroke-width="2.5" fill="none"/>
+</svg>

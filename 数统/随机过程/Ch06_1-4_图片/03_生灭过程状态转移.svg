@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="250" viewBox="0 0 760 250">
+<rect width="760" height="250" fill="white"/>
+<text x="380" y="28" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" fill="#3486BD">向右：出生率 λₙ</text>
+<text x="380" y="235" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" fill="#C58243">向左：死亡率 μₙ</text>
+<circle cx="65" cy="125" r="31" fill="#E6F1FA" stroke="#6386A2" stroke-width="2"/>
+<text x="65" y="133" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" fill="#28445A">0</text>
+<circle cx="220" cy="125" r="31" fill="#E6F1FA" stroke="#6386A2" stroke-width="2"/>
+<text x="220" y="133" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" fill="#28445A">1</text>
+<circle cx="375" cy="125" r="31" fill="#E6F1FA" stroke="#6386A2" stroke-width="2"/>
+<text x="375" y="133" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" fill="#28445A">2</text>
+<circle cx="530" cy="125" r="31" fill="#E6F1FA" stroke="#6386A2" stroke-width="2"/>
+<text x="530" y="133" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" fill="#28445A">3</text>
+<circle cx="685" cy="125" r="31" fill="#E6F1FA" stroke="#6386A2" stroke-width="2"/>
+<text x="685" y="133" text-anchor="middle" font-family="Arial,sans-serif" font-size="24" fill="#28445A">n</text>
+<path d="M 96 111 H 129" stroke="#3486BD" stroke-width="3" fill="none"/><path d="M 119 103 L 130 111 L 119 119" stroke="#3486BD" stroke-width="2.5" fill="none"/>
+<path d="M 129 139 H 96" stroke="#C58243" stroke-width="3" fill="none"/><path d="M 106 131 L 95 139 L 106 147" stroke="#C58243" stroke-width="2.5" fill="none"/>
+<path d="M 251 111 H 284" stroke="#3486BD" stroke-width="3" fill="none"/><path d="M 274 103 L 285 111 L 274 119" stroke="#3486BD" stroke-width="2.5" fill="none"/>
+<path d="M 284 139 H 251" stroke="#C58243" stroke-width="3" fill="none"/><path d="M 261 131 L 250 139 L 261 147" stroke="#C58243" stroke-width="2.5" fill="none"/>
+<path d="M 406 111 H 439" stroke="#3486BD" stroke-width="3" fill="none"/><path d="M 429 103 L 440 111 L 429 119" stroke="#3486BD" stroke-width="2.5" fill="none"/>
+<path d="M 439 139 H 406" stroke="#C58243" stroke-width="3" fill="none"/><path d="M 416 131 L 405 139 L 416 147" stroke="#C58243" stroke-width="2.5" fill="none"/>
+<path d="M 561 111 H 594" stroke="#3486BD" stroke-width="3" fill="none"/><path d="M 584 103 L 595 111 L 584 119" stroke="#3486BD" stroke-width="2.5" fill="none"/>
+<path d="M 594 139 H 561" stroke="#C58243" stroke-width="3" fill="none"/><path d="M 571 131 L 560 139 L 571 147" stroke="#C58243" stroke-width="2.5" fill="none"/>
+</svg>
